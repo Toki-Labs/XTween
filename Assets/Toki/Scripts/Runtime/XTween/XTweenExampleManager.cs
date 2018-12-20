@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour 
+public class XTweenExampleManager : MonoBehaviour 
 {
 	private Vector3 _defaultPos;
 	private Vector3 _defaultScale;
 	private Vector3 _defaultAngle;
 	public GameObject moveObj;
+	public Text text;
 
 	void Start () 
 	{
@@ -40,4 +42,8 @@ public class GameManager : MonoBehaviour
 		Debug.Log(hash.Now("value"));
 	}
 	
+	public void Receiver( string message )
+	{
+		this.text.text = message;
+	}
 }
