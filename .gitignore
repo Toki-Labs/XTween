@@ -34,3 +34,46 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Unity
+*.o
+*.lo
+*.la
+*.al
+.libs
+*.so
+*.so.[0-9]*
+*.pyc
+*.pyo
+*.rej
+*~
+#*#
+.#*.
+*.swp
+obj
+Temp
+Library
+*.suo
+*.user
+*.pidb
+*.userprefs
+*.sln
+*.unityproj
+*.csproj
+*.apk
+Bin
+Bin/*
+
+# General
+.DS_Store
+*/.DS_Store
+ProjectVersion.txt
+libgpg.so.meta
+
+UnityChannel/
+UnityPurchasing/
+db.lock
+storage.ide
+storage.ide-shm
+storage.ide-wal
+
