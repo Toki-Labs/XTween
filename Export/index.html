@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | XTeen.git</title>
+    <script src="WebGL/Build/UnityLoader.js"></script>
+    <script>
+      var dic = {};
+
+      var containerName = "gameContainer";
+      var gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
+      dic[containerName] = gameInstance;
+
+      containerName = "gameContainer2";
+      gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
+      dic[containerName] = gameInstance;
+
+      function UnityProgress(instance, progress) 
+      {
+        if (progress == 1)
+        {
+          var cName;
+          for( var key in dic )
+          {
+            var instanceDic = dic[key];
+            if( instance == instanceDic )
+            {
+              cName = key;
+              break;
+            }
+          }
+          instance.SendMessage('ContainerGame','Receiver',cName);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="gameContainer" style="width: 800px; height: 400px; margin: auto"></div>
+    <br/>
+    <div id="gameContainer2" style="width: 800px; height: 400px; margin: auto"></div>
+  </body>
+</html>
