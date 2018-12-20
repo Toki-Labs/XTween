@@ -13,7 +13,7 @@ XTween은 이런 기능이 좋습니다.
 4. 강력한 퍼포먼스로 메모리와 CPU사용량이 적다.
 5. 에디터 모드에서 사용은 물론, 모든 플랫폼에서 사용가능합니다.
 
-예제는 [XTween Example](https://toki-labs.github.io/XTween/)에서 확인하실 수 있습니다.
+예제는 [XTween Example](http://toki-labs.com/xtween)에서 확인하실 수 있습니다.
 
 Lastest Release
 ---
