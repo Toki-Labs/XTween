@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Xtween Example | Toki Labs</title>
+    <link rel="shortcut icon" href="http://blog.toki-labs.com/xtween/TemplateData/favicon.ico">
+    <link rel="stylesheet" href="http://blog.toki-labs.com/xtween/TemplateData/style.css">
+    <script src="http://blog.toki-labs.com/xtween/TemplateData/UnityProgress.js"></script>  
+    <script src="http://blog.toki-labs.com/xtween/Build/UnityLoader.js"></script>
+    <script>
+      var gameInstance = UnityLoader.instantiate("gameContainer", "Build/Bin.json", {onProgress: UnityProgress});
+    </script>
+  </head>
+  <body>
+    <div class="webgl-content">
+      <div id="gameContainer" style="width: 700px; height: 350px"></div>
+    </div>
+  </body>
+</html>
