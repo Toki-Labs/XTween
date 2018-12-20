@@ -61,8 +61,6 @@ Library
 *.unityproj
 *.csproj
 *.apk
-Bin
-Bin/*
 
 # General
 .DS_Store
