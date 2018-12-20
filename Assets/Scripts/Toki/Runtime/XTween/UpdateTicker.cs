@@ -296,4 +296,3 @@ public class UpdateTicker : SingleIndieObject<UpdateTicker>, ITimer
 		this._deltaTimeArray [4] = new DeltaTimeTicker (4, _time);
 	}
 }
-

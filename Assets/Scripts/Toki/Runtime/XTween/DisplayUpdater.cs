@@ -42,7 +42,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 	protected XHash _start;
 	protected XHash _finish;
     protected IColorUpdatable _colorUpdater;
-	protected Action _stopOnDestroyHandler; //GameObject�� Destroy�� �����ϵ���
+	protected Action _stopOnDestroyHandler;
 	protected List<Action> _updateList;
 		
 
@@ -152,9 +152,14 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		float x = _pos.x;
 		float y = _pos.y;
 		float z = _pos.z;
+		bool addForce = false;
+		if( this is BezierUpdater )
+		{
+			addForce = _finish.containX || _finish.containY || _finish.containZ;
+		}
 		if( _finish.containX )
 		{
-            if( x != _finish.x || _finish.isRelativeX )
+            if( x != _finish.x || _finish.isRelativeX || addForce )
             { 
 			    changedPos = true;
 			    x = _finish.isRelativeX ? x + _finish.x : _finish.x;
@@ -163,7 +168,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 		if( _finish.containY )
 		{
-            if( y != _finish.y || _finish.isRelativeY )
+            if( y != _finish.y || _finish.isRelativeY || addForce )
             {
 			    changedPos = true;;
 			    y = _finish.isRelativeY ? y + _finish.y : _finish.y;
@@ -172,7 +177,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 		if( _finish.containZ )
 		{
-            if( z != _finish.z || _finish.isRelativeZ )
+            if( z != _finish.z || _finish.isRelativeZ || addForce )
             {
 			    changedPos = true;
 			    z = _finish.isRelativeZ ? z + _finish.z : _finish.z;

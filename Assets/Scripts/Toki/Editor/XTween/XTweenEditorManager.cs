@@ -1,5 +1,5 @@
 ﻿/**********************************************************************************
-/*		File Name 		: EditorManager.cs
+/*		File Name 		: XTweenEditorManager.cs
 /*		Author 			: R0biN
 /*		Description 	: 
 /*		Created Date 	: 2018-10-21
@@ -13,29 +13,29 @@ using UnityEditor;
 
 
 [InitializeOnLoad]
-public class EditorManager
+public class XTweenEditorManager
 {
 	/************************************************************************
 	*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
 	************************************************************************/
 	private static bool _initialized = false;
-	private static EditorManager _instance;
+	private static XTweenEditorManager _instance;
 	
 	/************************************************************************
 	*	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
 	************************************************************************/
-	static EditorManager()
+	static XTweenEditorManager()
 	{
 		Instance.Initialize();
 	}
 	
-	public static EditorManager Instance
+	public static XTweenEditorManager Instance
 	{
 		get
 		{
 			if( _instance == null )
 			{
-				_instance = new EditorManager();
+				_instance = new XTweenEditorManager();
 			}
 			return _instance;
 		}
