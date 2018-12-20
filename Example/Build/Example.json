@@ -1,0 +1,13 @@
+{
+"companyName": "DefaultCompany",
+"productName": "XTeen.git",
+"dataUrl": "Example.data.unityweb",
+"wasmCodeUrl": "Example.wasm.code.unityweb",
+"wasmFrameworkUrl": "Example.wasm.framework.unityweb",
+"TOTAL_MEMORY": 268435456,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Light",
+"backgroundColor": "#828080",
+"cacheControl": {"default": "must-revalidate"}
+}
