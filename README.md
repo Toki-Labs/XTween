@@ -15,6 +15,10 @@ XTween은 이런 기능이 좋습니다.
 
 예제는 [XTween Example](http://blog.toki-labs.com/xtween)에서 확인하실 수 있습니다.
 
+Lastest Release
+---
+Version(Alpha) 0.0.1 - [XTween_0.0.1.unitypackage](https://github.com/Toki-Labs/XTween/blob/master/Bin/XTween_0.0.1.unitypackage)
+
 Implementation
 ---
 ```csharp
