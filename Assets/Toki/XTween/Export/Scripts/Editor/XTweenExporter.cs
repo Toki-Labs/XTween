@@ -68,7 +68,7 @@ public class XTweenExporter
     private string ReplaceTargetStringInContent( string patternStart, string patternEnd, string replaceString, string content )
     {
         int indexStart = content.IndexOf(patternStart);
-        int indexEnd = content.IndexOf(patternEnd, indexStart) + 1;
+        int indexEnd = content.IndexOf(patternEnd, indexStart) + patternEnd.Length;
         string target = content.Substring(indexStart, indexEnd - indexStart);
         return content.Replace(target, replaceString);
     }
@@ -170,16 +170,13 @@ public class XTweenExporter
 
     private void UpdateReleasePath(string exportFileName)
     {
-        string findText = "(https://github.com/Toki-Labs/XTween/raw/master/Bin/";
+        string first = "Version(Alpha) ";
+        string end = ".unitypackage)";
+        string replace = "Version(Alpha) {VER} - [XTween_{VER}.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_{VER}.unitypackage)";
+        replace = replace.Replace("{VER}", XTweenEditorManager.Instance.Data.version);
         string filePath = XTweenEditorManager.AbsPath + "/README.md";
         string content = XTweenEditorManager.ReadText(filePath);
-        string exportPath = findText + exportFileName + ")";
-        content = ReplaceTargetStringInContent(findText, ")", exportPath, content);
-        findText = "Version(Alpha) ";
-        string currentVersion = XTweenEditorManager.Instance.Data.version;
-        content = ReplaceTargetStringInContent(findText, " -", findText + currentVersion + "-", content);
-        findText = "[XTween_";
-        content = ReplaceTargetStringInContent(findText, "](", "[" + exportFileName, content);
+        content = ReplaceTargetStringInContent(first, end, replace, content);
         XTweenEditorManager.WriteText(filePath, content);
     }
 }
