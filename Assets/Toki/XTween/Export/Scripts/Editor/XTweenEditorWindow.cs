@@ -90,7 +90,7 @@ public class XTweenEditorWindow : EditorWindow
 
         GUILayout.BeginHorizontal();
         GUILayout.Label("Next Version", GUILayout.Width(110f));
-        GUILayout.Label(XTweenExporter.Instance.GetExportVersion().ToString());
+        GUILayout.Label(XTweenExporter.Instance.ExportVersion);
         GUI.backgroundColor = (changed) ? Color.green : Color.gray;
         if (GUILayout.Button("Save", GUILayout.Width(100f)))
         {
@@ -104,7 +104,7 @@ public class XTweenEditorWindow : EditorWindow
 
         if (GUILayout.Button("Export Core", GUILayout.Height(25f)))
         {
-            string exportVersion = XTweenExporter.Instance.GetExportVersion();
+            string exportVersion = XTweenExporter.Instance.ExportVersion;
             XTweenExporter.Instance.Export(false);
             this._xtweenVersion = exportVersion;
         }
