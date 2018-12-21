@@ -158,7 +158,7 @@ public class XTweenExporter
         }
         else
         {
-            File.Copy(exportRootPath + "XTween.unitypackage", exportPath);
+            File.Copy(exportRootPath + "/XTween.unitypackage", exportPath);
         }
         return exportFileName;
     }
