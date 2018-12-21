@@ -152,7 +152,15 @@ public class XTweenExporter
         }
         string exportFileName = "XTween_" + addStr + this._xtweenVersion + ".unitypackage";
         exportPath = exportPath + "/" + exportFileName;
-        AssetDatabase.ExportPackage(exportPathList.ToArray(), exportPath, ExportPackageOptions.Interactive | ExportPackageOptions.Recurse);
+        try
+        {
+            AssetDatabase.ExportPackage(exportPathList.ToArray(), exportPath, ExportPackageOptions.Interactive | ExportPackageOptions.Recurse);
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log(e.Message);
+        }
+        Debug.Log(File.Exists(exportPath));
         return exportFileName;
     }
 
