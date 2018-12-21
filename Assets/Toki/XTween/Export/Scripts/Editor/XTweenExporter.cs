@@ -38,7 +38,8 @@ public class XTweenExporter
 
     public static void UpdateRelease()
     {
-        Instance.UpdateReleasePath(Instance.Export(false, true));
+        Instance.Export(false,true);
+        Instance.UpdateReleasePath();
     }
 	
 	/************************************************************************
@@ -134,7 +135,7 @@ public class XTweenExporter
         }
     }
 	
-	public string Export(bool packingAll, bool release = false )
+	public void Export(bool packingAll, bool release = false )
     {
         string addStr = "";
         string exportRootPath = XTweenEditorManager.AbsPath + "/Bin";
@@ -165,10 +166,9 @@ public class XTweenExporter
             File.Copy(packageFile, exportPath);
             File.Delete(packageFile);
         }
-        return exportFileName;
     }
 
-    private void UpdateReleasePath(string exportFileName)
+    private void UpdateReleasePath()
     {
         string first = "Version(Alpha) ";
         string end = ".unitypackage)";
