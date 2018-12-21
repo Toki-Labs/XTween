@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 
+[InitializeOnLoad]
 public class XTweenExporter
 {
 	/************************************************************************
@@ -41,10 +42,23 @@ public class XTweenExporter
         Instance.Export(false,true);
         Instance.UpdateReleasePath();
     }
+
+    public static string ReadText( string path )
+	{
+		return File.ReadAllText(path);
+	}
+
+	public static void WriteText( string path, string content )
+	{
+		StreamWriter writer = File.CreateText(path);
+        writer.Write(content);
+        writer.Close();
+	}
 	
 	/************************************************************************
 	 *	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 	 ************************************************************************/
+     private XTweenData _data;
     private List<string> _folderList = new List<string>
     { 
         "Assets/Toki/XTween/Example", 
@@ -66,13 +80,39 @@ public class XTweenExporter
 	/************************************************************************
 	 *	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
 	 ************************************************************************/
-    private string ReplaceTargetStringInContent( string patternStart, string patternEnd, string replaceString, string content )
+    public XTweenData Data
     {
-        int indexStart = content.IndexOf(patternStart);
-        int indexEnd = content.IndexOf(patternEnd, indexStart) + patternEnd.Length;
-        string target = content.Substring(indexStart, indexEnd - indexStart);
-        return content.Replace(target, replaceString);
+        get
+        {
+            return _data;
+        }
     }
+
+	public string JsonPath
+    {
+        get
+        {
+            return XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Export/Scripts/Editor/xtween_config.json";
+        }
+    }
+
+	public static string ExportDefaultPath
+    {
+		get
+		{
+			string path = "";
+			if (Application.platform == RuntimePlatform.WindowsEditor)
+			{
+				path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+			}
+			else
+			{
+				path = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/Documents";
+			}
+			return path;
+		}
+    }
+
 	
 	/************************************************************************
 	 *	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
@@ -84,7 +124,8 @@ public class XTweenExporter
 	 ************************************************************************/
     public XTweenExporter()
     {
-        this._xtweenVersion = XTweenEditorManager.Instance.Data.version;
+        this.Load();
+        this._xtweenVersion = Data.version;
     }
 
 	/************************************************************************
@@ -95,7 +136,39 @@ public class XTweenExporter
 	/************************************************************************
 	 *	 	 	 	 	Private Method Declaration	 	 	 	 	 		*
 	 ************************************************************************/
-    
+    private string ReplaceTargetStringInContent( string patternStart, string patternEnd, string replaceString, string content )
+    {
+        int indexStart = content.IndexOf(patternStart);
+        int indexEnd = content.IndexOf(patternEnd, indexStart) + patternEnd.Length;
+        string target = content.Substring(indexStart, indexEnd - indexStart);
+        return content.Replace(target, replaceString);
+    }
+
+    private void Load()
+    {
+        if( File.Exists(this.JsonPath) )
+        {
+            string jsonStr = ReadText(this.JsonPath);
+            this._data = JsonUtility.FromJson<XTweenData>(jsonStr);
+        }
+        else
+        {
+            this._data = new XTweenData();
+            this.Save();
+        }
+    }
+
+    private void UpdateReleasePath()
+    {
+        string first = "Version(Alpha) ";
+        string end = ".unitypackage)";
+        string replace = "Version(Alpha) {VER} - [XTween_{VER}.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_{VER}.unitypackage)";
+        replace = replace.Replace("{VER}", Data.version);
+        string filePath = XTweenEditorManager.AbsPath + "/README.md";
+        string content = ReadText(filePath);
+        content = ReplaceTargetStringInContent(first, end, replace, content);
+        WriteText(filePath, content);
+    }
 	
 	/************************************************************************
 	 *	 	 	 	 	Protected Method Declaration	 	 	 	 	 	*
@@ -109,7 +182,7 @@ public class XTweenExporter
     {
         get
         {
-            string version = XTweenEditorManager.Instance.Data.version;
+            string version = Data.version;
             if( string.IsNullOrEmpty( version ) )
             {
                 return "0.0.1";
@@ -143,16 +216,15 @@ public class XTweenExporter
         if( packingAll )
         {
             addStr = "All_";
-            exportRootPath = XTweenEditorManager.ExportDefaultPath;
+            exportRootPath = ExportDefaultPath;
             string addPath = "Assets/Toki/XTween/Export";
             exportPathList.Add(addPath);
         }
         else
         {
             this._xtweenVersion = this.ExportVersion;
-            XTweenEditorManager manager = XTweenEditorManager.Instance;
-            manager.Data.version = this._xtweenVersion;
-            manager.Save();
+            Data.version = this._xtweenVersion;
+            Save();
         }
         string exportFileName = "XTween_" + addStr + this._xtweenVersion + ".unitypackage";
         string exportPath = exportRootPath + "/" + exportFileName;
@@ -168,15 +240,9 @@ public class XTweenExporter
         }
     }
 
-    private void UpdateReleasePath()
+    public void Save()
     {
-        string first = "Version(Alpha) ";
-        string end = ".unitypackage)";
-        string replace = "Version(Alpha) {VER} - [XTween_{VER}.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_{VER}.unitypackage)";
-        replace = replace.Replace("{VER}", XTweenEditorManager.Instance.Data.version);
-        string filePath = XTweenEditorManager.AbsPath + "/README.md";
-        string content = XTweenEditorManager.ReadText(filePath);
-        content = ReplaceTargetStringInContent(first, end, replace, content);
-        XTweenEditorManager.WriteText(filePath, content);
+        string jsonStr = JsonUtility.ToJson(this._data);
+        WriteText(this.JsonPath, jsonStr);
     }
 }
