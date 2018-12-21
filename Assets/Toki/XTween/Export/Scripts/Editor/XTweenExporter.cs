@@ -43,6 +43,36 @@ public class XTweenExporter
         Instance.UpdateReleasePath();
     }
 
+    public static void ExampleBuild()
+    {
+        string buildPath = XTweenEditorManager.AbsPath + "/Export/WebGL";
+        if( Directory.Exists(buildPath) )
+            Directory.Delete(buildPath, true);
+
+        BuildPipeline.BuildPlayer
+        ( 
+            FindEnabledEditorScenes(), 
+            "Export/WebGL", 
+            BuildTarget.WebGL, 
+            BuildOptions.None
+        );
+    }
+
+    protected static string[] FindEnabledEditorScenes()
+    {
+        List<string> EditorScenes = new List<string>();
+        foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes)
+        {
+            if (!scene.enabled)
+            {
+                continue;
+            }
+
+            EditorScenes.Add(scene.path);
+        }
+        return EditorScenes.ToArray();
+    }
+
     public static string ReadText( string path )
 	{
 		return File.ReadAllText(path);
