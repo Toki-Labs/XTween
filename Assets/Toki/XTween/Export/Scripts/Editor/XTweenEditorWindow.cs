@@ -60,12 +60,12 @@ public class XTweenEditorWindow : EditorWindow
 	 ************************************************************************/
     void OnEnable()
     {
-        this._xtweenVersion = XTweenEditorManager.Instance.Data.version;
+        this._xtweenVersion = XTweenExporter.Instance.Data.version;
     }
 
     void OnGUI()
     {
-        XTweenData data = XTweenEditorManager.Instance.Data;
+        XTweenData data = XTweenExporter.Instance.Data;
         GUILayout.BeginVertical();
 
         GUILayout.BeginVertical("Box");
@@ -95,7 +95,7 @@ public class XTweenEditorWindow : EditorWindow
         if (GUILayout.Button("Save", GUILayout.Width(100f)))
         {
             data.version = this._xtweenVersion;
-            XTweenEditorManager.Instance.Save();
+            XTweenExporter.Instance.Save();
             changed = false;
         }
         GUI.backgroundColor = Color.white;
