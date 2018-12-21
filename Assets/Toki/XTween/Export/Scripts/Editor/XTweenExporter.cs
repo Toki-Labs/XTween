@@ -170,13 +170,16 @@ public class XTweenExporter
 
     private void UpdateReleasePath(string exportFileName)
     {
-        const string FIND_TEXT = "(https://github.com/Toki-Labs/XTween/raw/master/Bin/";
+        string findText = "(https://github.com/Toki-Labs/XTween/raw/master/Bin/";
         string filePath = XTweenEditorManager.AbsPath + "/README.md";
         string content = XTweenEditorManager.ReadText(filePath);
-        string exportPath = FIND_TEXT + exportFileName + ")";
-        content = ReplaceTargetStringInContent(FIND_TEXT, ")", exportPath, content);
-        string version = "Version(Alpha) ";
-        content = ReplaceTargetStringInContent(version, " -", version + this.ExportVersion, content);
+        string exportPath = findText + exportFileName + ")";
+        content = ReplaceTargetStringInContent(findText, ")", exportPath, content);
+        findText = "Version(Alpha) ";
+        string currentVersion = XTweenEditorManager.Instance.Data.version;
+        content = ReplaceTargetStringInContent(findText, " -", findText + currentVersion + "-", content);
+        findText = "[XTween_";
+        content = ReplaceTargetStringInContent(findText, "](", "[" + exportFileName, content);
         XTweenEditorManager.WriteText(filePath, content);
     }
 }
