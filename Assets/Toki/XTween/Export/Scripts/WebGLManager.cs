@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Runtime.InteropServices;
 
-public class WebGLCommutor : MonoBehaviour 
+public class WebGLManager : MonoBehaviour 
 {
     [DllImport("__Internal")]
     private static extern void Hello();

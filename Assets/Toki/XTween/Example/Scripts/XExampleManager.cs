@@ -1,5 +1,5 @@
 ﻿/**********************************************************************************
-/*		File Name 		: ModuleXTween.cs
+/*		File Name 		: XTweenExporter.cs
 /*		Author 			: Robin
 /*		Description 	: 
 /*		Created Date 	: 2016-7-27
@@ -7,52 +7,42 @@
 /**********************************************************************************/
 
 using UnityEngine;
-using UnityEditor;
-using System.Collections;
+using UnityEngine.UI;
 using System;
-using System.IO;
+using System.Collections;
+using System.Collections.Generic;
 
-public class XTweenExampleBuild
+public class XExampleManager : MonoBehaviour
 {
 	/************************************************************************
-	 *	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
-	 ************************************************************************/
-	
+	*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
+	************************************************************************/
 	
 	/************************************************************************
-	 *	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
-	 ************************************************************************/
-	[MenuItem("Window/XTween Build #%8",priority=16)]
-	public static void XTweenBuild()
-	{
-		
-	}
-
+	*	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
+	************************************************************************/
 	
 	/************************************************************************
 	*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
-	
+    
 	/************************************************************************
 	*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
-	
-	
+		
 	/************************************************************************
 	*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 	************************************************************************/
-     
-	
-	
+    public Text textLog;
+    public GameObject target;
+		
 	/************************************************************************
 	*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
 	************************************************************************/
-    
 	
 	/************************************************************************
 	*	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
 	************************************************************************/
-	
 	
 	/************************************************************************
 	*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
@@ -62,7 +52,6 @@ public class XTweenExampleBuild
 	*	 	 	 	 	Coroutine Declaration	 	  			 	 		*
 	************************************************************************/
 	
-	
 	/************************************************************************
 	*	 	 	 	 	Private Method Declaration	 	 	 	 	 		*
 	************************************************************************/
@@ -71,10 +60,16 @@ public class XTweenExampleBuild
 	*	 	 	 	 	Protected Method Declaration	 	 	 	 	 	*
 	************************************************************************/
 	
-	
 	/************************************************************************
 	*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
 	************************************************************************/
-	
-	
+    public void ButtonClickHandler()
+    {
+        XTween.To(this.target, XHash.New.AddX(1000f).AddY(450f)).Play();
+    }
+
+    public void Receiver(string message)
+    {
+        this.textLog.text = "Received Message from canvas: " + message;
+    }
 }

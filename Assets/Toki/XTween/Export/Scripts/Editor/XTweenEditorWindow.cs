@@ -1,5 +1,5 @@
 ﻿/**********************************************************************************
-/*		File Name 		: ModuleXTween.cs
+/*		File Name 		: XTweenEditorWindow.cs
 /*		Author 			: Robin
 /*		Description 	: 
 /*		Created Date 	: 2016-7-27
