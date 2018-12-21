@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Runtime.InteropServices;
 
-public class WebGLManager : MonoBehaviour 
+public class XTweenWebGLManager : MonoBehaviour 
 {
     [DllImport("__Internal")]
     private static extern void Hello();
