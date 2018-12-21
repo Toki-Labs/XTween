@@ -104,30 +104,33 @@ public class XTweenExporter
 	/************************************************************************
 	*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
 	************************************************************************/
-    public string GetExportVersion()
+    public string ExportVersion
     {
-        string version = XTweenEditorManager.Instance.Data.version;
-        if( string.IsNullOrEmpty( version ) )
+        get
         {
-            return "0.0.1";
-        }
-        else
-        {
-            string[] versions = version.Split('.');
-            int head = int.Parse(versions[0]);
-            int mid = int.Parse(versions[1]);
-            int tail = int.Parse(versions[2]);
-            tail++;
-            if (tail > 999)
+            string version = XTweenEditorManager.Instance.Data.version;
+            if( string.IsNullOrEmpty( version ) )
             {
-                mid++;
-                tail = 0;
+                return "0.0.1";
             }
-            if (mid > 9)
+            else
             {
-                head++;
+                string[] versions = version.Split('.');
+                int head = int.Parse(versions[0]);
+                int mid = int.Parse(versions[1]);
+                int tail = int.Parse(versions[2]);
+                tail++;
+                if (tail > 999)
+                {
+                    mid++;
+                    tail = 0;
+                }
+                if (mid > 9)
+                {
+                    head++;
+                }
+                return head.ToString() + "." + mid.ToString() + "." + tail.ToString();
             }
-            return head.ToString() + "." + mid.ToString() + "." + tail.ToString();
         }
     }
 	
@@ -145,7 +148,7 @@ public class XTweenExporter
         }
         else
         {
-            this._xtweenVersion = this.GetExportVersion();
+            this._xtweenVersion = this.ExportVersion;
             XTweenEditorManager manager = XTweenEditorManager.Instance;
             manager.Data.version = this._xtweenVersion;
             manager.Save();
@@ -158,7 +161,9 @@ public class XTweenExporter
         }
         else
         {
-            File.Copy(exportRootPath + "/XTween.unitypackage", exportPath);
+            string packageFile = exportRootPath + "/XTween.unitypackage";
+            File.Copy(packageFile, exportPath);
+            File.Delete(packageFile);
         }
         return exportFileName;
     }
@@ -170,6 +175,8 @@ public class XTweenExporter
         string content = XTweenEditorManager.ReadText(filePath);
         string exportPath = FIND_TEXT + exportFileName + ")";
         content = ReplaceTargetStringInContent(FIND_TEXT, ")", exportPath, content);
+        string version = "Version(Alpha) ";
+        content = ReplaceTargetStringInContent(version, " -", version + this.ExportVersion, content);
         XTweenEditorManager.WriteText(filePath, content);
     }
 }
