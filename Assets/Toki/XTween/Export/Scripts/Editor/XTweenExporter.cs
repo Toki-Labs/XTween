@@ -36,9 +36,9 @@ public class XTweenExporter
         }
     }
 
-    public static void Export()
+    public static void UpdateRelease()
     {
-        Instance.UpdateReleasePath(Instance.Export(false));
+        Instance.UpdateReleasePath(Instance.Export(false, true));
     }
 	
 	/************************************************************************
@@ -131,15 +131,15 @@ public class XTweenExporter
         }
     }
 	
-	public string Export(bool packingAll)
+	public string Export(bool packingAll, bool release = false )
     {
         string addStr = "";
-        string exportPath = XTweenEditorManager.AbsPath + "/Bin";
+        string exportRootPath = XTweenEditorManager.AbsPath + "/Bin";
         List<string> exportPathList = new List<string>(this._folderList.ToArray());
         if( packingAll )
         {
             addStr = "All_";
-            exportPath = XTweenEditorManager.ExportDefaultPath;
+            exportRootPath = XTweenEditorManager.ExportDefaultPath;
             string addPath = "Assets/Toki/XTween/Export";
             exportPathList.Add(addPath);
         }
@@ -151,16 +151,15 @@ public class XTweenExporter
             manager.Save();
         }
         string exportFileName = "XTween_" + addStr + this._xtweenVersion + ".unitypackage";
-        exportPath = exportPath + "/" + exportFileName;
-        try
+        string exportPath = exportRootPath + "/" + exportFileName;
+        if( !release )
         {
             AssetDatabase.ExportPackage(exportPathList.ToArray(), exportPath, ExportPackageOptions.Interactive | ExportPackageOptions.Recurse);
         }
-        catch (System.Exception e)
+        else
         {
-            Debug.Log(e.Message);
+            File.Copy(exportRootPath + "XTween.unitypackage", exportPath);
         }
-        Debug.Log(exportPath + " - " + File.Exists(exportPath));
         return exportFileName;
     }
 
