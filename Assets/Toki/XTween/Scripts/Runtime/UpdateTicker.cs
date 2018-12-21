@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEditor;
 #endif
 
-public class UpdateTicker : SingleIndieObject<UpdateTicker>, ITimer
+public class UpdateTicker : SingleXTween<UpdateTicker>, ITimer
 {
 	protected TimerListener _first = null;
 	protected int _numListeners = 0;

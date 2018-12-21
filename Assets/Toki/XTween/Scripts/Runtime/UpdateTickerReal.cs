@@ -31,7 +31,7 @@ public class DeltaTimeTicker
 	}
 }
 
-public class UpdateTickerReal : SingleIndieObject<UpdateTickerReal>, ITimer
+public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 {
 	protected TimerListener _first = null;
 	protected int _numListeners = 0;

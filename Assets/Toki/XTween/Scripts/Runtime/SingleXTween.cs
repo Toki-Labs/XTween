@@ -1,24 +1,23 @@
 using UnityEngine;
 using System.Collections;
-// using Toki.Core;
 
-public class SingleIndieObject<Type> : MonoBehaviour where Type : MonoBehaviour 
+public class SingleXTween<Type> : MonoBehaviour where Type : MonoBehaviour 
 {
     /************************************************************************
-     *	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
-     ************************************************************************/
+    *	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
+    ************************************************************************/
     private static bool _isQuitting = false;
 	private static object _lock = new object();
 	private static Type _inst;
 
     /************************************************************************
-     *	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
-     ************************************************************************/
+    *	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
+    ************************************************************************/
 
 
     /************************************************************************
-     *	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
-     ************************************************************************/
+    *	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
+    ************************************************************************/
 
 
     /************************************************************************
@@ -64,8 +63,8 @@ public class SingleIndieObject<Type> : MonoBehaviour where Type : MonoBehaviour
 
 
     /************************************************************************
-         *	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
-         ************************************************************************/
+    *	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
+    ************************************************************************/
 
 
     /************************************************************************
