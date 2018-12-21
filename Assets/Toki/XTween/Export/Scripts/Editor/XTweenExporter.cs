@@ -160,7 +160,7 @@ public class XTweenExporter
         {
             Debug.Log(e.Message);
         }
-        Debug.Log(File.Exists(exportPath));
+        Debug.Log(exportPath + " - " + File.Exists(exportPath));
         return exportFileName;
     }
 
