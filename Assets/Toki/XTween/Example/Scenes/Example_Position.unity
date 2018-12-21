@@ -265,7 +265,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1760871110}
-        m_MethodName: ButtonMoveClickHandler
+        m_MethodName: ButtonClickHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -787,7 +787,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1760871109}
   - component: {fileID: 1760871110}
-  - component: {fileID: 1760871111}
   m_Layer: 0
   m_Name: ContainerGame
   m_TagString: Untagged
@@ -819,23 +818,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1760871108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2459ded4f6d63334d83202491fcd1867, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f350d572215b1848911487a9ebde4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveObj: {fileID: 1808215407}
-  text: {fileID: 1534252418}
---- !u!114 &1760871111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1760871108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8198ec05d4061114c8a63194e2e1943f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 1534252418}
+  textLog: {fileID: 1534252418}
+  target: {fileID: 1808215407}
 --- !u!1 &1808215407
 GameObject:
   m_ObjectHideFlags: 0
