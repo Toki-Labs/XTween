@@ -17,7 +17,7 @@ XTween은 이런 기능이 좋습니다.
 
 Lastest Release
 ---
-Version(Alpha) 0.0.7 - [XTween_0.0.7.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.7.unitypackage)
+Version(Alpha) 0.0.8 - [XTween_0.0.8.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.8.unitypackage)
 
 Implementation
 ---
