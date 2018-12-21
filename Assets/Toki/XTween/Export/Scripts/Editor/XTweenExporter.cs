@@ -43,6 +43,7 @@ public class XTweenExporter
         Instance.UpdateReleasePath();
     }
 
+    [MenuItem("Window/XTween Build #%9",priority=16)]
     public static void ExampleBuild()
     {
         string buildPath = XTweenEditorManager.AbsPath + "/Export/WebGL";

@@ -70,6 +70,6 @@ public class XExampleManager : MonoBehaviour
 
     public void Receiver(string message)
     {
-        this.textLog.text = "Received Message from canvas: " + message;
+        this.textLog.text = message;
     }
 }
