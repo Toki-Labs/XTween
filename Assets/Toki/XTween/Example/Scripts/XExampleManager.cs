@@ -25,6 +25,7 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
+	private string _containerName;
     
 	/************************************************************************
 	*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -47,6 +48,11 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 	************************************************************************/
+	IEnumerator Start()
+	{
+		yield return null;
+		this.textLog.text = this._containerName + "New";
+	}
     
 	/************************************************************************
 	*	 	 	 	 	Coroutine Declaration	 	  			 	 		*
@@ -70,6 +76,6 @@ public class XExampleManager : MonoBehaviour
 
     public void Receiver(string message)
     {
-        this.textLog.text = message;
+        this._containerName = message;
     }
 }
