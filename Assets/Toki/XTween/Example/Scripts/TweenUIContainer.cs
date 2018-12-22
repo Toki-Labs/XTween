@@ -8,37 +8,38 @@
 
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class XExampleManager : MonoBehaviour
+public struct TweenUIData
+{
+	public float time;
+	public EasingType easingType;
+	public EasingInOutType inOutType;
+	public IEasing Easing
+	{
+		get
+		{
+			return EasingData.GetEasing(easingType, inOutType);
+		}
+	}
+}
+
+public class TweenUIContainer : MonoBehaviour
 {
 	/************************************************************************
 	*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
 	************************************************************************/
-	private static XExampleManager _instance;
 	
 	/************************************************************************
 	*	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
 	************************************************************************/
-	public static XExampleManager Instance
-	{
-		get
-		{
-			return _instance;
-		}
-	}
 	
 	/************************************************************************
 	*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
-	private List<Button> _buttonList;
-	private string[] _scenes = new string[]{"Example_Position"};
-	private string _containerName = "Main";
-	private string _currentScene;
-
+    
 	/************************************************************************
 	*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
@@ -46,18 +47,39 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 	************************************************************************/
-	public Text text;
-	public GameObject uiContainer;
-	public GameObject buttonContainer;
-
+	public InputField inputTime;
+	public DropdownEasing dropdownEasing;
+	public DropdownInOut dropdownInOut;
+	public Dropdown dropdownContainer;
+	public Action<string> containerChangeHandler;
+		
 	/************************************************************************
 	*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
 	************************************************************************/
-	public string ContainerName
+	public TweenUIData Data
 	{
 		get
 		{
-			return this._containerName;
+			TweenUIData data = new TweenUIData();
+			data.time = this.InputTimeValue;
+			data.easingType = dropdownEasing.EasingType;
+			data.inOutType = dropdownInOut.InOutType;
+			return data;
+		}
+	}
+
+	private float InputTimeValue
+	{
+		get
+		{
+			string value = this.inputTime.text;
+			float valueFloat;
+			float.TryParse(value, out valueFloat);
+			if( valueFloat <= 0f || valueFloat > 10f )
+			{
+				valueFloat = 1f;
+			}
+			return valueFloat;
 		}
 	}
 	
@@ -68,21 +90,9 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 	************************************************************************/
-	void Awake()
+	void Start()
 	{
-		_instance = this;
-		this._buttonList = new List<Button>( this.buttonContainer.GetComponentsInChildren<Button>() );
-		foreach( var button in this._buttonList )
-		{
-			button.onClick.AddListener( () => this.ButtonSceneLoadClickHandler(button) );
-		}
-	}
-	
-	IEnumerator Start()
-	{
-		yield return null;
-		if( this._containerName != "Main" )
-			this.LoadScene(this._containerName);
+		this.inputTime.text = "1";
 	}
     
 	/************************************************************************
@@ -92,12 +102,6 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Private Method Declaration	 	 	 	 	 		*
 	************************************************************************/
-	private void LoadScene(string scene)
-	{
-		this._currentScene = scene;
-		SceneManager.LoadScene(scene,LoadSceneMode.Additive);
-		this.uiContainer.SetActive(false);
-	}
     
 	/************************************************************************
 	*	 	 	 	 	Protected Method Declaration	 	 	 	 	 	*
@@ -106,25 +110,13 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
 	************************************************************************/
-	public void UnloadScene()
+	public void InputTimeChangeHandler()
 	{
-		if( this._currentScene != null )
-		{
-			SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(this._currentScene));
-			this.uiContainer.SetActive(true);		
-			this._currentScene = null;
-		}
+		this.inputTime.text = this.InputTimeValue.ToString();
 	}
-
-	public void ButtonSceneLoadClickHandler(Button button)
+    
+	public void DropdownContainerChangeHandler()
 	{
-		this._currentScene = this._scenes[this._buttonList.IndexOf(button)];
-		this.LoadScene(this._currentScene);		
+		this.containerChangeHandler(this.dropdownContainer.options[this.dropdownContainer.value].text);
 	}
-
-    public void Receiver(string message)
-    {
-		this.text.text = message;
-        this._containerName = message;
-    }
 }

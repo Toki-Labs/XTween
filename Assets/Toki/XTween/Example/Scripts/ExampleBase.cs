@@ -7,59 +7,44 @@
 /**********************************************************************************/
 
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class XExampleManager : MonoBehaviour
+public class ExampleBase : MonoBehaviour
 {
 	/************************************************************************
 	*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
 	************************************************************************/
-	private static XExampleManager _instance;
 	
 	/************************************************************************
 	*	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
 	************************************************************************/
-	public static XExampleManager Instance
-	{
-		get
-		{
-			return _instance;
-		}
-	}
 	
 	/************************************************************************
 	*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
-	private List<Button> _buttonList;
-	private string[] _scenes = new string[]{"Example_Position"};
-	private string _containerName = "Main";
-	private string _currentScene;
-
+    
 	/************************************************************************
 	*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
+	protected IEnumerator _coroutineStart;
+	protected IAni _tween;
 		
 	/************************************************************************
 	*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 	************************************************************************/
-	public Text text;
-	public GameObject uiContainer;
-	public GameObject buttonContainer;
-
+	public TweenUIContainer uiContainer;
+	public GameObject buttonBack;
+    public GameObject target2D;
+	public GameObject target3D;
+	public GameObject container2D;
+	public GameObject container3D;
+		
 	/************************************************************************
 	*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
 	************************************************************************/
-	public string ContainerName
-	{
-		get
-		{
-			return this._containerName;
-		}
-	}
 	
 	/************************************************************************
 	*	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
@@ -68,35 +53,39 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 	************************************************************************/
-	void Awake()
-	{
-		_instance = this;
-		this._buttonList = new List<Button>( this.buttonContainer.GetComponentsInChildren<Button>() );
-		foreach( var button in this._buttonList )
-		{
-			button.onClick.AddListener( () => this.ButtonSceneLoadClickHandler(button) );
-		}
-	}
-	
 	IEnumerator Start()
 	{
 		yield return null;
-		if( this._containerName != "Main" )
-			this.LoadScene(this._containerName);
+		if( XExampleManager.Instance != null )
+		{
+			if( XExampleManager.Instance.ContainerName == "Main" )
+				this.buttonBack.SetActive(true);
+		}
+		this.uiContainer.containerChangeHandler = this.ChangedContainer;
+		yield return this.StartCoroutine(this.StartExample());
+	}
+
+	protected virtual IEnumerator StartExample()
+	{
+		yield return null;
 	}
     
 	/************************************************************************
 	*	 	 	 	 	Coroutine Declaration	 	  			 	 		*
 	************************************************************************/
+	protected virtual IEnumerator CoroutineStart()
+	{
+		yield return null;
+	}
 	
 	/************************************************************************
 	*	 	 	 	 	Private Method Declaration	 	 	 	 	 		*
 	************************************************************************/
-	private void LoadScene(string scene)
+	private void ChangedContainer(string container)
 	{
-		this._currentScene = scene;
-		SceneManager.LoadScene(scene,LoadSceneMode.Additive);
-		this.uiContainer.SetActive(false);
+		bool is3D = container.Equals("3D");
+		this.container2D.SetActive(!is3D);
+		this.container3D.SetActive(is3D);
 	}
     
 	/************************************************************************
@@ -106,25 +95,19 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
 	************************************************************************/
-	public void UnloadScene()
-	{
-		if( this._currentScene != null )
-		{
-			SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(this._currentScene));
-			this.uiContainer.SetActive(true);		
-			this._currentScene = null;
-		}
-	}
-
-	public void ButtonSceneLoadClickHandler(Button button)
-	{
-		this._currentScene = this._scenes[this._buttonList.IndexOf(button)];
-		this.LoadScene(this._currentScene);		
-	}
-
-    public void Receiver(string message)
+    public void ButtonMoveClickHandler()
     {
-		this.text.text = message;
-        this._containerName = message;
+		if( this._coroutineStart != null )
+		{
+			this.StopCoroutine(this._coroutineStart);
+			this._coroutineStart = null;
+		}
+		this._coroutineStart = this.CoroutineStart();
+		this.StartCoroutine(this._coroutineStart);
     }
+
+	public void ButtonBackClickHandler()
+	{
+		XExampleManager.Instance.UnloadScene();
+	}
 }

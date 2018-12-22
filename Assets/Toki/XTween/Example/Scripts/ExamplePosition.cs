@@ -8,37 +8,26 @@
 
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class XExampleManager : MonoBehaviour
+public class ExamplePosition : ExampleBase
 {
 	/************************************************************************
 	*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
 	************************************************************************/
-	private static XExampleManager _instance;
 	
 	/************************************************************************
 	*	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
 	************************************************************************/
-	public static XExampleManager Instance
-	{
-		get
-		{
-			return _instance;
-		}
-	}
 	
 	/************************************************************************
 	*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
-	private List<Button> _buttonList;
-	private string[] _scenes = new string[]{"Example_Position"};
-	private string _containerName = "Main";
-	private string _currentScene;
-
+	private Vector3 _position2D;
+	private Vector3 _position3D;
+    
 	/************************************************************************
 	*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
@@ -46,20 +35,10 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 	************************************************************************/
-	public Text text;
-	public GameObject uiContainer;
-	public GameObject buttonContainer;
-
+		
 	/************************************************************************
 	*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
 	************************************************************************/
-	public string ContainerName
-	{
-		get
-		{
-			return this._containerName;
-		}
-	}
 	
 	/************************************************************************
 	*	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
@@ -68,36 +47,42 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 	************************************************************************/
-	void Awake()
-	{
-		_instance = this;
-		this._buttonList = new List<Button>( this.buttonContainer.GetComponentsInChildren<Button>() );
-		foreach( var button in this._buttonList )
-		{
-			button.onClick.AddListener( () => this.ButtonSceneLoadClickHandler(button) );
-		}
-	}
-	
-	IEnumerator Start()
+	protected override IEnumerator StartExample()
 	{
 		yield return null;
-		if( this._containerName != "Main" )
-			this.LoadScene(this._containerName);
+		this._position2D = this.target2D.transform.localPosition;
+		this._position3D = this.target3D.transform.localPosition;
 	}
     
 	/************************************************************************
 	*	 	 	 	 	Coroutine Declaration	 	  			 	 		*
 	************************************************************************/
+	protected override IEnumerator CoroutineStart()
+	{
+		if( this._tween != null )
+		{
+			this._tween.Stop();
+			this._tween = null;
+		}
+		this.target2D.transform.localPosition = this._position2D;
+		this.target3D.transform.localPosition = this._position3D;
+		yield return new WaitForSeconds(0.5f);
+		TweenUIData data = this.uiContainer.Data;
+		if( this.container2D.activeSelf )
+		{
+			this._tween = XTween.To(this.target2D, XHash.New.AddX(800f).AddY(300f), data.time, data.Easing);
+			this._tween.Play();
+		}
+		else
+		{
+			this._tween = XTween.To(this.target3D, XHash.New.AddX(200f).AddY(50f).AddZ(-1500f), data.time, data.Easing);
+			this._tween.Play();
+		}
+	}
 	
 	/************************************************************************
 	*	 	 	 	 	Private Method Declaration	 	 	 	 	 		*
 	************************************************************************/
-	private void LoadScene(string scene)
-	{
-		this._currentScene = scene;
-		SceneManager.LoadScene(scene,LoadSceneMode.Additive);
-		this.uiContainer.SetActive(false);
-	}
     
 	/************************************************************************
 	*	 	 	 	 	Protected Method Declaration	 	 	 	 	 	*
@@ -106,25 +91,4 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
 	************************************************************************/
-	public void UnloadScene()
-	{
-		if( this._currentScene != null )
-		{
-			SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(this._currentScene));
-			this.uiContainer.SetActive(true);		
-			this._currentScene = null;
-		}
-	}
-
-	public void ButtonSceneLoadClickHandler(Button button)
-	{
-		this._currentScene = this._scenes[this._buttonList.IndexOf(button)];
-		this.LoadScene(this._currentScene);		
-	}
-
-    public void Receiver(string message)
-    {
-		this.text.text = message;
-        this._containerName = message;
-    }
 }
