@@ -12,7 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ExamplePosition : ExampleBase
+public class ExampleEvent : ExampleBase
 {
 	/************************************************************************
 	*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
@@ -51,8 +51,8 @@ public class ExamplePosition : ExampleBase
 	protected override IEnumerator StartExample()
 	{
 		yield return null;
-		this._position2D = this.target2D.transform.localPosition;
-		this._position3D = this.target3D.transform.localPosition;
+		this._position2D = this.target2D.transform.localScale;
+		this._position3D = this.target3D.transform.localScale;
 	}
     
 	/************************************************************************
@@ -65,18 +65,18 @@ public class ExamplePosition : ExampleBase
 			this._tween.Stop();
 			this._tween = null;
 		}
-		this.target2D.transform.localPosition = this._position2D;
-		this.target3D.transform.localPosition = this._position3D;
+		this.target2D.transform.localScale = this._position2D;
+		this.target3D.transform.localScale = this._position3D;
 		yield return new WaitForSeconds(0.5f);
 		TweenUIData data = this.uiContainer.Data;
 		if( this.container2D.activeSelf )
 		{
-			this._tween = XTween.To(this.target2D, XHash.New.AddX(800f).AddY(300f), data.time, data.Easing);
+			this._tween = XTween.To(this.target2D, XHash.New.AddScaleX(400f).AddScaleY(400f), data.time, data.Easing);
 			this._tween.Play();
 		}
 		else
 		{
-			this._tween = XTween.To(this.target3D, XHash.New.AddX(200f).AddY(50f).AddZ(-1500f), data.time, data.Easing);
+			this._tween = XTween.To(this.target3D, XHash.New.AddScaleX(500f).AddScaleY(500f).AddScaleZ(500f), data.time, data.Easing);
 			this._tween.Play();
 		}
 	}
@@ -97,8 +97,8 @@ public class ExamplePosition : ExampleBase
 		TweenUIData data = this.uiContainer.Data;
 		string easing = data.easingType.ToString() + ".ease" + data.inOutType.ToString();
 		string input = this.uiContainer.is3D ?
-			"XTween<color=#DCDC9D>.To(</color>target3D, XHash.New<color=#DCDC9D>.AddX(</color><color=#A7CE89>800f</color><color=#DCDC9D>).AddY(</color><color=#A7CE89>300f</color><color=#DCDC9D>).AddZ(</color><color=#A7CE89>-1500f</color><color=#DCDC9D>), "+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;" :
-			"XTween<color=#DCDC9D>.To(</color>target2D, XHash.New<color=#DCDC9D>.AddX(</color><color=#A7CE89>800f</color><color=#DCDC9D>).AddY(</color><color=#A7CE89>300f</color><color=#DCDC9D>), "+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;";
+			"XTween<color=#DCDC9D>.To(</color>target2D, XHash.New<color=#DCDC9D>.AddScaleX(</color><color=#A7CE89>500f</color><color=#DCDC9D>).AddSacleY(</color><color=#A7CE89>500f</color><color=#DCDC9D>).AddScaleZ(</color><color=#A7CE89>500f</color><color=#DCDC9D>), "+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;" :
+			"XTween<color=#DCDC9D>.To(</color>target2D, XHash.New<color=#DCDC9D>.AddScaleX(</color><color=#A7CE89>500f</color><color=#DCDC9D>).AddScaleY(</color><color=#A7CE89>500f</color><color=#DCDC9D>), "+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;";
 		this.textCode.text = input;
 	}
 }

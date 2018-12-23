@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -42,6 +43,7 @@ public class BezierUpdater : DisplayUpdater
                 }
                 else
                 {
+                    Debug.Log("Error Point(Out of Index): " + (ip-1) + ", "+ ip);
                     p1 = (cpVec[ip - 1] + cpVec[ip]) * 0.5f;
                     p2 = (cpVec[ip] + cpVec[ip + 1]) * 0.5f;
                 }
@@ -54,7 +56,15 @@ public class BezierUpdater : DisplayUpdater
         }
         return result;
     }
-
+    protected override Action GetUpdateX() { if(_controlPoint.x == null) return base.UpdateX; else return this.UpdateX; }
+	protected override Action GetUpdateY() { if(_controlPoint.y == null) return base.UpdateY; else return this.UpdateY; }
+	protected override Action GetUpdateZ() { if(_controlPoint.z == null) return base.UpdateZ; else return this.UpdateZ; }
+    protected override Action GetUpdateScaleX() { if(_controlPoint.scaleX == null) return base.UpdateScaleX; else return this.UpdateScaleX; }
+	protected override Action GetUpdateScaleY() { if(_controlPoint.scaleY == null) return base.UpdateScaleY; else return this.UpdateScaleY; }
+	protected override Action GetUpdateScaleZ() { if(_controlPoint.scaleZ == null) return base.UpdateScaleZ; else return this.UpdateScaleZ; }
+    protected override Action GetUpdateRotationX() { if(_controlPoint.rotationX == null) return base.UpdateRotationX; else return this.UpdateRotationX; }
+	protected override Action GetUpdateRotationY() { if(_controlPoint.rotationY == null) return base.UpdateRotationY; else return this.UpdateRotationY; }
+	protected override Action GetUpdateRotationZ() { if(_controlPoint.rotationZ == null) return base.UpdateRotationZ; else return this.UpdateRotationZ; }
     protected override void UpdateX()
     {
         _pos.x = this.Calcurate( _controlPoint.x, _sPos.x, _dPos.x );
@@ -65,7 +75,7 @@ public class BezierUpdater : DisplayUpdater
     }
     protected override void UpdateZ()
     {
-        _pos.z = this.Calcurate( _controlPoint.z, _sPos.z, _dPos.z );
+        _pos.z = this.Calcurate( new float[0], _sPos.z, _dPos.z );
     }
     protected override void UpdateScaleX()
     {

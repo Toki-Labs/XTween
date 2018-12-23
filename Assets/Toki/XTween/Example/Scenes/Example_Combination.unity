@@ -2371,7 +2371,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1760871110}
+      - m_Target: {fileID: 0}
         m_MethodName: ButtonBackClickHandler
         m_Mode: 1
         m_Arguments:
@@ -3431,6 +3431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe988fb41389ab648b8576194c74d343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultEasingType: 5
   inputTime: {fileID: 981784222}
   dropdownEasing: {fileID: 1140342101}
   dropdownInOut: {fileID: 658792435}
@@ -4063,7 +4064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.654902, g: 0.8078432, b: 0.5372549, a: 1}
+  m_Color: {r: 0.2627451, g: 0.78823537, b: 0.6901961, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4606,7 +4607,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1760871108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c90906490589e34bb1ec8e8de1c8dd7, type: 3}
+  m_Script: {fileID: 11500000, guid: 675e23edd5b28074fbd0a5c5014293e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   uiContainer: {fileID: 1285471887}
@@ -5004,8 +5005,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1028, y: -1117}
-  m_SizeDelta: {x: 1779, y: 100}
+  m_AnchoredPosition: {x: 1028, y: -953}
+  m_SizeDelta: {x: 1779, y: 270}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1902459453
 MonoBehaviour:

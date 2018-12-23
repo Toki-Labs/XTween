@@ -53,6 +53,17 @@ public class ExampleBase : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 	************************************************************************/
+	void Awake()
+	{
+		this.uiContainer.uiChangeHandler = this.UIChangeHandler;
+		this.Initialize();
+	}
+
+	protected virtual void Initialize()
+	{
+
+	}
+
 	IEnumerator Start()
 	{
 		yield return null;
@@ -109,5 +120,10 @@ public class ExampleBase : MonoBehaviour
 	public void ButtonBackClickHandler()
 	{
 		XExampleManager.Instance.UnloadScene();
+	}
+
+	public virtual void UIChangeHandler()
+	{
+
 	}
 }

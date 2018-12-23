@@ -163,7 +163,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
             { 
 			    changedPos = true;
 			    x = _finish.isRelativeX ? x + _finish.x : _finish.x;
-                this._updateList.Add(UpdateX);
+                this._updateList.Add(GetUpdateX());
             }
 		}
 		if( _finish.containY )
@@ -172,7 +172,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
             {
 			    changedPos = true;;
 			    y = _finish.isRelativeY ? y + _finish.y : _finish.y;
-                this._updateList.Add(UpdateY);
+                this._updateList.Add(GetUpdateY());
             }
 		}
 		if( _finish.containZ )
@@ -181,7 +181,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
             {
 			    changedPos = true;
 			    z = _finish.isRelativeZ ? z + _finish.z : _finish.z;
-                this._updateList.Add(UpdateZ);
+                this._updateList.Add(GetUpdateZ());
             }
 		}
 		float scaleX = _sca.x;
@@ -193,7 +193,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
             {
 			    changedSca = true;
 			    scaleX = _finish.isRelativeScaleX ? scaleX + _finish.scaleX : _finish.scaleX;
-                this._updateList.Add(UpdateScaleX);
+                this._updateList.Add(GetUpdateScaleX());
             }
 		}
 		if( _finish.containScaleY )
@@ -202,7 +202,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
             {
 			    changedSca = true;
 			    scaleY = _finish.isRelativeScaleY ? scaleY + _finish.scaleY : _finish.scaleY;
-                this._updateList.Add(UpdateScaleY);
+                this._updateList.Add(GetUpdateScaleY());
             }
 		}
 		if( _finish.containScaleZ )
@@ -211,7 +211,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
             {
 			    changedSca = true;
 			    scaleZ = _finish.isRelativeScaleZ ? scaleZ + _finish.scaleZ : _finish.scaleZ;
-                this._updateList.Add(UpdateScaleZ);
+                this._updateList.Add(GetUpdateScaleZ());
             }
 		}
 		float rotationX = _rot.x;
@@ -223,7 +223,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
             {
 			    changedRot = true;
 				rotationX = _finish.isRelativeRotateX ? rotationX + _finish.rotationX : this.GetRotation( _rot.x, _finish.rotationX, _finish.rotateXRight, _finish.rotateXCount );
-                this._updateList.Add(UpdateRotationX);
+                this._updateList.Add(GetUpdateRotationX());
             }
 		}
 		if( _finish.containRotationY )
@@ -232,7 +232,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
             {
 			    changedRot = true;
 				rotationY = _finish.isRelativeRotateY ? rotationY + _finish.rotationY : this.GetRotation( _rot.y, _finish.rotationY, _finish.rotateYRight, _finish.rotateYCount );
-                this._updateList.Add(UpdateRotationY);
+                this._updateList.Add(GetUpdateRotationY());
             }
 		}
 		if( _finish.containRotationZ )
@@ -241,7 +241,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
             {
 			    changedRot = true;
 				rotationZ = _finish.isRelativeRotateZ ? rotationZ + _finish.rotationZ : this.GetRotation( _rot.z, _finish.rotationZ, _finish.rotateZRight, _finish.rotateZCount );
-                this._updateList.Add(UpdateRotationZ);
+                this._updateList.Add(GetUpdateRotationZ());
             }
 		}
 
@@ -404,6 +404,16 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
         this._updateList = null;
         this._transform = null;
     }
+
+	protected virtual Action GetUpdateX() { return this.UpdateX; }
+	protected virtual Action GetUpdateY() { return this.UpdateY; }
+	protected virtual Action GetUpdateZ() { return this.UpdateZ; }
+	protected virtual Action GetUpdateScaleX() { return this.UpdateScaleX; }
+	protected virtual Action GetUpdateScaleY() { return this.UpdateScaleY; }
+	protected virtual Action GetUpdateScaleZ() { return this.UpdateScaleZ; }
+	protected virtual Action GetUpdateRotationX() { return this.UpdateRotationX; }
+	protected virtual Action GetUpdateRotationY() { return this.UpdateRotationY; }
+	protected virtual Action GetUpdateRotationZ() { return this.UpdateRotationZ; }
 
     protected virtual void UpdateX()
 	{

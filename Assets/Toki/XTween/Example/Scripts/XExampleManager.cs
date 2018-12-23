@@ -35,7 +35,12 @@ public class XExampleManager : MonoBehaviour
 	*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
 	private List<Button> _buttonList;
-	private string[] _scenes = new string[]{"Example_Position"};
+	private string[] _scenes = new string[]
+	{
+		"Example_Position", "Example_Scale", "Example_Angle",
+		"Example_Combination", "Example_Bezier", "Example_Value",
+		"Example_Event", "Example_Serial", "Example_Parallel",
+	};
 	private string _containerName = "Main";
 	private string _currentScene;
 

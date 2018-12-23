@@ -58,7 +58,6 @@ public class DropdownEasing : MonoBehaviour
 	{
 		this.dropdown.ClearOptions();
 		this.dropdown.AddOptions(EasingData.EasingList);
-		this.dropdown.value = 5;
 	}
     
 	/************************************************************************

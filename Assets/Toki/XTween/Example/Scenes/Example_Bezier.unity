@@ -2141,7 +2141,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f).AddZ(100f)).Play();
+  m_Text: <color=#43C9B0>XPoint</color> cPoint = XPoint.New<color=#DCDC9D>.AddX(</color><color=#A7CE89>-1000f,550f</color><color=#DCDC9D>).AddY(</color><color=#A7CE89>550f,300f</color><color=#DCDC9D>)</color>
 --- !u!222 &965327198
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2371,7 +2371,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1760871110}
+      - m_Target: {fileID: 0}
         m_MethodName: ButtonBackClickHandler
         m_Mode: 1
         m_Arguments:
@@ -3431,6 +3431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe988fb41389ab648b8576194c74d343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultEasingType: 5
   inputTime: {fileID: 981784222}
   dropdownEasing: {fileID: 1140342101}
   dropdownInOut: {fileID: 658792435}
@@ -4072,7 +4073,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 32
+    m_FontSize: 38
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
@@ -4606,7 +4607,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1760871108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c90906490589e34bb1ec8e8de1c8dd7, type: 3}
+  m_Script: {fileID: 11500000, guid: 77e4ff17c9dcbd043b993ebdcbf822c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   uiContainer: {fileID: 1285471887}
@@ -5004,8 +5005,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1028, y: -1117}
-  m_SizeDelta: {x: 1779, y: 100}
+  m_AnchoredPosition: {x: 1028, y: -1035}
+  m_SizeDelta: {x: 1779, y: 190}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1902459453
 MonoBehaviour:

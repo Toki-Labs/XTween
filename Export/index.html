@@ -1,43 +1,231 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en-US">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | XTeen.git</title>
-    <script src="WebGL/Build/UnityLoader.js"></script>
-    <script>
-      var dic = {};
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://toki-labs.github.io/XTween/assets/css/style.css?v=bc0d43733929ab821f9424ef3fea1c1e5f417f23">
 
-      var containerName = "Main";
-      var gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
-      dic[containerName] = gameInstance;
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>XTween - Tweener for Unity | XTween</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="XTween - Tweener for Unity" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tweener for Unity" />
+<meta property="og:description" content="Tweener for Unity" />
+<link rel="canonical" href="https://toki-labs.github.io/XTween/" />
+<meta property="og:url" content="https://toki-labs.github.io/XTween/" />
+<meta property="og:site_name" content="XTween" />
+<script type="application/ld+json">
+{"@type":"WebSite","headline":"XTween - Tweener for Unity","url":"https://toki-labs.github.io/XTween/","name":"XTween","description":"Tweener for Unity","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<script src="WebGL/Build/UnityLoader.js"></script>
+<script>
+  var dic = {};
 
-      containerName = "Example_Position";
-      gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
-      dic[containerName] = gameInstance;
+  var containerName = "Main";
+  var gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
+  dic[containerName] = gameInstance;
 
-      function UnityProgress(instance, progress) 
+  containerName = "Example_Position";
+  gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
+  dic[containerName] = gameInstance;
+
+  containerName = "Example_Scale";
+  gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
+  dic[containerName] = gameInstance;
+
+  containerName = "Example_Angle";
+  gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
+  dic[containerName] = gameInstance;
+
+  containerName = "Example_Combination";
+  gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
+  dic[containerName] = gameInstance;
+
+  containerName = "Example_Bezier";
+  gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
+  dic[containerName] = gameInstance;
+
+  containerName = "Example_Value";
+  gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
+  dic[containerName] = gameInstance;
+
+  containerName = "Example_Event";
+  gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
+  dic[containerName] = gameInstance;
+
+  containerName = "Example_Serial";
+  gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
+  dic[containerName] = gameInstance;
+
+  containerName = "Example_Parallel";
+  gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
+  dic[containerName] = gameInstance;
+
+  function UnityProgress(instance, progress) 
+  {
+    if (progress == 1)
+    {
+      var cName;
+      for( var key in dic )
       {
-        if (progress == 1)
+        var instanceDic = dic[key];
+        if( instance == instanceDic )
         {
-          var cName;
-          for( var key in dic )
-          {
-            var instanceDic = dic[key];
-            if( instance == instanceDic )
-            {
-              cName = key;
-              break;
-            }
-          }
-          instance.SendMessage('ContainerGameMain','Receiver',cName);
+          cName = key;
+          break;
         }
       }
-    </script>
+      instance.SendMessage('ContainerGameMain','Receiver',cName);
+    }
+  }
+</script>
   </head>
+
   <body>
-    <div id="Main" style="width: 800px; height: 400px; margin: auto"></div>
-    <br/>
-    <div id="Example_Position" style="width: 800px; height: 400px; margin: auto"></div>
+
+    <header>
+      <div class="container">
+        <h1>XTween</h1>
+        <h2>Tweener for Unity</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/Toki-Labs/XTween" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="xtween---tweener-for-unity">XTween - Tweener for Unity</h1>
+<p>Created by Lee Dong-Myung(Toki-Labs)</p>
+
+<h2 id="xtween란">XTween란?</h2>
+<p>유니티에서 코드로 애니매이션 트윈을 구현하기 위한 라이브러리로, 강력한 퍼포먼스와 쉬운 사용방법으로 원하는 결과물을 쉽게 구현가능하게 합니다.</p>
+
+<p>XTween은?</p>
+<ol>
+  <li>MonoBehaviour를 객체마다 생성시키지 않아 가볍다.</li>
+  <li>몇줄의 코드로 Tween을 구현가능하다.</li>
+  <li>이벤트 핸들링이 손쉽다.</li>
+  <li>강력한 퍼포먼스로 메모리와 CPU사용량이 적다.</li>
+  <li>에디터 모드에서 사용은 물론, 모든 플랫폼에서 사용가능하다.</li>
+</ol>
+
+<p>예제는 <a href="http://toki-labs.com/xtween">XTween Example</a>에서 확인하실 수 있습니다.</p>
+
+<h2 id="lastest-release">Lastest Release</h2>
+<p>Version(Alpha) 0.0.19 - <a href="https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.19.unitypackage">XTween_0.0.19.unitypackage</a></p>
+
+<h2 id="implementation">Implementation</h2>
+<div id="Main" style="width: 1000px; height: 500px; margin: auto"></div>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="position">Position</h2>
+<div id="Example_Position" style="width: 1000px; height: 500px; margin: auto"></div>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddZ</span><span class="p">(</span><span class="m">100f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+  
+<span class="c1">//or</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="scale">Scale</h2>
+<div id="Example_Scale" style="width: 1000px; height: 500px; margin: auto"></div>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">1f</span><span class="p">).</span><span class="nf">AddScaleY</span><span class="p">(</span><span class="m">1.5f</span><span class="p">).</span><span class="nf">AddScaleZ</span><span class="p">(</span><span class="m">0.5f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+
+<span class="c1">//or</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Scale</span><span class="p">(</span><span class="m">1f</span><span class="p">,</span><span class="m">1.5f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="rotation">Rotation</h2>
+<div id="Example_Angle" style="width: 1000px; height: 500px; margin: auto"></div>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRotationZ</span><span class="p">(</span><span class="m">600f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+
+<span class="c1">//or</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Rotation</span><span class="p">(</span><span class="m">60f</span><span class="p">,-</span><span class="m">180f</span><span class="p">,-</span><span class="m">45f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="combination">Combination</h2>
+<div id="Example_Combination" style="width: 1000px; height: 500px; margin: auto"></div>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddScale</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddRotationZ</span><span class="p">(</span><span class="m">180f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="bezier">Bezier</h2>
+<div id="Example_Bezier" style="width: 1000px; height: 500px; margin: auto"></div>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XPoint</span> <span class="n">controlPoint</span> <span class="p">=</span> <span class="n">XPoint</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">1000</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(-</span><span class="m">500f</span><span class="p">);</span>
+<span class="n">XHash</span> <span class="n">end</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">0f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">0f</span><span class="p">);</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">BezierTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">controlPoint</span><span class="p">,</span> <span class="n">end</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="value">Value</h2>
+<div id="Example_Value" style="width: 1000px; height: 500px; margin: auto"></div>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">XTween</span><span class="p">.</span><span class="nf">Tween</span><span class="p">(</span><span class="n">XObjectHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"value"</span><span class="p">,</span> <span class="m">10f</span><span class="p">,</span> <span class="m">200f</span><span class="p">),</span> <span class="n">UpdateValue</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nf">UpdateValue</span><span class="p">(</span><span class="n">XObjectHash</span> <span class="n">hash</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="n">hash</span><span class="p">.</span><span class="nf">Now</span><span class="p">(</span><span class="s">"value"</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="event-handling">Event Handling</h2>
+<div id="Example_Event" style="width: 1000px; height: 500px; margin: auto"></div>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">IAni</span> <span class="n">ani</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">200f</span><span class="p">));</span>
+  <span class="n">ani</span><span class="p">.</span><span class="n">onComplete</span> <span class="p">=</span> <span class="n">Executor</span><span class="p">&lt;</span><span class="kt">float</span><span class="p">&gt;.</span><span class="nf">New</span><span class="p">(</span><span class="n">OnTweenEnd</span><span class="p">,</span> <span class="m">10f</span><span class="p">);</span>
+  <span class="n">ani</span><span class="p">.</span><span class="nf">Play</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">void</span> <span class="nf">OnTweenEnd</span><span class="p">(</span><span class="kt">float</span> <span class="k">value</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="k">value</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="serial">Serial</h2>
+<div id="Example_Serial" style="width: 1000px; height: 500px; margin: auto"></div>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">endPosition</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">1000f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">300f</span><span class="p">);</span>
+<span class="n">XHash</span> <span class="n">endScale</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddScaleY</span><span class="p">(</span><span class="m">200f</span><span class="p">);</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">SerialTweens</span>
+<span class="p">(</span>	
+	<span class="k">false</span><span class="p">,</span> 
+	<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">endPosition</span><span class="p">),</span> 
+	<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">endScale</span><span class="p">)</span>
+<span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="parallel">Parallel</h2>
+<div id="Example_Parallel" style="width: 1000px; height: 500px; margin: auto"></div>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">endPosition</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">1000f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">300f</span><span class="p">);</span>
+<span class="n">XHash</span> <span class="n">endScale</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddScaleY</span><span class="p">(</span><span class="m">200f</span><span class="p">);</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">ParallelTweens</span>
+<span class="p">(</span>	
+	<span class="k">false</span><span class="p">,</span> 
+	<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">endPosition</span><span class="p">),</span> 
+	<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">endScale</span><span class="p">)</span>
+<span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="author-info">Author Info</h2>
+<p>Lee Dong-Myung(Tok-Labs) is a software developer in Korea.</p>
+
+<p>Blog: http://blog.toki-labs.com (Korean)
+Mail: dongmyung.5152@gmail.com</p>
+
+<h2 id="license">License</h2>
+<p>This library is under the MIT License.</p>
+
+<p>Some code is borrowed from BetweenAS3.</p>
+
+      </section>
+    </div>
+
+    
   </body>
 </html>

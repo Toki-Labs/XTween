@@ -47,11 +47,13 @@ public class TweenUIContainer : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 	************************************************************************/
+	public int defaultEasingType = (int)EasingType.Elastic;
 	public InputField inputTime;
 	public DropdownEasing dropdownEasing;
 	public DropdownInOut dropdownInOut;
 	public Dropdown dropdownContainer;
 	public Action<string> containerChangeHandler;
+	public Action uiChangeHandler;
 		
 	/************************************************************************
 	*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
@@ -82,6 +84,14 @@ public class TweenUIContainer : MonoBehaviour
 			return valueFloat;
 		}
 	}
+
+	public bool is3D
+	{
+		get
+		{
+			return this.dropdownContainer.value == 0;
+		}
+	}
 	
 	/************************************************************************
 	*	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
@@ -93,6 +103,12 @@ public class TweenUIContainer : MonoBehaviour
 	void Start()
 	{
 		this.inputTime.text = "1";
+		this.inputTime.onValueChange.AddListener( x=> this.uiChangeHandler() );
+		this.dropdownEasing.dropdown.value = this.defaultEasingType;
+		this.dropdownEasing.dropdown.onValueChanged.AddListener( x => this.uiChangeHandler() );
+		this.dropdownInOut.dropdown.onValueChanged.AddListener( x => this.uiChangeHandler() );
+		this.dropdownContainer.onValueChanged.AddListener( x => this.uiChangeHandler() );
+		this.uiChangeHandler();
 	}
     
 	/************************************************************************
