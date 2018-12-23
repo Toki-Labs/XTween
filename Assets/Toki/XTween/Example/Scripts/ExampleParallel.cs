@@ -12,7 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ExampleEvent : ExampleBase
+public class ExampleParallel : ExampleBase
 {
 	/************************************************************************
 	*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
@@ -26,6 +26,7 @@ public class ExampleEvent : ExampleBase
 	*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
 	private Vector3 _position3D;
+	private Vector3 _position3DSecond;
     
 	/************************************************************************
 	*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -35,7 +36,7 @@ public class ExampleEvent : ExampleBase
 	*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 	************************************************************************/
 	public Text textCode;
-	public Text textLog;
+	public GameObject target3DSecond;
 		
 	/************************************************************************
 	*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
@@ -48,11 +49,18 @@ public class ExampleEvent : ExampleBase
 	/************************************************************************
 	*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 	************************************************************************/
+	protected override void Initialize()
+	{
+		this.uiContainer.defaultTime = 0.6f;
+		this.uiContainer.defaultEasingType = (int)EasingType.Expo;
+		this.uiContainer.dropdownContainer.gameObject.SetActive(false);
+	}
+
 	protected override IEnumerator StartExample()
 	{
 		yield return null;
-		this.uiContainer.dropdownContainer.gameObject.SetActive(false);
 		this._position3D = this.target3D.transform.localPosition;
+		this._position3DSecond = this.target3DSecond.transform.localPosition;
 	}
     
 	/************************************************************************
@@ -66,18 +74,16 @@ public class ExampleEvent : ExampleBase
 			this._tween = null;
 		}
 		this.target3D.transform.localPosition = this._position3D;
-		this.textLog.text = "Tween Ready";
+		this.target3DSecond.transform.localPosition = this._position3DSecond;
 		yield return new WaitForSeconds(0.5f);
 		TweenUIData data = this.uiContainer.Data;
-		this.textLog.text = "Tweening...";
-		this._tween = XTween.To(this.target3D, XHash.New.AddX(200f).AddY(50f).AddZ(-1500f), data.time, data.Easing);
-		this._tween.onComplete = Executor<string>.New(TweenComplete, "Tween Complete!");
+		this._tween = XTween.ParallelTweens
+		(
+			false,
+			XTween.To(this.target3DSecond, XHash.New.AddX(-940f).AddY(-160f).AddZ(-500f), data.time, data.Easing),
+			XTween.To(this.target3D, XHash.New.AddX(200f).AddY(70f).AddZ(-1500f), data.time, data.Easing)
+		);
 		this._tween.Play();
-	}
-
-	void TweenComplete(string message)
-	{
-		textLog.text = message;
 	}
 	
 	/************************************************************************
@@ -96,14 +102,12 @@ public class ExampleEvent : ExampleBase
 		TweenUIData data = this.uiContainer.Data;
 		string easing = data.easingType.ToString() + ".ease" + data.inOutType.ToString();
 		string input = 
-			"<color=#43C9B0>IAni</color> tween = XTween<color=#DCDC9D>.To(</color>target2D, XHash.New<color=#DCDC9D>.AddX(</color><color=#A7CE89>800f</color><color=#DCDC9D>).AddY(</color><color=#A7CE89>300f</color><color=#DCDC9D>), "+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>)</color>;\n" +
-			"tween.onComplete = Executor<<color=#3F9CD6>string</color>><color=#DCDC9D>.New(</color>TweenComplete, <color=#CE9178>\"Tween Complete!\"</color>);\n" +
-			"tween<color=#DCDC9D>.onPlay();</color>\n" +
-			"\n" +
-			"<color=#3F9CD6>void</color> <color=#DCDC9D>TweenComplete(</color><color=#3F9CD6>string</color> message)\n" +
-			"{\n" +
-			"\t\ttextLog.text = message;\n" +
-			"}";
+		"XTween.ParallelTweens\n" +
+		"(\n" +
+		"\t\t<color=#3F9CD6>false</color>,\n" +
+		"\t\tXTween<color=#DCDC9D>.To(</color>target3DSecond, XHash.New<color=#DCDC9D>.AddX(</color><color=#A7CE89>-940f</color><color=#DCDC9D>).AddY(</color><color=#A7CE89>-160f</color><color=#DCDC9D>).AddZ(</color><color=#A7CE89>-500f</color><color=#DCDC9D>)</color>, <color=#A7CE89>"+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>)</color>,\n" +
+		"\t\tXTween<color=#DCDC9D>.To(</color>target3D, XHash.New<color=#DCDC9D>.AddX(</color><color=#A7CE89>200f</color><color=#DCDC9D>).AddY(</color><color=#A7CE89>70f</color><color=#DCDC9D>).AddZ(</color><color=#A7CE89>-1500f</color><color=#DCDC9D>)</color>, <color=#A7CE89>"+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>)</color>\n" +
+		")<color=#DCDC9D>.Play()</color>;";
 		this.textCode.text = input;
 	}
 }

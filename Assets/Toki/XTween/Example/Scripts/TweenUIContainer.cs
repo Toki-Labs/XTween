@@ -48,6 +48,7 @@ public class TweenUIContainer : MonoBehaviour
 	*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 	************************************************************************/
 	public int defaultEasingType = (int)EasingType.Elastic;
+	public float defaultTime = 1f;
 	public InputField inputTime;
 	public DropdownEasing dropdownEasing;
 	public DropdownInOut dropdownInOut;
@@ -102,7 +103,7 @@ public class TweenUIContainer : MonoBehaviour
 	************************************************************************/
 	void Start()
 	{
-		this.inputTime.text = "1";
+		this.inputTime.text = this.defaultTime.ToString();
 		this.inputTime.onValueChange.AddListener( x=> this.uiChangeHandler() );
 		this.dropdownEasing.dropdown.value = this.defaultEasingType;
 		this.dropdownEasing.dropdown.onValueChanged.AddListener( x => this.uiChangeHandler() );

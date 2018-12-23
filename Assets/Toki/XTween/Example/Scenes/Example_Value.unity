@@ -367,7 +367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &164391140
 Transform:
   m_ObjectHideFlags: 0
@@ -604,7 +604,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1760871111}
+      - m_Target: {fileID: 1760871110}
         m_MethodName: ButtonMoveClickHandler
         m_Mode: 1
         m_Arguments:
@@ -2130,7 +2130,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 34
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -2371,7 +2371,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1760871110}
         m_MethodName: ButtonBackClickHandler
         m_Mode: 1
         m_Arguments:
@@ -3431,6 +3431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe988fb41389ab648b8576194c74d343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultEasingType: 5
   inputTime: {fileID: 981784222}
   dropdownEasing: {fileID: 1140342101}
   dropdownInOut: {fileID: 658792435}
@@ -4331,7 +4332,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1648953051
 Transform:
   m_ObjectHideFlags: 0
@@ -4574,7 +4575,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1760871109}
-  - component: {fileID: 1760871111}
+  - component: {fileID: 1760871110}
   m_Layer: 0
   m_Name: ContainerGame
   m_TagString: Untagged
@@ -4598,7 +4599,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1760871111
+--- !u!114 &1760871110
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4606,7 +4607,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1760871108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 427cb82fc409d644e9e8f960aa936a20, type: 3}
+  m_Script: {fileID: 11500000, guid: 26328eccc515b5e49967c7b799b2d977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   uiContainer: {fileID: 1285471887}
@@ -5004,8 +5005,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1028, y: -1117}
-  m_SizeDelta: {x: 1779, y: 100}
+  m_AnchoredPosition: {x: 1028, y: -691}
+  m_SizeDelta: {x: 1779, y: 510}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1902459453
 MonoBehaviour:
@@ -5255,8 +5256,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2066322234}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 1}
+  m_LocalPosition: {x: -955, y: 0, z: 0}
+  m_LocalScale: {x: 300, y: 300, z: 1}
   m_Children: []
   m_Father: {fileID: 1648953051}
   m_RootOrder: 1

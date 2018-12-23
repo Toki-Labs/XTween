@@ -129,7 +129,6 @@ public class XExampleManager : MonoBehaviour
 
     public void Receiver(string message)
     {
-		this.text.text = message;
         this._containerName = message;
     }
 }

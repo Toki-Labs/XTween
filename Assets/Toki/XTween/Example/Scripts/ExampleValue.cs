@@ -25,8 +25,8 @@ public class ExampleValue : ExampleBase
 	/************************************************************************
 	*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
-	private Vector3 _position2D;
-	private Vector3 _position3D;
+	private SpriteRenderer sprite;
+	private Color _color;
     
 	/************************************************************************
 	*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -48,11 +48,18 @@ public class ExampleValue : ExampleBase
 	/************************************************************************
 	*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 	************************************************************************/
+	protected override void Initialize()
+	{
+		this.sprite = this.target2D.GetComponent<SpriteRenderer>();
+		this.uiContainer.defaultEasingType = (int)EasingType.Cubic;
+	}
+
 	protected override IEnumerator StartExample()
 	{
 		yield return null;
-		this._position2D = this.target2D.transform.localScale;
-		this._position3D = this.target3D.transform.localScale;
+		this.uiContainer.dropdownContainer.value = 1;
+		this.uiContainer.dropdownContainer.gameObject.SetActive(false);
+		this._color = this.sprite.color;
 	}
     
 	/************************************************************************
@@ -65,20 +72,20 @@ public class ExampleValue : ExampleBase
 			this._tween.Stop();
 			this._tween = null;
 		}
-		this.target2D.transform.localScale = this._position2D;
-		this.target3D.transform.localScale = this._position3D;
+		this.sprite.color = this._color;
 		yield return new WaitForSeconds(0.5f);
 		TweenUIData data = this.uiContainer.Data;
-		if( this.container2D.activeSelf )
-		{
-			this._tween = XTween.To(this.target2D, XHash.New.AddScaleX(400f).AddScaleY(400f), data.time, data.Easing);
-			this._tween.Play();
-		}
-		else
-		{
-			this._tween = XTween.To(this.target3D, XHash.New.AddScaleX(500f).AddScaleY(500f).AddScaleZ(500f), data.time, data.Easing);
-			this._tween.Play();
-		}
+		XObjectHash hash = XObjectHash.New.Add("r",1f,0.56f).Add("g",1f,0.83f);
+		this._tween = XTween.Tween(hash,UpdateColor,data.time,data.Easing);
+		this._tween.Play();
+	}
+
+	void UpdateColor(XObjectHash hash)
+	{
+		Color color = sprite.color;
+		color.r = hash.Now("r");
+		color.g = hash.Now("g");
+		sprite.color = color;
 	}
 	
 	/************************************************************************
@@ -96,9 +103,17 @@ public class ExampleValue : ExampleBase
 	{
 		TweenUIData data = this.uiContainer.Data;
 		string easing = data.easingType.ToString() + ".ease" + data.inOutType.ToString();
-		string input = this.uiContainer.is3D ?
-			"XTween<color=#DCDC9D>.To(</color>target2D, XHash.New<color=#DCDC9D>.AddScaleX(</color><color=#A7CE89>500f</color><color=#DCDC9D>).AddSacleY(</color><color=#A7CE89>500f</color><color=#DCDC9D>).AddScaleZ(</color><color=#A7CE89>500f</color><color=#DCDC9D>), "+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;" :
-			"XTween<color=#DCDC9D>.To(</color>target2D, XHash.New<color=#DCDC9D>.AddScaleX(</color><color=#A7CE89>500f</color><color=#DCDC9D>).AddScaleY(</color><color=#A7CE89>500f</color><color=#DCDC9D>), "+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;";
+		string input = 
+			"<color=#43C9B0>XObjectHash</color> hash = XObjectHash.New<color=#A7CE89>.Add(</color><color=#CE9178>\"r\"</color>,<color=#A7CE89>1f</color>,<color=#A7CE89>0.56f</color><color=#A7CE89>).Add(</color><color=#CE9178>\"g\"</color>,<color=#A7CE89>1f</color>,<color=#A7CE89>0.83f</color><color=#A7CE89>);</color>\n" +
+			"XTween<color=#A7CE89>.Tween(</color>hash, UpdateColor, <color=#A7CE89>"+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;\n" +
+			"\n" +
+			"<color=#3F9CD6>void</color> <color=#A7CE89>UpdateColor(</color><color=#43C9B0>XObjectHash</color> hash<color=#A7CE89>)\n" +
+			"{</color>\n" +
+			"\t\t<color=#43C9B0>Color</color> color = sprite.color;\n" +
+			"\t\tcolor.r = hash<color=#A7CE89>.Now(</color><color=#CE9178>\"r\"</color>);\n" +
+			"\t\tcolor.g = hash<color=#A7CE89>.Now(</color><color=#CE9178>\"g\"</color>);\n" +
+			"\t\tsprite.color = color;\n" +
+			"<color=#A7CE89>}</color>";
 		this.textCode.text = input;
 	}
 }
