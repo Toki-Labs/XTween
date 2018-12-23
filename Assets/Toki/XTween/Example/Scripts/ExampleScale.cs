@@ -76,7 +76,7 @@ public class ExampleScale : ExampleBase
 		}
 		else
 		{
-			this._tween = XTween.To(this.target3D, XHash.New.AddScaleX(500f).AddScaleY(500f).AddScaleZ(500f), data.time, data.Easing);
+			this._tween = XTween.To(this.target3D, XHash.New.AddScaleX(550f).AddScaleY(550f).AddScaleZ(550f), data.time, data.Easing);
 			this._tween.Play();
 		}
 	}
@@ -97,7 +97,7 @@ public class ExampleScale : ExampleBase
 		TweenUIData data = this.uiContainer.Data;
 		string easing = data.easingType.ToString() + ".ease" + data.inOutType.ToString();
 		string input = this.uiContainer.is3D ?
-			"XTween<color=#DCDC9D>.To(</color>target3D, XHash.New<color=#DCDC9D>.AddScaleX(</color><color=#A7CE89>500f</color><color=#DCDC9D>).AddSacleY(</color><color=#A7CE89>500f</color><color=#DCDC9D>).AddScaleZ(</color><color=#A7CE89>500f</color><color=#DCDC9D>), "+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;" :
+			"XTween<color=#DCDC9D>.To(</color>target3D, XHash.New<color=#DCDC9D>.AddScaleX(</color><color=#A7CE89>550f</color><color=#DCDC9D>).AddSacleY(</color><color=#A7CE89>550f</color><color=#DCDC9D>).AddScaleZ(</color><color=#A7CE89>550f</color><color=#DCDC9D>), "+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;" :
 			"XTween<color=#DCDC9D>.To(</color>target2D, XHash.New<color=#DCDC9D>.AddScaleX(</color><color=#A7CE89>500f</color><color=#DCDC9D>).AddScaleY(</color><color=#A7CE89>500f</color><color=#DCDC9D>), "+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;";
 		this.textCode.text = input;
 	}
