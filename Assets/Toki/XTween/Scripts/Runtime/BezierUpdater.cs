@@ -29,7 +29,7 @@ public class BezierUpdater : DisplayUpdater
             }
             else
             {
-                ip = (int)(_factor * l);
+                ip = (int)(_factor * l) >> 0;
                 it = (_factor - (ip * (1 / l))) * l;
                 if (ip == 0)
                 {
@@ -43,9 +43,16 @@ public class BezierUpdater : DisplayUpdater
                 }
                 else
                 {
-                    Debug.Log("Error Point(Out of Index): " + (ip-1) + ", "+ ip);
-                    p1 = (cpVec[ip - 1] + cpVec[ip]) * 0.5f;
-                    p2 = (cpVec[ip] + cpVec[ip + 1]) * 0.5f;
+                    if( ip >= l )
+                    {
+                        ip = (int)l - 1;
+                        return source + _factor * (2 * _invert * (cpVec[ip] - source) + _factor * (finish - source));
+                    }
+                    else
+                    {
+                        p1 = (cpVec[ip - 1] + cpVec[ip]) * 0.5f;
+                        p2 = (cpVec[ip] + cpVec[ip + 1]) * 0.5f;
+                    }
                 }
                 result = p1 + it * (2 * (1 - it) * (cpVec[ip] - p1) + it * (p2 - p1));
             }
@@ -75,7 +82,7 @@ public class BezierUpdater : DisplayUpdater
     }
     protected override void UpdateZ()
     {
-        _pos.z = this.Calcurate( new float[0], _sPos.z, _dPos.z );
+        _pos.z = this.Calcurate( _controlPoint.z, _sPos.z, _dPos.z );
     }
     protected override void UpdateScaleX()
     {
