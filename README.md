@@ -17,7 +17,7 @@ XTween은?
 
 Lastest Release
 ---
-Version(Alpha) 0.0.22 - [XTween_0.0.22.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.22.unitypackage)
+Version(Alpha) 0.0.23 - [XTween_0.0.23.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.23.unitypackage)
 
 Implementation
 ---
