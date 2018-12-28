@@ -79,6 +79,10 @@ void UpdateValue(XObjectHash hash)
 {
   Debug.Log(hash.Now("value"));
 }
+
+//or
+XObjectHash<Camera> hash = XObjectHash<Camera>.New.Add(camera3D, "fieldOfView", 6f);
+XTween.To<Camera>(hash,data.time,data.Easing).Play();
 ```
 
 Event Handling
