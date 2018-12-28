@@ -15,9 +15,20 @@ XTween은?
 
 예제는 [XTween Example](http://toki-labs.com/xtween)에서 확인하실 수 있습니다.
 
+
+Road Map
+---
+- [x] Support property tween
+- [ ] Support UI RectactTransform
+- [ ] Performance check & polishing effciency
+- [ ] Support path editor by GUI
+- [ ] Support Easing Edit in UI Graph
+
+
 Lastest Release
 ---
 Version(Alpha) 0.0.24 - [XTween_0.0.24.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.24.unitypackage)
+
 
 Implementation
 ---
