@@ -4,6 +4,17 @@ using System.Collections.Generic;
 
 public class UpdaterFactory
 {
+	public static IUpdating Create<T>( IClassicHandlable source )
+	{
+		IUpdating updator = new ObjectUpdater<T>();
+		if( source != null )
+		{
+			updator.finish = source;
+		}
+			
+		return updator;
+	}
+
 	public IUpdating Create( IClassicHandlable source )
 	{
 		IUpdating updator = new ObjectUpdater();

@@ -27,7 +27,8 @@ public class ExampleValue : ExampleBase
 	************************************************************************/
 	private SpriteRenderer sprite;
 	private Color _color;
-    
+	private float _defaultFieldOfView;
+	
 	/************************************************************************
 	*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
@@ -36,6 +37,8 @@ public class ExampleValue : ExampleBase
 	*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 	************************************************************************/
 	public Text textCode;
+	public RectTransform transInputCode;
+	public Camera camera3D;
 		
 	/************************************************************************
 	*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
@@ -52,13 +55,14 @@ public class ExampleValue : ExampleBase
 	{
 		this.sprite = this.target2D.GetComponent<SpriteRenderer>();
 		this.uiContainer.defaultEasingType = (int)EasingType.Cubic;
+		this._defaultFieldOfView = this.camera3D.fieldOfView;
 	}
 
 	protected override IEnumerator StartExample()
 	{
 		yield return null;
 		this.uiContainer.dropdownContainer.value = 1;
-		this.uiContainer.dropdownContainer.gameObject.SetActive(false);
+		// this.uiContainer.dropdownContainer.gameObject.SetActive(false);
 		this._color = this.sprite.color;
 	}
     
@@ -73,11 +77,21 @@ public class ExampleValue : ExampleBase
 			this._tween = null;
 		}
 		this.sprite.color = this._color;
+		this.camera3D.fieldOfView = this._defaultFieldOfView;
 		yield return new WaitForSeconds(0.5f);
 		TweenUIData data = this.uiContainer.Data;
-		XObjectHash hash = XObjectHash.New.Add("r",1f,0.56f).Add("g",1f,0.83f);
-		this._tween = XTween.Tween(hash,UpdateColor,data.time,data.Easing);
-		this._tween.Play();
+		if( this.container2D.activeSelf )
+		{
+			XObjectHash hash = XObjectHash.New.Add("r",1f,0.56f).Add("g",1f,0.83f);
+			this._tween = XTween.Tween(hash,UpdateColor,data.time,data.Easing);
+			this._tween.Play();
+		}
+		else
+		{
+			XObjectHash<Camera> hash = XObjectHash<Camera>.New.Add(this.camera3D, "fieldOfView", 6f);
+			this._tween = XTween.To<Camera>(hash,data.time,data.Easing);
+			this._tween.Play();
+		}
 	}
 
 	void UpdateColor(XObjectHash hash)
@@ -101,9 +115,10 @@ public class ExampleValue : ExampleBase
 	************************************************************************/
 	public override void UIChangeHandler()
 	{
+		RectTransform trans = this.transInputCode;
 		TweenUIData data = this.uiContainer.Data;
 		string easing = data.easingType.ToString() + ".ease" + data.inOutType.ToString();
-		string input = 
+		string input = this.container2D.activeSelf ?
 			"<color=#43C9B0>XObjectHash</color> hash = XObjectHash.New<color=#A7CE89>.Add(</color><color=#CE9178>\"r\"</color>,<color=#A7CE89>1f</color>,<color=#A7CE89>0.56f</color><color=#A7CE89>).Add(</color><color=#CE9178>\"g\"</color>,<color=#A7CE89>1f</color>,<color=#A7CE89>0.83f</color><color=#A7CE89>);</color>\n" +
 			"XTween<color=#A7CE89>.Tween(</color>hash, UpdateColor, <color=#A7CE89>"+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;\n" +
 			"\n" +
@@ -113,7 +128,13 @@ public class ExampleValue : ExampleBase
 			"\t\tcolor.r = hash<color=#A7CE89>.Now(</color><color=#CE9178>\"r\"</color>);\n" +
 			"\t\tcolor.g = hash<color=#A7CE89>.Now(</color><color=#CE9178>\"g\"</color>);\n" +
 			"\t\tsprite.color = color;\n" +
-			"<color=#A7CE89>}</color>";
+			"<color=#A7CE89>}</color>" :
+			"<color=#43C9B0>XObjectHash</color><<color=#43C9B0>Camera</color>> hash = XObjectHash<<color=#43C9B0>Camera</color>>.New<color=#A7CE89>.Add</color>(camera3D, <color=#CE9178>\"fieldOfView\"</color>, <color=#A7CE89>6f</color>);\n" +
+			"XTween<color=#A7CE89>.To</color><<color=#43C9B0>Camera</color>>(hash,<color=#A7CE89>"+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;";
+
+		Vector2 size = trans.sizeDelta;
+		size.y = this.container2D.activeSelf ? 510f : 170f;
+		trans.sizeDelta = size;
 		this.textCode.text = input;
 	}
 }

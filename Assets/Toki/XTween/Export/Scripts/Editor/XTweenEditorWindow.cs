@@ -117,6 +117,13 @@ public class XTweenEditorWindow : EditorWindow
         }
         GUI.backgroundColor = Color.white;
 
+        GUILayout.Space(20f);
+
+        if(GUILayout.Button("Test", GUILayout.Height(30f)))
+        {
+            // ExampleValue.Test();
+        }
+
         GUILayout.Space(10f);
 
         GUILayout.EndVertical();

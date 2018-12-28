@@ -398,7 +398,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 
     public void Dispose()
     {
-		Debug.Log ("Dispose");
+		// Debug.Log ("Dispose");
         this._stopOnDestroyHandler = null;
         this._updateList.Clear();
         this._updateList = null;

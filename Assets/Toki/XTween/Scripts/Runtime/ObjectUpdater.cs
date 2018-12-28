@@ -76,3 +76,79 @@ public class ObjectUpdater : IUpdating
 		return instance;
 	}
 }
+
+public class ObjectUpdater<T> : IUpdating
+{
+	protected XObjectHash<T> _source;
+	protected float invert;
+	protected Action _stopHandler;
+	protected Action<XObjectHash<T>> _updateHandler;
+		
+	public string targetName
+	{
+		get;
+		set;
+	}
+		
+	public GameObject target
+	{
+		get;
+		set;
+	}
+		
+	public Action stopHandler
+	{
+		set { _stopHandler = value; }
+	}
+		
+	public IClassicHandlable start
+	{
+		set
+		{
+            
+		}
+	}
+		
+	public IClassicHandlable finish
+	{
+		set
+		{
+            this._source = (XObjectHash<T>)value;
+		}
+	}
+		
+	public Action<XObjectHash<T>> updateHandler
+	{
+		set
+		{
+			this._updateHandler = value;
+		}
+	}
+
+    public void ResolveValues()
+    {
+        this._source.ResolveValues();
+    }
+		
+	public void Updating( float factor )
+	{
+        invert = 1.0f - factor;
+
+		XObjectHash<T> hash = this._source.Update( invert, factor );
+		if( this._updateHandler != null)
+        	this._updateHandler( hash );
+	}
+		
+	protected void CopyFrom( ObjectUpdater<T> source )
+	{
+        source._source = this._source;
+        source._updateHandler = this._updateHandler;
+	}
+		
+	public IUpdating Clone()
+	{
+		ObjectUpdater<T> instance = new ObjectUpdater<T>();
+		instance.CopyFrom(this);
+		return instance;
+	}
+}

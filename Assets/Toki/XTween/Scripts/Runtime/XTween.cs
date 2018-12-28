@@ -116,6 +116,20 @@ public class XTween
 		return tween;
     }
 
+	public static IAni To<T>( XObjectHash<T> hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		ITimer tick = _ticker;
+		ITimer tickReal = _tickerReal; 
+		ObjectTween tween = new ObjectTween( (realTime) ? tickReal : tick );
+		ObjectUpdater<T> updater = (ObjectUpdater<T>)UpdaterFactory.Create<T>( hash );
+		tween.frameSkip = frameSkip;
+		tween.updater = updater;
+		tween.classicHandlers = hash;
+		tween.time = time;
+		tween.easing = ( easing != null ) ? easing : Linear.easeNone;
+		return tween;
+    }
+
 	public static ContinousTween Continous( GameObject target, XHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		ITimer tick = _ticker;
