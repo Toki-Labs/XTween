@@ -623,14 +623,20 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 	private void UpdateRect()
 	{
 		Vector2 offset = this._transformRect.offsetMin;
-		offset.Set(_rect.left, _rect.bottom);
+		if(_finish.ContainLeft) offset.x = _rect.left;
+		if(_finish.ContainBottom) offset.y = _rect.bottom;
 		this._transformRect.offsetMin = offset;
-		offset.Set(_rect.right, _rect.top);
-		this._transformRect.offsetMax = offset * -1f;
+		offset = this._transformRect.offsetMax;
+		if(_finish.ContainRight) offset.x = -_rect.right;
+		if(_finish.ContainTop) offset.y = -_rect.top;
+		this._transformRect.offsetMax = offset;
 	}
 	private void UpdateSize()
 	{
-		this._transformRect.sizeDelta = _size;
+		Vector2 size = this._transformRect.sizeDelta;
+		if(_finish.ContainWidth) size.x = _size.x;
+		if(_finish.ContainHeight) size.y = _size.y;
+		this._transformRect.sizeDelta = size;
 	}
 	private void UpdateScale()
 	{

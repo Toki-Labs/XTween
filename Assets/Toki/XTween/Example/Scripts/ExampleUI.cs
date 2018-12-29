@@ -83,7 +83,8 @@ public class ExampleUI : ExampleBase
 		transDropdown.offsetMax = this._offsetMaxDropdown;
 		yield return new WaitForSeconds(0.5f);
 		TweenUIData data = this.uiContainer.Data;
-		XHash hashButton = XHash.New.AddX(400f).AddY(-250f).AddWidth(800f).AddHeight(400f);
+		// XHash hashButton = XHash.New.AddX(400f).AddY(-250f).AddWidth(800f).AddHeight(400f);
+		XHash hashButton = XHash.New.AddLeft(400f).AddY(-250f).AddRight(1680f).AddHeight(400f);
 		XHash hashDropdown = XHash.New.AddLeft(2000f).AddRight(300f).AddTop(250f).AddBottom(790f);
 		this._tween =XTween.ParallelTweens
 		(
