@@ -32,16 +32,14 @@ XTween End GC - __0.02KB__
 ![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.JPG)
 - Other Tween이 50배 많은 Garbage 발생
 
- |__Other Tween__|__XTween__
+ -|Other Tween|XTween
  Start GA|185.5KG|2.5KB
  End GA|1KB|0.02KB
  Total GA|186.5KB|2.52KB
  
  __Code Compare__
- Other Tween Code
  ![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Code.JPG)
- XTween Code
- ![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.JPG)
+ ![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Code.JPG)
 
 
 Road Map
