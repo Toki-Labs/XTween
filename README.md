@@ -181,6 +181,17 @@ XTween.ParallelTweens
 ).Play();
 ```
 
+UI
+---
+```csharp
+XHash hashButton = XHash.New.AddX(400f).AddY(-250f).AddWidth(800f).AddHeight(400f);
+XTween.To(this.button, hashButton).Play();
+
+//or when stretch type
+XHash hashDropdown = XHash.New.AddLeft(2000f).AddRight(300f).AddTop(500f).AddBottom(400f);
+XTween.To(this.dropdown, hashDropdown).Play();
+```
+
 Author Info
 ---
 Lee Dong-Myung(Tok-Labs) is a software developer in Korea.
