@@ -17,7 +17,6 @@ XTween은?
 
 
 
-
 Implementation
 ---
 ```csharp
@@ -42,15 +41,16 @@ __Garbage Alloc__
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.png)
 >Other Tween이 50배 많은 Garbage 발생
 
- Gabage Alloc Time|Other Tween|XTween
- --------|-----------|------
- Start|185.5KG|2.5KB
- End|1KB|0.02KB
- Total|186.5KB|2.52KB
- 
- Other Tween에 비해 74배이상의 적은 Garbage 생성
-  
- __Code Compare__
+>Gabage Alloc Time|Other Tween|XTween
+>--------|-----------|------
+>Start|185.5KG|2.5KB
+>End|1KB|0.02KB
+>Total|186.5KB|2.52KB
+> 
+>Other Tween에 비해 74배이상의 적은 Garbage 생성
+
+
+__Code Compare__
  >__Other Tween Code__
  >
  >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Code.JPG)
