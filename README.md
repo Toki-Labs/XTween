@@ -16,31 +16,48 @@ XTween은?
 예제는 [XTween Example](http://toki-labs.com/xtween)에서 확인하실 수 있습니다.
 
 
+
+
+Implementation
+---
+```csharp
+XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f)).Play();
+```
+
+
 Performance
 ---
 Unity에서 보편적으로 쓰이는 Tween과 XTween과의 성능비교
 
 __Garbage Alloc__
->Start
+>__Start__
+>
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Start.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start.png)
 >Other Tween이 74.2배 많은 Garbage 발생
 
->End
+>__End__
+>
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_End.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.png)
 >Other Tween이 50배 많은 Garbage 발생
 
- Category|Other Tween|XTween
+ Gabage Alloc Time|Other Tween|XTween
  --------|-----------|------
- Start GA|185.5KG|2.5KB
- End GA|1KB|0.02KB
- Total GA|186.5KB|2.52KB
+ Start|185.5KG|2.5KB
+ End|1KB|0.02KB
+ Total|186.5KB|2.52KB
  
- 
+ Other Tween에 비해 74배이상의 적은 Garbage 생성
+  
  __Code Compare__
- ![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Code.JPG)
- ![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Code.JPG)
+ >Other Tween Code
+ 
+ >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Code.JPG)
+ 
+ >XTween Code
+ 
+ >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Code.JPG)
 
 
 Road Map
@@ -55,13 +72,6 @@ Road Map
 Lastest Release
 ---
 Version(Alpha) 0.0.24 - [XTween_0.0.24.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.24.unitypackage)
-
-
-Implementation
----
-```csharp
-XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f)).Play();
-```
 
 
 Position
