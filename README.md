@@ -34,13 +34,13 @@ __Garbage Alloc__
 >
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Start.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start.png)
->Other Tween이 74.2배 많은 Garbage 발생
+>XTween이 74.2배 적은 Garbage 생성
 
 >__End__
 >
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_End.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.png)
->Other Tween이 50배 많은 Garbage 발생
+>XTween이 50배 적은 Garbage 생성
 
 >Gabage Alloc Time|Other Tween|XTween
 >--------|-----------|------
@@ -48,8 +48,13 @@ __Garbage Alloc__
 >End|1KB|0.02KB
 >Total|186.5KB|2.52KB
 > 
->Other Tween에 비해 74배이상의 적은 Garbage 생성
+>XTween이 74배 이상의 적은 Garbage 생성
 
+__CPU Performance__
+>100개의 GameObject를 동시에 움직일시 움직일때의 CPU사용 비교
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Update.png)
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Update.png)
+>XTween이 약2배 빠름
 
 __Code Compare__
  >__Other Tween Code__
