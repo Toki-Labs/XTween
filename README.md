@@ -21,13 +21,15 @@ Performance
 Unity에서 보편적으로 쓰이는 Tween과 XTween과의 성능비교
 
 __Garbage Alloc__
-![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Start.png)
-![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start.png)
-__Other Tween이 74.2배 많은 Garbage 발생 __
+>Start
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Start.png)
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start.png)
+>Other Tween이 74.2배 많은 Garbage 발생
 
-![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_End.png)
-![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.png)
-__Other Tween이 50배 많은 Garbage 발생__
+>End
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_End.png)
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.png)
+>Other Tween이 50배 많은 Garbage 발생
 
  Category|Other Tween|XTween
  --------|-----------|------
