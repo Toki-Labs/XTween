@@ -34,13 +34,13 @@ __Garbage Alloc__
 >
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Start.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start.png)
->XTween이 74.2배 적은 Garbage 생성
+>XTween이 74.2배 적은 Garbage 생성, 객체 생성시 비용 또한 3.4배 적음
 
 >__End__
 >
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_End.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.png)
->XTween이 50배 적은 Garbage 생성, 생성시 비용 또한 3.4배 적음
+>XTween이 50배 적은 Garbage 생성
 
 >Gabage Alloc Time|Other Tween|XTween
 >--------|-----------|------
