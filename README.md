@@ -124,30 +124,23 @@ XTween.BezierTo(this.moveObj, controlPoint, end).Play();
 Value
 ---
 ```csharp
-void Start()
-{
-  XTween.Tween(XObjectHash.New.Add("value", 10f, 200f), UpdateValue).Play();
-}
+XTween.Tween(XObjectHash.New.Add("value", 10f, 200f), UpdateValue).Play();
 
 void UpdateValue(XObjectHash hash)
 {
   Debug.Log(hash.Now("value"));
 }
 
-//or
-XObjectHash<Camera> hash = XObjectHash<Camera>.New.Add(camera3D, "fieldOfView", 6f);
-XTween.To<Camera>(hash,data.time,data.Easing).Play();
+//or Property tween
+XTween.To<Camera>(XObjectHash<Camera>.New.Add(camera3D, "fieldOfView", 6f)).Play();
 ```
 
 Event Handling
 ---
 ```csharp
-void Start()
-{
-  IAni ani = XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f));
-  ani.onComplete = Executor<float>.New(OnTweenEnd, 10f);
-  ani.Play();
-}
+IAni ani = XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f));
+ani.onComplete = Executor<float>.New(OnTweenEnd, 10f);
+ani.Play();
 
 void OnTweenEnd(float value)
 {
