@@ -36,6 +36,7 @@ public class ExamplePosition : ExampleBase
 	*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 	************************************************************************/
 	public Text textCode;
+	public RectTransform rectUI;
 		
 	/************************************************************************
 	*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
@@ -67,9 +68,10 @@ public class ExamplePosition : ExampleBase
 		}
 		this.target2D.transform.localPosition = this._position2D;
 		this.target3D.transform.localPosition = this._position3D;
+		GC.Collect();
 		yield return new WaitForSeconds(0.5f);
 		TweenUIData data = this.uiContainer.Data;
-		if( this.container2D.activeSelf )
+		/* if( this.container2D.activeSelf )
 		{
 			this._tween = XTween.To(this.target2D, XHash.New.AddX(800f).AddY(300f), data.time, data.Easing);
 			this._tween.Play();
@@ -78,6 +80,25 @@ public class ExamplePosition : ExampleBase
 		{
 			this._tween = XTween.To(this.target3D, XHash.New.AddX(200f).AddY(50f).AddZ(-1500f), data.time, data.Easing);
 			this._tween.Play();
+		} */
+
+		bool isBreak = false;
+		IAni ani = XTween.To(this.target3D, XHash.New.AddX(200f).AddY(50f).AddZ(-1500f), data.time, data.Easing);
+		ani.Play();
+		ani.onComplete = Executor.New(() => 
+		{
+			isBreak = true;
+		});
+
+		while( true )
+		{
+			if( isBreak )
+			{
+				GC.Collect();
+				yield return new WaitForSeconds(0.1f);
+				Debug.Break();
+			}
+			yield return null;
 		}
 	}
 	

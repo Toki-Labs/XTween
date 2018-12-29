@@ -36,7 +36,7 @@ public class ContinousTween : AbstractTween, IIAniObject
 		set 
 		{
 			this._isPlaying = value;
-			Debug.Log( "isPlaying" );
+			// Debug.Log( "isPlaying" );
 			if( !this._isPlaying )
 			{
 				_ticker.RemoveTimer(this);
