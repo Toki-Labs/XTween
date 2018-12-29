@@ -51,12 +51,12 @@ __Garbage Alloc__
  Other Tween에 비해 74배이상의 적은 Garbage 생성
   
  __Code Compare__
- >Other Tween Code
- 
+ >__Other Tween Code__
+ >
  >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Code.JPG)
  
- >XTween Code
- 
+ >__XTween Code__
+ >
  >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Code.JPG)
 
 
