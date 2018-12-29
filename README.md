@@ -110,7 +110,7 @@ XTween.To(moveObj, XHash.New.Rotation(60f,-180f,-45f)).Play();
 Combination
 ---
 ```csharp
-XTween.To(moveObj, XHash.New.AddX(600f).AddScale(200f).AddRotationZ(180f)).Play();
+XTween.To(moveObj, XHash.New.AddX(600f).AddScaleX(200f).AddRotationZ(180f)).Play();
 ```
 
 Bezier
