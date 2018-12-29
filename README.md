@@ -185,11 +185,11 @@ UI
 ---
 ```csharp
 XHash hashButton = XHash.New.AddX(400f).AddY(-250f).AddWidth(800f).AddHeight(400f);
-XTween.To(this.button, hashButton).Play();
+XTween.To(button, hashButton).Play();
 
 //or when stretch type
 XHash hashDropdown = XHash.New.AddLeft(2000f).AddRight(300f).AddTop(500f).AddBottom(400f);
-XTween.To(this.dropdown, hashDropdown).Play();
+XTween.To(dropdown, hashDropdown).Play();
 ```
 
 Author Info
