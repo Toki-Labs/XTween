@@ -44,7 +44,7 @@ __Garbage Alloc__
 
 >Gabage Alloc Time|Other Tween|XTween
 >--------|-----------|------
->Start|185.5KG|2.5KB
+>Start|185.5K|2.5KB
 >End|1KB|0.02KB
 >Total|186.5KB|2.52KB
 > 
