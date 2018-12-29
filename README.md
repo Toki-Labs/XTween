@@ -64,7 +64,7 @@ __Code Compare__
 Road Map
 ---
 - [x] Support property tween
-- [ ] Support UI RectactTransform
+- [ ] Support UI RectTransform
 - [x] Performance check & polishing effciency
 - [ ] Support path editor by GUI
 - [ ] Support Easing Edit in UI Graph
