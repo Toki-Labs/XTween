@@ -36,7 +36,6 @@ public class ExamplePosition : ExampleBase
 	*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 	************************************************************************/
 	public Text textCode;
-	public RectTransform rectUI;
 		
 	/************************************************************************
 	*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*

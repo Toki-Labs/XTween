@@ -8,42 +8,28 @@
 
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class XExampleManager : MonoBehaviour
+public class ExampleUI : ExampleBase
 {
 	/************************************************************************
 	*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
 	************************************************************************/
-	private static XExampleManager _instance;
 	
 	/************************************************************************
 	*	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
 	************************************************************************/
-	public static XExampleManager Instance
-	{
-		get
-		{
-			return _instance;
-		}
-	}
 	
 	/************************************************************************
 	*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
-	private List<Button> _buttonList;
-	private string[] _scenes = new string[]
-	{
-		"Example_Position", "Example_Scale", "Example_Angle",
-		"Example_Combination", "Example_Bezier", "Example_Value",
-		"Example_Event", "Example_Serial", "Example_Parallel", "Example_UI"
-	};
-	private string _containerName = "Main";
-	private string _currentScene;
-
+	private Vector3 _positionButton;
+	private Vector3 _sizeButton;
+	private Vector2 _offsetMinDropdown;
+	private Vector2 _offsetMaxDropdown;
+    
 	/************************************************************************
 	*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
@@ -51,20 +37,13 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 	************************************************************************/
-	public Text text;
-	public GameObject uiContainer;
-	public GameObject buttonContainer;
-
+	public Text textCode;
+	public GameObject button;
+	public GameObject dropdown;
+		
 	/************************************************************************
 	*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
 	************************************************************************/
-	public string ContainerName
-	{
-		get
-		{
-			return this._containerName;
-		}
-	}
 	
 	/************************************************************************
 	*	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
@@ -73,36 +52,51 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 	************************************************************************/
-	void Awake()
+	protected override IEnumerator StartExample()
 	{
-		_instance = this;
-		this._buttonList = new List<Button>( this.buttonContainer.GetComponentsInChildren<Button>() );
-		foreach( var button in this._buttonList )
-		{
-			button.onClick.AddListener( () => this.ButtonSceneLoadClickHandler(button) );
-		}
-	}
-	
-	IEnumerator Start()
-	{
+		this.uiContainer.dropdownContainer.gameObject.SetActive(false);
+		this.uiContainer.dropdownEasing.dropdown.value = (int)EasingType.Bounce;
 		yield return null;
-		if( this._containerName != "Main" )
-			this.LoadScene(this._containerName);
+		RectTransform transButton = this.button.transform as RectTransform;
+		this._positionButton = transButton.anchoredPosition3D;
+		this._sizeButton = transButton.sizeDelta;
+		RectTransform transDropdown = this.dropdown.transform as RectTransform;
+		this._offsetMinDropdown = transDropdown.offsetMin;
+		this._offsetMaxDropdown = transDropdown.offsetMax;
 	}
     
 	/************************************************************************
 	*	 	 	 	 	Coroutine Declaration	 	  			 	 		*
 	************************************************************************/
-	
+	protected override IEnumerator CoroutineStart()
+	{
+		if( this._tween != null )
+		{
+			this._tween.Stop();
+			this._tween = null;
+		}
+		RectTransform transButton = this.button.transform as RectTransform;
+		transButton.anchoredPosition3D = this._positionButton;
+		transButton.sizeDelta = this._sizeButton;
+		RectTransform transDropdown = this.dropdown.transform as RectTransform;
+		transDropdown.offsetMin = this._offsetMinDropdown;
+		transDropdown.offsetMax = this._offsetMaxDropdown;
+		yield return new WaitForSeconds(0.5f);
+		TweenUIData data = this.uiContainer.Data;
+		XHash hashButton = XHash.New.AddX(400f).AddY(-250f).AddWidth(800f).AddHeight(400f);
+		XHash hashDropdown = XHash.New.AddLeft(2000f).AddRight(300f).AddTop(250f).AddBottom(790f);
+		this._tween =XTween.ParallelTweens
+		(
+			false,
+			XTween.To(this.button, hashButton, data.time, data.Easing),
+			XTween.To(this.dropdown, hashDropdown, data.time, data.Easing)
+		);
+		this._tween.Play();
+	}
+
 	/************************************************************************
 	*	 	 	 	 	Private Method Declaration	 	 	 	 	 		*
 	************************************************************************/
-	private void LoadScene(string scene)
-	{
-		this._currentScene = scene;
-		SceneManager.LoadScene(scene,LoadSceneMode.Additive);
-		this.uiContainer.SetActive(false);
-	}
     
 	/************************************************************************
 	*	 	 	 	 	Protected Method Declaration	 	 	 	 	 	*
@@ -111,24 +105,16 @@ public class XExampleManager : MonoBehaviour
 	/************************************************************************
 	*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
 	************************************************************************/
-	public void UnloadScene()
+	public override void UIChangeHandler()
 	{
-		if( this._currentScene != null )
-		{
-			SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(this._currentScene));
-			this.uiContainer.SetActive(true);		
-			this._currentScene = null;
-		}
-	}
+		TweenUIData data = this.uiContainer.Data;
+		string easing = data.easingType.ToString() + ".ease" + data.inOutType.ToString();
+		string input = 
+			"<color=#43C9B0>XHash</color> hashButton = XHash.New<color=#DCDC9D>.AddX(<color=#A7CE89>400f</color>).AddY(<color=#A7CE89>-250f</color>).AddWidth(<color=#A7CE89>800f</color>).AddHeight(<color=#A7CE89>400f</color>);</color>\n" +
+			"XTween<color=#DCDC9D>.To(</color>button, hashButton, <color=#DCDC9D>" + data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play();</color>\n" +
+			"<color=#43C9B0>XHash</color> hashDropdown = XHash<color=#DCDC9D>.New.AddLeft(<color=#A7CE89>2000f</color>).AddRight(<color=#A7CE89>300f</color>).AddTop(<color=#A7CE89>250f</color>).AddBottom(<color=#A7CE89>790f</color>);</color>\n" +
+			"XTween<color=#DCDC9D>.To(</color>dropdown, hashDropdown, <color=#A7CE89>"+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play();</color>";
 
-	public void ButtonSceneLoadClickHandler(Button button)
-	{
-		this._currentScene = this._scenes[this._buttonList.IndexOf(button)];
-		this.LoadScene(this._currentScene);		
+		this.textCode.text = input;
 	}
-
-    public void Receiver(string message)
-    {
-        this._containerName = message;
-    }
 }

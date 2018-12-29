@@ -63,6 +63,10 @@
   gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
   dic[containerName] = gameInstance;
 
+  containerName = "Example_UI";
+  gameInstance = UnityLoader.instantiate(containerName, "WebGL/Build/WebGL.json", {onProgress: UnityProgress});
+  dic[containerName] = gameInstance;
+
   function UnityProgress(instance, progress) 
   {
     if (progress == 1)
@@ -131,7 +135,7 @@
 
   <p><img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Start.png" alt="" />
 <img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start.png" alt="" />
-XTween이 74.2배 적은 Garbage 생성, 생성시 비용 또한 3.4배 적음</p>
+XTween이 74.2배 적은 Garbage 생성, 객체 생성시 비용 또한 3.4배 적음</p>
 </blockquote>
 
 <blockquote>
@@ -154,7 +158,7 @@ XTween이 50배 적은 Garbage 생성</p>
     <tbody>
       <tr>
         <td>Start</td>
-        <td>185.5KB/td>
+        <td>185.5KB</td>
         <td>2.5KB</td>
       </tr>
       <tr>
@@ -197,7 +201,7 @@ XTween이 약2배 빠름</p>
 <h2 id="road-map">Road Map</h2>
 <ul class="task-list">
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Support property tween</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Support UI RectTransform</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Support UI RectTransform</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Performance check &amp; polishing effciency</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Support path editor by GUI</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Support Easing Edit in UI Graph</li>
@@ -296,6 +300,16 @@ XTween이 약2배 빠름</p>
 	<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">endPosition</span><span class="p">),</span> 
 	<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">endScale</span><span class="p">)</span>
 <span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="ui">UI</h2>
+<div id="Example_UI" style="width: 1000px; height: 500px; margin: auto"></div>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">hashButton</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">400f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(-</span><span class="m">250f</span><span class="p">).</span><span class="nf">AddWidth</span><span class="p">(</span><span class="m">800f</span><span class="p">).</span><span class="nf">AddHeight</span><span class="p">(</span><span class="m">400f</span><span class="p">);</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">button</span><span class="p">,</span> <span class="n">hashButton</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+
+<span class="c1">//or when stretch type</span>
+<span class="n">XHash</span> <span class="n">hashDropdown</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddLeft</span><span class="p">(</span><span class="m">2000f</span><span class="p">).</span><span class="nf">AddRight</span><span class="p">(</span><span class="m">300f</span><span class="p">).</span><span class="nf">AddTop</span><span class="p">(</span><span class="m">500f</span><span class="p">).</span><span class="nf">AddBottom</span><span class="p">(</span><span class="m">400f</span><span class="p">);</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">dropdown</span><span class="p">,</span> <span class="n">hashDropdown</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="author-info">Author Info</h2>

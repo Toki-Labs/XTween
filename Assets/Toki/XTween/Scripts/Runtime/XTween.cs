@@ -91,7 +91,7 @@ public class XTween
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
-		ObjectTween tween = new ObjectTween( (realTime) ? tickReal : tick );
+		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
 		ObjectUpdater updater = (ObjectUpdater)_updaterFactory.Create( source );
 		updater.updateHandler = UpdateHandler;
 		tween.frameSkip = frameSkip;
@@ -107,7 +107,7 @@ public class XTween
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
-		ObjectTween tween = new ObjectTween( (realTime) ? tickReal : tick );
+		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
 		tween.frameSkip = frameSkip;
 		tween.updater = _updaterFactory.Create(target, hash, hash.GetStart());
 		tween.classicHandlers = hash;
@@ -120,7 +120,7 @@ public class XTween
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
-		ObjectTween tween = new ObjectTween( (realTime) ? tickReal : tick );
+		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
 		ObjectUpdater<T> updater = (ObjectUpdater<T>)UpdaterFactory.Create<T>( hash );
 		tween.frameSkip = frameSkip;
 		tween.updater = updater;
@@ -134,7 +134,7 @@ public class XTween
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
-		ContinousTween tween = new ContinousTween( (realTime) ? tickReal : tick );
+		ContinousTween tween = new ContinousTween( realTime ? tickReal : tick );
 		tween.frameSkip = frameSkip;
 		tween.time = time;
 		tween.easing = (easing != null) ? easing : Linear.easeNone;
@@ -148,7 +148,7 @@ public class XTween
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
-		ObjectTween tween = new ObjectTween( (realTime) ? tickReal : tick );
+		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
 		tween.frameSkip = 0;
 		tween.updater = _updaterFactory.Create( target, hash, hash.GetStart() );
 		tween.time = time;
@@ -162,7 +162,7 @@ public class XTween
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
-		ObjectTween tween = new ObjectTween( (realTime) ? tickReal : tick );
+		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
 		tween.frameSkip = frameSkip;
 		tween.updater = _updaterFactory.CreateBezier(target, hash, hash.GetStart(), controlPoint);
 		tween.classicHandlers = hash;
@@ -176,7 +176,7 @@ public class XTween
     {
         ITimer tick = _ticker;
         ITimer tickReal = _tickerReal;
-        ParallelTween tween = new ParallelTween(tweenList.ToArray(), (realTime) ? tickReal : tick, 0);
+        ParallelTween tween = new ParallelTween(tweenList.ToArray(), realTime ? tickReal : tick, 0);
         tween.frameSkip = 0;
         return tween;
     }
@@ -185,7 +185,7 @@ public class XTween
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
-        ParallelTween tween = new ParallelTween(tweens, (realTime) ? tickReal : tick, 0);
+        ParallelTween tween = new ParallelTween(tweens, realTime ? tickReal : tick, 0);
         tween.frameSkip = 0;
         return tween;
 	}
@@ -195,7 +195,7 @@ public class XTween
     {
         ITimer tick = _ticker;
         ITimer tickReal = _tickerReal;
-        SerialTween tween = new SerialTween(tweenList.ToArray(), (realTime) ? tickReal : tick, 0);
+        SerialTween tween = new SerialTween(tweenList.ToArray(), realTime ? tickReal : tick, 0);
         tween.frameSkip = 0;
         return tween;
     }
@@ -205,7 +205,7 @@ public class XTween
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal;
-        SerialTween tween = new SerialTween(tweens, (realTime) ? tickReal : tick, 0);
+        SerialTween tween = new SerialTween(tweens, realTime ? tickReal : tick, 0);
         tween.frameSkip = 0;
 		return tween;
 	}

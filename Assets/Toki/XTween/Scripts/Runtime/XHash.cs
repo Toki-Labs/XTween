@@ -3,6 +3,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+public struct UIRect
+{
+	public float left, right, top, bottom;
+	public UIRect( float left, float top, float right, float bottom )
+	{
+		this.left = left;
+		this.top = top;
+		this.right = right;
+		this.bottom = bottom;
+	}
+
+	public override string ToString()
+	{
+		return "(" + this.left.ToString() + ", " + this.top.ToString() + ", " + 
+				this.right.ToString() + ", " + this.bottom.ToString() + ")";
+	}
+}
+
 public struct XHash : IClassicHandlable
 {
 	private IExecutable _onPlay;
@@ -67,33 +85,15 @@ public struct XHash : IClassicHandlable
     }
 	private IClassicHandlable _start;
 
-    private bool _isRelativeX;
-    private bool _isRelativeY;
-    private bool _isRelativeZ;
-    public bool isRelativeX
-    {
-        get { return _isRelativeX; }
-        set { _isRelativeX = value; }
-    }
-    public bool isRelativeY
-    {
-        get { return _isRelativeY; }
-        set { _isRelativeY = value; }
-    }
-    public bool isRelativeZ
-    {
-        get { return _isRelativeZ; }
-        set { _isRelativeZ = value; }
-    }
-    private bool _containX;
-	private bool _containY;
-	private bool _containZ;
+	/*********************************** Position **********************************/
+    public bool isRelativeX { get; set; }
+    public bool isRelativeY { get; set; }
+    public bool isRelativeZ { get; set; }
+    private bool _containX, _containY, _containZ;
 	public bool containX { get{ return this._containX; } }
 	public bool containY { get{ return this._containY; } }
 	public bool containZ { get{ return this._containZ; } }
-	private float _x;
-	private float _y;
-	private float _z;
+	private float _x, _y, _z;
 	public float x
 	{
 		get { return _x; }
@@ -121,34 +121,138 @@ public struct XHash : IClassicHandlable
 			_z = value; 
 		}
 	}
+	public XHash Position( float x, float y, bool isRelative = false )
+	{
+		this.AddX( x, isRelative );
+		this.AddY( y, isRelative );
+		return this;
+	}
+	public XHash Position( float x, float y, float z, bool isRelative = false )
+    {
+        this.AddX( x, isRelative );
+        this.AddY( y, isRelative );
+        this.AddZ( z, isRelative );
+        return this;
+    }
+	public XHash Position( Vector3 position, bool isRelative = false )
+	{
+		this.AddX( position.x, isRelative );
+		this.AddY( position.y, isRelative );
+		this.AddZ( position.z, isRelative );
+		return this;
+	}
 
-    private bool _isRelativeScaleX;
-    private bool _isRelativeScaleY;
-    private bool _isRelativeScaleZ;
-    public bool isRelativeScaleX
+	/*********************************** Position **********************************/
+    public bool IsRelativeLeft { get; set; }
+    public bool IsRelativeTop { get; set; }
+    public bool IsRelativeRight { get; set; }
+	public bool IsRelativeBottom { get; set; }
+    private bool _containLeft, _containTop, _containRight, _containBottom;
+	public bool ContainLeft { get{ return this._containLeft; } }
+	public bool ContainTop { get{ return this._containTop; } }
+	public bool ContainRight { get{ return this._containRight; } }
+	public bool ContainBottom { get{ return this._containBottom; } }
+	private float _left, _top, _right, _bottom;
+	public float Left
+	{
+		get { return _left; }
+		set 
+		{ 
+			_containLeft = true;
+			_left = value; 
+		}
+	}
+	public float Top
+	{
+		get { return _top; }
+		set 
+		{ 
+			_containTop = true;
+			_top = value;
+		}
+	}
+	public float Right
+	{
+		get { return _right; }
+		set 
+		{ 
+			_containRight = true;
+			_right = value; 
+		}
+	}
+	public float Bottom
+	{
+		get { return _bottom; }
+		set 
+		{ 
+			_containBottom = true;
+			_bottom = value; 
+		}
+	}
+	public XHash Rect( float left, float top, float right, float bottom, bool isRelative = false )
     {
-        get { return _isRelativeScaleX; }
-        set { _isRelativeScaleX = value; }
+        this.AddLeft( left, isRelative );
+        this.AddTop( top, isRelative );
+		this.AddRight( right, isRelative );
+        this.AddBottom( bottom, isRelative );
+        return this;
     }
-    public bool isRelativeScaleY
-    {
-        get { return _isRelativeScaleY; }
-        set { _isRelativeScaleY = value; }
-    }
-    public bool isRelativeScaleZ
-    {
-        get { return _isRelativeScaleZ; }
-        set { _isRelativeScaleZ = value; }
-    }
-    private bool _containScaleX;
-	private bool _containScaleY;
-	private bool _containScaleZ;
+	public XHash Rect( UIRect rect, bool isRelative = false )
+	{
+		this.AddLeft( rect.left, isRelative );
+        this.AddTop( rect.top, isRelative );
+		this.AddRight( rect.right, isRelative );
+        this.AddBottom( rect.bottom, isRelative );
+		return this;
+	}
+
+	/*********************************** Size **********************************/
+    public bool IsRelativeWidth { get; set; }
+    public bool IsRelativeHeight { get; set; }
+    private bool _containWidth, _containHeight;
+	public bool ContainWidth { get{ return this._containWidth; } }
+	public bool ContainHeight { get{ return this._containHeight; } }
+	private float _width, _height;
+	public float Width
+	{
+		get { return _width; }
+		set 
+		{ 
+			_containWidth = true;
+			_width = value;
+		}
+	}
+	public float Height
+	{
+		get { return _height; }
+		set 
+		{ 
+			_containHeight = true;
+			_height = value;
+		}
+	}
+	public XHash SizeDelta( float width, float height, bool isRelative = false )
+	{
+		this.AddWidth( width, isRelative );
+		this.AddHeight( height, isRelative );
+		return this;
+	}
+	public XHash SizeDelta( Vector2 sizeDelta, bool isRelative = false )
+	{
+		this.AddWidth( sizeDelta.x, isRelative );
+		this.AddHeight( sizeDelta.y, isRelative );
+		return this;
+	}
+
+	/*********************************** Scale **********************************/
+    public bool isRelativeScaleX { get; set; }
+    public bool isRelativeScaleY { get; set; }
+    public bool isRelativeScaleZ { get; set; }
+    private bool _containScaleX, _containScaleY, _containScaleZ;
 	public bool containScaleX { get{ return this._containScaleX; } }
 	public bool containScaleY { get{ return this._containScaleY; } }
 	public bool containScaleZ { get{ return this._containScaleZ; } }
-	private float _scaleX;
-	private float _scaleY;
-	private float _scaleZ;
+	private float _scaleX, _scaleY, _scaleZ;
 	public float scaleX
 	{
 		get { return _scaleX; }
@@ -176,37 +280,37 @@ public struct XHash : IClassicHandlable
 			_scaleZ = value; 
 		}
 	}
+	public XHash Scale( float x, float y, bool isRelative = false )
+	{
+		this.AddScaleX( x, isRelative );
+		this.AddScaleY( y, isRelative );
+		return this;
+	}
+	public XHash Scale( float x, float y, float z, bool isRelative = false )
+    {
+        this.AddScaleX( x, isRelative );
+		this.AddScaleY( y, isRelative );
+		this.AddScaleZ( z, isRelative );
+        return this;
+    }
+	public XHash Scale( Vector3 scale, bool isRelative = false )
+	{
+		this.AddScaleX( scale.x, isRelative );
+		this.AddScaleY( scale.y, isRelative );
+		this.AddScaleY( scale.y, isRelative );
+		return this;
+	}
 
-    private bool _isRelativeRotateX;
-    private bool _isRelativeRotateY;
-    private bool _isRelativeRotateZ;
-    public bool isRelativeRotateX
-    {
-        get { return _isRelativeRotateX; }
-        set { _isRelativeRotateX = value; }
-    }
-    public bool isRelativeRotateY
-    {
-        get { return _isRelativeRotateY; }
-        set { _isRelativeRotateY = value; }
-    }
-    public bool isRelativeRotateZ
-    {
-        get { return _isRelativeRotateZ; }
-        set { _isRelativeRotateZ = value; }
-    }
-    private bool _containRotationX;
-	private bool _containRotationY;
-	private bool _containRotationZ;
+	/*********************************** Rotation **********************************/
+    public bool isRelativeRotateX { get; set; }
+    public bool isRelativeRotateY { get; set; }
+    public bool isRelativeRotateZ { get; set; }
+    private bool _containRotationX, _containRotationY, _containRotationZ;
 	public bool containRotationX { get{ return this._containRotationX; } }
 	public bool containRotationY { get{ return this._containRotationY; } }
 	public bool containRotationZ { get{ return this._containRotationZ; } }
-	private bool _rotateXRight;
-	private bool _rotateYRight;
-	private bool _rotateZRight;
-	private float _rotationX;
-	private float _rotationY;
-	private float _rotationZ;
+	private bool _rotateXRight, _rotateYRight, _rotateZRight;
+	private float _rotationX, _rotationY, _rotationZ;
 	public float rotationX
 	{
 		get { return _rotationX; }
@@ -258,43 +362,32 @@ public struct XHash : IClassicHandlable
 			this._rotateZRight = value;
 		}
 	}
+	public XHash Rotation( float x, float y, float z, bool isRelative = false )
+    {
+        this.AddRotationX( x, isRelative );
+		this.AddRotationY( y, isRelative );
+		this.AddRotationZ( z, isRelative );
+        return this;
+    }
+    public XHash Rotation( Vector3 rotation, bool isRelative = false )
+    {
+        this.AddRotationX( rotation.x, isRelative );
+		this.AddRotationY( rotation.y, isRelative );
+		this.AddRotationZ( rotation.z, isRelative );
+        return this;
+    }
 
-    private bool _isRelativeRed;
-    private bool _isRelativeGreen;
-    private bool _isRelativeBlue;
-    private bool _isRelativeAlpha;
-    public bool isRelativeRed
-    {
-        get { return this._isRelativeRed; }
-        set { this._isRelativeRed = value; }
-    }
-    public bool isRelativeGreen
-    {
-        get { return this._isRelativeGreen; }
-        set { this._isRelativeGreen = value; }
-    }
-    public bool isRelativeBlue
-    {
-        get { return this._isRelativeBlue; }
-        set { this._isRelativeBlue = value; }
-    }
-    public bool isRelativeAlpha
-    {
-        get { return this._isRelativeAlpha; }
-        set { this._isRelativeAlpha = value; }
-    }
-    private bool _containRed;
-	private bool _containGreen;
-	private bool _containBlue;
-	private bool _containAlpha;
+	/*********************************** Color **********************************/
+    public bool isRelativeRed { get; set; }
+    public bool isRelativeGreen { get; set; }
+    public bool isRelativeBlue { get; set; }
+    public bool isRelativeAlpha { get; set; }
+    private bool _containRed, _containGreen, _containBlue, _containAlpha;
 	public bool containRed { get{ return this._containRed; } }
 	public bool containGreen { get{ return this._containGreen; } }
 	public bool containBlue { get{ return this._containBlue; } }
 	public bool containAlpha { get{ return this._containAlpha; } }
-	private float _red;
-	private float _green;
-	private float _blue;
-	private float _alpha;
+	private float _red, _green, _blue, _alpha;
 	public float red
 	{
 		get { return _red; }
@@ -332,29 +425,15 @@ public struct XHash : IClassicHandlable
 		}
 	}
 
-	private int _rotateXCount;
-	private int _rotateYCount;
-	private int _rotateZCount;
+	/*********************************** Rotation Count **********************************/
+	private int _rotateXCount, _rotateYCount, _rotateZCount;
 	public int rotateXCount { get{ return _rotateXCount; } }
 	public int rotateYCount { get{ return _rotateYCount; } }
 	public int rotateZCount { get{ return _rotateZCount; } }
-
     public bool containColor { get {  return (this._containRed || this._containGreen || this._containBlue || this._containAlpha); } }
 
-    private bool _containType;
-    private Type _type;
-    public bool containColorComponentType { get { return this._containType; } }
-    public Type colorComponentType
-    {
-        get { return _type; }
-        set
-        {
-            _containType = true;
-            _type = value;
-        }
-    }
-
-	public static XHash New
+	/*********************************** Create Instance **********************************/
+    public static XHash New
     {
         get
         {
@@ -363,72 +442,12 @@ public struct XHash : IClassicHandlable
         }
     }
 
-	public XHash Position( float x, float y, bool isRelative = false )
-	{
-		this.x = x;
-		this.y = y;
-		return this;
-	}
 	
-	public XHash Position( float x, float y, float z, bool isRelative = false )
-    {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        return this;
-    }
-
-	public XHash Position( Vector3 position, bool isRelative = false )
-	{
-		this.x = position.x;
-		this.y = position.y;
-		this.z = position.z;
-		return this;
-	}
-	
-	public XHash Scale( float x, float y, bool isRelative = false )
-	{
-		this.scaleX = x;
-		this.scaleY = y;
-		return this;
-	}
-	
-	public XHash Scale( float x, float y, float z, bool isRelative = false )
-    {
-        this.scaleX = x;
-        this.scaleY = y;
-        this.scaleZ = z;
-        return this;
-    }
-
-	public XHash Scale( Vector3 scale, bool isRelative = false )
-	{
-		this.scaleX = scale.x;
-		this.scaleY = scale.y;
-		this.scaleZ = scale.z;
-		return this;
-	}
-	
-	public XHash Rotation( float x, float y, float z, bool isRelative = false )
-    {
-        this.rotationX = x;
-        this.rotationY = y;
-        this.rotationZ = z;
-        return this;
-    }
-
-    public XHash Rotation( Vector3 rotation, bool isRelative = false )
-    {
-        this.rotationX = rotation.x;
-        this.rotationY = rotation.y;
-        this.rotationZ = rotation.z;
-        return this;
-    }
-
+	/*********************************** Add Methods **********************************/
     public XHash AddX( float end, bool isRelative = false )
     {
         this.x = end;
-        this._isRelativeX = isRelative;
+        this.isRelativeX = isRelative;
         return this;
     }
 	public XHash AddX( float start, float end, bool isRelative = false )
@@ -441,7 +460,7 @@ public struct XHash : IClassicHandlable
     public XHash AddY( float end, bool isRelative = false )
     {
         this.y = end;
-        this._isRelativeY = isRelative;
+        this.isRelativeY = isRelative;
         return this;
     }
 	public XHash AddY( float start, float end, bool isRelative = false )
@@ -454,7 +473,7 @@ public struct XHash : IClassicHandlable
     public XHash AddZ( float end, bool isRelative = false )
     {
         this.z = end;
-        this._isRelativeZ = isRelative;
+        this.isRelativeZ = isRelative;
         return this;
     }
 	public XHash AddZ( float start, float end, bool isRelative = false )
@@ -464,10 +483,88 @@ public struct XHash : IClassicHandlable
 		this._start = hash;
 		return AddZ( end, isRelative );
 	}
+	public XHash AddLeft( float end, bool isRelative = false )
+    {
+        this.Left = end;
+        this.IsRelativeLeft = isRelative;
+        return this;
+    }
+	public XHash AddLeft( float start, float end, bool isRelative = false )
+	{
+		XHash hash = this.GetStart();
+		hash.Left = start;
+		this._start = hash;
+		return AddLeft( end, isRelative );
+	}
+	public XHash AddTop( float end, bool isRelative = false )
+    {
+        this.Top = end;
+        this.IsRelativeTop = isRelative;
+        return this;
+    }
+	public XHash AddTop( float start, float end, bool isRelative = false )
+	{
+		XHash hash = this.GetStart();
+		hash.Top = start;
+		this._start = hash;
+		return AddTop( end, isRelative );
+	}
+	public XHash AddRight( float end, bool isRelative = false )
+    {
+        this.Right = end;
+        this.IsRelativeRight = isRelative;
+        return this;
+    }
+	public XHash AddRight( float start, float end, bool isRelative = false )
+	{
+		XHash hash = this.GetStart();
+		hash.Right = start;
+		this._start = hash;
+		return AddRight( end, isRelative );
+	}
+	public XHash AddBottom( float end, bool isRelative = false )
+    {
+        this.Bottom = end;
+        this.IsRelativeBottom = isRelative;
+        return this;
+    }
+	public XHash AddBottom( float start, float end, bool isRelative = false )
+	{
+		XHash hash = this.GetStart();
+		hash.Bottom = start;
+		this._start = hash;
+		return AddBottom( end, isRelative );
+	}
+	public XHash AddWidth( float end, bool isRelative = false )
+    {
+        this.Width = end;
+        this.IsRelativeWidth = isRelative;
+        return this;
+    }
+	public XHash AddWidth( float start, float end, bool isRelative = false )
+	{
+		XHash hash = this.GetStart();
+		hash.Width = start;
+		this._start = hash;
+		return AddWidth( end, isRelative );
+	}
+	public XHash AddHeight( float end, bool isRelative = false )
+    {
+        this.Height = end;
+        this.IsRelativeHeight = isRelative;
+        return this;
+    }
+	public XHash AddHeight( float start, float end, bool isRelative = false )
+	{
+		XHash hash = this.GetStart();
+		hash.Height = start;
+		this._start = hash;
+		return AddHeight( end, isRelative );
+	}
     public XHash AddScaleX( float end, bool isRelative = false )
     {
         this.scaleX = end;
-        this._isRelativeScaleX = isRelative;
+        this.isRelativeScaleX = isRelative;
         return this;
     }
 	public XHash AddScaleX( float start, float end, bool isRelative = false )
@@ -480,7 +577,7 @@ public struct XHash : IClassicHandlable
     public XHash AddScaleY( float end, bool isRelative = false )
     {
         this.scaleY = end;
-        this._isRelativeScaleY = isRelative;
+        this.isRelativeScaleY = isRelative;
         return this;
     }
 	public XHash AddScaleY( float start, float end, bool isRelative = false )
@@ -493,7 +590,7 @@ public struct XHash : IClassicHandlable
     public XHash AddScaleZ( float end, bool isRelative = false )
     {
         this.scaleZ = end;
-        this._isRelativeScaleZ = isRelative;
+        this.isRelativeScaleZ = isRelative;
         return this;
     }
 	public XHash AddScaleZ( float start, float end, bool isRelative = false )
@@ -506,7 +603,7 @@ public struct XHash : IClassicHandlable
     public XHash AddRotationX( float end, bool isRelative = false  )
     {
         this.rotationX = end;
-        this._isRelativeRotateX = isRelative;
+        this.isRelativeRotateX = isRelative;
         return this;
     }
     public XHash AddRotationX( float end, bool rotateRight, int rotateCount = 0, bool isRelative = false )
@@ -514,7 +611,7 @@ public struct XHash : IClassicHandlable
         this.rotationX = end;
 		this._rotateXRight = rotateRight;
 		this._rotateXCount = rotateCount;
-        this._isRelativeRotateX = isRelative;
+        this.isRelativeRotateX = isRelative;
         return this;
     }
 	public XHash AddRotationX( float start, float end, bool rotateRight, int rotateCount = 0, bool isRelative = false )
@@ -527,7 +624,7 @@ public struct XHash : IClassicHandlable
     public XHash AddRotationY( float end, bool isRelative = false  )
     {
         this.rotationY = end;
-        this._isRelativeRotateY = isRelative;
+        this.isRelativeRotateY = isRelative;
         return this;
     }
 	public XHash AddRotationY( float end, bool rotateRight, int rotateCount = 0, bool isRelative = false )
@@ -535,7 +632,7 @@ public struct XHash : IClassicHandlable
         this.rotationY = end;
 		this._rotateYRight = rotateRight;
 		this._rotateYCount = rotateCount;
-        this._isRelativeRotateY = isRelative;
+        this.isRelativeRotateY = isRelative;
         return this;
     }
 	public XHash AddRotationY( float start, float end, bool rotateRight, int rotateCount = 0, bool isRelative = false )
@@ -548,7 +645,7 @@ public struct XHash : IClassicHandlable
     public XHash AddRotationZ( float end, bool isRelative = false  )
     {
         this.rotationZ = end;
-        this._isRelativeRotateZ = isRelative;
+        this.isRelativeRotateZ = isRelative;
         return this;
     }
     public XHash AddRotationZ( float end, bool rotateRight, int rotateCount = 0, bool isRelative = false )
@@ -556,7 +653,7 @@ public struct XHash : IClassicHandlable
         this.rotationZ = end;
 		this._rotateZRight = rotateRight;
 		this._rotateZCount = rotateCount;
-        this._isRelativeRotateZ = isRelative;
+        this.isRelativeRotateZ = isRelative;
         return this;
     }
 	public XHash AddRotationZ( float start, float end, bool rotateRight, int rotateCount = 0, bool isRelative = false )
@@ -569,7 +666,7 @@ public struct XHash : IClassicHandlable
     public XHash AddRed( float end, bool isRelative = false )
     {
         this.red = end;
-        this._isRelativeRed = isRelative;
+        this.isRelativeRed = isRelative;
         return this;
     }
 	public XHash AddRed( float start, float end, bool isRelative = false )
@@ -582,7 +679,7 @@ public struct XHash : IClassicHandlable
     public XHash AddGreen( float end, bool isRelative = false )
     {
         this.green = end;
-        this._isRelativeGreen = isRelative;
+        this.isRelativeGreen = isRelative;
         return this;
     }
 	public XHash AddGreen( float start, float end, bool isRelative = false )
@@ -595,7 +692,7 @@ public struct XHash : IClassicHandlable
     public XHash AddBlue( float end, bool isRelative = false )
     {
         this.blue = end;
-        this._isRelativeBlue = isRelative;
+        this.isRelativeBlue = isRelative;
         return this;
     }
 	public XHash AddBlue( float start, float end, bool isRelative = false )
@@ -608,7 +705,7 @@ public struct XHash : IClassicHandlable
     public XHash AddAlpha( float end, bool isRelative = false )
     {
         this.alpha = end;
-        this._isRelativeAlpha = isRelative;
+        this.isRelativeAlpha = isRelative;
         return this;
     }
 	public XHash AddAlpha( float start, float end, bool isRelative = false )
@@ -618,12 +715,7 @@ public struct XHash : IClassicHandlable
 		this._start = hash;
 		return AddAlpha( end, isRelative );
 	}
-    public XHash AddColorComponentType( Type type )
-    {
-        this.colorComponentType = type;
-        return this;
-    }
-	public XHash AddOnPlay( IExecutable value )
+    public XHash AddOnPlay( IExecutable value )
 	{
 		this.onPlay = value;
 		return this;
@@ -646,10 +738,7 @@ public struct XHash : IClassicHandlable
 
 	public XHash GetStart()
 	{
-		if( this._start == null )
-		{
-			this._start = new XHash();
-		}
+		if( this._start == null ) this._start = new XHash();
 		return (XHash)this._start;
 	}
 }
