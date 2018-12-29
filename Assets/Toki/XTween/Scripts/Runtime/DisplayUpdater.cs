@@ -3,23 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum XProperty
-{
-	x,
-	y,
-	z,
-	scaleX,
-	scaleY,
-	scaleZ,
-	rotationX,
-	rotationY,
-	rotationZ,
-	red,
-	blue,
-	green,
-	alpha
-}
-	
 public class DisplayUpdater : AbstractUpdater, IUpdating
 {
 	protected float _invert;
