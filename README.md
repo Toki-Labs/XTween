@@ -22,16 +22,16 @@ Unity에서 보편적으로 쓰이는 Tween과 XTween과의 성능비교
 
 __Garbage Alloc__
 Other Tween Start GC - __185.5KB__
-![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Start.JPG)
+![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Start.png)
 XTween Start GC - __2.5KB__
-![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start.JPG)
+![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start.png)
 - Other Tween이 74.2배 많은 Garbage 발생 
 
 
 Other Tween End GC - __1KB__
-![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_End.JPG)
+![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_End.png)
 XTween End GC - __0.02KB__
-![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.JPG)
+![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.png)
 - Other Tween이 50배 많은 Garbage 발생
 
  Category|Other Tween|XTween
