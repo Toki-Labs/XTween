@@ -36,8 +36,9 @@ public class ObjectTween : AbstractTween, IIAniObject
 				if( _updater is DisplayUpdater )
 				{
 					DisplayUpdater display = (DisplayUpdater)_updater;
-					display.stopOnDestroyHandler = this.StopOnDestroy;
+					display.StopOnDestroyHandler = this.StopOnDestroy;
 				}
+				
 			}
 		}
 	}
@@ -49,13 +50,16 @@ public class ObjectTween : AbstractTween, IIAniObject
 		
 	protected override void InternalUpdate( float time )
 	{
-		float factor = 0.0f;
+		float factor = 0f;
 
-		if (time > 0.0f) {
-			if (time < _duration) {
+		if (time > 0f) 
+		{
+			if (time < _duration) 
+			{
 				factor = _easing.Calculate(time, 0.0f, 1.0f, _duration);
 			}
-			else {
+			else 
+			{
 				factor = 1.0f;
 			}
 		}
@@ -65,15 +69,5 @@ public class ObjectTween : AbstractTween, IIAniObject
 	protected override AbstractTween NewInstance()
 	{
 		return new ObjectTween(_ticker);
-	}
-		
-	protected override void CopyFrom( AbstractTween source )
-	{
-		base.CopyFrom(source);
-			
-		ObjectTween obj = source as ObjectTween;
-		
-		_easing = obj._easing;
-		_updater = obj._updater.Clone();
 	}
 }

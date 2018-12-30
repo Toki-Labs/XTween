@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 public class TweenDecorator : AbstractTween
 {
-	public TweenDecorator( IIAni baseTween, float position ) : base( baseTween.ticker, position )
+	public TweenDecorator( IIAni baseTween, float position ) : base( baseTween.Ticker, position )
 	{
 		_baseTween = baseTween;
-        _baseTween.decoratorStopOnDestroy = this.StopOnDestroy;
-		_duration = baseTween.duration;
+        _baseTween.DecoratorStopOnDestroy = this.StopOnDestroy;
+		_duration = baseTween.Duration;
 	}
 		
 	protected IIAni _baseTween;
@@ -17,11 +17,11 @@ public class TweenDecorator : AbstractTween
 		get { return _baseTween; }
 	}
 
-    public override Action decoratorStopOnDestroy
+    public override Action DecoratorStopOnDestroy
     {
         set
         {
-            _baseTween.decoratorStopOnDestroy = value;
+            _baseTween.DecoratorStopOnDestroy = value;
         }
     }
 

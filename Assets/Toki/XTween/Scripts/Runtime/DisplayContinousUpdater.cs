@@ -68,28 +68,4 @@ public class DisplayContinousUpdater : DisplayUpdater
 	{
 		_rot.z += _dRot.z * _factor * _deltaTime;
 	}
-	protected override void UpdateColorRed()
-	{
-		_col.r += _dColor.r * _factor * _deltaTime;
-	}
-	protected override void UpdateColorGreen()
-	{
-		_col.g += _dColor.g * _factor * _deltaTime;
-	}
-	protected override void UpdateColorBlue()
-	{
-		_col.b += _dColor.b * _factor * _deltaTime;
-	}
-	protected override void UpdateColorAlpha()
-	{
-		_col.a += _dColor.a * _factor * _deltaTime;
-	}
-		
-	public override IUpdating Clone()
-	{
-		DisplayUpdater instance = new DisplayUpdater();
-        instance.start = this._start;
-        instance.finish = this._finish;
-		return instance;
-	}
 }

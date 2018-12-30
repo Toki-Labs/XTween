@@ -28,22 +28,22 @@ public class AbstractTween : TimerListener, IIAni
 		
 	protected float _time;
 		
-	public ITimer ticker
+	public ITimer Ticker
 	{
 		get { return _ticker; }
 	}
 		
-	public float duration
+	public float Duration
 	{
 		get { return _duration; }
 	}
 		
-	public float position
+	public float Position
 	{
 		get { return _position; }
 	}
 		
-	public bool isPlaying
+	public bool IsPlaying
 	{
 		get { return _isPlaying; }
 		set 
@@ -56,7 +56,7 @@ public class AbstractTween : TimerListener, IIAni
 		}
 	}
 
-    public virtual Action decoratorStopOnDestroy
+    public virtual Action DecoratorStopOnDestroy
     {
         set
         {
@@ -64,7 +64,7 @@ public class AbstractTween : TimerListener, IIAni
         }
     }
 
-	public bool isRealTime
+	public bool IsRealTime
 	{
 		get
 		{
@@ -79,7 +79,7 @@ public class AbstractTween : TimerListener, IIAni
 		}
 	}
 
-	public uint frameSkip
+	public uint FrameSkip
 	{
 		get
 		{
@@ -100,40 +100,40 @@ public class AbstractTween : TimerListener, IIAni
 		}
 	}
 	
-	public bool stopOnComplete
+	public bool StopOnComplete
 	{
 		get { return _stopOnComplete; }
 		set { _stopOnComplete = value; }
 	}
 		
-	public IClassicHandlable classicHandlers
+	public IClassicHandlable ClassicHandlers
 	{
 		get { return _classicHandlers; }
 		set { _classicHandlers = value; }
 	}
 		
-	public IExecutable onPlay
+	public IExecutable OnPlay
 	{
-		get { return _classicHandlers != null ? _classicHandlers.onPlay : null; }
-		set { GetClassicHandlers.onPlay = value; }
+		get { return _classicHandlers != null ? _classicHandlers.OnPlay : null; }
+		set { GetClassicHandlers.OnPlay = value; }
 	}
 		
-	public IExecutable onStop
+	public IExecutable OnStop
 	{
-		get { return _classicHandlers != null ? _classicHandlers.onStop : null; }
-		set { GetClassicHandlers.onStop = value; }
+		get { return _classicHandlers != null ? _classicHandlers.OnStop : null; }
+		set { GetClassicHandlers.OnStop = value; }
 	}
 		
-	public IExecutable onUpdate
+	public IExecutable OnUpdate
 	{
-		get { return _classicHandlers != null ? _classicHandlers.onUpdate : null; }
-		set { GetClassicHandlers.onUpdate = value; }
+		get { return _classicHandlers != null ? _classicHandlers.OnUpdate : null; }
+		set { GetClassicHandlers.OnUpdate = value; }
 	}
 		
-	public IExecutable onComplete
+	public IExecutable OnComplete
 	{
-		get { return _classicHandlers != null ? _classicHandlers.onComplete : null; }
-		set { GetClassicHandlers.onComplete = value; }
+		get { return _classicHandlers != null ? _classicHandlers.OnComplete : null; }
+		set { GetClassicHandlers.OnComplete = value; }
 	}
 		
 	protected IClassicHandlable GetClassicHandlers
@@ -195,8 +195,8 @@ public class AbstractTween : TimerListener, IIAni
 			_isPlaying = true;
 			this.ResolveValues();
             _ticker.AddTimer(this);
-            if (_classicHandlers != null && _classicHandlers.onPlay != null) {
-				_classicHandlers.onPlay.Execute();
+            if (_classicHandlers != null && _classicHandlers.OnPlay != null) {
+				_classicHandlers.OnPlay.Execute();
 			}
 			Tick(t);
 		}
@@ -209,8 +209,8 @@ public class AbstractTween : TimerListener, IIAni
 		
 	public virtual void StartPlay()
 	{
-		if (_classicHandlers != null && _classicHandlers.onPlay != null) {
-			_classicHandlers.onPlay.Execute();
+		if (_classicHandlers != null && _classicHandlers.OnPlay != null) {
+			_classicHandlers.OnPlay.Execute();
 		}
 	}
 
@@ -218,22 +218,21 @@ public class AbstractTween : TimerListener, IIAni
 	{
 		if (_isPlaying) {
 			_isPlaying = false;
-			if (_classicHandlers != null && _classicHandlers.onStop != null) {
-				_classicHandlers.onStop.Execute();
+			if (_classicHandlers != null && _classicHandlers.OnStop != null) {
+				_classicHandlers.OnStop.Execute();
 			}
 		}
 	}
 
 	public virtual void Dispose()
 	{
-        //Ticker�� ����
 		this._isPlaying = false;
 	}
 		
 	public virtual void StartStop()
 	{
-		if (_classicHandlers != null && _classicHandlers.onStop != null) {
-			_classicHandlers.onStop.Execute();
+		if (_classicHandlers != null && _classicHandlers.OnStop != null) {
+			_classicHandlers.OnStop.Execute();
 		}
 	}
 		
@@ -271,8 +270,8 @@ public class AbstractTween : TimerListener, IIAni
 		_position = position;
         this.ResolveValues();
 		InternalUpdate(position);
-		if (_classicHandlers != null && _classicHandlers.onUpdate != null) {
-			_classicHandlers.onUpdate.Execute();
+		if (_classicHandlers != null && _classicHandlers.OnUpdate != null) {
+			_classicHandlers.OnUpdate.Execute();
 		}
 		Stop();
 	}
@@ -290,13 +289,13 @@ public class AbstractTween : TimerListener, IIAni
         {
 		    InternalUpdate(time);
 			
-		    if (_classicHandlers != null && _classicHandlers.onUpdate != null) {
-			    _classicHandlers.onUpdate.Execute();
+		    if (_classicHandlers != null && _classicHandlers.OnUpdate != null) {
+			    _classicHandlers.OnUpdate.Execute();
 		    }
 			
 		    if (isComplete) {
-			    if (_classicHandlers != null && _classicHandlers.onComplete != null) {
-				    _classicHandlers.onComplete.Execute();
+			    if (_classicHandlers != null && _classicHandlers.OnComplete != null) {
+				    _classicHandlers.OnComplete.Execute();
 			    }
 		    }
         }	
@@ -318,8 +317,8 @@ public class AbstractTween : TimerListener, IIAni
 		_position = t;
         InternalUpdate(t);
 			
-		if (_classicHandlers != null && _classicHandlers.onUpdate != null) {
-			_classicHandlers.onUpdate.Execute();
+		if (_classicHandlers != null && _classicHandlers.OnUpdate != null) {
+			_classicHandlers.OnUpdate.Execute();
 		}
 			
 		if (_isPlaying) {
@@ -327,14 +326,14 @@ public class AbstractTween : TimerListener, IIAni
 				_position = _duration;
 				if (_stopOnComplete) {
 					_isPlaying = false;
-					if (_classicHandlers != null && _classicHandlers.onComplete != null) {
-						_classicHandlers.onComplete.Execute();
+					if (_classicHandlers != null && _classicHandlers.OnComplete != null) {
+						_classicHandlers.OnComplete.Execute();
 					}
 					return true;
 				}
 				else {
-					if (_classicHandlers != null && _classicHandlers.onComplete != null) {
-						_classicHandlers.onComplete.Execute();
+					if (_classicHandlers != null && _classicHandlers.OnComplete != null) {
+						_classicHandlers.OnComplete.Execute();
 					}
 					_position = t - _duration;
 					_startTime = time - _position;

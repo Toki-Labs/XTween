@@ -104,54 +104,5 @@ public class BezierUpdater : DisplayUpdater
     {
         _rot.y = this.Calcurate( _controlPoint.rotationY, _sRot.y, _dRot.y );
     }
-    protected override void UpdateRotationZ()
-    {
-        _rot.z = this.Calcurate( _controlPoint.rotationZ, _sRot.z, _dRot.z );
-    }
-    protected override void UpdateColorRed()
-    {
-        _col.r = this.Calcurate( _controlPoint.red, _sColor.r, _dColor.r );
-    }
-    protected override void UpdateColorGreen()
-    {
-        _col.g = this.Calcurate( _controlPoint.green, _sColor.g, _dColor.g );
-    }
-    protected override void UpdateColorBlue()
-    {
-        _col.b = this.Calcurate( _controlPoint.blue, _sColor.b, _dColor.b );
-    }
-    protected override void UpdateColorAlpha()
-    {
-        _col.a = this.Calcurate( _controlPoint.alpha, _sColor.a, _dColor.a );
-    }
-		
-	protected override AbstractUpdater NewInstance() 
-	{
-        BezierUpdater updater = new BezierUpdater();
-        updater._start = this._start;
-        updater._finish = this._finish;
-        return updater;
-	}
-		
-	protected override void CopyFrom( AbstractUpdater source )
-	{
-		base.CopyFrom(source);
-			
-		BezierUpdater obj = source as BezierUpdater;
-        this._target = obj._target;
-        this._start = obj._start;
-        this._finish = obj._finish;
-        this._controlPoint = obj._controlPoint;
-        this._stopOnDestroyHandler = obj._stopOnDestroyHandler;
-	}
-
-    public override IUpdating Clone()
-    {
-        BezierUpdater instance = new BezierUpdater();
-        instance.start = this._start;
-        instance.finish = this._finish;
-        instance.controlPoint = this._controlPoint;
-        return base.Clone();
-    }
 }
 

@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 public class DisplayUpdater : AbstractUpdater, IUpdating
 {
-	protected float _invert;
-    protected float _factor = 0f;
     protected int _updateCount;
 	protected GameObject _target = null;
 	protected Transform _transform;
@@ -21,22 +19,15 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
     protected Vector3 _dSca;
     protected Vector3 _sRot;
     protected Vector3 _dRot;
-    protected Color _sColor;
-    protected Color _dColor;
-	protected Vector3 _pos;
+    protected Vector3 _pos;
 	protected UIRect _rect;
 	protected Vector2 _size;
 	protected Vector3 _rot;
 	protected Vector3 _sca;
-	protected Color _col;
 	protected XHash _start;
 	protected XHash _finish;
-    protected IColorUpdatable _colorUpdater;
-	protected Action _stopOnDestroyHandler;
 	protected List<Action> _updateList;
-		
-
-    public override GameObject target
+    public GameObject Target
 	{
 		get { return _target; }
 		set 
@@ -45,37 +36,16 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 	}
 		
-	public override IClassicHandlable start
+	public override IClassicHandlable Start
 	{
 		set { _start = (XHash)value; }
 	}
 		
-	public override IClassicHandlable finish
+	public override IClassicHandlable Finish
 	{
 		set { _finish = (XHash)value; }
 	}
-		
-	public Action stopOnDestroyHandler
-	{
-		set { _stopOnDestroyHandler = value; }
-	}
-		
-	protected virtual void FindColorObject()
-	{
-        if( this._finish.containColor )
-        {
-            /* if( this._finish.containColorComponentType )
-            {
-                Type type = this._finish.colorComponentType;
-                this._colorUpdater = ColorUpdatorFactory.Create( type,target );
-            }
-            else
-            {
-                this._colorUpdater = ColorUpdatorFactory.Find( target );
-            } */
-        }
-	}
-		
+	
 	//source set
 	public override void ResolveValues()
 	{
@@ -90,7 +60,6 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 
 		this._transform = this._target.transform;
 		this._transformRect = this._target.transform as RectTransform;
-		this.FindColorObject();
 			
 		if( this._transformRect == null )
 		{
@@ -109,17 +78,17 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		_sca = this._transform.localScale;
         
 		//if exist source, set values
-		if( _start.containX )
+		if( _start.ContainX )
 		{
-			_pos.x = _start.x;
+			_pos.x = _start.X;
 		}
-		if( _start.containY )
+		if( _start.ContainY )
 		{
-			_pos.y = _start.y;
+			_pos.y = _start.Y;
 		}
-		if( _start.containZ )
+		if( _start.ContainZ )
 		{
-			_pos.z = _start.z;
+			_pos.z = _start.Z;
 		}
 		if( _start.ContainLeft )
 		{
@@ -145,29 +114,29 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		{
 			_size.x = _start.Height;
 		}
-		if( _start.containScaleX )
+		if( _start.ContainScaleX )
 		{
-			_sca.x = _start.scaleX;
+			_sca.x = _start.ScaleX;
 		}
-		if( _start.containScaleY )
+		if( _start.ContainScaleY )
 		{
-			_sca.y = _start.scaleY;
+			_sca.y = _start.ScaleY;
 		}
-		if( _start.containScaleZ )
+		if( _start.ContainScaleZ )
 		{
-			_sca.z = _start.scaleZ;
+			_sca.z = _start.ScaleZ;
 		}
-		if( _start.containRotationX )
+		if( _start.ContainRotationX )
 		{
-			_rot.x = _start.rotationX;
+			_rot.x = _start.RotationX;
 		}
-		if( _start.containRotationY )
+		if( _start.ContainRotationY )
 		{
-			_rot.y = _start.rotationY;
+			_rot.y = _start.RotationY;
 		}
-		if( _start.containRotationZ )
+		if( _start.ContainRotationZ )
 		{
-			_rot.z = _start.rotationZ;
+			_rot.z = _start.RotationZ;
 		}
         
         bool changedPos = false;
@@ -175,7 +144,6 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		bool changedSize = false;
 		bool changedSca = false;
 		bool changedRot = false;
-		bool changedCol = false;
         this._updateList = new List<Action>();
 			
 		float x = _pos.x;
@@ -184,32 +152,32 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		bool addForce = false;
 		if( this is BezierUpdater )
 		{
-			addForce = _finish.containX || _finish.containY || _finish.containZ;
+			addForce = _finish.ContainX || _finish.ContainY || _finish.ContainZ;
 		}
-		if( _finish.containX )
+		if( _finish.ContainX )
 		{
-            if( x != _finish.x || _finish.isRelativeX || addForce )
+            if( x != _finish.X || _finish.IsRelativeX || addForce )
             { 
 			    changedPos = true;
-			    x = _finish.isRelativeX ? x + _finish.x : _finish.x;
+			    x = _finish.IsRelativeX ? x + _finish.X : _finish.X;
                 this._updateList.Add(GetUpdateX());
             }
 		}
-		if( _finish.containY )
+		if( _finish.ContainY )
 		{
-            if( y != _finish.y || _finish.isRelativeY || addForce )
+            if( y != _finish.Y || _finish.IsRelativeY || addForce )
             {
 			    changedPos = true;;
-			    y = _finish.isRelativeY ? y + _finish.y : _finish.y;
+			    y = _finish.IsRelativeY ? y + _finish.Y : _finish.Y;
                 this._updateList.Add(GetUpdateY());
             }
 		}
-		if( _finish.containZ )
+		if( _finish.ContainZ )
 		{
-            if( z != _finish.z || _finish.isRelativeZ || addForce )
+            if( z != _finish.Z || _finish.IsRelativeZ || addForce )
             {
 			    changedPos = true;
-			    z = _finish.isRelativeZ ? z + _finish.z : _finish.z;
+			    z = _finish.IsRelativeZ ? z + _finish.Z : _finish.Z;
                 this._updateList.Add(GetUpdateZ());
             }
 		}
@@ -276,60 +244,60 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		float scaleX = _sca.x;
 		float scaleY = _sca.y;
 		float scaleZ = _sca.z;
-		if( _finish.containScaleX )
+		if( _finish.ContainScaleX )
 		{
-            if( scaleX != _finish.scaleX || _finish.isRelativeScaleX )
+            if( scaleX != _finish.ScaleX || _finish.IsRelativeScaleX )
             {
 			    changedSca = true;
-			    scaleX = _finish.isRelativeScaleX ? scaleX + _finish.scaleX : _finish.scaleX;
+			    scaleX = _finish.IsRelativeScaleX ? scaleX + _finish.ScaleX : _finish.ScaleX;
                 this._updateList.Add(GetUpdateScaleX());
             }
 		}
-		if( _finish.containScaleY )
+		if( _finish.ContainScaleY )
 		{
-            if( scaleY != _finish.scaleY || _finish.isRelativeScaleY )
+            if( scaleY != _finish.ScaleY || _finish.IsRelativeScaleY )
             {
 			    changedSca = true;
-			    scaleY = _finish.isRelativeScaleY ? scaleY + _finish.scaleY : _finish.scaleY;
+			    scaleY = _finish.IsRelativeScaleY ? scaleY + _finish.ScaleY : _finish.ScaleY;
                 this._updateList.Add(GetUpdateScaleY());
             }
 		}
-		if( _finish.containScaleZ )
+		if( _finish.ContainScaleZ )
 		{
-            if( scaleZ != _finish.scaleZ || _finish.isRelativeScaleZ )
+            if( scaleZ != _finish.ScaleZ || _finish.IsRelativeScaleZ )
             {
 			    changedSca = true;
-			    scaleZ = _finish.isRelativeScaleZ ? scaleZ + _finish.scaleZ : _finish.scaleZ;
+			    scaleZ = _finish.IsRelativeScaleZ ? scaleZ + _finish.ScaleZ : _finish.ScaleZ;
                 this._updateList.Add(GetUpdateScaleZ());
             }
 		}
 		float rotationX = _rot.x;
 		float rotationY = _rot.y;
 		float rotationZ = _rot.z;
-		if( _finish.containRotationX )
+		if( _finish.ContainRotationX )
 		{
-			if( rotationX != _finish.rotationX || _finish.rotateXCount > 0 || _finish.isRelativeRotateX )
+			if( rotationX != _finish.RotationX || _finish.RotateXCount > 0 || _finish.IsRelativeRotateX )
             {
 			    changedRot = true;
-				rotationX = _finish.isRelativeRotateX ? rotationX + _finish.rotationX : this.GetRotation( _rot.x, _finish.rotationX, _finish.rotateXRight, _finish.rotateXCount );
+				rotationX = _finish.IsRelativeRotateX ? rotationX + _finish.RotationX : this.GetRotation( _rot.x, _finish.RotationX, _finish.RotateXClockwise, _finish.RotateXCount );
                 this._updateList.Add(GetUpdateRotationX());
             }
 		}
-		if( _finish.containRotationY )
+		if( _finish.ContainRotationY )
 		{
-			if( rotationY != _finish.rotationY || _finish.rotateYCount > 0 || _finish.isRelativeRotateY )
+			if( rotationY != _finish.RotationY || _finish.RotateYCount > 0 || _finish.IsRelativeRotateY )
             {
 			    changedRot = true;
-				rotationY = _finish.isRelativeRotateY ? rotationY + _finish.rotationY : this.GetRotation( _rot.y, _finish.rotationY, _finish.rotateYRight, _finish.rotateYCount );
+				rotationY = _finish.IsRelativeRotateY ? rotationY + _finish.RotationY : this.GetRotation( _rot.y, _finish.RotationY, _finish.RotateYClockwise, _finish.RotateYCount );
                 this._updateList.Add(GetUpdateRotationY());
             }
 		}
-		if( _finish.containRotationZ )
+		if( _finish.ContainRotationZ )
 		{
-            if( rotationZ != _finish.rotationZ || _finish.rotateZCount > 0 || _finish.isRelativeRotateZ )
+            if( rotationZ != _finish.RotationZ || _finish.RotateZCount > 0 || _finish.IsRelativeRotateZ )
             {
 			    changedRot = true;
-				rotationZ = _finish.isRelativeRotateZ ? rotationZ + _finish.rotationZ : this.GetRotation( _rot.z, _finish.rotationZ, _finish.rotateZRight, _finish.rotateZCount );
+				rotationZ = _finish.IsRelativeRotateZ ? rotationZ + _finish.RotationZ : this.GetRotation( _rot.z, _finish.RotationZ, _finish.RotateZClockwise, _finish.RotateZCount );
                 this._updateList.Add(GetUpdateRotationZ());
             }
 		}
@@ -383,76 +351,6 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
             this._updateList.Add(UpdateRotation);
 		}
 
-        if ( this._colorUpdater != null )
-        {
-            _col = this._colorUpdater.GetColor();
-            if (_start.containRed)
-            {
-                _col.r = _start.red;
-            }
-            if (_start.containGreen)
-            {
-                _col.g = _start.green;
-            }
-            if (_start.containBlue)
-            {
-                _col.b = _start.blue;
-            }
-            if (_start.containAlpha)
-            {
-                _col.a = _start.alpha;
-            }
-
-            float red = _col.r;
-            float green = _col.g;
-            float blue = _col.b;
-            float alpha = _col.a;
-            if (_finish.containRed)
-            {
-                if (red != _finish.red || _finish.isRelativeRed)
-                {
-                    changedCol = true;
-                    red = _finish.isRelativeRed ? red + _finish.red : _finish.red;
-                    this._updateList.Add(UpdateColorRed);
-                }
-            }
-            if (_finish.containGreen)
-            {
-                if (green != _finish.green || _finish.isRelativeGreen)
-                {
-                    changedCol = true;
-                    green = _finish.isRelativeGreen ? green + _finish.green : _finish.green;
-                    this._updateList.Add(UpdateColorGreen);
-                }
-            }
-            if (_finish.containBlue)
-            {
-                if (blue != _finish.blue || _finish.isRelativeBlue)
-                {
-                    changedCol = true;
-                    blue = _finish.isRelativeBlue ? blue + _finish.blue : _finish.blue;
-                    this._updateList.Add(UpdateColorBlue);
-                }
-            }
-            if (_finish.containAlpha)
-            {
-                if (alpha != _finish.alpha || _finish.isRelativeAlpha)
-                {
-                    changedCol = true;
-                    alpha = _finish.isRelativeAlpha ? alpha + _finish.alpha : _finish.alpha;
-                    this._updateList.Add(UpdateColorAlpha);
-                }
-            }
-            if (changedCol)
-            {
-                this.UpdateColor();
-                this._sColor = new Color(_col.r, _col.b, _col.g, _col.a);
-                this._dColor = new Color(red, green, blue, alpha);
-				this.UpdateColor();
-				this._updateList.Add(UpdateColor);
-            }
-        }
-
         this._updateCount = this._updateList.Count;
 	}
 
@@ -491,10 +389,8 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		return finish;
 	}
 		
-	public override void Updating( float factor )
+	protected override void UpdateObject()
 	{
-        _invert = 1.0f - factor;
-        _factor = factor;
         if (this._target == null)
         {
             this._stopOnDestroyHandler.Invoke();
@@ -594,23 +490,6 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 	{
 		_rot.z = _sRot.z * _invert + _dRot.z * _factor;
 	}
-    protected virtual void UpdateColorRed()
-	{
-		_col.r = _sColor.r * _invert + _dColor.r * _factor;
-	}
-    protected virtual void UpdateColorGreen()
-	{
-		_col.g = _sColor.g * _invert + _dColor.g * _factor;
-	}
-    protected virtual void UpdateColorBlue()
-	{
-		_col.b = _sColor.b * _invert + _dColor.b * _factor;
-	}
-    protected virtual void UpdateColorAlpha()
-	{
-		_col.a = _sColor.a * _invert + _dColor.a * _factor;
-	}
-		
 	//update transform
 	private void UpdatePosition()
 	{
@@ -645,17 +524,5 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 	private void UpdateRotation()
 	{
 		this._transform.localEulerAngles = _rot;
-	}
-    private void UpdateColor()
-    {
-        this._colorUpdater.SetColor(_col);
-    }
-		
-	public override IUpdating Clone()
-	{
-		DisplayUpdater instance = new DisplayUpdater();
-        instance.start = this._start;
-        instance.finish = this._finish;
-		return instance;
 	}
 }

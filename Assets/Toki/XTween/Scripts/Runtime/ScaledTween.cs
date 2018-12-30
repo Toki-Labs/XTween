@@ -5,7 +5,7 @@ public class ScaledTween : TweenDecorator
 {
 	public ScaledTween( IIAni baseTween, float scale ) : base(baseTween, 0)
 	{
-		_duration = baseTween.duration * scale;
+		_duration = baseTween.Duration * scale;
 		_scale = scale;
 	}
 		

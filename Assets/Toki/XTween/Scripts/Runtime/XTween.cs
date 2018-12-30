@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 
@@ -86,60 +87,89 @@ public class XTween
 	}
 #endif
 
-    /*===================================== Tween ========================================*/
-	public static IAni Tween( XObjectHash source, Action<XObjectHash> UpdateHandler, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
-	{
-		ITimer tick = _ticker;
-		ITimer tickReal = _tickerReal; 
-		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
-		ObjectUpdater updater = (ObjectUpdater)_updaterFactory.Create( source );
-		updater.updateHandler = UpdateHandler;
-		tween.frameSkip = frameSkip;
-		tween.updater = updater;
-		tween.classicHandlers = source;
-		tween.time = time;
-		tween.easing = ( easing != null ) ? easing : Linear.easeNone;
-		return tween;
-	}
-
-	/*===================================== To ========================================*/
+	/*===================================== Transform ========================================*/
     public static IAni To( GameObject target, XHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
 		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
-		tween.frameSkip = frameSkip;
+		tween.FrameSkip = frameSkip;
 		tween.updater = _updaterFactory.Create(target, hash, hash.GetStart());
-		tween.classicHandlers = hash;
+		tween.ClassicHandlers = hash;
 		tween.time = time;
 		tween.easing = (easing != null) ? easing : Linear.easeNone;
 		return tween;
     }
 
-	public static IAni To<T>( XObjectHash<T> hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+    /*===================================== Value ========================================*/
+	public static IAni ValueTo( XObjectHash source, Action<XObjectHash> UpdateHandler, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
 		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
-		ObjectUpdater<T> updater = (ObjectUpdater<T>)UpdaterFactory.Create<T>( hash );
-		tween.frameSkip = frameSkip;
+		ObjectUpdater updater = (ObjectUpdater)_updaterFactory.Create( source );
+		updater.UpdateHandler = UpdateHandler;
+		tween.FrameSkip = frameSkip;
 		tween.updater = updater;
-		tween.classicHandlers = hash;
+		tween.ClassicHandlers = source;
+		tween.time = time;
+		tween.easing = ( easing != null ) ? easing : Linear.easeNone;
+		return tween;
+	}
+
+	/*===================================== Property ========================================*/
+	public static IAni PropertyTo<T>( T target, XObjectHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		ITimer tick = _ticker;
+		ITimer tickReal = _tickerReal; 
+		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
+		ObjectUpdater<T> updater = (ObjectUpdater<T>)UpdaterFactory.Create<T>( target, hash );
+		tween.FrameSkip = frameSkip;
+		tween.updater = updater;
+		tween.ClassicHandlers = hash;
 		tween.time = time;
 		tween.easing = ( easing != null ) ? easing : Linear.easeNone;
 		return tween;
     }
 
+	/*===================================== Color ========================================*/
+	//Sprite
+	public static IAni ColorTo( SpriteRenderer target, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		return ColorTo<SpriteRenderer>(target, "color", hash, time, easing, frameSkip, realTime);
+	}
+
+	//UI
+	public static IAni ColorTo( Graphic target, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		return ColorTo<Graphic>(target, "color", hash, time, easing, frameSkip, realTime);
+	}
+
+	public static IAni ColorTo<T>( T target, string colorPropertyName, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		ITimer tick = _ticker;
+		ITimer tickReal = _tickerReal; 
+		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
+		ColorUpdater<T> updater = (ColorUpdater<T>)UpdaterFactory.Create<T>(target, colorPropertyName, hash, hash.GetStart() );
+		tween.FrameSkip = frameSkip;
+		tween.updater = updater;
+		tween.ClassicHandlers = hash;
+		tween.time = time;
+		tween.easing = ( easing != null ) ? easing : Linear.easeNone;
+		return tween;
+    }
+
+	/*===================================== Continue ========================================*/
 	public static ContinousTween Continous( GameObject target, XHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
 		ContinousTween tween = new ContinousTween( realTime ? tickReal : tick );
-		tween.frameSkip = frameSkip;
+		tween.FrameSkip = frameSkip;
 		tween.time = time;
 		tween.easing = (easing != null) ? easing : Linear.easeNone;
 		tween.updater = _updaterFactory.CreateContinous(target, hash, hash.GetStart());
-		tween.classicHandlers = hash;
+		tween.ClassicHandlers = hash;
 		return tween;
 	}
 
@@ -149,7 +179,7 @@ public class XTween
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
 		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
-		tween.frameSkip = 0;
+		tween.FrameSkip = 0;
 		tween.updater = _updaterFactory.Create( target, hash, hash.GetStart() );
 		tween.time = time;
 		tween.easing = ( easing != null ) ? easing : Linear.easeNone;
@@ -163,9 +193,9 @@ public class XTween
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
 		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
-		tween.frameSkip = frameSkip;
+		tween.FrameSkip = frameSkip;
 		tween.updater = _updaterFactory.CreateBezier(target, hash, hash.GetStart(), controlPoint);
-		tween.classicHandlers = hash;
+		tween.ClassicHandlers = hash;
 		tween.time = time;
 		tween.easing =  ( easing != null ) ? easing : Linear.easeNone;
 		return tween;
@@ -177,7 +207,7 @@ public class XTween
         ITimer tick = _ticker;
         ITimer tickReal = _tickerReal;
         ParallelTween tween = new ParallelTween(tweenList.ToArray(), realTime ? tickReal : tick, 0);
-        tween.frameSkip = 0;
+        tween.FrameSkip = 0;
         return tween;
     }
 
@@ -186,7 +216,7 @@ public class XTween
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
         ParallelTween tween = new ParallelTween(tweens, realTime ? tickReal : tick, 0);
-        tween.frameSkip = 0;
+        tween.FrameSkip = 0;
         return tween;
 	}
 
@@ -196,7 +226,7 @@ public class XTween
         ITimer tick = _ticker;
         ITimer tickReal = _tickerReal;
         SerialTween tween = new SerialTween(tweenList.ToArray(), realTime ? tickReal : tick, 0);
-        tween.frameSkip = 0;
+        tween.FrameSkip = 0;
         return tween;
     }
 
@@ -206,7 +236,7 @@ public class XTween
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal;
         SerialTween tween = new SerialTween(tweens, realTime ? tickReal : tick, 0);
-        tween.frameSkip = 0;
+        tween.FrameSkip = 0;
 		return tween;
 	}
 
@@ -214,18 +244,18 @@ public class XTween
 	public static IAni Reverse( IAni tween, bool reversePosition = true)
 	{
 		IAni newTween;
-		float pos = reversePosition ? tween.duration - tween.position : 0.0f;
+		float pos = reversePosition ? tween.Duration - tween.Position : 0.0f;
 		if (tween is ReversedTween) {
 			newTween = new TweenDecorator((tween as ReversedTween).baseTween, pos);
-			newTween.frameSkip = tween.frameSkip;
+			newTween.FrameSkip = tween.FrameSkip;
 			return newTween;
 		}
 		if (tween is TweenDecorator) {
 			newTween = (tween as TweenDecorator).baseTween;
-			newTween.frameSkip = tween.frameSkip;
+			newTween.FrameSkip = tween.FrameSkip;
 		}
 		newTween = new ReversedTween(tween as IIAni, pos);
-		newTween.frameSkip = tween.frameSkip;
+		newTween.FrameSkip = tween.FrameSkip;
 		return newTween;
 	}
 
@@ -233,7 +263,7 @@ public class XTween
 	public static IAni Repeat( IAni tween, int repeatCount )
 	{
 		IAni newTween = new RepeatedTween( (IIAni)tween, repeatCount );
-		newTween.frameSkip = tween.frameSkip;
+		newTween.FrameSkip = tween.FrameSkip;
 		return newTween;
 	}
 
@@ -241,7 +271,7 @@ public class XTween
 	public static IAni Scale( IAni tween, float scale )
 	{
 		IAni newTween = new ScaledTween( tween as IIAni, scale );
-		newTween.frameSkip = tween.frameSkip;
+		newTween.FrameSkip = tween.FrameSkip;
 		return newTween;
 	}
 
@@ -250,16 +280,16 @@ public class XTween
 	{
 		IAni newTween;
 		if (isPercent) {
-			begin = tween.duration * begin;
-			end = tween.duration * end;
+			begin = tween.Duration * begin;
+			end = tween.Duration * end;
 		}
 		if (begin > end) {
 			newTween = new ReversedTween(new SlicedTween(tween as IIAni, end, begin), 0);
-			newTween.frameSkip = tween.frameSkip;
+			newTween.FrameSkip = tween.FrameSkip;
 			return newTween;
 		}
 		newTween = new SlicedTween(tween as IIAni, begin, end);
-		newTween.frameSkip = tween.frameSkip;
+		newTween.FrameSkip = tween.FrameSkip;
 		return newTween;
 	}
 
@@ -267,7 +297,7 @@ public class XTween
 	public static IAni Delay( IAni tween, float delay, float postDelay = 0.0f )
 	{
 		IAni newTween = new DelayedTween( tween as IIAni, delay, postDelay );
-		newTween.frameSkip = tween.frameSkip;
+		newTween.FrameSkip = tween.FrameSkip;
 		return newTween;
 	}
 }

@@ -4,56 +4,55 @@ using System.Collections.Generic;
 
 public class UpdaterFactory
 {
-	public static IUpdating Create<T>( IClassicHandlable source )
+	public static IUpdating Create<T>( T target, XObjectHash source )
 	{
-		IUpdating updator = new ObjectUpdater<T>();
-		if( source != null )
-		{
-			updator.finish = source;
-		}
-			
+		ObjectUpdater<T> updator = new ObjectUpdater<T>();
+		updator.Target = target;
+		updator.Finish = source;
+		return updator;
+	}
+
+	public static IUpdating Create<T>( T target, string propertyName, XColorHash dest, XColorHash source )
+	{
+		ColorUpdater<T> updator = new ColorUpdater<T>();
+		updator.Target = target;
+		updator.PropertyName = propertyName;
+		updator.Start = source;
+		updator.Finish = dest;
 		return updator;
 	}
 
 	public IUpdating Create( IClassicHandlable source )
 	{
 		IUpdating updator = new ObjectUpdater();
-		if( source != null )
-		{
-			updator.finish = source;
-		}
-			
+		updator.Finish = source;
 		return updator;
 	}
 		
 	public IUpdating Create( GameObject target, IClassicHandlable dest, IClassicHandlable source )
 	{
-		IUpdating updater = new DisplayUpdater();
-		
-		updater.start = source;
-		updater.finish = dest;
-		updater.target = target;
-			
+		DisplayUpdater updater = new DisplayUpdater();
+		updater.Start = source;
+		updater.Finish = dest;
+		updater.Target = target;
 		return updater;
 	}
 
 	public IUpdating CreateContinous( GameObject target, IClassicHandlable dest, IClassicHandlable source )
 	{
-		IUpdating updater = new DisplayContinousUpdater();
-		
-		updater.start = source;
-		updater.finish = dest;
-		updater.target = target;
-		
+		DisplayContinousUpdater updater = new DisplayContinousUpdater();
+		updater.Start = source;
+		updater.Finish = dest;
+		updater.Target = target;
 		return updater;
 	}
 		
 	public IUpdating CreateBezier( GameObject target, XHash dest, XHash source, XPoint controlPoint )
 	{
 		BezierUpdater bezierUpdater = new BezierUpdater();
-		bezierUpdater.target = target;
-        bezierUpdater.start = source;
-        bezierUpdater.finish = dest;
+		bezierUpdater.Target = target;
+        bezierUpdater.Start = source;
+        bezierUpdater.Finish = dest;
         bezierUpdater.controlPoint = controlPoint;
 			
 		return bezierUpdater;

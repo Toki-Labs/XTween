@@ -14,23 +14,23 @@ public class ParallelTween : GroupTween
 			
 		if (l > 0) {
 			_a = targets[0] as IIAni;
-			_duration = _a.duration > _duration ? _a.duration : _duration;
+			_duration = _a.Duration > _duration ? _a.Duration : _duration;
 			if (l > 1) {
 				_b = targets[1] as IIAni;
-				_duration = _b.duration > _duration ? _b.duration : _duration;
+				_duration = _b.Duration > _duration ? _b.Duration : _duration;
 				if (l > 2) {
 					_c = targets[2] as IIAni;
-					_duration = _c.duration > _duration ? _c.duration : _duration;
+					_duration = _c.Duration > _duration ? _c.Duration : _duration;
 					if (l > 3) {
 						_d = targets[3] as IIAni;
-						_duration = _d.duration > _duration ? _d.duration : _duration;
+						_duration = _d.Duration > _duration ? _d.Duration : _duration;
 						if (l > 4) {
 							int length = l - 4;
 							_targets = new IIAni[length];
 							for (int i = 4; i < l; ++i) {
 								IIAni t = targets[i] as IIAni;
 								_targets[i - 4] = t;
-								_duration = t.duration > _duration ? t.duration : _duration;
+								_duration = t.Duration > _duration ? t.Duration : _duration;
 							}
 						}
 					}

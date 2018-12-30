@@ -1,41 +1,25 @@
 using UnityEngine;
 using System;
+using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ObjectUpdater : IUpdating
+public class ObjectUpdater : AbstractUpdater
 {
+	protected Dictionary<string, XObjectSet> _valueDic;
+	protected string[] _keys;
+	protected int _keyLength;
 	protected XObjectHash _source;
-	protected float invert;
-	protected Action _stopHandler;
 	protected Action<XObjectHash> _updateHandler;
+	protected Action _StopOnDestroyHandler;
 		
-	public string targetName
+	public override Action StopOnDestroyHandler
 	{
-		get;
-		set;
+		set { _StopOnDestroyHandler = value; }
 	}
 		
-	public GameObject target
-	{
-		get;
-		set;
-	}
-		
-	public Action stopHandler
-	{
-		set { _stopHandler = value; }
-	}
-		
-	public IClassicHandlable start
-	{
-		set
-		{
-            
-		}
-	}
-		
-	public IClassicHandlable finish
+	public override IClassicHandlable Start { set{}	}
+	public override IClassicHandlable Finish
 	{
 		set
 		{
@@ -43,7 +27,7 @@ public class ObjectUpdater : IUpdating
 		}
 	}
 		
-	public Action<XObjectHash> updateHandler
+	public Action<XObjectHash> UpdateHandler
 	{
 		set
 		{
@@ -51,104 +35,106 @@ public class ObjectUpdater : IUpdating
 		}
 	}
 
-    public void ResolveValues()
+	protected void ComposeDic()
+	{
+		this._valueDic = _source.ObjectSet;
+		this._keys = XTween.GetArrayFromCollection<string>(this._valueDic.Keys);
+		this._keyLength = this._keys.Length;
+	}
+
+    public override void ResolveValues()
     {
-        this._source.ResolveValues();
+		this.ComposeDic();
+
+		foreach ( var item in this._valueDic )
+		{
+			XObjectValues objValue = item.Value.value;
+			item.Value.updator = delegate( float invert, float factor )
+			{
+				objValue.current = objValue.start * invert + objValue.end * factor;
+				item.Value.value = objValue;
+			};
+			item.Value.value = objValue;
+		}
     }
 		
-	public void Updating( float factor )
+	protected override void UpdateObject()
 	{
-        invert = 1.0f - factor;
-
-        this._updateHandler( this._source.Update( invert, factor ) );
-	}
-		
-	protected void CopyFrom( ObjectUpdater source )
-	{
-        source._source = this._source;
-        source._updateHandler = this._updateHandler;
-	}
-		
-	public IUpdating Clone()
-	{
-		ObjectUpdater instance = new ObjectUpdater();
-		instance.CopyFrom(this);
-		return instance;
+		for (int i = 0; i < this._keyLength; ++i)
+		{
+			this._valueDic[this._keys[i]].updator(_invert, _factor);
+		}
+		if( this._updateHandler != null ) this._updateHandler(_source);
 	}
 }
 
-public class ObjectUpdater<T> : IUpdating
+public class ObjectUpdater<T> : ObjectUpdater
 {
-	protected XObjectHash<T> _source;
-	protected float invert;
-	protected Action _stopHandler;
-	protected Action<XObjectHash<T>> _updateHandler;
-		
-	public string targetName
+	protected T _target;
+	public T Target
 	{
-		get;
-		set;
-	}
-		
-	public GameObject target
-	{
-		get;
-		set;
-	}
-		
-	public Action stopHandler
-	{
-		set { _stopHandler = value; }
-	}
-		
-	public IClassicHandlable start
-	{
+		get { return _target; }
 		set
 		{
-            
+			_target = value;
 		}
 	}
-		
-	public IClassicHandlable finish
-	{
-		set
-		{
-            this._source = (XObjectHash<T>)value;
-		}
-	}
-		
-	public Action<XObjectHash<T>> updateHandler
-	{
-		set
-		{
-			this._updateHandler = value;
-		}
-	}
-
-    public void ResolveValues()
+    public override void ResolveValues()
     {
-        this._source.ResolveValues();
+		if( _target == null )
+		{
+			if( this._stopOnDestroyHandler != null )
+			{
+				this._stopOnDestroyHandler.Invoke();
+			}
+			return;
+		}
+		base.ComposeDic();
+
+        Type type = typeof(T);
+		foreach ( var item in this._valueDic )
+		{
+			XObjectValues objValue = item.Value.value;
+			Action<T,float> setter = (Action<T, float>)Delegate.CreateDelegate(
+				typeof(Action<T, float>),
+				typeof(T).GetProperty(item.Key).GetSetMethod()
+			);
+        	PropertyInfo pInfo = type.GetProperty(item.Key);
+			if( objValue.ContainStart )
+			{
+				setter(_target, objValue.start);
+			}
+			else
+			{
+	        	objValue.start = (float)pInfo.GetValue(_target, null);
+			}
+			item.Value.updator = delegate( float invert, float factor )
+			{
+				objValue.current = objValue.start * invert + objValue.end * factor;
+				item.Value.value = objValue;
+				setter(_target, objValue.current);
+			};	
+		}
+		
     }
 		
-	public void Updating( float factor )
+	protected override void UpdateObject()
 	{
-        invert = 1.0f - factor;
+        if (this._target == null)
+        {
+            this._stopOnDestroyHandler.Invoke();
+            this.Dispose();
+        }
+        else
+        {
+			base.UpdateObject();
+        }
+	}
 
-		XObjectHash<T> hash = this._source.Update( invert, factor );
-		if( this._updateHandler != null)
-        	this._updateHandler( hash );
-	}
-		
-	protected void CopyFrom( ObjectUpdater<T> source )
-	{
-        source._source = this._source;
-        source._updateHandler = this._updateHandler;
-	}
-		
-	public IUpdating Clone()
-	{
-		ObjectUpdater<T> instance = new ObjectUpdater<T>();
-		instance.CopyFrom(this);
-		return instance;
-	}
+	public void Dispose()
+    {
+        this._stopOnDestroyHandler = null;
+        this._valueDic.Clear();
+        this._target = default(T);
+    }
 }

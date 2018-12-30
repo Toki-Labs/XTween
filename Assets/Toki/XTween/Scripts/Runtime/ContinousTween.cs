@@ -30,7 +30,7 @@ public class ContinousTween : AbstractTween, IIAniObject
 		display.ResolveValues();
 	}
 
-	public bool isPlaying
+	public bool IsPlaying
 	{
 		get { return _isPlaying; }
 		set 
@@ -56,7 +56,7 @@ public class ContinousTween : AbstractTween, IIAniObject
 				DisplayContinousUpdater display = (DisplayContinousUpdater)_updater;
 				display.ticker = this._ticker;
 				display.frameSkip = (int)this._frameSkip;
-				display.stopOnDestroyHandler = this.StopOnDestroy;
+				display.StopOnDestroyHandler = this.StopOnDestroy;
 			}
 		}
 	}
@@ -86,8 +86,8 @@ public class ContinousTween : AbstractTween, IIAniObject
 		_position = t;
 		InternalUpdate(t);
 		
-		if (_classicHandlers != null && _classicHandlers.onUpdate != null) {
-			_classicHandlers.onUpdate.Execute();
+		if (_classicHandlers != null && _classicHandlers.OnUpdate != null) {
+			_classicHandlers.OnUpdate.Execute();
 		}
 
 		if (_isPlaying) {

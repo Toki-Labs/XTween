@@ -39,7 +39,8 @@ public class XExampleManager : MonoBehaviour
 	{
 		"Example_Position", "Example_Scale", "Example_Angle",
 		"Example_Combination", "Example_Bezier", "Example_Value",
-		"Example_Event", "Example_Serial", "Example_Parallel", "Example_UI"
+		"Example_Event", "Example_Serial", "Example_Parallel", "Example_UI",
+		"Example_Color"
 	};
 	private string _containerName = "Main";
 	private string _currentScene;

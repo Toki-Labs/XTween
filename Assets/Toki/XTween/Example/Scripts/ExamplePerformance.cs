@@ -106,7 +106,7 @@ public class ExamplePerformance : ExampleBase
 	private void StartXTween(GameObject target)
 	{
 		IAni ani = XTween.To(target, XHash.New.Position(0f,0f,-400f), 1f, Elastic.easeOut);
-		ani.onComplete = Executor.New(() => _isBreak = true);
+		ani.OnComplete = Executor.New(() => _isBreak = true);
 		ani.Play();
 	}
 

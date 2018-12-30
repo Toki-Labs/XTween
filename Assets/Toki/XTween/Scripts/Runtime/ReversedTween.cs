@@ -5,7 +5,7 @@ public class ReversedTween : TweenDecorator
 {
 	public ReversedTween( IIAni baseTween, float position ) : base( baseTween, position )
 	{
-		_duration = baseTween.duration;
+		_duration = baseTween.Duration;
 	}
 	
 	protected override void InternalUpdate( float time )

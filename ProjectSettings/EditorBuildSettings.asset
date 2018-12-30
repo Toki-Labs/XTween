@@ -38,4 +38,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Toki/XTween/Example/Scenes/Example_UI.unity
     guid: b6c5bb1d34a9ab84ea64c34023282028
+  - enabled: 1
+    path: Assets/Toki/XTween/Example/Scenes/Example_Color.unity
+    guid: 704c5d417e2e83543b1771da7ac37b47
   m_configObjects: {}

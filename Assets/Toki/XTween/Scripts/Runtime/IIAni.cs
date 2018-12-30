@@ -2,11 +2,11 @@ using System;
 
 public interface IIAni : IAni
 {
-	ITimer ticker
+	ITimer Ticker
 	{
 		get;
 	}
-    Action decoratorStopOnDestroy
+    Action DecoratorStopOnDestroy
     {
         set;
     }

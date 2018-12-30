@@ -4,58 +4,58 @@ using System.Collections.Generic;
 
 public interface IAni
 {
-	float duration
+	float Duration
 	{
 		get;
 	}
 		
-	float position
+	float Position
 	{
 		get;
 	}
 		
-	bool isPlaying
+	bool IsPlaying
 	{
 		get;
 	}
 		
-	bool stopOnComplete
+	bool StopOnComplete
 	{
 		get;
 		set;
 	}
 
-	bool isRealTime
+	bool IsRealTime
 	{
 		get;
 		set;
 	}
 
-	uint frameSkip
+	uint FrameSkip
 	{
 		get;
 		set;
 	}
 		
-	IExecutable onPlay
+	IExecutable OnPlay
 	{
 		get;
 		set;
 	}
 		
-	IExecutable onStop
+	IExecutable OnStop
 	{
 		get;
 		set;
 	}
 		
-	IExecutable onUpdate
+	IExecutable OnUpdate
 	{
 		get;
 		set;
 	}
 		
-	IExecutable onComplete
+	IExecutable OnComplete
 	{
 		get;
 		set;

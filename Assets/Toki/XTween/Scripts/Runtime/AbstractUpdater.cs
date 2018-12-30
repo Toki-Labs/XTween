@@ -1,56 +1,26 @@
 using UnityEngine;
+using System;
 using System.Collections;
 
-public class AbstractUpdater : IUpdating
+public abstract class AbstractUpdater : IUpdating
 {
-	public virtual GameObject target
+	protected float _invert;
+    protected float _factor = 0f;
+	protected Action _stopOnDestroyHandler;
+	public virtual Action StopOnDestroyHandler
 	{
-		get { return null; }
-		set {}
+		set { _stopOnDestroyHandler = value; }
 	}
-		
-	public virtual IClassicHandlable start
-	{
-		set {}
-	}
-		
-	public virtual IClassicHandlable finish
-	{
-		set {}
-	}
-
+	public abstract IClassicHandlable Start {set;}
+	public abstract IClassicHandlable Finish {set;}
     public virtual void Updating( float factor )
 	{
-		UpdateObject(factor);
+		_invert = 1.0f - factor;
+        _factor = factor;
+		UpdateObject();
 	}
 		
-	public virtual void ResolveValues()
-	{
-		
-	}
-		
-	protected virtual void UpdateObject( float factor )
-	{
-			
-	}
-		
-	public virtual IUpdating Clone()
-	{
-		AbstractUpdater instance = NewInstance();
-		if (instance != null) {
-			instance.CopyFrom(this);
-		}
-		return instance;
-	}
-		
-	protected virtual AbstractUpdater NewInstance()
-	{
-		return null;
-	}
-		
-	protected virtual void CopyFrom( AbstractUpdater source )
-	{
-		// Do NOT copy _isResolved property.
-	}
+	public abstract void ResolveValues();
+	protected abstract void UpdateObject();
 }
 

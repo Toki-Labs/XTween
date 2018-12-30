@@ -15,19 +15,19 @@ public class SerialTween : GroupTween
 		if (l > 0) {
 			_a = targets[0] as IIAni;
             _a.IntializeGroup();
-			_duration += _a.duration;
+			_duration += _a.Duration;
 			if (l > 1) {
 				_b = targets[1] as IIAni;
                 _b.IntializeGroup();
-                _duration += _b.duration;
+                _duration += _b.Duration;
 				if (l > 2) {
 					_c = targets[2] as IIAni;
                     _c.IntializeGroup();
-                    _duration += _c.duration;
+                    _duration += _c.Duration;
 					if (l > 3) {
 						_d = targets[3] as IIAni;
                         _d.IntializeGroup();
-                        _duration += _d.duration;
+                        _duration += _d.Duration;
 						if (l > 4) {
 							int length = l - 4;
 							_targets = new IIAni[length];
@@ -35,7 +35,7 @@ public class SerialTween : GroupTween
 								IIAni t = targets[i] as IIAni;
                                 t.IntializeGroup();
                                 _targets[i - 4] = t;
-								_duration += t.duration;
+								_duration += t.Duration;
 							}
 						}
 					}
@@ -55,22 +55,22 @@ public class SerialTween : GroupTween
 			
 		if ((time - lt) >= 0) {
 			if (_a != null) {
-				if (lt <= (d += _a.duration) && ld <= time) {
+				if (lt <= (d += _a.Duration) && ld <= time) {
 					_a.UpdateTween(time - ld);
 				}
 				ld = d;
 				if (_b != null) {
-					if (lt <= (d += _b.duration) && ld <= time) {
+					if (lt <= (d += _b.Duration) && ld <= time) {
 						_b.UpdateTween(time - ld);
 					}
 					ld = d;
 					if (_c != null) {
-						if (lt <= (d += _c.duration) && ld <= time) {
+						if (lt <= (d += _c.Duration) && ld <= time) {
 							_c.UpdateTween(time - ld);
 						}
 						ld = d;
 						if (_d != null) {
-							if (lt <= (d += _d.duration) && ld <= time) {
+							if (lt <= (d += _d.Duration) && ld <= time) {
 								_d.UpdateTween(time - ld);
 							}
 							ld = d;
@@ -78,7 +78,7 @@ public class SerialTween : GroupTween
 								l = _targets.Length;
 								for (i = 0; i < l; ++i) {
 									t = _targets[i];
-									if (lt <= (d += t.duration) && ld <= time) {
+									if (lt <= (d += t.Duration) && ld <= time) {
 										t.UpdateTween(time - ld);
 									}
 									ld = d;
@@ -95,32 +95,32 @@ public class SerialTween : GroupTween
 			if (_targets != null) {
 				for (i = _targets.Length - 1; i >= 0; --i) {
 					t = _targets[i];
-					if (lt >= (d -= t.duration) && ld >= time) {
+					if (lt >= (d -= t.Duration) && ld >= time) {
 						t.UpdateTween(time - d);
 					}
 					ld = d;
 				}
 			}
 			if (_d != null) {
-				if (lt >= (d -= _d.duration) && ld >= time) {
+				if (lt >= (d -= _d.Duration) && ld >= time) {
 					_d.UpdateTween(time - d);
 				}
 				ld = d;
 			}
 			if (_c != null) {
-				if (lt >= (d -= _c.duration) && ld >= time) {
+				if (lt >= (d -= _c.Duration) && ld >= time) {
 					_c.UpdateTween(time - d);
 				}
 				ld = d;
 			}
 			if (_b != null) {
-				if (lt >= (d -= _b.duration) && ld >= time) {
+				if (lt >= (d -= _b.Duration) && ld >= time) {
 					_b.UpdateTween(time - d);
 				}
 				ld = d;
 			}
 			if (_a != null) {
-				if (lt >= (d -= _a.duration) && ld >= time) {
+				if (lt >= (d -= _a.Duration) && ld >= time) {
 					_a.UpdateTween(time - d);
 				}
 				ld = d;
@@ -151,6 +151,6 @@ public class SerialTween : GroupTween
 				targets.Add(t[i].Clone());
 			}
 		}
-		return new SerialTween(targets.ToArray(), ticker, 0);
+		return new SerialTween(targets.ToArray(), Ticker, 0);
 	}
 }

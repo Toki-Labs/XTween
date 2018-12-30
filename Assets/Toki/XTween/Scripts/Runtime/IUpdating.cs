@@ -3,23 +3,21 @@ using UnityEngine;
 
 public interface IUpdating
 {		
-	GameObject target
-	{
-		get;
-		set;
-	}
-		
-	IClassicHandlable start
+	Action StopOnDestroyHandler
 	{
 		set;
 	}
 		
-	IClassicHandlable finish
+	IClassicHandlable Start
 	{
 		set;
 	}
 		
-	IUpdating Clone();
+	IClassicHandlable Finish
+	{
+		set;
+	}
+		
     void ResolveValues();
 	void Updating( float factor );
 }

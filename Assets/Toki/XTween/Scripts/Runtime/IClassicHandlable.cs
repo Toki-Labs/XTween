@@ -4,22 +4,22 @@ using System.Collections.Generic;
 
 public interface IClassicHandlable
 {
-    IExecutable onPlay
+    IExecutable OnPlay
     {
         get;
         set;
     }
-    IExecutable onStop
+    IExecutable OnStop
     {
         get;
         set;
     }
-    IExecutable onUpdate
+    IExecutable OnUpdate
     {
         get;
         set;
     }
-    IExecutable onComplete
+    IExecutable OnComplete
     {
         get;
         set;

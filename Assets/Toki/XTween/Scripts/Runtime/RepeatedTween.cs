@@ -5,7 +5,7 @@ public class RepeatedTween : TweenDecorator
 {
 	public RepeatedTween( IIAni baseTween, int repeatCount ) : base( baseTween, 0f )
 	{
-		_baseDuration = baseTween.duration;
+		_baseDuration = baseTween.Duration;
 		_repeatCount = repeatCount;
 		_duration = _baseDuration * repeatCount;
 	}

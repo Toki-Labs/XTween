@@ -5,7 +5,7 @@ public class DelayedTween : TweenDecorator
 {
 	public DelayedTween( IIAni baseTween, float preDelay, float postDelay ) : base(baseTween, 0)
 	{
-		_duration = preDelay + baseTween.duration + postDelay;
+		_duration = preDelay + baseTween.Duration + postDelay;
 		_preDelay = preDelay;
 		_postDelay = postDelay;
 	}
