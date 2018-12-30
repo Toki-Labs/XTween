@@ -131,7 +131,7 @@ void UpdateValue(XObjectHash hash)
 }
 
 //or Property tween
-XTween.To<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f)).Play();
+XTween.ValueTo<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f)).Play();
 ```
 
 Event Handling
