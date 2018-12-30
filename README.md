@@ -77,7 +77,7 @@ Road Map
 
 Lastest Release
 ---
-Version(Alpha) 0.0.32 - [XTween_0.0.32.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.32.unitypackage)
+Version(Alpha) 0.0.33 - [XTween_0.0.33.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.33.unitypackage)
 
 
 Position
