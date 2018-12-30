@@ -14,6 +14,7 @@ public struct XObjectValues
 {
     private bool _containStart;
     public bool ContainStart { get{return _containStart;} }
+    public float[] controlPoint;
     public float start;
     public float current;
     public float end;
@@ -23,6 +24,7 @@ public struct XObjectValues
         this._containStart = false;
         this.start = this.current = 0f;
         this.end = end;
+        this.controlPoint = null;
     }
     public XObjectValues( float start, float end )
     {
@@ -30,6 +32,7 @@ public struct XObjectValues
         this.start = start;
         this.current = start;
         this.end = end;
+        this.controlPoint = null;
     }
 }
 
@@ -43,9 +46,33 @@ public struct XObjectHash : IClassicHandlable
         return AddValue(key, new XObjectValues( start, end ));
     }
 
+    public XObjectHash AddControlPointWithStartEnd( string key, float start, float end, params float[] values )
+    {
+        AddValue(key, new XObjectValues( start, end ));
+        AddControlPoint(key, values);
+        return this;
+    }
+
     public XObjectHash Add( string key, float end )
     {
         return AddValue(key, new XObjectValues( end ));
+    }
+
+    public XObjectHash AddControlPointWithEnd( string key, float end, params float[] values )
+    {
+        AddValue(key, new XObjectValues( end ));
+        AddControlPoint(key, values);
+        return this;
+    }
+
+    public XObjectHash AddControlPoint( string key, params float[] values )
+    {
+        if( !this._objectSet.ContainsKey(key) ) Add(key, 0f);
+        XObjectSet objSet = this._objectSet[key];
+        XObjectValues value = objSet.value;
+        value.controlPoint = values;
+        objSet.value = value;
+        return this;
     }
 
     private XObjectHash AddValue( string key, XObjectValues value )

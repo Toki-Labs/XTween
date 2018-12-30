@@ -78,6 +78,7 @@ public struct XColorHash : IClassicHandlable
 	public bool ContainBlue { get{ return this._containBlue; } }
 	public bool ContainAlpha { get{ return this._containAlpha; } }
 	private float _red, _green, _blue, _alpha;
+	private float[] _controlRed, _controlGreen, _controlBlue, _controlAlpha;
 	public float Red
 	{
 		get { return _red; }
@@ -87,6 +88,7 @@ public struct XColorHash : IClassicHandlable
 			_red = value; 
 		}
 	}
+	public float[] ControlPointRed { get{ return _controlRed; } set{ _controlRed = value; } }
 	public float Green
 	{
 		get { return _green; }
@@ -96,6 +98,7 @@ public struct XColorHash : IClassicHandlable
 			_green = value; 
 		}
 	}
+	public float[] ControlPointGreen { get{ return _controlGreen; } set{ _controlGreen = value; } }
 	public float Blue
 	{
 		get { return _blue; }
@@ -105,6 +108,7 @@ public struct XColorHash : IClassicHandlable
 			_blue = value; 
 		}
 	}
+	public float[] ControlPointBlue { get{ return _controlBlue; } set{ _controlBlue = value; } }
 	public float Alpha
 	{
 		get { return _alpha; }
@@ -114,6 +118,7 @@ public struct XColorHash : IClassicHandlable
 			_alpha = value; 
 		}
 	}
+	public float[] ControlPointAlpha { get{ return _controlAlpha; } set{ _controlAlpha = value; } }
     public XColorHash Color( Color color, bool isRelative = false )
     {
         this.AddRed( color.r, isRelative );
@@ -154,6 +159,11 @@ public struct XColorHash : IClassicHandlable
 		this._start = hash;
 		return AddRed( end, isRelative );
 	}
+	public XColorHash AddControlPointRed( params float[] values )
+	{
+		this._controlRed = values;
+		return this;
+	}
     public XColorHash AddGreen( float end, bool isRelative = false )
     {
         this.Green = end;
@@ -166,6 +176,11 @@ public struct XColorHash : IClassicHandlable
 		hash.Green = start;
 		this._start = hash;
 		return AddGreen( end, isRelative );
+	}
+	public XColorHash AddControlPointGreen( params float[] values )
+	{
+		this._controlGreen = values;
+		return this;
 	}
     public XColorHash AddBlue( float end, bool isRelative = false )
     {
@@ -180,6 +195,11 @@ public struct XColorHash : IClassicHandlable
 		this._start = hash;
 		return AddBlue( end, isRelative );
 	}
+	public XColorHash AddControlPointBlue( params float[] values )
+	{
+		this._controlBlue = values;
+		return this;
+	}
     public XColorHash AddAlpha( float end, bool isRelative = false )
     {
         this.Alpha = end;
@@ -192,6 +212,11 @@ public struct XColorHash : IClassicHandlable
 		hash.Alpha = start;
 		this._start = hash;
 		return AddAlpha( end, isRelative );
+	}
+	public XColorHash AddControlPointAlpha( params float[] values )
+	{
+		this._controlAlpha = values;
+		return this;
 	}
     public XColorHash AddOnPlay( IExecutable value )
 	{

@@ -89,36 +89,42 @@ public class ColorUpdater<T> : AbstractUpdater, IUpdating
 		float green = _col.g;
 		float blue = _col.b;
 		float alpha = _col.a;
+
+		if( _finish.ControlPointRed != null && !_finish.ContainRed ) _finish.Red = _col.r;
+		if( _finish.ControlPointGreen != null && !_finish.ContainGreen ) _finish.Green = _col.g;
+		if( _finish.ControlPointBlue != null && !_finish.ContainBlue ) _finish.Blue = _col.b;
+		if( _finish.ControlPointAlpha != null && !_finish.ContainAlpha ) _finish.Alpha = _col.a;
+
 		if (_finish.ContainRed)
 		{
-			if (red != _finish.Red || _finish.IsRelativeRed)
+			if (red != _finish.Red || _finish.ControlPointRed != null || _finish.IsRelativeRed)
 			{
 				red = _finish.IsRelativeRed ? red + _finish.Red : _finish.Red;
-				this._updateList.Add(UpdateRed);
+				this._updateList.Add(GetUpdateRed());
 			}
 		}
 		if (_finish.ContainGreen)
 		{
-			if (green != _finish.Green || _finish.IsRelativeGreen)
+			if (green != _finish.Green || _finish.ControlPointGreen != null || _finish.IsRelativeGreen)
 			{
 				green = _finish.IsRelativeGreen ? green + _finish.Green : _finish.Green;
-				this._updateList.Add(UpdateGreen);
+				this._updateList.Add(GetUpdateGreen());
 			}
 		}
 		if (_finish.ContainBlue)
 		{
-			if (blue != _finish.Blue || _finish.IsRelativeBlue)
+			if (blue != _finish.Blue || _finish.ControlPointBlue != null || _finish.IsRelativeBlue)
 			{
 				blue = _finish.IsRelativeBlue ? blue + _finish.Blue : _finish.Blue;
-				this._updateList.Add(UpdateBlue);
+				this._updateList.Add(GetUpdateBlue());
 			}
 		}
 		if (_finish.ContainAlpha)
 		{
-			if (alpha != _finish.Alpha || _finish.IsRelativeAlpha)
+			if (alpha != _finish.Alpha || _finish.ControlPointAlpha != null || _finish.IsRelativeAlpha)
 			{
 				alpha = _finish.IsRelativeAlpha ? alpha + _finish.Alpha : _finish.Alpha;
-				this._updateList.Add(UpdateAlpha);
+				this._updateList.Add(GetUpdateAlpha());
 			}
 		}
 
@@ -151,21 +157,41 @@ public class ColorUpdater<T> : AbstractUpdater, IUpdating
         this._updateList.Clear();
         this._updateList = null;
     }
+	protected virtual Action GetUpdateRed() { return _finish.ControlPointRed == null ? (Action)this.UpdateRed : this.UpdateBezierRed; }
+	protected virtual Action GetUpdateGreen() { return _finish.ControlPointGreen == null ? (Action)this.UpdateGreen : this.UpdateBezierGreen; }
+	protected virtual Action GetUpdateBlue() { return _finish.ControlPointBlue == null ? (Action)this.UpdateBlue : this.UpdateBezierBlue; }
+	protected virtual Action GetUpdateAlpha() { return _finish.ControlPointAlpha == null ? (Action)this.UpdateAlpha : this.UpdateBezierAlpha; }
     protected virtual void UpdateRed()
 	{
 		_col.r = _sColor.r * _invert + _dColor.r * _factor;
+	}
+	protected virtual void UpdateBezierRed()
+	{
+		_col.r = base.Calcurate( _finish.ControlPointRed, _sColor.r, _dColor.r );
 	}
     protected virtual void UpdateGreen()
 	{
 		_col.g = _sColor.g * _invert + _dColor.g * _factor;
 	}
+	protected virtual void UpdateBezierGreen()
+	{
+		_col.g = base.Calcurate( _finish.ControlPointGreen, _sColor.g, _dColor.g );
+	}
     protected virtual void UpdateBlue()
 	{
 		_col.b = _sColor.b * _invert + _dColor.b * _factor;
 	}
+	protected virtual void UpdateBezierBlue()
+	{
+		_col.b = base.Calcurate( _finish.ControlPointBlue, _sColor.b, _dColor.b );
+	}
     protected virtual void UpdateAlpha()
 	{
 		_col.a = _sColor.a * _invert + _dColor.a * _factor;
+	}
+	protected virtual void UpdateBezierAlpha()
+	{
+		_col.a = base.Calcurate( _finish.ControlPointAlpha, _sColor.a, _dColor.a );
 	}
 
 	protected void Updator()

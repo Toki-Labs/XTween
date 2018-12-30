@@ -440,18 +440,18 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 	protected virtual Action GetUpdateX() { return _finish.ControlPointX == null ? (Action)this.UpdateX : this.UpdateBezierX; }
 	protected virtual Action GetUpdateY() { return _finish.ControlPointY == null ? (Action)this.UpdateY : this.UpdateBezierY; }
 	protected virtual Action GetUpdateZ() { return _finish.ControlPointZ == null ? (Action)this.UpdateZ : this.UpdateBezierZ; }
-	protected virtual Action GetUpdateLeft() { return this.UpdateLeft; }
-	protected virtual Action GetUpdateTop() { return this.UpdateTop; }
-	protected virtual Action GetUpdateRight() { return this.UpdateRight; }
-	protected virtual Action GetUpdateBottom() { return this.UpdateBottom; }
-	protected virtual Action GetUpdateWidth() { return this.UpdateWidth; }
-	protected virtual Action GetUpdateHeight() { return this.UpdateHeight; }
-	protected virtual Action GetUpdateScaleX() { return this.UpdateScaleX; }
-	protected virtual Action GetUpdateScaleY() { return this.UpdateScaleY; }
-	protected virtual Action GetUpdateScaleZ() { return this.UpdateScaleZ; }
-	protected virtual Action GetUpdateRotationX() { return this.UpdateRotationX; }
-	protected virtual Action GetUpdateRotationY() { return this.UpdateRotationY; }
-	protected virtual Action GetUpdateRotationZ() { return this.UpdateRotationZ; }
+	protected virtual Action GetUpdateLeft() { return _finish.ControlPointLeft == null ? (Action)this.UpdateLeft : this.UpdateBezierLeft; }
+	protected virtual Action GetUpdateTop() { return _finish.ControlPointTop == null ? (Action)this.UpdateTop : this.UpdateBezierTop; }
+	protected virtual Action GetUpdateRight() { return _finish.ControlPointRight == null ? (Action)this.UpdateRight : this.UpdateBezierRight; }
+	protected virtual Action GetUpdateBottom() { return _finish.ControlPointBottom == null ? (Action)this.UpdateBottom : this.UpdateBezierBottom; }
+	protected virtual Action GetUpdateWidth() { return _finish.ControlPointWidth == null ? (Action)this.UpdateWidth : this.UpdateBezierWidth; }
+	protected virtual Action GetUpdateHeight() { return _finish.ControlPointHeight == null ? (Action)this.UpdateHeight : this.UpdateBezierHeight; }
+	protected virtual Action GetUpdateScaleX() { return _finish.ControlPointScaleX == null ? (Action)this.UpdateScaleX : this.UpdateBezierScaleX; }
+	protected virtual Action GetUpdateScaleY() { return _finish.ControlPointScaleY == null ? (Action)this.UpdateScaleY : this.UpdateBezierScaleY; }
+	protected virtual Action GetUpdateScaleZ() { return _finish.ControlPointScaleZ == null ? (Action)this.UpdateScaleZ : this.UpdateBezierScaleZ; }
+	protected virtual Action GetUpdateRotationX() { return _finish.ControlPointRotationX == null ? (Action)this.UpdateRotationX : this.UpdateBezierRotationX; }
+	protected virtual Action GetUpdateRotationY() { return _finish.ControlPointRotationY == null ? (Action)this.UpdateRotationY : this.UpdateBezierRotationY; }
+	protected virtual Action GetUpdateRotationZ() { return _finish.ControlPointRotationZ == null ? (Action)this.UpdateRotationZ : this.UpdateBezierRotationZ; }
 
     protected virtual void UpdateX()
 	{

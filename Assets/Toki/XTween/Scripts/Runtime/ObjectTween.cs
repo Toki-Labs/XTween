@@ -33,12 +33,7 @@ public class ObjectTween : AbstractTween, IIAniObject
 				
 			if( _updater != null )
 			{
-				if( _updater is DisplayUpdater )
-				{
-					DisplayUpdater display = (DisplayUpdater)_updater;
-					display.StopOnDestroyHandler = this.StopOnDestroy;
-				}
-				
+				_updater.StopOnDestroyHandler = this.StopOnDestroy;
 			}
 		}
 	}

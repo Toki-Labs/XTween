@@ -49,9 +49,15 @@ public class ObjectUpdater : AbstractUpdater
 		foreach ( var item in this._valueDic )
 		{
 			XObjectValues objValue = item.Value.value;
-			item.Value.updator = delegate( float invert, float factor )
+			item.Value.updator = objValue.controlPoint == null ? 
+			(Action<float,float>)delegate( float invert, float factor )
 			{
 				objValue.current = objValue.start * invert + objValue.end * factor;
+				item.Value.value = objValue;
+			} :
+			delegate( float invert, float factor )
+			{
+				objValue.current = Calcurate(objValue.controlPoint, objValue.start, objValue.end);
 				item.Value.value = objValue;
 			};
 			item.Value.value = objValue;
@@ -108,12 +114,19 @@ public class ObjectUpdater<T> : ObjectUpdater
 			{
 	        	objValue.start = (float)pInfo.GetValue(_target, null);
 			}
-			item.Value.updator = delegate( float invert, float factor )
+			item.Value.updator = objValue.controlPoint == null ? 
+			(Action<float,float>)delegate( float invert, float factor )
 			{
 				objValue.current = objValue.start * invert + objValue.end * factor;
 				item.Value.value = objValue;
 				setter(_target, objValue.current);
-			};	
+			} :
+			delegate( float invert, float factor )
+			{
+				objValue.current = Calcurate(objValue.controlPoint, objValue.start, objValue.end);
+				item.Value.value = objValue;
+				setter(_target, objValue.current);
+			};
 		}
 		
     }
