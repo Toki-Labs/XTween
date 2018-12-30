@@ -118,13 +118,13 @@ Bezier
 ```csharp
 XPoint controlPoint = XPoint.New.AddX(1000).AddY(-500f);
 XHash end = XHash.New.AddX(0f).AddY(0f);
-XTween.BezierTo(this.moveObj, controlPoint, end).Play();
+XTween.BezierTo(moveObj, controlPoint, end).Play();
 ```
 
 Value
 ---
 ```csharp
-XTween.Tween(XObjectHash.New.Add("value", 10f, 200f), UpdateValue).Play();
+XTween.ValueTo(XObjectHash.New.Add("value", 10f, 200f), UpdateValue).Play();
 
 void UpdateValue(XObjectHash hash)
 {
@@ -132,14 +132,14 @@ void UpdateValue(XObjectHash hash)
 }
 
 //or Property tween
-XTween.To<Camera>(XObjectHash<Camera>.New.Add(camera3D, "fieldOfView", 6f)).Play();
+XTween.To<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f)).Play();
 ```
 
 Event Handling
 ---
 ```csharp
 IAni ani = XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f));
-ani.onComplete = Executor<float>.New(OnTweenEnd, 10f);
+ani.OnComplete = Executor<float>.New(OnTweenEnd, 10f);
 ani.Play();
 
 void OnTweenEnd(float value)
