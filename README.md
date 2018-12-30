@@ -116,9 +116,8 @@ XTween.To(moveObj, XHash.New.AddX(600f).AddScaleX(200f).AddRotationZ(180f)).Play
 Bezier
 ---
 ```csharp
-XPoint controlPoint = XPoint.New.AddX(1000).AddY(-500f);
-XHash end = XHash.New.AddX(0f).AddY(0f);
-XTween.BezierTo(moveObj, controlPoint, end).Play();
+XHash hash = XHash.New.AddX(0f).AddY(0f).AddControlPointX(1000f).AddControlPoint(-500f);
+XTween.To(moveObj, hash).Play();
 ```
 
 Value
