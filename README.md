@@ -185,6 +185,16 @@ XHash hashDropdown = XHash.New.AddLeft(2000f).AddRight(300f).AddTop(500f).AddBot
 XTween.To(dropdown, hashDropdown).Play();
 ```
 
+Color
+---
+```csharp
+XTween.ColorTo(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
+
+//or when object has other type
+XTween.ColorTo<Image>(imageInstance, "color", XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
+```
+
+
 Author Info
 ---
 Lee Dong-Myung(Tok-Labs) is a software developer in Korea.
