@@ -118,7 +118,7 @@ public class XTween
 	}
 
 	/*===================================== Property ========================================*/
-	public static IAni PropertyTo<T>( T target, XObjectHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IAni ValueTo<T>( T target, XObjectHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 

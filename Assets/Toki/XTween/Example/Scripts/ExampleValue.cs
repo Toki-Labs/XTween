@@ -89,7 +89,7 @@ public class ExampleValue : ExampleBase
 		else
 		{
 			XObjectHash hash = XObjectHash.New.Add("fieldOfView", 6f);
-			this._tween = XTween.PropertyTo<Camera>(this.camera3D,hash,data.time,data.Easing);
+			this._tween = XTween.ValueTo<Camera>(this.camera3D,hash,data.time,data.Easing);
 			this._tween.Play();
 		}
 	}
@@ -129,8 +129,8 @@ public class ExampleValue : ExampleBase
 			"\t\tcolor.g = hash<color=#DCDC9D>.Now(</color><color=#CE9178>\"g\"</color>);\n" +
 			"\t\tsprite.color = color;\n" +
 			"<color=#A7CE89>}</color>" :
-			"<color=#43C9B0>XObjectHash</color> hash = XObjectHash.New<color=#A7CE89>.Add</color>(camera3D, <color=#A7CE89>6f</color>);\n" +
-			"XTween<color=#A7CE89>.PropertyTo</color><<color=#43C9B0>Camera</color>>(hash, <color=#CE9178>\"fieldOfView\"</color>, <color=#A7CE89>"+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;";
+			"<color=#43C9B0>XObjectHash</color> hash = XObjectHash.New<color=#A7CE89>.Add</color>(<color=#CE9178>\"fieldOfView\"</color>, <color=#A7CE89>6f</color>);\n" +
+			"XTween<color=#A7CE89>.ValueTo</color><<color=#43C9B0>Camera</color>>(camera3D, hash, <color=#A7CE89>"+ data.time +"f,</color> "+ easing +"<color=#DCDC9D>).Play()</color>;";
 
 		Vector2 size = trans.sizeDelta;
 		size.y = this.container2D.activeSelf ? 510f : 170f;
