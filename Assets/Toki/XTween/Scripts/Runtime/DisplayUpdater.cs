@@ -149,14 +149,14 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		float x = _pos.x;
 		float y = _pos.y;
 		float z = _pos.z;
-		bool addForce = false;
-		if( this is BezierUpdater )
-		{
-			addForce = _finish.ContainX || _finish.ContainY || _finish.ContainZ;
-		}
+
+		if( _finish.ControlPointX != null && !_finish.ContainX ) _finish.X = _pos.x;
+		if( _finish.ControlPointY != null && !_finish.ContainY ) _finish.Y = _pos.y;
+		if( _finish.ControlPointZ != null && !_finish.ContainZ ) _finish.Z = _pos.z;
+		
 		if( _finish.ContainX )
 		{
-            if( x != _finish.X || _finish.IsRelativeX || addForce )
+            if( x != _finish.X || _finish.ControlPointX != null || _finish.IsRelativeX )
             { 
 			    changedPos = true;
 			    x = _finish.IsRelativeX ? x + _finish.X : _finish.X;
@@ -165,7 +165,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 		if( _finish.ContainY )
 		{
-            if( y != _finish.Y || _finish.IsRelativeY || addForce )
+            if( y != _finish.Y || _finish.ControlPointY != null || _finish.IsRelativeY )
             {
 			    changedPos = true;;
 			    y = _finish.IsRelativeY ? y + _finish.Y : _finish.Y;
@@ -174,7 +174,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 		if( _finish.ContainZ )
 		{
-            if( z != _finish.Z || _finish.IsRelativeZ || addForce )
+            if( z != _finish.Z || _finish.ControlPointZ != null || _finish.IsRelativeZ )
             {
 			    changedPos = true;
 			    z = _finish.IsRelativeZ ? z + _finish.Z : _finish.Z;
@@ -185,9 +185,15 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		float top = _rect.top;
 		float right = _rect.right;
 		float bottom = _rect.bottom;
+
+		if( _finish.ControlPointLeft != null && !_finish.ContainLeft ) _finish.Left = _rect.left;
+		if( _finish.ControlPointRight != null && !_finish.ContainRight ) _finish.Right = _rect.right;
+		if( _finish.ControlPointTop != null && !_finish.ContainTop ) _finish.Top = _rect.top;
+		if( _finish.ControlPointBottom != null && !_finish.ContainBottom ) _finish.Bottom = _rect.bottom;
+
 		if( _finish.ContainLeft )
 		{
-            if( left != _finish.Left || _finish.IsRelativeLeft )
+            if( left != _finish.Left || _finish.ControlPointLeft != null || _finish.IsRelativeLeft )
             { 
 			    changedRect = true;
 			    left = _finish.IsRelativeLeft ? left + _finish.Left : _finish.Left;
@@ -196,7 +202,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 		if( _finish.ContainRight )
 		{
-            if( right != _finish.Right || _finish.IsRelativeRight )
+            if( right != _finish.Right || _finish.ControlPointRight != null || _finish.IsRelativeRight )
             { 
 			    changedRect = true;
 			    right = _finish.IsRelativeRight ? right + _finish.Right : _finish.Right;
@@ -205,7 +211,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 		if( _finish.ContainTop )
 		{
-            if( top != _finish.Top || _finish.IsRelativeTop )
+            if( top != _finish.Top || _finish.ControlPointTop != null || _finish.IsRelativeTop )
             { 
 			    changedRect = true;
 			    top = _finish.IsRelativeTop ? top + _finish.Top : _finish.Top;
@@ -214,7 +220,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 		if( _finish.ContainBottom )
 		{
-            if( bottom != _finish.Bottom || _finish.IsRelativeBottom )
+            if( bottom != _finish.Bottom || _finish.ControlPointBottom != null || _finish.IsRelativeBottom )
             { 
 			    changedRect = true;
 			    bottom = _finish.IsRelativeBottom ? bottom + _finish.Bottom : _finish.Bottom;
@@ -223,9 +229,13 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 		float width = _size.x;
 		float height = _size.y;
+
+		if( _finish.ControlPointWidth != null && !_finish.ContainWidth ) _finish.Width = _size.x;
+		if( _finish.ControlPointHeight != null && !_finish.ContainHeight ) _finish.Height = _size.y;
+
 		if( _finish.ContainWidth )
 		{
-            if( width != _finish.Width || _finish.IsRelativeWidth )
+            if( width != _finish.Width || _finish.ControlPointWidth != null || _finish.IsRelativeWidth )
             {
 			    changedSize = true;
 			    width = _finish.IsRelativeWidth ? width + _finish.Width : _finish.Width;
@@ -234,7 +244,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 		if( _finish.ContainHeight )
 		{
-            if( height != _finish.Height || _finish.IsRelativeHeight )
+            if( height != _finish.Height || _finish.ControlPointHeight != null || _finish.IsRelativeHeight )
             {
 			    changedSize = true;
 			    height = _finish.IsRelativeHeight ? height + _finish.Height : _finish.Height;
@@ -244,9 +254,14 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		float scaleX = _sca.x;
 		float scaleY = _sca.y;
 		float scaleZ = _sca.z;
+
+		if( _finish.ControlPointScaleX != null && !_finish.ContainScaleX ) _finish.ScaleX = _sca.x;
+		if( _finish.ControlPointScaleY != null && !_finish.ContainScaleY ) _finish.ScaleY = _sca.y;
+		if( _finish.ControlPointScaleZ != null && !_finish.ContainScaleZ ) _finish.ScaleZ = _sca.z;
+
 		if( _finish.ContainScaleX )
 		{
-            if( scaleX != _finish.ScaleX || _finish.IsRelativeScaleX )
+            if( scaleX != _finish.ScaleX || _finish.ControlPointScaleX != null || _finish.IsRelativeScaleX )
             {
 			    changedSca = true;
 			    scaleX = _finish.IsRelativeScaleX ? scaleX + _finish.ScaleX : _finish.ScaleX;
@@ -255,7 +270,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 		if( _finish.ContainScaleY )
 		{
-            if( scaleY != _finish.ScaleY || _finish.IsRelativeScaleY )
+            if( scaleY != _finish.ScaleY || _finish.ControlPointScaleY != null || _finish.IsRelativeScaleY )
             {
 			    changedSca = true;
 			    scaleY = _finish.IsRelativeScaleY ? scaleY + _finish.ScaleY : _finish.ScaleY;
@@ -264,7 +279,7 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 		if( _finish.ContainScaleZ )
 		{
-            if( scaleZ != _finish.ScaleZ || _finish.IsRelativeScaleZ )
+            if( scaleZ != _finish.ScaleZ || _finish.ControlPointScaleZ != null || _finish.IsRelativeScaleZ )
             {
 			    changedSca = true;
 			    scaleZ = _finish.IsRelativeScaleZ ? scaleZ + _finish.ScaleZ : _finish.ScaleZ;
@@ -274,9 +289,15 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		float rotationX = _rot.x;
 		float rotationY = _rot.y;
 		float rotationZ = _rot.z;
+
+		if( _finish.ControlPointRotationX != null && !_finish.ContainRotationX ) _finish.RotationX = _rot.x;
+		if( _finish.ControlPointRotationY != null && !_finish.ContainRotationY ) _finish.RotationY = _rot.y;
+		if( _finish.ControlPointRotationZ != null && !_finish.ContainRotationZ ) _finish.RotationZ = _rot.z;
+
 		if( _finish.ContainRotationX )
 		{
-			if( rotationX != _finish.RotationX || _finish.RotateXCount > 0 || _finish.IsRelativeRotateX )
+			if( rotationX != _finish.RotationX || _finish.ControlPointRotationX != null || 
+				_finish.RotateXCount > 0 || _finish.IsRelativeRotateX )
             {
 			    changedRot = true;
 				rotationX = _finish.IsRelativeRotateX ? rotationX + _finish.RotationX : this.GetRotation( _rot.x, _finish.RotationX, _finish.RotateXClockwise, _finish.RotateXCount );
@@ -285,7 +306,8 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 		if( _finish.ContainRotationY )
 		{
-			if( rotationY != _finish.RotationY || _finish.RotateYCount > 0 || _finish.IsRelativeRotateY )
+			if( rotationY != _finish.RotationY || _finish.ControlPointRotationY != null || 
+				_finish.RotateYCount > 0 || _finish.IsRelativeRotateY )
             {
 			    changedRot = true;
 				rotationY = _finish.IsRelativeRotateY ? rotationY + _finish.RotationY : this.GetRotation( _rot.y, _finish.RotationY, _finish.RotateYClockwise, _finish.RotateYCount );
@@ -294,7 +316,8 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 		}
 		if( _finish.ContainRotationZ )
 		{
-            if( rotationZ != _finish.RotationZ || _finish.RotateZCount > 0 || _finish.IsRelativeRotateZ )
+            if( rotationZ != _finish.RotationZ || _finish.ControlPointRotationZ != null || 
+				_finish.RotateZCount > 0 || _finish.IsRelativeRotateZ )
             {
 			    changedRot = true;
 				rotationZ = _finish.IsRelativeRotateZ ? rotationZ + _finish.RotationZ : this.GetRotation( _rot.z, _finish.RotationZ, _finish.RotateZClockwise, _finish.RotateZCount );
@@ -414,9 +437,9 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
         this._transform = null;
     }
 
-	protected virtual Action GetUpdateX() { return this.UpdateX; }
-	protected virtual Action GetUpdateY() { return this.UpdateY; }
-	protected virtual Action GetUpdateZ() { return this.UpdateZ; }
+	protected virtual Action GetUpdateX() { return _finish.ControlPointX == null ? (Action)this.UpdateX : this.UpdateBezierX; }
+	protected virtual Action GetUpdateY() { return _finish.ControlPointY == null ? (Action)this.UpdateY : this.UpdateBezierY; }
+	protected virtual Action GetUpdateZ() { return _finish.ControlPointZ == null ? (Action)this.UpdateZ : this.UpdateBezierZ; }
 	protected virtual Action GetUpdateLeft() { return this.UpdateLeft; }
 	protected virtual Action GetUpdateTop() { return this.UpdateTop; }
 	protected virtual Action GetUpdateRight() { return this.UpdateRight; }
@@ -434,61 +457,121 @@ public class DisplayUpdater : AbstractUpdater, IUpdating
 	{
 		_pos.x = _sPos.x * _invert + _dPos.x * _factor;
 	}
+	protected virtual void UpdateBezierX()
+	{
+		_pos.x = base.Calcurate( _finish.ControlPointX, _sPos.x, _dPos.x );
+	}
     protected virtual void UpdateY()
 	{
 		_pos.y = _sPos.y * _invert + _dPos.y * _factor;
+	}
+	protected virtual void UpdateBezierY()
+	{
+		_pos.y = base.Calcurate( _finish.ControlPointY, _sPos.y, _dPos.y );
 	}
     protected virtual void UpdateZ()
 	{
 		_pos.z = _sPos.z * _invert + _dPos.z * _factor;
 	}
+	protected virtual void UpdateBezierZ()
+	{
+		_pos.z = base.Calcurate( _finish.ControlPointZ, _sPos.z, _dPos.z );
+	}
 	protected virtual void UpdateLeft()
 	{
 		_rect.left = _sRect.left * _invert + _dRect.left * _factor;
+	}
+	protected virtual void UpdateBezierLeft()
+	{
+		_rect.left = base.Calcurate( _finish.ControlPointLeft, _sRect.left, _dRect.left );
 	}
 	protected virtual void UpdateTop()
 	{
 		_rect.top = _sRect.top * _invert + _dRect.top * _factor;
 	}
+	protected virtual void UpdateBezierTop()
+	{
+		_rect.top = base.Calcurate( _finish.ControlPointTop, _sRect.top, _dRect.top );
+	}
 	protected virtual void UpdateRight()
 	{
 		_rect.right = _sRect.right * _invert + _dRect.right * _factor;
+	}
+	protected virtual void UpdateBezierRight()
+	{
+		_rect.right = base.Calcurate( _finish.ControlPointRight, _sRect.right, _dRect.right );
 	}
 	protected virtual void UpdateBottom()
 	{
 		_rect.bottom = _sRect.bottom * _invert + _dRect.bottom * _factor;
 	}
+	protected virtual void UpdateBezierBottom()
+	{
+		_rect.bottom = base.Calcurate( _finish.ControlPointBottom, _sRect.bottom, _dRect.bottom );
+	}
 	protected virtual void UpdateWidth()
 	{
 		_size.x = _sSize.x * _invert + _dSize.x * _factor;
+	}
+	protected virtual void UpdateBezierWidth()
+	{
+		_size.x = base.Calcurate( _finish.ControlPointWidth, _sSize.x, _dSize.x );
 	}
 	protected virtual void UpdateHeight()
 	{
 		_size.y = _sSize.y * _invert + _dSize.y * _factor;
 	}
+	protected virtual void UpdateBezierHeight()
+	{
+		_size.y = base.Calcurate( _finish.ControlPointHeight, _sSize.y, _dSize.y );
+	}
     protected virtual void UpdateScaleX()
 	{
 		_sca.x = _sSca.x * _invert + _dSca.x * _factor;
+	}
+	protected virtual void UpdateBezierScaleX()
+	{
+		_sca.x = base.Calcurate( _finish.ControlPointScaleX, _sSca.x, _dSca.x );
 	}
     protected virtual void UpdateScaleY()
 	{
 		_sca.y = _sSca.y * _invert + _dSca.y * _factor;
 	}
+	protected virtual void UpdateBezierScaleY()
+	{
+		_sca.y = base.Calcurate( _finish.ControlPointScaleY, _sSca.y, _dSca.y );
+	}
     protected virtual void UpdateScaleZ()
 	{
 		_sca.z = _sSca.z * _invert + _dSca.z * _factor;
+	}
+	protected virtual void UpdateBezierScaleZ()
+	{
+		_sca.z = base.Calcurate( _finish.ControlPointScaleZ, _sSca.z, _dSca.z );
 	}
     protected virtual void UpdateRotationX()
 	{
 		_rot.x = _sRot.x * _invert + _dRot.x * _factor;
 	}
+	protected virtual void UpdateBezierRotationX()
+	{
+		_rot.x = base.Calcurate( _finish.ControlPointRotationX, _sRot.x, _dRot.x );
+	}
     protected virtual void UpdateRotationY()
 	{
 		_rot.y = _sRot.y * _invert + _dRot.y * _factor;
 	}
+	protected virtual void UpdateBezierRotationY()
+	{
+		_rot.y = base.Calcurate( _finish.ControlPointRotationY, _sRot.y, _dRot.y );
+	}
     protected virtual void UpdateRotationZ()
 	{
 		_rot.z = _sRot.z * _invert + _dRot.z * _factor;
+	}
+	protected virtual void UpdateBezierRotationZ()
+	{
+		_rot.z = base.Calcurate( _finish.ControlPointRotationZ, _sRot.z, _dRot.z );
 	}
 	//update transform
 	private void UpdatePosition()

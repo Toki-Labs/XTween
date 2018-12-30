@@ -94,6 +94,7 @@ public struct XHash : IClassicHandlable
 	public bool ContainY { get{ return this._containY; } }
 	public bool ContainZ { get{ return this._containZ; } }
 	private float _x, _y, _z;
+	private float[] _controlX, _controlY, _controlZ;
 	public float X
 	{
 		get { return _x; }
@@ -103,15 +104,17 @@ public struct XHash : IClassicHandlable
 			_x = value; 
 		}
 	}
-	public float Y
-	{
-		get { return _y; }
+	public float[] ControlPointX { get{ return _controlX; } set{ _controlX = value; } }
+	public float Y 
+	{ 
+		get{ return _y; }
 		set 
 		{ 
 			_containY = true;
 			_y = value; 
 		}
 	}
+	public float[] ControlPointY { get{ return _controlY; } set{ _controlY = value; } }
 	public float Z
 	{
 		get { return _z; }
@@ -121,6 +124,7 @@ public struct XHash : IClassicHandlable
 			_z = value; 
 		}
 	}
+	public float[] ControlPointZ { get{ return _controlZ; } set{ _controlZ = value; } }
 	public XHash Position( float x, float y, bool isRelative = false )
 	{
 		this.AddX( x, isRelative );
@@ -161,6 +165,7 @@ public struct XHash : IClassicHandlable
 	public bool ContainRight { get{ return this._containRight; } }
 	public bool ContainBottom { get{ return this._containBottom; } }
 	private float _left, _top, _right, _bottom;
+	private float[] _controlLeft, _controlTop, _controlRight, _controlBottom;
 	public float Left
 	{
 		get { return _left; }
@@ -170,6 +175,7 @@ public struct XHash : IClassicHandlable
 			_left = value; 
 		}
 	}
+	public float[] ControlPointLeft { get{ return _controlLeft; } set{ _controlLeft = value; } }
 	public float Top
 	{
 		get { return _top; }
@@ -179,6 +185,7 @@ public struct XHash : IClassicHandlable
 			_top = value;
 		}
 	}
+	public float[] ControlPointTop { get{ return _controlTop; } set{ _controlTop = value; } }
 	public float Right
 	{
 		get { return _right; }
@@ -188,6 +195,7 @@ public struct XHash : IClassicHandlable
 			_right = value; 
 		}
 	}
+	public float[] ControlPointRight { get{ return _controlRight; } set{ _controlRight = value; } }
 	public float Bottom
 	{
 		get { return _bottom; }
@@ -197,6 +205,7 @@ public struct XHash : IClassicHandlable
 			_bottom = value; 
 		}
 	}
+	public float[] ControlPointBottom { get{ return _controlBottom; } set{ _controlBottom = value; } }
 	public XHash Rect( float left, float top, float right, float bottom, bool isRelative = false )
     {
         this.AddLeft( left, isRelative );
@@ -230,6 +239,7 @@ public struct XHash : IClassicHandlable
 	public bool ContainWidth { get{ return this._containWidth; } }
 	public bool ContainHeight { get{ return this._containHeight; } }
 	private float _width, _height;
+	private float[] _controlWidth, _controlHeight;
 	public float Width
 	{
 		get { return _width; }
@@ -239,6 +249,7 @@ public struct XHash : IClassicHandlable
 			_width = value;
 		}
 	}
+	public float[] ControlPointWidth { get{ return _controlWidth; } set{ _controlWidth = value; } }
 	public float Height
 	{
 		get { return _height; }
@@ -248,6 +259,7 @@ public struct XHash : IClassicHandlable
 			_height = value;
 		}
 	}
+	public float[] ControlPointHeight { get{ return _controlHeight; } set{ _controlHeight = value; } }
 	public XHash SizeDelta( float width, float height, bool isRelative = false )
 	{
 		this.AddWidth( width, isRelative );
@@ -277,6 +289,7 @@ public struct XHash : IClassicHandlable
 	public bool ContainScaleY { get{ return this._containScaleY; } }
 	public bool ContainScaleZ { get{ return this._containScaleZ; } }
 	private float _scaleX, _scaleY, _scaleZ;
+	private float[] _controlScaleX, _controlScaleY, _controlScaleZ;
 	public float ScaleX
 	{
 		get { return _scaleX; }
@@ -286,6 +299,7 @@ public struct XHash : IClassicHandlable
 			_scaleX = value; 
 		}
 	}
+	public float[] ControlPointScaleX { get{ return _controlScaleX; } set{ _controlScaleX = value; } }
 	public float ScaleY
 	{
 		get { return _scaleY; }
@@ -295,6 +309,7 @@ public struct XHash : IClassicHandlable
 			_scaleY = value; 
 		}
 	}
+	public float[] ControlPointScaleY { get{ return _controlScaleY; } set{ _controlScaleY = value; } }
 	public float ScaleZ
 	{
 		get { return _scaleZ; }
@@ -304,6 +319,7 @@ public struct XHash : IClassicHandlable
 			_scaleZ = value; 
 		}
 	}
+	public float[] ControlPointScaleZ { get{ return _controlScaleZ; } set{ _controlScaleZ = value; } }
 	public XHash Scale( float x, float y, bool isRelative = false )
 	{
 		this.AddScaleX( x, isRelative );
@@ -321,7 +337,7 @@ public struct XHash : IClassicHandlable
 	{
 		this.AddScaleX( scale.x, isRelative );
 		this.AddScaleY( scale.y, isRelative );
-		this.AddScaleY( scale.y, isRelative );
+		this.AddScaleZ( scale.z, isRelative );
 		return this;
 	}
 
@@ -330,7 +346,7 @@ public struct XHash : IClassicHandlable
 		this._start = this.GetStart().Scale(start, isRelative);
 		this.AddScaleX( end.x, isRelative );
 		this.AddScaleY( end.y, isRelative );
-		this.AddScaleY( end.y, isRelative );
+		this.AddScaleZ( end.z, isRelative );
 		return this;
 	}
 
@@ -344,6 +360,7 @@ public struct XHash : IClassicHandlable
 	public bool ContainRotationZ { get{ return this._containRotationZ; } }
 	private bool _rotateXClockwise, _rotateYClockwise, _rotateZClockwise;
 	private float _rotationX, _rotationY, _rotationZ;
+	private float[] _controlRotationX, _controlRotationY, _controlRotationZ;
 	public float RotationX
 	{
 		get { return _rotationX; }
@@ -353,6 +370,7 @@ public struct XHash : IClassicHandlable
 			_rotationX = value; 
 		}
 	}
+	public float[] ControlPointRotationX { get{ return _controlRotationX; } set{ _controlRotationX = value; } }
 	public float RotationY
 	{
 		get { return _rotationY; }
@@ -362,6 +380,7 @@ public struct XHash : IClassicHandlable
 			_rotationY = value; 
 		}
 	}
+	public float[] ControlPointRotationY { get{ return _controlRotationY; } set{ _controlRotationY = value; } }
 	public float RotationZ
 	{
 		get { return _rotationZ; }
@@ -371,6 +390,7 @@ public struct XHash : IClassicHandlable
 			_rotationZ = value; 
 		}
 	}
+	public float[] ControlPointRotationZ { get{ return _controlRotationZ; } set{ _controlRotationZ = value; } }
 	public bool RotateXClockwise
 	{
 		get { return this._rotateXClockwise; }
@@ -448,6 +468,11 @@ public struct XHash : IClassicHandlable
 		this._start = hash;
 		return AddX( end, isRelative );
 	}
+	public XHash AddControlPointX( params float[] values )
+	{
+		this._controlX = values;
+		return this;
+	}
     public XHash AddY( float end, bool isRelative = false )
     {
         this.Y = end;
@@ -460,6 +485,11 @@ public struct XHash : IClassicHandlable
 		hash.Y = start;
 		this._start = hash;
 		return AddY( end, isRelative );
+	}
+	public XHash AddControlPointY( params float[] values )
+	{
+		this._controlY = values;
+		return this;
 	}
     public XHash AddZ( float end, bool isRelative = false )
     {
@@ -474,6 +504,11 @@ public struct XHash : IClassicHandlable
 		this._start = hash;
 		return AddZ( end, isRelative );
 	}
+	public XHash AddControlPointZ( params float[] values )
+	{
+		this._controlZ = values;
+		return this;
+	}
 	public XHash AddLeft( float end, bool isRelative = false )
     {
         this.Left = end;
@@ -486,6 +521,11 @@ public struct XHash : IClassicHandlable
 		hash.Left = start;
 		this._start = hash;
 		return AddLeft( end, isRelative );
+	}
+	public XHash AddControlPointLeft( params float[] values )
+	{
+		this._controlLeft = values;
+		return this;
 	}
 	public XHash AddTop( float end, bool isRelative = false )
     {
@@ -500,6 +540,11 @@ public struct XHash : IClassicHandlable
 		this._start = hash;
 		return AddTop( end, isRelative );
 	}
+	public XHash AddControlPointTop( params float[] values )
+	{
+		this._controlTop = values;
+		return this;
+	}
 	public XHash AddRight( float end, bool isRelative = false )
     {
         this.Right = end;
@@ -512,6 +557,11 @@ public struct XHash : IClassicHandlable
 		hash.Right = start;
 		this._start = hash;
 		return AddRight( end, isRelative );
+	}
+	public XHash AddControlPointRight( params float[] values )
+	{
+		this._controlRight = values;
+		return this;
 	}
 	public XHash AddBottom( float end, bool isRelative = false )
     {
@@ -526,6 +576,11 @@ public struct XHash : IClassicHandlable
 		this._start = hash;
 		return AddBottom( end, isRelative );
 	}
+	public XHash AddControlPointBottom( params float[] values )
+	{
+		this._controlBottom = values;
+		return this;
+	}
 	public XHash AddWidth( float end, bool isRelative = false )
     {
         this.Width = end;
@@ -538,6 +593,11 @@ public struct XHash : IClassicHandlable
 		hash.Width = start;
 		this._start = hash;
 		return AddWidth( end, isRelative );
+	}
+	public XHash AddControlPointWidth( params float[] values )
+	{
+		this._controlWidth = values;
+		return this;
 	}
 	public XHash AddHeight( float end, bool isRelative = false )
     {
@@ -552,6 +612,11 @@ public struct XHash : IClassicHandlable
 		this._start = hash;
 		return AddHeight( end, isRelative );
 	}
+	public XHash AddControlPointHeight( params float[] values )
+	{
+		this._controlHeight = values;
+		return this;
+	}
     public XHash AddScaleX( float end, bool isRelative = false )
     {
         this.ScaleX = end;
@@ -564,6 +629,11 @@ public struct XHash : IClassicHandlable
 		hash.ScaleX = start;
 		this._start = hash;
 		return AddScaleX( end, isRelative );
+	}
+	public XHash AddControlScaleX( params float[] values )
+	{
+		this._controlScaleX = values;
+		return this;
 	}
     public XHash AddScaleY( float end, bool isRelative = false )
     {
@@ -578,6 +648,11 @@ public struct XHash : IClassicHandlable
 		this._start = hash;
 		return AddScaleY( end, isRelative );
 	}
+	public XHash AddControlScaleY( params float[] values )
+	{
+		this._controlScaleY = values;
+		return this;
+	}
     public XHash AddScaleZ( float end, bool isRelative = false )
     {
         this.ScaleZ = end;
@@ -590,6 +665,11 @@ public struct XHash : IClassicHandlable
 		hash.ScaleZ = start;
 		this._start = hash;
 		return AddScaleZ( end, isRelative );
+	}
+	public XHash AddControlScaleZ( params float[] values )
+	{
+		this._controlScaleZ = values;
+		return this;
 	}
     public XHash AddRotationX( float end, bool isRelative = false  )
     {
@@ -612,6 +692,11 @@ public struct XHash : IClassicHandlable
 		this._start = hash;
 		return AddRotationX( end, clockwise, rotateCount, isRelative );
 	}
+	public XHash AddControlRotationX( params float[] values )
+	{
+		this._controlRotationX = values;
+		return this;
+	}
     public XHash AddRotationY( float end, bool isRelative = false  )
     {
         this.RotationY = end;
@@ -633,6 +718,11 @@ public struct XHash : IClassicHandlable
 		this._start = hash;
 		return AddRotationY( end, clockwise, rotateCount, isRelative );
 	}
+	public XHash AddControlRotationY( params float[] values )
+	{
+		this._controlRotationY = values;
+		return this;
+	}
     public XHash AddRotationZ( float end, bool isRelative = false  )
     {
         this.RotationZ = end;
@@ -653,6 +743,11 @@ public struct XHash : IClassicHandlable
 		hash.RotationZ = start;
 		this._start = hash;
 		return AddRotationZ( end, clockwise, rotateCount, isRelative );
+	}
+	public XHash AddControlRotationZ( params float[] values )
+	{
+		this._controlRotationZ = values;
+		return this;
 	}
     public XHash AddOnPlay( IExecutable value )
 	{

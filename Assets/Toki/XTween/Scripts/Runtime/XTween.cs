@@ -145,6 +145,7 @@ public class XTween
 		return ColorTo<Graphic>(target, "color", hash, time, easing, frameSkip, realTime);
 	}
 
+	//Color Property
 	public static IAni ColorTo<T>( T target, string colorPropertyName, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		ITimer tick = _ticker;
@@ -186,20 +187,6 @@ public class XTween
 		tween.ResolveValues();
 		tween.UpdateTween( applyTime );
     }
-
-    /*===================================== BezierTo ========================================*/
-	public static IAniObject BezierTo( GameObject target, XPoint controlPoint, XHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
-	{
-		ITimer tick = _ticker;
-		ITimer tickReal = _tickerReal; 
-		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
-		tween.FrameSkip = frameSkip;
-		tween.updater = _updaterFactory.CreateBezier(target, hash, hash.GetStart(), controlPoint);
-		tween.ClassicHandlers = hash;
-		tween.time = time;
-		tween.easing =  ( easing != null ) ? easing : Linear.easeNone;
-		return tween;
-	}
 
     /*===================================== ParallelTweens ========================================*/
     public static IAniGroup ParallelTweens( List<IAni> tweenList, bool realTime = false )

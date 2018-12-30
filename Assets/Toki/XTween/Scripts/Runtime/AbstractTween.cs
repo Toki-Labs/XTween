@@ -187,17 +187,14 @@ public class AbstractTween : TimerListener, IIAni
 #else
 			_time = (this._ticker is UpdateTicker) ? Time.time : Time.realtimeSinceStartup;
 #endif
-			if (_position >= _duration) {
-				_position = 0;
-			}
+			if (_position >= _duration) _position = 0;
 			float t = _ticker.time;
 			_startTime = t - _position;
 			_isPlaying = true;
 			this.ResolveValues();
             _ticker.AddTimer(this);
-            if (_classicHandlers != null && _classicHandlers.OnPlay != null) {
+            if (_classicHandlers != null && _classicHandlers.OnPlay != null) 
 				_classicHandlers.OnPlay.Execute();
-			}
 			Tick(t);
 		}
 	}
@@ -216,11 +213,11 @@ public class AbstractTween : TimerListener, IIAni
 
 	public virtual void Stop()
 	{
-		if (_isPlaying) {
+		if (_isPlaying) 
+		{
 			_isPlaying = false;
-			if (_classicHandlers != null && _classicHandlers.OnStop != null) {
+			if (_classicHandlers != null && _classicHandlers.OnStop != null) 
 				_classicHandlers.OnStop.Execute();
-			}
 		}
 	}
 
@@ -238,22 +235,14 @@ public class AbstractTween : TimerListener, IIAni
 		
 	public virtual void TogglePause()
 	{
-		if (_isPlaying) {
-			Stop();
-		}
-		else {
-			Play();
-		}
+		if (_isPlaying) Stop();
+		else Play();
 	}
 		
 	public virtual void GotoAndPlay( float position )
 	{
-		if (position < 0) {
-			position = 0;
-		}
-		if (position > _duration) {
-			position = _duration;
-		}
+		if (position < 0) position = 0;
+		if (position > _duration) position = _duration;
 		_position = position;
 		_startTime = _ticker.time - _position;
         this.Play();

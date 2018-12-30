@@ -46,15 +46,4 @@ public class UpdaterFactory
 		updater.Target = target;
 		return updater;
 	}
-		
-	public IUpdating CreateBezier( GameObject target, XHash dest, XHash source, XPoint controlPoint )
-	{
-		BezierUpdater bezierUpdater = new BezierUpdater();
-		bezierUpdater.Target = target;
-        bezierUpdater.Start = source;
-        bezierUpdater.Finish = dest;
-        bezierUpdater.controlPoint = controlPoint;
-			
-		return bezierUpdater;
-	}
 }
