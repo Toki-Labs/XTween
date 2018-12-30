@@ -117,7 +117,7 @@ public class XTween
 		return tween;
 	}
 
-	/*===================================== Property ========================================*/
+	//Proerpty Type Only
 	public static IAni ValueTo<T>( T target, XObjectHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		ITimer tick = _ticker;
