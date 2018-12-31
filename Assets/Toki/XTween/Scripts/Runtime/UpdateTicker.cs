@@ -54,12 +54,23 @@ public class UpdateTicker : SingleXTween<UpdateTicker>, ITimer
 #if UNITY_EDITOR
 	public void AddUpdate()
 	{
+		InitializeInEditor();
 		EditorApplication.update += this.UpdateTickers;
 	}
 
 	public void RemoveUpdate()
 	{
+		InitializeInEditor();
 		EditorApplication.update -= this.UpdateTickers;
+	}
+
+	private void InitializeInEditor()
+	{
+		_time = t = 0f;
+		_numListeners = n = 0;
+		_tickerListenerPaddings = null;
+		_first = prevListener = listener = l = ll = null;
+		Start();
 	}
 #endif
 		
@@ -93,6 +104,7 @@ public class UpdateTicker : SingleXTween<UpdateTicker>, ITimer
 			_first.prevListener = l;
 		}
 			
+		TimerListener removeListener = null;
 		while (listener.nextListener != null) {
 			if ((listener = listener.nextListener).Tick(t)) {
 				if (listener.prevListener != null) {
@@ -107,6 +119,7 @@ public class UpdateTicker : SingleXTween<UpdateTicker>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -123,6 +136,7 @@ public class UpdateTicker : SingleXTween<UpdateTicker>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -139,6 +153,7 @@ public class UpdateTicker : SingleXTween<UpdateTicker>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -155,6 +170,7 @@ public class UpdateTicker : SingleXTween<UpdateTicker>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -171,6 +187,7 @@ public class UpdateTicker : SingleXTween<UpdateTicker>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -187,6 +204,7 @@ public class UpdateTicker : SingleXTween<UpdateTicker>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -203,6 +221,7 @@ public class UpdateTicker : SingleXTween<UpdateTicker>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -219,15 +238,18 @@ public class UpdateTicker : SingleXTween<UpdateTicker>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
 		}
+		
 			
 		if ((_first = l.nextListener) != null) {
 			_first.prevListener = null;
 		}
 		l.nextListener = _tickerListenerPaddings[n + 1];
+		if( removeListener != null ) removeListener.TickerRemoved();
 	}
 		
 	public float time
@@ -252,6 +274,7 @@ public class UpdateTicker : SingleXTween<UpdateTicker>, ITimer
 		_first = listener;
 
 		++_numListeners;
+		// Debug.Log("Add: " + _numListeners);
 	}
 		
 	public void RemoveTimer( TimerListener listener )
@@ -277,6 +300,7 @@ public class UpdateTicker : SingleXTween<UpdateTicker>, ITimer
 				
 			l = l.nextListener;
 		}
+		// Debug.Log("Remove: " + _numListeners);
 	}
 		
 	public void Initialize()

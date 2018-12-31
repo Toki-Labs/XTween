@@ -12,7 +12,7 @@ public class ReversedTween : TweenDecorator
 	{
 		_baseTween.UpdateTween(_duration - time);
 	}
-		
+
 	protected override AbstractTween NewInstance()
 	{
 		return new ReversedTween(_baseTween.Clone() as IIAni, 0);

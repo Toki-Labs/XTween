@@ -7,9 +7,14 @@ public class TimerListener
 {
 	public TimerListener prevListener = null;
 	public TimerListener nextListener = null;
+	public virtual void TickerRemoved()
+	{
+		
+	}
     public virtual void StopOnDestroy()
-    {
-    }
+	{
+
+	}
 	public virtual bool Tick( float time )
 	{
 		return false;

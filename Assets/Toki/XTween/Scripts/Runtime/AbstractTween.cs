@@ -175,28 +175,33 @@ public class AbstractTween : TimerListener, IIAni
 	public virtual void Play()
 	{
 		if (!_isPlaying) {
-#if UNITY_EDITOR
-			if( Application.isPlaying )
-			{
-				_time = (this._ticker is UpdateTicker) ? Time.time : Time.realtimeSinceStartup;
-			}
-			else
-			{
-				_time = Time.realtimeSinceStartup;
-			}
-#else
-			_time = (this._ticker is UpdateTicker) ? Time.time : Time.realtimeSinceStartup;
-#endif
 			if (_position >= _duration) _position = 0;
+			ResolveValues();
 			float t = _ticker.time;
 			_startTime = t - _position;
-			_isPlaying = true;
-			this.ResolveValues();
-            _ticker.AddTimer(this);
-            if (_classicHandlers != null && _classicHandlers.OnPlay != null) 
-				_classicHandlers.OnPlay.Execute();
-			Tick(t);
+			PlayNow(t);
 		}
+	}
+
+	private void PlayNow(float time)
+	{
+#if UNITY_EDITOR
+		if( Application.isPlaying )
+		{
+			_time = (this._ticker is UpdateTicker) ? Time.time : Time.realtimeSinceStartup;
+		}
+		else
+		{
+			_time = Time.realtimeSinceStartup;
+		}
+#else
+		_time = (this._ticker is UpdateTicker) ? Time.time : Time.realtimeSinceStartup;
+#endif
+		_isPlaying = true;
+		_ticker.AddTimer(this);
+		if (_classicHandlers != null && _classicHandlers.OnPlay != null) 
+			_classicHandlers.OnPlay.Execute();
+		Tick(time);
 	}
 
     public virtual void ResolveValues()
@@ -221,11 +226,6 @@ public class AbstractTween : TimerListener, IIAni
 		}
 	}
 
-	public virtual void Dispose()
-	{
-		this._isPlaying = false;
-	}
-		
 	public virtual void StartStop()
 	{
 		if (_classicHandlers != null && _classicHandlers.OnStop != null) {
@@ -245,7 +245,8 @@ public class AbstractTween : TimerListener, IIAni
 		if (position > _duration) position = _duration;
 		_position = position;
 		_startTime = _ticker.time - _position;
-        this.Play();
+		InternalUpdate(position);
+        PlayNow(_ticker.time);
 	}
 		
 	public virtual void GotoAndStop( float position ) 
@@ -257,7 +258,6 @@ public class AbstractTween : TimerListener, IIAni
 			position = _duration;
 		}
 		_position = position;
-        this.ResolveValues();
 		InternalUpdate(position);
 		if (_classicHandlers != null && _classicHandlers.OnUpdate != null) {
 			_classicHandlers.OnUpdate.Execute();
@@ -314,10 +314,6 @@ public class AbstractTween : TimerListener, IIAni
 			if (t >= _duration) {
 				_position = _duration;
 				if (_stopOnComplete) {
-					_isPlaying = false;
-					if (_classicHandlers != null && _classicHandlers.OnComplete != null) {
-						_classicHandlers.OnComplete.Execute();
-					}
 					return true;
 				}
 				else {
@@ -330,9 +326,19 @@ public class AbstractTween : TimerListener, IIAni
 				}
 			}
 			return false;
-		}
-			
+		}			
 		return true;
+	}
+
+	public override void TickerRemoved()
+	{
+		if(_isPlaying && _stopOnComplete)
+		{
+			_isPlaying = false;
+			if (_classicHandlers != null && _classicHandlers.OnComplete != null) {
+				_classicHandlers.OnComplete.Execute();
+			}
+		}
 	}
 
 	public bool TickByCount( float time )

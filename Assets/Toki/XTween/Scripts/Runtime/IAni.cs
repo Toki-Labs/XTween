@@ -67,6 +67,5 @@ public interface IAni
 	void TogglePause();
 	void GotoAndPlay( float position );
 	void GotoAndStop( float position );
-	void Dispose();
 	IAni Clone();
 }
