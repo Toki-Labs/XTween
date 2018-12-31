@@ -79,10 +79,12 @@ public class XTween
 		if( isEnterEditorMode )
 		{
 			_ticker.AddUpdate();
+			_tickerReal.AddUpdate();
 		}
 		else
 		{
 			_ticker.RemoveUpdate();
+			_tickerReal.RemoveUpdate();
 		}
 	}
 #endif

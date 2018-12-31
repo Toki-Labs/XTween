@@ -2,6 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class DeltaTimeTicker
 {
 	private int _frameSkip;
@@ -51,6 +55,12 @@ public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 		return _deltaTimeArray[frameSkip].deltaTime;
 	}
 
+#if UNITY_EDITOR
+	public UpdateTickerReal()
+	{
+		this.Start();
+	}
+#endif
 		
 	void Start()
 	{
@@ -58,7 +68,7 @@ public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 		
 		prevListener = null;
 		
-		for ( int i = 0; i < 10; ++i) 
+		for ( int i = 0; i < 10; ++i ) 
 		{
 			TimerListener listener = new TimerListener();
 			if (prevListener != null) {
@@ -69,6 +79,29 @@ public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 			_tickerListenerPaddings.Add( listener );
 		}
 	}
+
+#if UNITY_EDITOR
+	public void AddUpdate()
+	{
+		InitializeInEditor();
+		EditorApplication.update += this.UpdateTickers;
+	}
+
+	public void RemoveUpdate()
+	{
+		InitializeInEditor();
+		EditorApplication.update -= this.UpdateTickers;
+	}
+
+	private void InitializeInEditor()
+	{
+		_time = t = 0f;
+		_numListeners = n = 0;
+		_tickerListenerPaddings = null;
+		_first = prevListener = listener = l = ll = null;
+		Start();
+	}
+#endif
 
     void Update()
     {
@@ -93,6 +126,7 @@ public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 			_first.prevListener = l;
 		}
 			
+		TimerListener removeListener = null;
 		while (listener.nextListener != null) {
 			if ((listener = listener.nextListener).Tick(t)) {
 				if (listener.prevListener != null) {
@@ -107,6 +141,7 @@ public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -123,6 +158,7 @@ public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -139,6 +175,7 @@ public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -155,6 +192,7 @@ public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -171,6 +209,7 @@ public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -187,6 +226,7 @@ public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -203,6 +243,7 @@ public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -219,6 +260,7 @@ public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 				ll = listener.prevListener;
 				listener.nextListener = null;
 				listener.prevListener = null;
+				removeListener = listener;
 				listener = ll;
 				--_numListeners;
 			}
@@ -228,6 +270,7 @@ public class UpdateTickerReal : SingleXTween<UpdateTickerReal>, ITimer
 			_first.prevListener = null;
 		}
 		l.nextListener = _tickerListenerPaddings[n + 1];
+		if( removeListener != null ) removeListener.TickerRemoved();
 	}
 		
 	public float time
