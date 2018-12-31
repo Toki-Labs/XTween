@@ -45,9 +45,11 @@ public class SingleXTween<Type> : MonoBehaviour where Type : MonoBehaviour
 					
 					if( _inst == null )
 					{
-                        string typeName = typeof( Type ).ToString();
-                        typeName = typeName.Substring( typeName.LastIndexOf('.') + 1 );
-                        GameObject game = new GameObject( typeName );
+                        GameObject game = GameObject.Find("XTweenUpdater");
+                        if(game == null)
+                        {
+                            game = new GameObject( "XTweenUpdater" );
+                        }
 
 						_inst = game.AddComponent<Type>();
                         DontDestroyOnLoad(game);
