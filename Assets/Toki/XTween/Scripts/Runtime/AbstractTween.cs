@@ -332,6 +332,7 @@ public class AbstractTween : TimerListener, IIAni
 
 	public override void TickerRemoved()
 	{
+		// Debug.Log("Remove Ticker");
 		if(_isPlaying && _stopOnComplete)
 		{
 			_isPlaying = false;

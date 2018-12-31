@@ -48,14 +48,7 @@ public class ColorUpdater<T> : AbstractUpdater, IUpdating
 	//source set
 	public override void ResolveValues()
 	{
-		if( _target == null || _propertyName == null )
-		{
-			if( this._stopOnDestroyHandler != null )
-			{
-				this._stopOnDestroyHandler.Invoke();
-			}
-			return;
-		}
+		if (IsNullTarget() || _propertyName == null) return;
 
 		Type type = typeof(T);
         PropertyInfo pInfo = type.GetProperty(_propertyName);
@@ -136,27 +129,28 @@ public class ColorUpdater<T> : AbstractUpdater, IUpdating
 
 	protected override void UpdateObject()
 	{
-        if (this._target == null)
-        {
-            this._stopOnDestroyHandler.Invoke();
-            this.Dispose();
-        }
-        else
-        {
-            for (int i = 0; i < this._updateCount; ++i)
-            {
-                this._updateList[i].Invoke();
-            }
-        }
+        if (IsNullTarget()) return;
+
+		for (int i = 0; i < this._updateCount; ++i)
+		{
+			this._updateList[i].Invoke();
+		}
 	}
 
-    public void Dispose()
-    {
-		// Debug.Log ("Dispose");
-        this._stopOnDestroyHandler = null;
-        this._updateList.Clear();
-        this._updateList = null;
-    }
+	private bool IsNullTarget()
+	{
+		if(EqualityComparer<T>.Default.Equals(_target, default(T))) 
+		{
+			if( _stopOnDestroyHandler != null )
+				_stopOnDestroyHandler.Invoke();
+			this._stopOnDestroyHandler = null;
+			this._updateList.Clear();
+			this._updateList = null;
+			return true;
+		}
+		return false;
+	}
+	
 	protected virtual Action GetUpdateRed() { return _finish.ControlPointRed == null ? (Action)this.UpdateRed : this.UpdateBezierRed; }
 	protected virtual Action GetUpdateGreen() { return _finish.ControlPointGreen == null ? (Action)this.UpdateGreen : this.UpdateBezierGreen; }
 	protected virtual Action GetUpdateBlue() { return _finish.ControlPointBlue == null ? (Action)this.UpdateBlue : this.UpdateBezierBlue; }

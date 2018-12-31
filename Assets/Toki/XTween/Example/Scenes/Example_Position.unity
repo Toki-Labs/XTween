@@ -1814,7 +1814,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MOVE
+  m_Text: TWEEN
 --- !u!222 &787359612
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3431,6 +3431,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe988fb41389ab648b8576194c74d343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultEasingType: 5
+  defaultTime: 1
   inputTime: {fileID: 981784222}
   dropdownEasing: {fileID: 1140342101}
   dropdownInOut: {fileID: 658792435}

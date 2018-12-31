@@ -87,14 +87,7 @@ public class ObjectUpdater<T> : ObjectUpdater
 	}
     public override void ResolveValues()
     {
-		if( _target == null )
-		{
-			if( this._stopOnDestroyHandler != null )
-			{
-				this._stopOnDestroyHandler.Invoke();
-			}
-			return;
-		}
+		if( IsNullTarget() ) return;
 		base.ComposeDic();
 
         Type type = typeof(T);
@@ -117,12 +110,16 @@ public class ObjectUpdater<T> : ObjectUpdater
 			item.Value.updator = objValue.controlPoint == null ? 
 			(Action<float,float>)delegate( float invert, float factor )
 			{
+				if( IsNullTarget() ) return;
+				
 				objValue.current = objValue.start * invert + objValue.end * factor;
 				item.Value.value = objValue;
 				setter(_target, objValue.current);
 			} :
 			delegate( float invert, float factor )
 			{
+				if( IsNullTarget() ) return;
+
 				objValue.current = Calcurate(objValue.controlPoint, objValue.start, objValue.end);
 				item.Value.value = objValue;
 				setter(_target, objValue.current);
@@ -130,24 +127,29 @@ public class ObjectUpdater<T> : ObjectUpdater
 		}
 		
     }
+
+	private bool IsNullTarget()
+	{
+		if(EqualityComparer<T>.Default.Equals(_target, default(T))) 
+		{
+			if( _stopOnDestroyHandler != null )
+				_stopOnDestroyHandler.Invoke();
+			_stopOnDestroyHandler = null;
+        	_valueDic.Clear();
+        	_target = default(T);
+			return true;
+		}
+		return false;
+	}
 		
 	protected override void UpdateObject()
 	{
-        if (this._target == null)
-        {
-            this._stopOnDestroyHandler.Invoke();
-            this.Dispose();
-        }
-        else
-        {
-			base.UpdateObject();
-        }
+        if( IsNullTarget() ) return;
+		base.UpdateObject();
 	}
 
 	public void Dispose()
     {
-        this._stopOnDestroyHandler = null;
-        this._valueDic.Clear();
-        this._target = default(T);
+        
     }
 }
