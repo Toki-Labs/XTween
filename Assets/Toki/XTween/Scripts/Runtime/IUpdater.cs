@@ -1,40 +1,43 @@
 using System;
 using UnityEngine;
 
-public interface IUpdater
+namespace Toki.Tween
 {
-	bool isRelative
+	public interface IUpdater
 	{
-		get;
-		set;
+		bool isRelative
+		{
+			get;
+			set;
+		}
+			
+		string targetName
+		{
+			get;
+			set;
+		}
+			
+		GameObject target
+		{
+			get;
+			set;
+		}
+			
+		XHash source
+		{
+			set;
+		}
+			
+		XHash destination
+		{
+			set;
+		}
+			
+		void setSourceValue( string propertyName, float value, bool isRelative = false);		
+		void setDestinationValue( string propertyName, float value, bool isRelative = false);
+		object getObject( string propertyName );
+		void setObject( string propertyName, object value );
+		void update( float factor );
+		IUpdater clone();
 	}
-		
-	string targetName
-	{
-		get;
-		set;
-	}
-		
-	GameObject target
-	{
-		get;
-		set;
-	}
-		
-	XHash source
-	{
-		set;
-	}
-		
-	XHash destination
-	{
-		set;
-	}
-		
-	void setSourceValue( string propertyName, float value, bool isRelative = false);		
-	void setDestinationValue( string propertyName, float value, bool isRelative = false);
-	object getObject( string propertyName );
-	void setObject( string propertyName, object value );
-	void update( float factor );
-	IUpdater clone();
 }

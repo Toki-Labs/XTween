@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
 
-public interface IAniGroup : IAni
+namespace Toki.Tween
 {
-	bool Contains( IAni tween );
-	IAni GetTweenAt( int index );
-	int GetTweenIndex( IAni tween );
-	IIAni[] tweens
+	public interface IAniGroup : IAni
 	{
-		get;
+		bool Contains( IAni tween );
+		IAni GetTweenAt( int index );
+		int GetTweenIndex( IAni tween );
+		IIAni[] tweens
+		{
+			get;
+		}
 	}
 }

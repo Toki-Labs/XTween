@@ -1,20 +1,23 @@
 using UnityEngine;
 using System.Collections;
 
-public class ReversedTween : TweenDecorator
+namespace Toki.Tween
 {
-	public ReversedTween( IIAni baseTween, float position ) : base( baseTween, position )
+	public class ReversedTween : TweenDecorator
 	{
-		_duration = baseTween.Duration;
-	}
-	
-	protected override void InternalUpdate( float time )
-	{
-		_baseTween.UpdateTween(_duration - time);
-	}
+		public ReversedTween( IIAni baseTween, float position ) : base( baseTween, position )
+		{
+			_duration = baseTween.Duration;
+		}
+		
+		protected override void InternalUpdate( float time )
+		{
+			_baseTween.UpdateTween(_duration - time);
+		}
 
-	protected override AbstractTween NewInstance()
-	{
-		return new ReversedTween(_baseTween.Clone() as IIAni, 0);
+		protected override AbstractTween NewInstance()
+		{
+			return new ReversedTween(_baseTween.Clone() as IIAni, 0);
+		}
 	}
 }

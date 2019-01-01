@@ -3,36 +3,40 @@ using System;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
+using Toki.Tween;
 
-public class XObjectSet
+namespace Toki.Tween
 {
-    public Action<float,float> updator;
-    public XObjectValues value;
-}
-
-public struct XObjectValues
-{
-    private bool _containStart;
-    public bool ContainStart { get{return _containStart;} }
-    public float[] controlPoint;
-    public float start;
-    public float current;
-    public float end;
-
-    public XObjectValues( float end )
+    public class XObjectSet
     {
-        this._containStart = false;
-        this.start = this.current = 0f;
-        this.end = end;
-        this.controlPoint = null;
+        public Action<float,float> updator;
+        public XObjectValues value;
     }
-    public XObjectValues( float start, float end )
+
+    public struct XObjectValues
     {
-        this._containStart = true;
-        this.start = start;
-        this.current = start;
-        this.end = end;
-        this.controlPoint = null;
+        private bool _containStart;
+        public bool ContainStart { get{return _containStart;} }
+        public float[] controlPoint;
+        public float start;
+        public float current;
+        public float end;
+
+        public XObjectValues( float end )
+        {
+            this._containStart = false;
+            this.start = this.current = 0f;
+            this.end = end;
+            this.controlPoint = null;
+        }
+        public XObjectValues( float start, float end )
+        {
+            this._containStart = true;
+            this.start = start;
+            this.current = start;
+            this.end = end;
+            this.controlPoint = null;
+        }
     }
 }
 

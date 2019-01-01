@@ -1,14 +1,17 @@
 using System;
 
-public interface ITimer
+namespace Toki.Tween
 {
-	float time
+	public interface ITimer
 	{
-		get;
-		set;
+		float time
+		{
+			get;
+			set;
+		}
+		float GetDeltaTime( int frameSkip );
+		void Initialize();
+		void AddTimer( TimerListener listener );
+		void RemoveTimer( TimerListener listener );
 	}
-	float GetDeltaTime( int frameSkip );
-	void Initialize();
-	void AddTimer( TimerListener listener );
-	void RemoveTimer( TimerListener listener );
 }

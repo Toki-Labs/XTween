@@ -1,12 +1,15 @@
 using UnityEngine;
 using System.Collections;
 
-public class TickerListener
+namespace Toki.Tween
 {
-	public TickerListener prevListener = null;
-	public TickerListener nextListener = null;
-	public virtual bool tick( float time )
+	public class TickerListener
 	{
-		return false;
+		public TickerListener prevListener = null;
+		public TickerListener nextListener = null;
+		public virtual bool tick( float time )
+		{
+			return false;
+		}
 	}
 }

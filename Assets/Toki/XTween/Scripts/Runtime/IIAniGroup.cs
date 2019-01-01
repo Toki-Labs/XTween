@@ -1,5 +1,8 @@
 using System;
 
-public interface IIAniGroup : IAniGroup, IIAni
+namespace Toki.Tween
 {
+    public interface IIAniGroup : IAniGroup, IIAni
+    {
+    }
 }

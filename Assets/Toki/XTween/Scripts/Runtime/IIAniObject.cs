@@ -1,22 +1,25 @@
 using System;
 
-public interface IIAniObject : IAniObject, IIAni
+namespace Toki.Tween
 {
-	float time
+	public interface IIAniObject : IAniObject, IIAni
 	{
-		get;
-		set;
-	}
-		
-	IEasing easing
-	{
-		get;
-		set;
-	}
-		
-	IUpdating updater
-	{
-		get;
-		set;
+		float time
+		{
+			get;
+			set;
+		}
+			
+		IEasing easing
+		{
+			get;
+			set;
+		}
+			
+		IUpdating updater
+		{
+			get;
+			set;
+		}
 	}
 }

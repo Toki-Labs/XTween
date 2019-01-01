@@ -2,22 +2,26 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Toki.Tween;
 
-public struct UIRect
+namespace Toki.Tween
 {
-	public float left, right, top, bottom;
-	public UIRect( float left, float top, float right, float bottom )
+	public struct UIRect
 	{
-		this.left = left;
-		this.top = top;
-		this.right = right;
-		this.bottom = bottom;
-	}
+		public float left, right, top, bottom;
+		public UIRect( float left, float top, float right, float bottom )
+		{
+			this.left = left;
+			this.top = top;
+			this.right = right;
+			this.bottom = bottom;
+		}
 
-	public override string ToString()
-	{
-		return "(" + this.left.ToString() + ", " + this.top.ToString() + ", " + 
-				this.right.ToString() + ", " + this.bottom.ToString() + ")";
+		public override string ToString()
+		{
+			return "(" + this.left.ToString() + ", " + this.top.ToString() + ", " + 
+					this.right.ToString() + ", " + this.bottom.ToString() + ")";
+		}
 	}
 }
 
@@ -214,7 +218,7 @@ public struct XHash : IClassicHandlable
         this.AddBottom( bottom, isRelative );
         return this;
     }
-	public XHash Rect( UIRect rect, bool isRelative = false )
+	public XHash Rect( Toki.Tween.UIRect rect, bool isRelative = false )
 	{
 		this.AddLeft( rect.left, isRelative );
         this.AddTop( rect.top, isRelative );
@@ -222,7 +226,7 @@ public struct XHash : IClassicHandlable
         this.AddBottom( rect.bottom, isRelative );
 		return this;
 	}
-	public XHash Rect( UIRect start, UIRect end, bool isRelative = false )
+	public XHash Rect( Toki.Tween.UIRect start, Toki.Tween.UIRect end, bool isRelative = false )
 	{
 		this._start = this.GetStart().Rect(start, isRelative);
 		this.AddLeft( end.left, isRelative );

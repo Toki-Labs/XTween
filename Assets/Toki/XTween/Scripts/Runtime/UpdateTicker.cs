@@ -6,23 +6,26 @@ using System.Collections.Generic;
 using UnityEditor;
 #endif
 
-public class UpdateTicker : UpdateTickerBase<UpdateTicker>, ITimer
-{	
+namespace Toki.Tween
+{
+	public class UpdateTicker : UpdateTickerBase<UpdateTicker>, ITimer
+	{	
 #if UNITY_EDITOR
-	public UpdateTicker() : base()
-	{
-	}
+		public UpdateTicker() : base()
+		{
+		}
 #endif
 
-	protected override void TimeSet()
-	{
+		protected override void TimeSet()
+		{
 #if UNITY_EDITOR
-		if( Application.isPlaying )
-			_time = Time.time;
-		else
-			_time = Time.realtimeSinceStartup;
+			if( Application.isPlaying )
+				_time = Time.time;
+			else
+				_time = Time.realtimeSinceStartup;
 #else
-		_time = Time.time;
+			_time = Time.time;
 #endif
+		}
 	}
 }

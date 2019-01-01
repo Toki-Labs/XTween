@@ -1,19 +1,22 @@
 using System;
 
-public interface IIAni : IAni
+namespace Toki.Tween
 {
-	ITimer Ticker
+	public interface IIAni : IAni
 	{
-		get;
-	}
-    Action DecoratorStopOnDestroy
-    {
-        set;
-    }
+		ITimer Ticker
+		{
+			get;
+		}
+		Action DecoratorStopOnDestroy
+		{
+			set;
+		}
 
-    void IntializeGroup();
-	void StartPlay();
-	void StartStop();
-    void ResolveValues();
-	void UpdateTween( float time );
+		void IntializeGroup();
+		void StartPlay();
+		void StartStop();
+		void ResolveValues();
+		void UpdateTween( float time );
+	}
 }

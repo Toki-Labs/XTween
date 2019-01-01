@@ -6,45 +6,47 @@ using System.Collections.Generic;
 using UnityEditor;
 #endif
 
-public class DeltaTimeTicker
+namespace Toki.Tween
 {
-	private int _frameSkip;
-	private int _frameSkipCount;
-	private float _deltaTime;
-	private float _time;
-
-	public float deltaTime { get{ return this._deltaTime; } }
-
-	public DeltaTimeTicker( int frameSkip, float time )
+	public class DeltaTimeTicker
 	{
-		this._frameSkip = frameSkip;
-		this._frameSkipCount = 0;
-		this._deltaTime = 0f;
-		this._time = time;
+		private int _frameSkip;
+		private int _frameSkipCount;
+		private float _deltaTime;
+		private float _time;
+
+		public float deltaTime { get{ return this._deltaTime; } }
+
+		public DeltaTimeTicker( int frameSkip, float time )
+		{
+			this._frameSkip = frameSkip;
+			this._frameSkipCount = 0;
+			this._deltaTime = 0f;
+			this._time = time;
+		}
+
+		public void Update( float time )
+		{
+			this._frameSkipCount++;
+			if( this._frameSkip < this._frameSkipCount )
+			{
+				this._deltaTime = time - this._time;
+				this._time = time;
+				this._frameSkipCount = 0;
+			}
+		}
 	}
 
-	public void Update( float time )
+	public class UpdateTickerReal : UpdateTickerBase<UpdateTickerReal>, ITimer
 	{
-		this._frameSkipCount++;
-		if( this._frameSkip < this._frameSkipCount )
+		public UpdateTickerReal() : base()
 		{
-			this._deltaTime = time - this._time;
-			this._time = time;
-			this._frameSkipCount = 0;
+
+		}
+		
+		protected override void TimeSet()
+		{
+			_time = Time.realtimeSinceStartup;
 		}
 	}
 }
-
-public class UpdateTickerReal : UpdateTickerBase<UpdateTickerReal>, ITimer
-{
-	public UpdateTickerReal() : base()
-	{
-
-	}
-	
-	protected override void TimeSet()
-	{
-		_time = Time.realtimeSinceStartup;
-	}
-}
-

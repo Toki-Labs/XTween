@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
+using Toki.Tween;
 
 public class XTween
 {
@@ -92,9 +93,7 @@ public class XTween
 	/*===================================== Transform ========================================*/
     public static IAni To( GameObject target, XHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
-		ITimer tick = _ticker;
-		ITimer tickReal = _tickerReal; 
-		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
+		ObjectTween tween = new ObjectTween( realTime ? (ITimer)_tickerReal : _ticker );
 		tween.FrameSkip = frameSkip;
 		tween.updater = _updaterFactory.Create(target, hash, hash.GetStart());
 		tween.ClassicHandlers = hash;
@@ -106,9 +105,7 @@ public class XTween
     /*===================================== Value ========================================*/
 	public static IAni ValueTo( XObjectHash source, Action<XObjectHash> UpdateHandler, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
-		ITimer tick = _ticker;
-		ITimer tickReal = _tickerReal; 
-		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
+		ObjectTween tween = new ObjectTween( realTime ? (ITimer)_tickerReal : _ticker );
 		ObjectUpdater updater = (ObjectUpdater)_updaterFactory.Create( source );
 		updater.UpdateHandler = UpdateHandler;
 		tween.FrameSkip = frameSkip;
@@ -122,9 +119,7 @@ public class XTween
 	//Proerpty Type Only
 	public static IAni ValueTo<T>( T target, XObjectHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
-		ITimer tick = _ticker;
-		ITimer tickReal = _tickerReal; 
-		ObjectTween tween = new ObjectTween( realTime ? tickReal : tick );
+		ObjectTween tween = new ObjectTween( realTime ? (ITimer)_tickerReal : _ticker );
 		ObjectUpdater<T> updater = (ObjectUpdater<T>)UpdaterFactory.Create<T>( target, hash );
 		tween.FrameSkip = frameSkip;
 		tween.updater = updater;
