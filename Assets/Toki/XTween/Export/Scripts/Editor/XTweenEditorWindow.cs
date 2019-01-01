@@ -123,12 +123,7 @@ namespace Toki.Tween
 
             if(GUILayout.Button("Test", GUILayout.Height(30f)))
             {
-                // ExampleValue.Test();
-                GameObject go = GameObject.Find("Button");
-                RectTransform trans = go.transform as RectTransform;
-                var text = go.GetComponent<UnityEngine.UI.Text>();
-                Debug.Log(trans.anchoredPosition);
-                Debug.Log(trans.offsetMax);
+                // XTweenExporter.UpdateReleasePath();
             }
 
             GUILayout.Space(10f);

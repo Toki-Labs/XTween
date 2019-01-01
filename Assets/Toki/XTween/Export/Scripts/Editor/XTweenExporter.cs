@@ -201,6 +201,17 @@ namespace Toki.Tween
             string content = ReadText(filePath);
             content = ReplaceTargetStringInContent(first, end, replace, content);
             WriteText(filePath, content);
+
+            first = "<!--Version Start";
+            end = "Version End-->";
+            replace = 
+            "<!--Version Start-->\n" +
+            "<p>Version(Alpha) "+ Data.version +" - <a href=\"https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_"+ Data.version +".unitypackage\">XTween_"+ Data.version +".unitypackage</a></p>\n" +
+            "<!--Version End-->";
+            filePath = XTweenEditorManager.AbsPath + "/Export/index.html";
+            content = ReadText(filePath);
+            content = ReplaceTargetStringInContent(first, end, replace, content);
+            WriteText(filePath, content);
         }
         
         /************************************************************************
