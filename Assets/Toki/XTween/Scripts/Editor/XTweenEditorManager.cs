@@ -61,6 +61,33 @@ namespace Toki.Tween
 			}
 		}
 
+		public static string ReadText( string path )
+        {
+            return File.ReadAllText(path);
+        }
+
+        public static void WriteText( string path, string content )
+        {
+            StreamWriter writer = File.CreateText(path);
+            writer.Write(content);
+            writer.Close();
+        }
+
+		public static void UpdateEasingName()
+		{
+			List<EasingData> easingList = XTweenEditorData.Instance.easingDataList;
+			List<string> easingNameList = new List<string>();
+			easingList.ForEach(x => easingNameList.Add(x.name));
+			string[] names = easingNameList.ToArray();
+			string replaceStr = string.Join(",\n\t", names);
+			string path = AbsPath + "/Assets/Toki/XTween/Scripts/Editor/EasingNameTemplete";
+			string content = ReadText(path);
+			content = content.Replace("/* Name List */", replaceStr);
+			path = AbsPath + "/Assets/Toki/XTween/Scripts/EaseName.cs";
+			WriteText(path, content);
+			AssetDatabase.Refresh();
+		}
+
 		/************************************************************************
 		*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 		************************************************************************/
@@ -127,19 +154,18 @@ namespace Toki.Tween
 
 		private void CheckEditorData()
 		{
-			string targetPath = AbsPath + "/Assets/Toki/XTween/Prefabs/XTweenData.prefab";
-			string destDir = AbsPath + "/Assets/Toki/XTween/Resources";
-			string destPath = destDir + "/XTweenData.prefab";
-			if( !File.Exists(destPath) )
+			string destDir = "Assets/Toki/XTween/Resources";
+			string destPath = destDir + "/XTweenData.asset";
+			if( !File.Exists(AbsPath + "/" + destPath) )
 			{
-				if( !Directory.Exists(destDir) )
-				{
-					Directory.CreateDirectory(destDir);
-				}
-				
-				File.Copy(targetPath, destPath, true);
+				Directory.CreateDirectory(AbsPath + "/" + destDir);
+				XTweenEditorData asset = ScriptableObject.CreateInstance<XTweenEditorData>();
+				AssetDatabase.CreateAsset (asset, destPath);
+				AssetDatabase.SaveAssets();
 				AssetDatabase.Refresh();
 			}
+
+			UpdateEasingName();
 		}
 
 		//============================== Ani ====================================

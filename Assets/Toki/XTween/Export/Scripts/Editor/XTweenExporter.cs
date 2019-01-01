@@ -76,18 +76,6 @@ namespace Toki.Tween
             return EditorScenes.ToArray();
         }
 
-        public static string ReadText( string path )
-        {
-            return File.ReadAllText(path);
-        }
-
-        public static void WriteText( string path, string content )
-        {
-            StreamWriter writer = File.CreateText(path);
-            writer.Write(content);
-            writer.Close();
-        }
-        
         /************************************************************************
         *	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
         ************************************************************************/
@@ -180,7 +168,7 @@ namespace Toki.Tween
         {
             if( File.Exists(this.JsonPath) )
             {
-                string jsonStr = ReadText(this.JsonPath);
+                string jsonStr = XTweenEditorManager.ReadText(this.JsonPath);
                 this._data = JsonUtility.FromJson<XTweenData>(jsonStr);
             }
             else
@@ -197,9 +185,9 @@ namespace Toki.Tween
             string replace = "Version(Alpha) {VER} - [XTween_{VER}.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_{VER}.unitypackage)";
             replace = replace.Replace("{VER}", Data.version);
             string filePath = XTweenEditorManager.AbsPath + "/README.md";
-            string content = ReadText(filePath);
+            string content = XTweenEditorManager.ReadText(filePath);
             content = ReplaceTargetStringInContent(first, end, replace, content);
-            WriteText(filePath, content);
+            XTweenEditorManager.WriteText(filePath, content);
 
             first = "<!--Version Start";
             end = "Version End-->";
@@ -208,9 +196,9 @@ namespace Toki.Tween
             "<p>Version(Alpha) "+ Data.version +" - <a href=\"https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_"+ Data.version +".unitypackage\">XTween_"+ Data.version +".unitypackage</a></p>\n" +
             "<!--Version End-->";
             filePath = XTweenEditorManager.AbsPath + "/Export/index.html";
-            content = ReadText(filePath);
+            content = XTweenEditorManager.ReadText(filePath);
             content = ReplaceTargetStringInContent(first, end, replace, content);
-            WriteText(filePath, content);
+            XTweenEditorManager.WriteText(filePath, content);
         }
         
         /************************************************************************
@@ -274,7 +262,7 @@ namespace Toki.Tween
             string exportPath = exportRootPath + "/" + exportFileName;
             if( !release )
             {
-                AssetDatabase.ExportPackage(exportPathList.ToArray(), exportPath, ExportPackageOptions.Recurse);
+                AssetDatabase.ExportPackage(exportPathList.ToArray(), exportPath, ExportPackageOptions.Interactive | ExportPackageOptions.Recurse);
             }
             else
             {
@@ -287,7 +275,7 @@ namespace Toki.Tween
         public void Save()
         {
             string jsonStr = JsonUtility.ToJson(this._data);
-            WriteText(this.JsonPath, jsonStr);
+            XTweenEditorManager.WriteText(this.JsonPath, jsonStr);
         }
     }
 }

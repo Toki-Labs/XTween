@@ -6,72 +6,132 @@
 /*		Modified Date 	: 
 /**********************************************************************************/
 
-using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-namespace Toki.Tween
+#if UNITY_EDITOR
+using System.IO;
+using UnityEditor;
+#endif
+
+namespace Toki.Tween 
 {
 	[Serializable]
-	public class EasingData
+	public class EasingData 
 	{
-		[HideInInspector]
-		public AnimationCurve animationCurve = new AnimationCurve(new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f));
+		public string name;
+		public AnimationCurve animationCurve = new AnimationCurve (new Keyframe (0f, 0f, 0f, 1f), new Keyframe (1f, 1f, 1f, 0f));
 
 	}
 
-	public class XTweenEditorData : MonoBehaviour
+	public class XTweenEditorData : ScriptableObject 
 	{
 		/************************************************************************
-		*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
-		************************************************************************/
-		
+		 *	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
+		 ************************************************************************/
+
 		/************************************************************************
-		*	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
-		************************************************************************/
-		
+		 *	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
+		 ************************************************************************/
+		public static XTweenEditorData _instance;
+		public static XTweenEditorData Instance 
+		{
+			get 
+			{
+				if (_instance == null) 
+				{
+					_instance = Resources.Load<XTweenEditorData>("XTweenData");
+				}
+				return _instance;
+			}
+		}
+
 		/************************************************************************
-		*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
-		************************************************************************/
-		
+		 *	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
+		 ************************************************************************/
+		private Dictionary<EaseName, EaseCustom> _easingDic;
+
 		/************************************************************************
-		*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
-		************************************************************************/
-			
+		 *	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
+		 ************************************************************************/
+
 		/************************************************************************
-		*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
-		************************************************************************/
-		public int index = -1;
-		public List<EasingData> easingDataList;
-			
+		 *	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
+		 ************************************************************************/
+		public List<EasingData> easingDataList = new List<EasingData>();
+
 		/************************************************************************
-		*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
-		************************************************************************/
-		
+		 *	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
+		 ************************************************************************/
+
 		/************************************************************************
-		*	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
-		************************************************************************/
-		
+		 *	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
+		 ************************************************************************/
+
 		/************************************************************************
-		*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
-		************************************************************************/
-		
+		 *	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
+		 ************************************************************************/
+
 		/************************************************************************
-		*	 	 	 	 	Coroutine Declaration	 	  			 	 		*
-		************************************************************************/
-		
+		 *	 	 	 	 	Coroutine Declaration	 	  			 	 		*
+		 ************************************************************************/
+
 		/************************************************************************
-		*	 	 	 	 	Private Method Declaration	 	 	 	 	 		*
-		************************************************************************/
-		
+		 *	 	 	 	 	Private Method Declaration	 	 	 	 	 		*
+		 ************************************************************************/
+
 		/************************************************************************
-		*	 	 	 	 	Protected Method Declaration	 	 	 	 	 	*
-		************************************************************************/
-		
+		 *	 	 	 	 	Protected Method Declaration	 	 	 	 	 	*
+		 ************************************************************************/
+
 		/************************************************************************
-		*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
-		************************************************************************/
-		
+		 *	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
+		 ************************************************************************/
+		public bool IsExistName (string name, int index) 
+		{
+			bool exist = false;
+			int length = this.easingDataList.Count;
+			for (int i = 0; i < length; ++i) 
+			{
+				if (index == -1) 
+				{
+					if (this.easingDataList[i].name.ToLower () == name.ToLower ()) 
+					{
+						exist = true;
+						break;
+					}
+				} 
+				else 
+				{
+					if (this.easingDataList[i].name.ToLower () == name.ToLower () && i != index) 
+					{
+						exist = true;
+						break;
+					}
+				}
+			}
+			return exist;
+		}
+
+		public EaseCustom GetEasingData(EaseName name)
+		{
+			EaseCustom data = null;
+			if( this._easingDic == null )
+			{
+				this._easingDic = new Dictionary<EaseName, EaseCustom>();
+				foreach( var item in this.easingDataList )
+				{
+					EaseName easingName = (EaseName)Enum.Parse(typeof(EaseName), item.name);
+					this._easingDic[easingName] = new EaseCustom(item.animationCurve);
+				}
+			}
+			if( this._easingDic.ContainsKey(name) )
+			{
+				data = this._easingDic[name];
+			}
+			return data;
+		}
 	}
 }
