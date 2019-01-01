@@ -274,7 +274,7 @@ namespace Toki.Tween
             string exportPath = exportRootPath + "/" + exportFileName;
             if( !release )
             {
-                AssetDatabase.ExportPackage(exportPathList.ToArray(), exportPath, ExportPackageOptions.Interactive | ExportPackageOptions.Recurse);
+                AssetDatabase.ExportPackage(exportPathList.ToArray(), exportPath, ExportPackageOptions.Recurse);
             }
             else
             {
