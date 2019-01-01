@@ -1,91 +1,58 @@
 ﻿/**********************************************************************************
-/*		File Name 		: XTweenEditorManager.cs
-/*		Author 			: R0biN
+/*		File Name 		: XTweenExporter.cs
+/*		Author 			: Robin
 /*		Description 	: 
-/*		Created Date 	: 2018-10-21
+/*		Created Date 	: 2016-7-27
 /*		Modified Date 	: 
 /**********************************************************************************/
 
 using UnityEngine;
 using System;
-using System.IO;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 
 namespace Toki.Tween
 {
 	[Serializable]
-	public class XTweenData
+	public class EasingData
 	{
-		public string version;
+		[HideInInspector]
+		public AnimationCurve animationCurve = new AnimationCurve(new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f));
+
 	}
 
-	[InitializeOnLoad]
-	public class XTweenEditorManager
+	public class XTweenEditorData : MonoBehaviour
 	{
 		/************************************************************************
 		*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
 		************************************************************************/
-		private static bool _initialized = false;
-		private static XTweenEditorManager _instance;
 		
 		/************************************************************************
 		*	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
 		************************************************************************/
-		static XTweenEditorManager()
-		{
-			Instance.Initialize();
-		}
 		
-		public static XTweenEditorManager Instance
-		{
-			get
-			{
-				if( _instance == null )
-				{
-					_instance = new XTweenEditorManager();
-				}
-				return _instance;
-			}
-		}
-
-		public static string AbsPath
-		{
-			get
-			{
-	#if UNITY_EDITOR
-				string absPath = Application.dataPath;
-				return absPath.Substring( 0, absPath.LastIndexOf( "/" ) );
-	#endif
-				return Application.dataPath;
-			}
-		}
-
 		/************************************************************************
 		*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 		************************************************************************/
-		private PlayModeStateChange _playMode;
 		
 		/************************************************************************
 		*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
 		************************************************************************/
-		
+			
 		/************************************************************************
 		*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 		************************************************************************/
-		public Action initializeListener;
-		
+		public int index = -1;
+		public List<EasingData> easingDataList;
+			
 		/************************************************************************
 		*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
 		************************************************************************/
-		public bool Initialized
-		{
-			get
-			{
-				return _initialized;
-			}
-		}
-
+		
+		/************************************************************************
+		*	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
+		************************************************************************/
+		
 		/************************************************************************
 		*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 		************************************************************************/
@@ -103,62 +70,8 @@ namespace Toki.Tween
 		************************************************************************/
 		
 		/************************************************************************
-		*	 	 	 	 	Event Method Declaration	 	 	 	     	 	*
-		************************************************************************/
-		private void ChangedPlayMode( PlayModeStateChange state )
-		{
-			if( this._playMode != state )
-			{
-				bool send = false;
-				switch ( state )
-				{
-					case PlayModeStateChange.EnteredEditMode:
-					case PlayModeStateChange.EnteredPlayMode:
-						send = true;
-						break;
-					default:
-						break;
-				}
-
-				this._playMode = state;
-				if( send ) XTween.PlayModeChanged( this._playMode.Equals(PlayModeStateChange.EnteredEditMode) );
-			}
-		}
-
-		private void CheckEditorData()
-		{
-			string targetPath = AbsPath + "/Assets/Toki/XTween/Prefabs/XTweenData.prefab";
-			string destDir = AbsPath + "/Assets/Toki/XTween/Resources";
-			string destPath = destDir + "/XTweenData.prefab";
-			if( !File.Exists(destPath) )
-			{
-				if( !Directory.Exists(destDir) )
-				{
-					Directory.CreateDirectory(destDir);
-				}
-				
-				File.Copy(targetPath, destPath, true);
-				AssetDatabase.Refresh();
-			}
-		}
-
-		//============================== Ani ====================================
-		//============================== Net ====================================
-		//============================== UI =====================================
-		
-		/************************************************************************
 		*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
 		************************************************************************/
-		public void Initialize()
-		{
-			if( !_initialized )
-			{
-				_initialized = true;
-
-				EditorApplication.playModeStateChanged += this.ChangedPlayMode;
-				this.CheckEditorData();
-			}
-		}
 		
 	}
 }

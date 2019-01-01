@@ -14,7 +14,7 @@ using System.IO;
 
 namespace Toki.Tween
 {
-    public class XTweenEditorWindow : EditorWindow
+    public class XTweenExportWindow : EditorWindow
     {
         /************************************************************************
         *	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
@@ -25,9 +25,9 @@ namespace Toki.Tween
         *	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
         ************************************************************************/
         [MenuItem("Window/XTween Export #%8",priority=15)]
-        public static void XTweenWindow()
+        public static void OpenXTweenExportWindow()
         {
-            EditorWindow.GetWindow<XTweenEditorWindow>(false, "XTween Export", true);
+            EditorWindow.GetWindow<XTweenExportWindow>(false, "XTween Export", true);
         }
 
         
