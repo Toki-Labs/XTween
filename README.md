@@ -161,12 +161,12 @@ StartCoroutine(CoroutineTween());
 IEnumerator CoroutineTween()
 {
 	XHash hash = XHash.New.AddX(200f).AddY(50f).AddZ(-1500f);
-	yield return XTween.To(this.target3D, hash).WaitForPlay();
+	yield return XTween.To(target3D, hash).WaitForPlay();
 	Debug.Log("On Complete First Tween");
 
 	//Start other tween start at 0.3sec
 	XHash hash = XHash.New.AddX(100f).AddY(500f);
-	yield return XTween.To(this.target3D, hash).WaitForGotoAndPlay(0.3f);
+	yield return XTween.To(target3D, hash).WaitForGotoAndPlay(0.3f);
 	Debug.Log("On Complete Second Tween");
 }
 
