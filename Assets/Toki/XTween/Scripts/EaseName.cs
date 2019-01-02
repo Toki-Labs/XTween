@@ -2,6 +2,6 @@ using System;
 
 public enum EaseName
 {
-	Test1,
-	Test2
+	EaseIn,
+	EaseInBounce
 }

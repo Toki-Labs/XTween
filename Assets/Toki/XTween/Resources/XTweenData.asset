@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: XTweenData
   m_EditorClassIdentifier: 
   easingDataList:
-  - name: Test1
+  - name: EaseIn
     animationCurve:
       serializedVersion: 2
       m_Curve:
@@ -20,7 +20,7 @@ MonoBehaviour:
         time: 0
         value: 0
         inSlope: 0
-        outSlope: 1
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -28,16 +28,16 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 1
-        outSlope: 0
+        inSlope: 3.2113543
+        outSlope: 3.2113543
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.03533566
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  - name: Test2
+  - name: EaseInBounce
     animationCurve:
       serializedVersion: 2
       m_Curve:
