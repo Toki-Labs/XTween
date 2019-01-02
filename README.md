@@ -193,6 +193,15 @@ XTween.ColorTo(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
 XTween.ColorTo<Image>(imageInstance, "color", XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
 ```
 
+Custom Easing
+---
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/EaseCurve.JPG)
+>직접 제작한 Easing으로 적용가능, 코드힌트로 제공
+```csharp
+XHash hash = XHash.New.AddX(200f).AddY(50f).AddZ(-1500f)
+		.AddControlPointX(-1000f,550f).AddControlPointY(550f,-300f);
+XTween.To(this.target3D, hash, data.time, Ease.Get(EaseName.EaseInBounce).Play();
+```
 
 Author Info
 ---
