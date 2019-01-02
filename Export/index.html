@@ -318,6 +318,16 @@ XTween이 약2배 빠름</p>
 <span class="n">XTween</span><span class="p">.</span><span class="n">ColorTo</span><span class="p">&lt;</span><span class="n">Image</span><span class="p">&gt;(</span><span class="n">imageInstance</span><span class="p">,</span> <span class="s">"color"</span><span class="p">,</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
+<h2 id="custom-easing">Custom Easing</h2>
+<blockquote>
+  <p><img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/EaseCurve.JPG" alt="" />
+직접 제작한 Easing으로 적용가능, 코드힌트로 제공, 상단Menu -&gt; Windows -&gt; XTween Editor</p>
+  <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">50f</span><span class="p">).</span><span class="nf">AddZ</span><span class="p">(-</span><span class="m">1500f</span><span class="p">)</span>
+		<span class="p">.</span><span class="nf">AddControlPointX</span><span class="p">(-</span><span class="m">1000f</span><span class="p">,</span><span class="m">550f</span><span class="p">).</span><span class="nf">AddControlPointY</span><span class="p">(</span><span class="m">550f</span><span class="p">,-</span><span class="m">300f</span><span class="p">);</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">target3D</span><span class="p">,</span> <span class="n">hash</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">time</span><span class="p">,</span> <span class="n">Ease</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="n">EaseName</span><span class="p">.</span><span class="n">EaseInBounce</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+</code></pre></div>  </div>
+</blockquote>
+
 <h2 id="author-info">Author Info</h2>
 <p>Lee Dong-Myung(Tok-Labs) is a software developer in Korea.</p>
 
