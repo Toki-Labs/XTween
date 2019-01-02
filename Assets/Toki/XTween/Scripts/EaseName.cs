@@ -2,7 +2,6 @@ using System;
 
 public enum EaseName
 {
-	Test,
-	Test2,
-	Test3
+	Test1,
+	Test2
 }

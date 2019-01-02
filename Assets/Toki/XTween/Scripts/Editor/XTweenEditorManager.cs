@@ -85,6 +85,8 @@ namespace Toki.Tween
 			content = content.Replace("/* Name List */", replaceStr);
 			path = AbsPath + "/Assets/Toki/XTween/Scripts/EaseName.cs";
 			WriteText(path, content);
+			EditorUtility.SetDirty(XTweenEditorData.Instance);
+			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 		}
 
