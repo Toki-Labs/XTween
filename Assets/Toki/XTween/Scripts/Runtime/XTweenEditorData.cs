@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 #if UNITY_EDITOR
-using System.IO;
 using UnityEditor;
 #endif
 
@@ -133,5 +132,13 @@ namespace Toki.Tween
 			}
 			return data;
 		}
+
+#if UNITY_EDITOR
+		public void Save()
+		{
+			EditorUtility.SetDirty(this);
+			AssetDatabase.SaveAssets();
+		}
+#endif
 	}
 }

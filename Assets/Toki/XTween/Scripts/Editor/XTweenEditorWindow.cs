@@ -174,7 +174,7 @@ namespace Toki.Tween
 			EditorGUIUtility.labelWidth = 110f;
 
 			this._easingName = EditorGUILayout.TextField("Name", this._easingName, GUILayout.Width(300f)).Replace(" ", "");
-			this._easingCurve = EditorGUILayout.CurveField("Animation Curve", this._easingCurve, GUILayout.Width(300f), GUILayout.Height(200f));
+			this._easingCurve = EditorGUILayout.CurveField("Animation Curve", this._easingCurve, GUILayout.Width(300f), GUILayout.Height(185f));
 			Keyframe[] keys = this._easingCurve.keys;
 			int keyLength = keys.Length;
 			int keyLast = keyLength - 1;
@@ -251,6 +251,7 @@ namespace Toki.Tween
 					data.animationCurve = this._easingCurve;
 					if( beforeName != this._easingName )
 						XTweenEditorManager.UpdateEasingName();
+					XTweenEditorData.Instance.Save();
 					GUIUtility.keyboardControl = 0;
 				}
 				GUI.backgroundColor = Color.white;
