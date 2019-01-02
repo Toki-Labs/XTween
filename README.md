@@ -207,17 +207,26 @@ Decorator
 ---
 ```csharp
 IAni tween = XTween.ColorTo(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f));
+
 //Delay Tweener
 tween = XTween.Delay(tween, 1f/*Pre Delay*/, 1f/*Post Delay*/);
+
 //Scale Tweener time
 tween = XTween.Scale(tween, 2f/*Scale tweener time*/);
+
 //Slice Tweener
 tween = XTween.Slice(tween, 0.2f/*Slice start at*/, 0.8f/*Slice end*/, false/*Slice value is when Percent */);
+
 //Repeat Tweener
 tween = XTween.Repeat(tween, 3/*3 time repeat*/);
+
 //Reverse Tweener
 tween = XTween.Reverse(tween);
 tween.Play();
+
+//When end tweener
+tween.GotoAndStop(0.5f); //Move to Tweener's 0.5sec
+tween.GotoAndPlay(0.3f); //Move to 0.3sec and play;
 ```
 
 Author Info
