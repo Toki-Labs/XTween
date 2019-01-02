@@ -80,7 +80,7 @@ namespace Toki.Tween
 			easingList.ForEach(x => easingNameList.Add(x.name));
 			string[] names = easingNameList.ToArray();
 			string replaceStr = string.Join(",\n\t", names);
-			string path = AbsPath + "/Assets/Toki/XTween/Scripts/Editor/EasingNameTemplete";
+			string path = AbsPath + "/Assets/Toki/XTween/Scripts/Editor/EaseNameTemplete";
 			string content = ReadText(path);
 			content = content.Replace("/* Name List */", replaceStr);
 			path = AbsPath + "/Assets/Toki/XTween/Scripts/EaseName.cs";
