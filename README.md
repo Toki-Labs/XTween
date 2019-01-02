@@ -165,7 +165,7 @@ IEnumerator CoroutineTween()
 	Debug.Log("On Complete First Tween");
 
 	//Start other tween start at 0.3sec
-	XHash hash = XHash.New.AddX(100f).AddY(500f)
+	XHash hash = XHash.New.AddX(100f).AddY(500f);
 	yield return XTween.To(this.target3D, hash).WaitForGotoAndPlay(0.3f);
 	Debug.Log("On Complete Second Tween");
 }
