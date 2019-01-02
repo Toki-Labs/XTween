@@ -185,6 +185,11 @@ namespace Toki.Tween
 			}
 		}
 
+		public virtual WaitForTweenPlay WaitForPlay()
+		{
+			return new WaitForTweenPlay(this);
+		}
+
 		private void PlayNow(float time)
 		{
 	#if UNITY_EDITOR

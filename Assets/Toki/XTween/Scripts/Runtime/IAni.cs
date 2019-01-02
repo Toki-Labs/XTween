@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Toki.Tween;
 
 public interface IAni
 {
@@ -63,6 +64,7 @@ public interface IAni
 
     void StopOnDestroy();
 	void Play();
+	WaitForTweenPlay WaitForPlay();
 	void Stop();	
 	void TogglePause();
 	void GotoAndPlay( float position );
