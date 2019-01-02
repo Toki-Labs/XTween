@@ -220,7 +220,7 @@ XTween이 약2배 빠름</p>
 <!--Version End-->
 
 <h2 id="position">Position</h2>
-<div id="Example_Position" style="width: 1000px; height: 500px; margin: auto"></div>
+<!--<div id="Example_Position" style="width: 1000px; height: 500px; margin: auto"></div>-->
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddZ</span><span class="p">(</span><span class="m">100f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
   
 <span class="c1">//or</span>
@@ -228,7 +228,7 @@ XTween이 약2배 빠름</p>
 </code></pre></div></div>
 
 <h2 id="scale">Scale</h2>
-<div id="Example_Scale" style="width: 1000px; height: 500px; margin: auto"></div>
+<!--<div id="Example_Scale" style="width: 1000px; height: 500px; margin: auto"></div>-->
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">1f</span><span class="p">).</span><span class="nf">AddScaleY</span><span class="p">(</span><span class="m">1.5f</span><span class="p">).</span><span class="nf">AddScaleZ</span><span class="p">(</span><span class="m">0.5f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="c1">//or</span>
@@ -236,7 +236,7 @@ XTween이 약2배 빠름</p>
 </code></pre></div></div>
 
 <h2 id="rotation">Rotation</h2>
-<div id="Example_Angle" style="width: 1000px; height: 500px; margin: auto"></div>
+<!--<div id="Example_Angle" style="width: 1000px; height: 500px; margin: auto"></div>-->
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRotationZ</span><span class="p">(</span><span class="m">600f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="c1">//or</span>
@@ -244,18 +244,18 @@ XTween이 약2배 빠름</p>
 </code></pre></div></div>
 
 <h2 id="combination">Combination</h2>
-<div id="Example_Combination" style="width: 1000px; height: 500px; margin: auto"></div>
+<!--<div id="Example_Combination" style="width: 1000px; height: 500px; margin: auto"></div>-->
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddRotationZ</span><span class="p">(</span><span class="m">180f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="bezier">Bezier</h2>
-<div id="Example_Bezier" style="width: 1000px; height: 500px; margin: auto"></div>
+<!--<div id="Example_Bezier" style="width: 1000px; height: 500px; margin: auto"></div>-->
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">0f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">0f</span><span class="p">).</span><span class="nf">AddControlPointX</span><span class="p">(</span><span class="m">1000f</span><span class="p">).</span><span class="nf">AddControlPoint</span><span class="p">(-</span><span class="m">500f</span><span class="p">);</span>
 <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">hash</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="value">Value</h2>
-<div id="Example_Value" style="width: 1000px; height: 500px; margin: auto"></div>
+<!--<div id="Example_Value" style="width: 1000px; height: 500px; margin: auto"></div>-->
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">ValueTo</span><span class="p">(</span><span class="n">XObjectHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"value"</span><span class="p">,</span> <span class="m">10f</span><span class="p">,</span> <span class="m">200f</span><span class="p">),</span> <span class="n">UpdateValue</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="k">void</span> <span class="nf">UpdateValue</span><span class="p">(</span><span class="n">XObjectHash</span> <span class="n">hash</span><span class="p">)</span>
@@ -268,7 +268,7 @@ XTween이 약2배 빠름</p>
 </code></pre></div></div>
 
 <h2 id="event-handling">Event Handling</h2>
-<div id="Example_Event" style="width: 1000px; height: 500px; margin: auto"></div>
+<!--<div id="Example_Event" style="width: 1000px; height: 500px; margin: auto"></div>-->
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">IAni</span> <span class="n">ani</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">200f</span><span class="p">));</span>
 <span class="n">ani</span><span class="p">.</span><span class="n">OnComplete</span> <span class="p">=</span> <span class="n">Executor</span><span class="p">&lt;</span><span class="kt">float</span><span class="p">&gt;.</span><span class="nf">New</span><span class="p">(</span><span class="n">OnTweenEnd</span><span class="p">,</span> <span class="m">10f</span><span class="p">);</span>
 <span class="n">ani</span><span class="p">.</span><span class="nf">Play</span><span class="p">();</span>
@@ -289,13 +289,18 @@ XTween이 약2배 빠름</p>
 <span class="p">{</span>
 	<span class="n">XHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">50f</span><span class="p">).</span><span class="nf">AddZ</span><span class="p">(-</span><span class="m">1500f</span><span class="p">);</span>
 	<span class="k">yield</span> <span class="k">return</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">target3D</span><span class="p">,</span> <span class="n">hash</span><span class="p">).</span><span class="nf">WaitForPlay</span><span class="p">();</span>
-	<span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"On Complete Tween"</span><span class="p">);</span>
+	<span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"On Complete First Tween"</span><span class="p">);</span>
+
+	<span class="c1">//Start other tween start at 0.3sec</span>
+	<span class="n">XHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">100f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">500f</span><span class="p">)</span>
+	<span class="k">yield</span> <span class="k">return</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">target3D</span><span class="p">,</span> <span class="n">hash</span><span class="p">).</span><span class="nf">WaitForGotoAndPlay</span><span class="p">(</span><span class="m">0.3f</span><span class="p">);</span>
+	<span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"On Complete Second Tween"</span><span class="p">);</span>
 <span class="p">}</span>
 
 </code></pre></div></div>
 
 <h2 id="serial">Serial</h2>
-<div id="Example_Serial" style="width: 1000px; height: 500px; margin: auto"></div>
+<!--<div id="Example_Serial" style="width: 1000px; height: 500px; margin: auto"></div>-->
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">endPosition</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">1000f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">300f</span><span class="p">);</span>
 <span class="n">XHash</span> <span class="n">endScale</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddScaleY</span><span class="p">(</span><span class="m">200f</span><span class="p">);</span>
 <span class="n">XTween</span><span class="p">.</span><span class="nf">SerialTweens</span>
@@ -307,7 +312,7 @@ XTween이 약2배 빠름</p>
 </code></pre></div></div>
 
 <h2 id="parallel">Parallel</h2>
-<div id="Example_Parallel" style="width: 1000px; height: 500px; margin: auto"></div>
+<!--<div id="Example_Parallel" style="width: 1000px; height: 500px; margin: auto"></div>-->
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">endPosition</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">1000f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">300f</span><span class="p">);</span>
 <span class="n">XHash</span> <span class="n">endScale</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddScaleY</span><span class="p">(</span><span class="m">200f</span><span class="p">);</span>
 <span class="n">XTween</span><span class="p">.</span><span class="nf">ParallelTweens</span>
@@ -319,7 +324,7 @@ XTween이 약2배 빠름</p>
 </code></pre></div></div>
 
 <h2 id="ui">UI</h2>
-<div id="Example_UI" style="width: 1000px; height: 500px; margin: auto"></div>
+<!--<div id="Example_UI" style="width: 1000px; height: 500px; margin: auto"></div>-->
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">hashButton</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">400f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(-</span><span class="m">250f</span><span class="p">).</span><span class="nf">AddWidth</span><span class="p">(</span><span class="m">800f</span><span class="p">).</span><span class="nf">AddHeight</span><span class="p">(</span><span class="m">400f</span><span class="p">);</span>
 <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="n">hashButton</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 
@@ -329,7 +334,7 @@ XTween이 약2배 빠름</p>
 </code></pre></div></div>
 
 <h2 id="color">Color</h2>
-<div id="Example_Color" style="width: 1000px; height: 500px; margin: auto"></div>
+<!--<div id="Example_Color" style="width: 1000px; height: 500px; margin: auto"></div>-->
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">ColorTo</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="c1">//or when object has other type</span>
