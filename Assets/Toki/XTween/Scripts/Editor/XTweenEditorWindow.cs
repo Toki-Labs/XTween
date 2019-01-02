@@ -174,7 +174,7 @@ namespace Toki.Tween
 			EditorGUIUtility.labelWidth = 110f;
 
 			this._easingName = EditorGUILayout.TextField("Name", this._easingName, GUILayout.Width(300f)).Replace(" ", "");
-			this._easingCurve = EditorGUILayout.CurveField("Animation Curve", this._easingCurve, GUILayout.Width(300f), GUILayout.Height(185f));
+			this._easingCurve = EditorGUILayout.CurveField("Easing Graph", this._easingCurve, GUILayout.Width(300f), GUILayout.Height(185f));
 			Keyframe[] keys = this._easingCurve.keys;
 			int keyLength = keys.Length;
 			int keyLast = keyLength - 1;

@@ -328,6 +328,30 @@ XTween이 약2배 빠름</p>
 </code></pre></div>  </div>
 </blockquote>
 
+<h2 id="decorator">Decorator</h2>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">IAni</span> <span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">ColorTo</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">));</span>
+
+<span class="c1">//Delay Tweener</span>
+<span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">Delay</span><span class="p">(</span><span class="n">tween</span><span class="p">,</span> <span class="m">1f</span><span class="cm">/*Pre Delay*/</span><span class="p">,</span> <span class="m">1f</span><span class="cm">/*Post Delay*/</span><span class="p">);</span>
+
+<span class="c1">//Scale Tweener time</span>
+<span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">Scale</span><span class="p">(</span><span class="n">tween</span><span class="p">,</span> <span class="m">2f</span><span class="cm">/*Scale tweener time*/</span><span class="p">);</span>
+
+<span class="c1">//Slice Tweener</span>
+<span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">Slice</span><span class="p">(</span><span class="n">tween</span><span class="p">,</span> <span class="m">0.2f</span><span class="cm">/*Slice start at*/</span><span class="p">,</span> <span class="m">0.8f</span><span class="cm">/*Slice end*/</span><span class="p">,</span> <span class="k">false</span><span class="cm">/*is percent value?*/</span><span class="p">);</span>
+
+<span class="c1">//Repeat Tweener</span>
+<span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">Repeat</span><span class="p">(</span><span class="n">tween</span><span class="p">,</span> <span class="m">3</span><span class="cm">/*3 time repeat*/</span><span class="p">);</span>
+
+<span class="c1">//Reverse Tweener</span>
+<span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">Reverse</span><span class="p">(</span><span class="n">tween</span><span class="p">);</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">Play</span><span class="p">();</span>
+
+<span class="c1">//When end tweener</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">GotoAndStop</span><span class="p">(</span><span class="m">0.5f</span><span class="p">);</span> <span class="c1">//Move to Tweener's 0.5sec</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">GotoAndPlay</span><span class="p">(</span><span class="m">0.3f</span><span class="p">);</span> <span class="c1">//Move to 0.3sec and play;</span>
+</code></pre></div></div>
+
 <h2 id="author-info">Author Info</h2>
 <p>Lee Dong-Myung(Tok-Labs) is a software developer in Korea.</p>
 
