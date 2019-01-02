@@ -196,7 +196,7 @@ XTween.ColorTo<Image>(imageInstance, "color", XColorHash.New.AddRed(0.56f).AddGr
 Custom Easing
 ---
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/EaseCurve.JPG)
->직접 제작한 Easing으로 적용가능, 코드힌트로 제공
+>직접 제작한 Easing으로 적용가능, 코드힌트로 제공, 상단Menu -> Windows -> XTween Editor
 ```csharp
 XHash hash = XHash.New.AddX(200f).AddY(50f).AddZ(-1500f)
 		.AddControlPointX(-1000f,550f).AddControlPointY(550f,-300f);
