@@ -91,7 +91,7 @@ public class ExampleTest : ExampleBase
 			{
 				this.StartCoroutine(this.Test());
 			});
-			yield return this._tween.WaitForPlay();
+			yield return this._tween.WaitForGotoAndPlay(0.2f);
 
 		}
 	}
