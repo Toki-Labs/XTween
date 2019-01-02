@@ -121,10 +121,10 @@ namespace Toki.Tween
 
             GUILayout.Space(20f);
 
-            if(GUILayout.Button("Test", GUILayout.Height(30f)))
+            /* if(GUILayout.Button("Test", GUILayout.Height(30f)))
             {
                 // XTweenExporter.UpdateReleasePath();
-            }
+            } */
 
             GUILayout.Space(10f);
 

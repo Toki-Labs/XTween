@@ -82,7 +82,6 @@ namespace Toki.Tween
         private XTweenData _data;
         private List<string> _folderList = new List<string>
         { 
-            "Assets/Toki/XTween/Prefabs",
             "Assets/Toki/XTween/Scripts"
         };
         private string _xtweenVersion = "0.0.1";
@@ -251,6 +250,7 @@ namespace Toki.Tween
                 exportPathList.Add("Assets/Toki/XTween/Export");
                 exportPathList.Add("Assets/Toki/XTween/Example");
                 exportPathList.Add("Assets/Toki/XTween/Images");
+                exportPathList.Add("Assets/Toki/XTween/Resources");
             }
             else
             {
