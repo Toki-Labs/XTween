@@ -145,6 +145,23 @@ void OnTweenEnd(float value)
 {
   Debug.Log(value);
 }
+
+//or
+XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f)).AddOnComplete(()=>Debug.Log("OnComplete")).Play();
+```
+
+Coroutine
+---
+Support use with coroutine
+```csharp
+StartCoroutine(CoroutineTween());
+IEnumerator CoroutineTween()
+{
+	XHash hash = XHash.New.AddX(200f).AddY(50f).AddZ(-1500f);
+	yield return XTween.To(this.target3D, hash).WaitForPlay();
+	Debug.Log("On Complete Tween");
+}
+
 ```
 
 Serial
@@ -199,7 +216,7 @@ Custom Easing
 >직접 제작한 Easing으로 적용가능, 코드힌트로 제공, 상단Menu -> Windows -> XTween Editor
 ```csharp
 XHash hash = XHash.New.AddX(200f).AddY(50f).AddZ(-1500f)
-		.AddControlPointX(-1000f,550f).AddControlPointY(550f,-300f);
+	     .AddControlPointX(-1000f,550f).AddControlPointY(550f,-300f);
 XTween.To(target3D, hash, 1f, Ease.Get(EaseName.EaseInBounce).Play();
 ```
 
