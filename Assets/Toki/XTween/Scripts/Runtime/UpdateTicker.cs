@@ -24,7 +24,7 @@ namespace Toki.Tween
 			else
                 _time = UnityEngine.Time.realtimeSinceStartup;
 #else
-			_time = Time.time;
+			_time = UnityEngine.Time.time;
 #endif
 		}
 	}
