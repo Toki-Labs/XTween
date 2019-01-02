@@ -28,9 +28,9 @@ namespace Toki.Tween
 			this._curve = curve;
 		}
 
-		public float Calculate( float arg0, float arg1, float arg2, float arg3 )
+		public float Calculate( float time, float arg1, float arg2, float dest )
 		{
-			return _curve.Evaluate(arg0);
+			return _curve.Evaluate(time * 1f / dest);
 		}
 	}
 }
