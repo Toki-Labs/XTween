@@ -50,6 +50,7 @@ namespace Toki.Tween
 		//source set
 		public override void ResolveValues()
 		{
+			if (_resolvedValues) return;
 			if (IsNullTarget() || _propertyName == null) return;
 
 			Type type = typeof(T);
@@ -127,6 +128,7 @@ namespace Toki.Tween
 			this._dColor = new Color(red, green, blue, alpha);
 			this._updateList.Add(Updator);
 			this._updateCount = this._updateList.Count;
+			this._resolvedValues = true;
 		}
 
 		protected override void UpdateObject()

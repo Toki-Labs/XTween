@@ -155,7 +155,7 @@ namespace Toki.Tween
 
 		private void CheckEditorData()
 		{
-			string destDir = "Assets/Toki/XTween/Resources";
+			string destDir = "Assets/Resources";
 			string destPath = destDir + "/XTweenData.asset";
 			if( !File.Exists(AbsPath + "/" + destPath) )
 			{

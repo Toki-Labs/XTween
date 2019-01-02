@@ -213,9 +213,8 @@ namespace Toki.Tween
 			
 		public virtual void StartPlay()
 		{
-			if (_classicHandlers != null && _classicHandlers.OnPlay != null) {
+			if (_classicHandlers != null && _classicHandlers.OnPlay != null)
 				_classicHandlers.OnPlay.Execute();
-			}
 		}
 
 		public virtual void Stop()
@@ -230,9 +229,8 @@ namespace Toki.Tween
 
 		public virtual void StartStop()
 		{
-			if (_classicHandlers != null && _classicHandlers.OnStop != null) {
+			if (_classicHandlers != null && _classicHandlers.OnStop != null) 
 				_classicHandlers.OnStop.Execute();
-			}
 		}
 			
 		public virtual void TogglePause()
@@ -247,21 +245,21 @@ namespace Toki.Tween
 			if (position > _duration) position = _duration;
 			_position = position;
 			_startTime = _ticker.time - _position;
+			ResolveValues();
 			InternalUpdate(position);
 			PlayNow(_ticker.time);
 		}
 			
 		public virtual void GotoAndStop( float position ) 
 		{
-			if (position < 0) {
-				position = 0;
-			}
-			if (position > _duration) {
-				position = _duration;
-			}
+			if (position < 0) position = 0;
+			if (position > _duration) position = _duration;
+			
 			_position = position;
+			ResolveValues();
 			InternalUpdate(position);
-			if (_classicHandlers != null && _classicHandlers.OnUpdate != null) {
+			if (_classicHandlers != null && _classicHandlers.OnUpdate != null) 
+			{
 				_classicHandlers.OnUpdate.Execute();
 			}
 			Stop();
@@ -271,7 +269,8 @@ namespace Toki.Tween
 		{
 			bool isComplete = false;
 				
-			if ((_position < _duration && _duration <= time) || (0 < _position && time <= 0)) {
+			if ((_position < _duration && _duration <= time) || (0 < _position && time <= 0)) 
+			{
 				isComplete = true;
 			}
 				
@@ -280,14 +279,13 @@ namespace Toki.Tween
 			{
 				InternalUpdate(time);
 				
-				if (_classicHandlers != null && _classicHandlers.OnUpdate != null) {
+				if (_classicHandlers != null && _classicHandlers.OnUpdate != null)
 					_classicHandlers.OnUpdate.Execute();
-				}
 				
-				if (isComplete) {
-					if (_classicHandlers != null && _classicHandlers.OnComplete != null) {
+				if (isComplete)
+				{
+					if (_classicHandlers != null && _classicHandlers.OnComplete != null)
 						_classicHandlers.OnComplete.Execute();
-					}
 				}
 			}	
 		}
@@ -308,20 +306,20 @@ namespace Toki.Tween
 			_position = t;
 			InternalUpdate(t);
 				
-			if (_classicHandlers != null && _classicHandlers.OnUpdate != null) {
+			if (_classicHandlers != null && _classicHandlers.OnUpdate != null)
 				_classicHandlers.OnUpdate.Execute();
-			}
 				
-			if (_isPlaying) {
-				if (t >= _duration) {
+			if (_isPlaying) 
+			{
+				if (t >= _duration) 
+				{
 					_position = _duration;
-					if (_stopOnComplete) {
-						return true;
-					}
-					else {
-						if (_classicHandlers != null && _classicHandlers.OnComplete != null) {
+					if (_stopOnComplete) return true;
+					else 
+					{
+						if (_classicHandlers != null && _classicHandlers.OnComplete != null)
 							_classicHandlers.OnComplete.Execute();
-						}
+
 						_position = t - _duration;
 						_startTime = time - _position;
 						Tick(time);
@@ -338,9 +336,8 @@ namespace Toki.Tween
 			if(_isPlaying && _stopOnComplete)
 			{
 				_isPlaying = false;
-				if (_classicHandlers != null && _classicHandlers.OnComplete != null) {
+				if (_classicHandlers != null && _classicHandlers.OnComplete != null)
 					_classicHandlers.OnComplete.Execute();
-				}
 			}
 		}
 
@@ -380,7 +377,8 @@ namespace Toki.Tween
 			_ticker = source._ticker;
 			_duration = source._duration;
 			_stopOnComplete = source._stopOnComplete;
-			if (source._classicHandlers != null) {
+			if (source._classicHandlers != null) 
+			{
 				_classicHandlers = new XObjectHash();
 				_classicHandlers.CopyFrom(source._classicHandlers);
 			}

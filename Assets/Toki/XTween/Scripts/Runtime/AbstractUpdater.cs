@@ -8,6 +8,7 @@ namespace Toki.Tween
     {
         protected float _invert;
         protected float _factor = 0f;
+        protected bool _resolvedValues = false;
         protected Action _stopOnDestroyHandler;
         public virtual Action StopOnDestroyHandler
         {

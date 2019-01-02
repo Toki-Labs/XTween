@@ -46,6 +46,7 @@ namespace Toki.Tween
 
 		public override void ResolveValues()
 		{
+			if( _resolvedValues ) return;
 			this.ComposeDic();
 
 			foreach ( var item in this._valueDic )
@@ -64,6 +65,7 @@ namespace Toki.Tween
 				};
 				item.Value.value = objValue;
 			}
+			this._resolvedValues = true;
 		}
 			
 		protected override void UpdateObject()
@@ -89,6 +91,7 @@ namespace Toki.Tween
 		}
 		public override void ResolveValues()
 		{
+			if( _resolvedValues ) return;
 			if( IsNullTarget() ) return;
 			base.ComposeDic();
 
@@ -127,7 +130,7 @@ namespace Toki.Tween
 					setter(_target, objValue.current);
 				};
 			}
-			
+			_resolvedValues = true;
 		}
 
 		private bool IsNullTarget()

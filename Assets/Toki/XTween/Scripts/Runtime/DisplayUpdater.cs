@@ -51,6 +51,7 @@ namespace Toki.Tween
 		//source set
 		public override void ResolveValues()
 		{
+			if( _resolvedValues ) return;
 			if( _target == null )
 			{
 				if( this._stopOnDestroyHandler != null )
@@ -377,6 +378,7 @@ namespace Toki.Tween
 			}
 
 			this._updateCount = this._updateList.Count;
+			this._resolvedValues = true;
 		}
 
 		private float GetRotation( float start, float finish, bool rotateRight, int rotateCount )
