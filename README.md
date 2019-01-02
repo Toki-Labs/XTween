@@ -72,7 +72,7 @@ Road Map
 - [x] Support UI RectTransform
 - [x] Performance check & polishing effciency
 - [ ] Support path editor by GUI
-- [ ] Support Easing Edit in UI Graph
+- [x] Support Easing Edit in UI Graph
 
 
 Lastest Release
