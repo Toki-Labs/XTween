@@ -200,7 +200,7 @@ Custom Easing
 ```csharp
 XHash hash = XHash.New.AddX(200f).AddY(50f).AddZ(-1500f)
 		.AddControlPointX(-1000f,550f).AddControlPointY(550f,-300f);
-XTween.To(this.target3D, hash, data.time, Ease.Get(EaseName.EaseInBounce).Play();
+XTween.To(target3D, hash, 1f, Ease.Get(EaseName.EaseInBounce).Play();
 ```
 
 Author Info
