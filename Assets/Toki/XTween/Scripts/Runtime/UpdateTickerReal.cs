@@ -46,7 +46,7 @@ namespace Toki.Tween
 		
 		protected override void TimeSet()
 		{
-			_time = Time.realtimeSinceStartup;
+            _time = UnityEngine.Time.realtimeSinceStartup;
 		}
 	}
 }

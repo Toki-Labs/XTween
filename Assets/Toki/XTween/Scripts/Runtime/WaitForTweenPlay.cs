@@ -1,14 +1,16 @@
 using UnityEngine;
 using System.Collections;
+using Toki.Tween;
 
 namespace Toki.Tween
 {
-    public class WaitForTweenPlay : CustomYieldInstruction
+    public class WaitForTweenPlay : IEnumerator, ITimer
     {
         /************************************************************************
         *	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
         ************************************************************************/
-        protected IAni _tween;
+        protected AbstractTween _tween;
+        protected ITimer _ticker;
 
         /************************************************************************
         *	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -22,13 +24,19 @@ namespace Toki.Tween
         /************************************************************************
         *	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
         ************************************************************************/
-        public override bool keepWaiting
+        public float Time
         {
             get
             {
-                return this._tween.IsPlaying;
+                return _ticker.Time;
+            }
+            set
+            {
+                _ticker.Time = value;
             }
         }
+
+        public ITimer Ticker { get{return _ticker;} }
 
         /************************************************************************
         *	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
@@ -37,12 +45,29 @@ namespace Toki.Tween
         /************************************************************************
         *	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
         ************************************************************************/
-        public WaitForTweenPlay(IAni tween)
+        public WaitForTweenPlay(ITimer ticker, AbstractTween tween)
         {
-            this._tween = tween;
-            this._tween.Play();
+            _ticker = ticker;
+            _tween = tween;
         }
 
+        public object Current { get{return null;} }
+
+        public bool MoveNext()
+        {
+            bool isDone = false;
+            if( _tween.IsPlaying )
+            {
+                isDone = _tween.Tick(_ticker.Time);
+            }
+            if( isDone ) _tween.TickerRemoved();
+            return !isDone;
+        }
+
+        public void Reset()
+        {
+            _tween.GotoAndStop(0);
+        }
 
         /************************************************************************
         *	 	 	 	 	Coroutine Declaration	 	  			 	 		*
@@ -62,5 +87,13 @@ namespace Toki.Tween
         /************************************************************************
         *	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
         ************************************************************************/
+        public float GetDeltaTime( int frameSkip )
+        {
+            return _ticker.GetDeltaTime( frameSkip );
+        }
+
+        public void Initialize() {}
+        public void AddTimer( TimerListener listener ) {}
+        public void RemoveTimer( TimerListener listener ) {}
     }
 }

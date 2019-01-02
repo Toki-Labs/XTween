@@ -20,18 +20,6 @@ public interface IAni
 		get;
 	}
 		
-	bool StopOnComplete
-	{
-		get;
-		set;
-	}
-
-	bool IsRealTime
-	{
-		get;
-		set;
-	}
-
 	uint FrameSkip
 	{
 		get;
@@ -65,6 +53,7 @@ public interface IAni
     void StopOnDestroy();
 	void Play();
 	WaitForTweenPlay WaitForPlay();
+	WaitForTweenPlay WaitForGotoAndPlay( float position );
 	void Stop();	
 	void TogglePause();
 	void GotoAndPlay( float position );

@@ -253,7 +253,7 @@ namespace Toki.Tween
 			if( removeListener != null ) removeListener.TickerRemoved();
 		}
 			
-		public float time
+		public float Time
 		{
 			get { return _time; }
 			set { _time = value; }

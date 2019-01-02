@@ -4,7 +4,7 @@ namespace Toki.Tween
 {
 	public interface ITimer
 	{
-		float time
+		float Time
 		{
 			get;
 			set;

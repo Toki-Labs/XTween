@@ -48,14 +48,6 @@ namespace Toki.Tween
 		public bool IsPlaying
 		{
 			get { return _isPlaying; }
-			set 
-			{
-				this._isPlaying = value;
-				if( !this._isPlaying )
-				{
-					_ticker.RemoveTimer(this);
-				}
-			}
 		}
 
 		public virtual Action DecoratorStopOnDestroy
@@ -63,21 +55,6 @@ namespace Toki.Tween
 			set
 			{
 				this._decoratorStopOnDestroy = value;
-			}
-		}
-
-		public bool IsRealTime
-		{
-			get
-			{
-				return this._isRealTime;
-			}
-			set
-			{
-				if( this._isRealTime == value ) return;
-				this._isRealTime = value;
-				this._ticker = XTween.GetTicker( this._isRealTime );
-				this._startTime = this._ticker.time - this._position;
 			}
 		}
 
@@ -102,12 +79,6 @@ namespace Toki.Tween
 			}
 		}
 		
-		public bool StopOnComplete
-		{
-			get { return _stopOnComplete; }
-			set { _stopOnComplete = value; }
-		}
-			
 		public IClassicHandlable ClassicHandlers
 		{
 			get { return _classicHandlers; }
@@ -158,14 +129,14 @@ namespace Toki.Tween
 			}
 			else
 			{
-				this._isPlaying = false;
+				_isPlaying = false;
 			}
-			this._enableGroup = false;
+			_enableGroup = false;
 		}
 
 		public virtual void StopFromDisposeList()
 		{
-			this._isPlaying = false;
+			_isPlaying = false;
 		}
 
 		public void IntializeGroup()
@@ -174,23 +145,48 @@ namespace Toki.Tween
 			this._time = 0f;
 		}
 
+		private void TickerChange()
+		{
+			if( _ticker is WaitForTweenPlay )
+				_ticker = (_ticker as WaitForTweenPlay).Ticker;
+		}
+
+		//Play Directly
 		public virtual void Play()
 		{
-			if (!_isPlaying) {
+			TickerChange();
+			PlayTween();
+		}
+
+		private void PlayTween()
+		{
+			if (!_isPlaying) 
+			{
 				if (_position >= _duration) _position = 0;
-				ResolveValues();
-				float t = _ticker.time;
+				float t = _ticker.Time;
 				_startTime = t - _position;
-				PlayNow(t);
+				ResolveValues();
+				PlayCompose(t);
 			}
 		}
 
 		public virtual WaitForTweenPlay WaitForPlay()
 		{
-			return new WaitForTweenPlay(this);
+			WaitForTweenPlay wait;
+			if( _ticker is WaitForTweenPlay )
+			{
+				wait = (WaitForTweenPlay)_ticker;
+			}
+			else
+			{
+				wait = new WaitForTweenPlay(_ticker, this);
+				_ticker = wait;
+			}
+			PlayTween();
+			return wait;
 		}
 
-		private void PlayNow(float time)
+		private void PlayCompose(float time)
 		{
 	#if UNITY_EDITOR
 			if( Application.isPlaying )
@@ -244,17 +240,40 @@ namespace Toki.Tween
 			else Play();
 		}
 			
+		//Goto And Play Directly
 		public virtual void GotoAndPlay( float position )
+		{
+			TickerChange();
+			GotoAndPlayTween(position);
+		}
+
+		private void GotoAndPlayTween(float position)
 		{
 			if (position < 0) position = 0;
 			if (position > _duration) position = _duration;
 			_position = position;
-			_startTime = _ticker.time - _position;
+			_startTime = _ticker.Time - _position;
 			ResolveValues();
 			InternalUpdate(position);
-			PlayNow(_ticker.time);
+			PlayCompose(_ticker.Time);
 		}
-			
+		
+		public virtual WaitForTweenPlay WaitForGotoAndPlay(float position)
+		{
+			WaitForTweenPlay wait;
+			if( _ticker is WaitForTweenPlay )
+			{
+				wait = (WaitForTweenPlay)_ticker;
+			}
+			else
+			{
+				wait = new WaitForTweenPlay(_ticker, this);
+				_ticker = wait;
+			}
+			GotoAndPlayTween(position);
+			return wait;
+		}
+
 		public virtual void GotoAndStop( float position ) 
 		{
 			if (position < 0) position = 0;
@@ -293,17 +312,15 @@ namespace Toki.Tween
 				}
 			}	
 		}
-			
+
 		public override bool Tick( float time )
 		{
-			return this._tickListener( time );
+			return _tickListener( time );
 		}
 
 		public virtual bool TickNormal( float time )
 		{
-			if (!_isPlaying) {
-				return true;
-			}
+			if (!_isPlaying) return true;
 				
 			float t = time - _startTime;
 				

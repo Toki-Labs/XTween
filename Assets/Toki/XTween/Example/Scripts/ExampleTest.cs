@@ -91,7 +91,7 @@ public class ExampleTest : ExampleBase
 			{
 				this.StartCoroutine(this.Test());
 			});
-			this._tween.Play();
+			yield return this._tween.WaitForPlay();
 
 		}
 	}
@@ -99,7 +99,7 @@ public class ExampleTest : ExampleBase
 	private IEnumerator Test()
 	{
 		yield return new WaitForSeconds(1f);
-		this._tween.GotoAndPlay(0f);
+		yield return this._tween.WaitForGotoAndPlay(0.3f);
 	}
 
 	private void StartiTween(GameObject target)

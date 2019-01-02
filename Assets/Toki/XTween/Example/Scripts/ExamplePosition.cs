@@ -60,6 +60,7 @@ public class ExamplePosition : ExampleBase
 	************************************************************************/
 	protected override IEnumerator CoroutineStart()
 	{
+		// yield return new WaitForSeconds(0.1f);
 		if( this._tween != null )
 		{
 			this._tween.Stop();
@@ -67,7 +68,7 @@ public class ExamplePosition : ExampleBase
 		}
 		this.target2D.transform.localPosition = this._position2D;
 		this.target3D.transform.localPosition = this._position3D;
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.2f);
 		TweenUIData data = this.uiContainer.Data;
 		if( this.container2D.activeSelf )
 		{

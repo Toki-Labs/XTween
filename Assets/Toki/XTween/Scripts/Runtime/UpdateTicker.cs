@@ -20,9 +20,9 @@ namespace Toki.Tween
 		{
 #if UNITY_EDITOR
 			if( Application.isPlaying )
-				_time = Time.time;
+                _time = UnityEngine.Time.time;
 			else
-				_time = Time.realtimeSinceStartup;
+                _time = UnityEngine.Time.realtimeSinceStartup;
 #else
 			_time = Time.time;
 #endif
