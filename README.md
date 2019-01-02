@@ -215,7 +215,7 @@ tween = XTween.Delay(tween, 1f/*Pre Delay*/, 1f/*Post Delay*/);
 tween = XTween.Scale(tween, 2f/*Scale tweener time*/);
 
 //Slice Tweener
-tween = XTween.Slice(tween, 0.2f/*Slice start at*/, 0.8f/*Slice end*/, false/*Slice value is when Percent */);
+tween = XTween.Slice(tween, 0.2f/*Slice start at*/, 0.8f/*Slice end*/, false/*is percent value?*/);
 
 //Repeat Tweener
 tween = XTween.Repeat(tween, 3/*3 time repeat*/);
