@@ -264,9 +264,8 @@ namespace Toki.Tween
 			ResolveValues();
 			InternalUpdate(position);
 			if (_classicHandlers != null && _classicHandlers.OnUpdate != null) 
-			{
 				_classicHandlers.OnUpdate.Execute();
-			}
+
 			Stop();
 		}
 			
