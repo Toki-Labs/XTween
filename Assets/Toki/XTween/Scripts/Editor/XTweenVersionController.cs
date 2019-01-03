@@ -139,8 +139,9 @@ namespace Toki.Tween
 				{
 					Directory.Delete(path,true);
 				}
-				
+
 				AssetDatabase.ImportPackage(filePath, false);
+				this.EmptyTemp();
 			}
 			else
 			{
