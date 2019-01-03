@@ -298,13 +298,13 @@ public static class XTweenShorcutExtensions
 		return XTween.To(gameObject, hash, time, easing, frameSkip, realTime);
 	}
 
-	public static IAni To( XObjectHash source, Action<XObjectHash> UpdateHandler, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IAni To(this XObjectHash source, Action<XObjectHash> UpdateHandler, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.To(source, UpdateHandler, time, easing, frameSkip, realTime);
 	}
 
 	//Proerpty Type Only
-	public static IAni To<T>( T target, XObjectHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IAni To<T>(this T target, XObjectHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.To<T>(target, hash, time, easing, frameSkip, realTime);
 	}
