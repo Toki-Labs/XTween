@@ -51,6 +51,13 @@ StopCoroutine(tweenCoroutine);
 ```
 
 
+
+Lastest Release
+---
+Version(Alpha) 0.0.61 - [XTween_0.0.61.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.61.unitypackage)
+
+
+
 Performance
 ---
 Unity에서 보편적으로 쓰이는 Tween과 XTween과의 성능비교
@@ -101,10 +108,6 @@ Road Map
 - [ ] Support visual editor
 - [ ] Support path editor by GUI
 
-
-Lastest Release
----
-Version(Alpha) 0.0.61 - [XTween_0.0.61.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.61.unitypackage)
 
 
 Position
