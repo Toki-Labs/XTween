@@ -128,17 +128,17 @@
 </ol>
 
 <h2 id="implementation">Implementation</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/********************* Simple Use *****************************/</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/******* Simple Use **************/</span>
 <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 
 
-<span class="cm">/********************* Use with shortcut **********************/</span>
+<span class="cm">/******* Shortcut type ***********/</span>
 <span class="c1">//when moveObj is Transform or GameObject</span>
 <span class="n">IAni</span> <span class="n">tween</span> <span class="p">=</span> <span class="n">moveObj</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 <span class="n">tween</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
 
 
-<span class="cm">/********************* Use with Coroutine *********************/</span>
+<span class="cm">/******* Use with Coroutine ******/</span>
 <span class="c1">//You can use this like normal yield instruction.</span>
 <span class="n">IEnumerator</span> <span class="n">tweenCoroutine</span> <span class="p">=</span> <span class="nf">CoroutineTween</span><span class="p">();</span>
 <span class="nf">StartCoroutine</span><span class="p">(</span><span class="n">tweenCoroutine</span><span class="p">);</span>
