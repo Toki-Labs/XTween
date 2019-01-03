@@ -45,6 +45,16 @@ namespace Toki.Tween
             Instance.UpdateReleasePath();
         }
 
+        public static void MovePackageFile()
+        {
+            string exportRootPath = XTweenEditorManager.AbsPath + "/Bin";
+            string exportFileName = "XTween_" + XTweenEditorManager.Instance.Data.version + ".unitypackage";
+            string exportPath = exportRootPath + "/" + exportFileName;
+            string packageFile = exportRootPath + "/XTween.unitypackage";
+            File.Copy(packageFile, exportPath);
+            File.Delete(packageFile);
+        }
+
         [MenuItem("Window/XTween Build #%B",priority=16)]
         public static void ExampleBuild()
         {
@@ -232,12 +242,6 @@ namespace Toki.Tween
             if( !release )
             {
                 AssetDatabase.ExportPackage(exportPathList.ToArray(), exportPath, ExportPackageOptions.Interactive | ExportPackageOptions.Recurse);
-            }
-            else
-            {
-                string packageFile = exportRootPath + "/XTween.unitypackage";
-                File.Copy(packageFile, exportPath);
-                File.Delete(packageFile);
             }
         }
     }

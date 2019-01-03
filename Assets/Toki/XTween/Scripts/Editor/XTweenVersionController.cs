@@ -140,7 +140,6 @@ namespace Toki.Tween
 				}
 
 				AssetDatabase.ImportPackage(filePath, false);
-				this.EmptyTemp();
 			}
 			else
 			{
@@ -173,6 +172,7 @@ namespace Toki.Tween
 		************************************************************************/
 		public void Check()
 		{
+			this.EmptyTemp();
 			string date = EditorPrefs.GetString(STORE_CHECKED_DATE, null);
 			bool needToCheck = false;
 			if( string.IsNullOrEmpty(date) )

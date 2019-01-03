@@ -209,11 +209,13 @@ namespace Toki.Tween
 							this._easingCurve = data.animationCurve;
 							GUIUtility.keyboardControl = 0;
 						}
+						// GUI.backgroundColor = this._easingIndex == i ? Color.white : Color.red;
 						if( GUILayout.Button("X", GUILayout.Width(20f)) )
 						{
 							this._data.easingDataList.RemoveAt(i);
 							XTweenEditorManager.UpdateEasingName();
 						}
+						// GUI.backgroundColor = Color.white;
 						
 						GUILayout.EndHorizontal();
 						GUI.color = Color.white;
