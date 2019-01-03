@@ -58,11 +58,15 @@ namespace Toki.Tween
 		/************************************************************************
 		*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 		************************************************************************/
+		private const string NETWORK_ERROR_MSG = "Some with wrong in check update.";
+		private const string INIT_MSG = "Checking version...";
+		private XTweenVersionController _versionController;
 		private XTweenEditorData _data;
 		private int _easingIndex = -1;
 		private Vector2 _easingScroll = Vector2.zero;
 		private string _easingName = "";
 		private AnimationCurve _easingCurve;
+		private string _lastVersion = INIT_MSG;
 		
 		/************************************************************************
 		*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -92,6 +96,8 @@ namespace Toki.Tween
 		************************************************************************/
 		void OnEnable()
 		{
+			this._versionController = new XTweenVersionController(this.CheckedLastVersion);
+			if( !EditorApplication.isPlaying ) this._versionController.Check();
 			if( XTweenEditorManager.Instance.Initialized )
 			{
 				this.ReadData();
@@ -108,6 +114,61 @@ namespace Toki.Tween
 		void OnGUI()
 		{
 			GUILayout.BeginVertical();
+
+			GUILayout.Height(20f);
+			GUILayout.BeginVertical("Box");
+			{
+				GUILayout.Space(3f);
+				GUILayout.Label("Update check", "BoldLabel");
+				GUILayout.Space(3f);
+			}
+			GUILayout.EndVertical();
+
+			GUILayout.Space(0f);
+			GUILayout.BeginVertical("Box");
+			GUILayout.Space(5f);
+
+			string currentVersion = XTweenEditorManager.Instance.Data.version;
+			GUILayout.BeginHorizontal();
+			GUILayout.Label("Current version", GUILayout.Width(110f));
+			GUILayout.Label(currentVersion, "BoldLabel");
+			GUILayout.EndHorizontal();
+
+			if( !EditorApplication.isPlaying )
+			{
+				GUILayout.BeginHorizontal();
+				GUILayout.Label("Lastest version", GUILayout.Width(110f));
+				GUILayout.Label(this._lastVersion, "BoldLabel");
+				GUILayout.EndHorizontal();
+
+				GUILayout.Space(10f);
+				if( this._lastVersion != NETWORK_ERROR_MSG && 
+					this._lastVersion != INIT_MSG &&
+					this._lastVersion != currentVersion )
+				{
+					GUI.backgroundColor = this._versionController.IsDownloading ? Color.gray : Color.green;
+					if( GUILayout.Button("Update to version " + this._lastVersion, GUILayout.Height(30f)) && !this._versionController.IsDownloading )
+					{
+						Debug.Log("Update");
+						if( EditorUtility.DisplayDialog("Do you wanna update to version " + this._lastVersion + "?", "Yes", "No") )
+						{
+							this._versionController.Update();
+						}
+					}
+					GUI.backgroundColor = Color.white;
+				}
+				else
+				{
+					GUILayout.Space(30f);
+				}
+				GUILayout.Space(10f);
+			}
+			else
+			{
+				GUILayout.Space(70f);
+			}
+			GUILayout.EndVertical();
+			GUILayout.Space(10f);
 			GUILayout.Height(20f);
 			GUILayout.BeginVertical("Box");
 			{
@@ -265,6 +326,9 @@ namespace Toki.Tween
 			GUILayout.Space(5f); 
 			GUILayout.EndVertical();
 			GUILayout.EndVertical();
+
+			GUILayout.Space(10f);
+
 			GUILayout.EndVertical();
 		}
 		
@@ -291,6 +355,25 @@ namespace Toki.Tween
 			XTweenEditorManager.Instance.initializeListener -= this.ReadData;
 			this.InitUI();
 			this._data = XTweenEditorData.Instance;
+		}
+
+		private void CheckedLastVersion( string version )
+		{
+			string currentVersion = XTweenEditorManager.Instance.Data.version;
+			if( string.IsNullOrEmpty(version) )
+			{
+				//set stored
+				this._lastVersion = this._versionController.StoredLastVersion;
+			}
+			else if( version.Equals("error") )
+			{
+				this._lastVersion = NETWORK_ERROR_MSG;
+			}
+			else
+			{
+				//set downloaded
+				this._lastVersion = version;
+			}
 		}
 		
 		/************************************************************************
