@@ -7,15 +7,14 @@ XTween란?
 유니티에서 코드로 애니매이션 트윈을 구현하기 위한 라이브러리로, 강력한 퍼포먼스와 쉬운 사용방법으로 원하는 결과물을 쉽게 구현가능하게 합니다.
 
 XTween은?
-1. MonoBehaviour를 객체마다 생성시키지 않아 가볍다.
-2. 몇줄의 코드로 Tween을 구현가능하다.
-3. Tween하고자 하는 Object의 명확한 코드힌트를 제공하여 사용자 실수가 없다.
-4. 이벤트 핸들링이 손쉽다. (별도의 메서드 선언없이 Anonymous Method지원)
-5. Coroutine의 지원으로 다른 Instruction과의 조합이 용이하다.
-6. Custom Easing의 지원으로 원하는 애니매이션을 얼마든지 만들어 낼 수있다.
-7. 생성한 트윈은 Instance화 할 수 있어 재사용성이 높고 시간컨트롤이 용이하다.
-8. 강력한 퍼포먼스로 메모리와 CPU사용량이 적다.
-9. 에디터 모드에서 사용은 물론, 모든 플랫폼에서 사용가능하다.
+1. 몇줄의 코드로 Tween을 구현가능하다. (익히기 쉽고 Readablity가 좋다)
+2. Tween하고자 하는 Object의 명확한 코드힌트를 제공하여 사용자 실수가 없다.
+3. 이벤트 핸들링이 쉽다. (별도의 메서드 선언없이 Anonymous Method지원)
+4. Coroutine의 지원으로 다른 Instruction과의 조합이 용이하다.
+5. Custom Easing의 지원으로 원하는 애니매이션을 얼마든지 만들어 낼 수있다.
+6. 생성한 트윈은 Instance화 할 수 있어 재사용성이 높고 시간제어가 쉽다.
+7. 강력한 퍼포먼스로 메모리와 CPU사용량이 적다. (객체마다 MonoBehaviour를 생성시키지 않아 가볍다.)
+8. 에디터 모드에서 사용은 물론, 모든 플랫폼에서 사용가능하다.
 
 예제는 [XTween Example](http://toki-labs.com/xtween)에서 확인하실 수 있습니다.
 
@@ -49,6 +48,13 @@ IEnumerator CoroutineTween()
 
 StopCoroutine(tweenCoroutine);
 ```
+
+
+
+Lastest Release
+---
+Version(Alpha) 0.0.62 - [XTween_0.0.62.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.62.unitypackage)
+
 
 
 Performance
@@ -101,10 +107,6 @@ Road Map
 - [ ] Support visual editor
 - [ ] Support path editor by GUI
 
-
-Lastest Release
----
-Version(Alpha) 0.0.61 - [XTween_0.0.61.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.61.unitypackage)
 
 
 Position
