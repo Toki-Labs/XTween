@@ -132,6 +132,14 @@ namespace Toki.Tween
 			if( string.IsNullOrEmpty(this._http.error) )
 			{
 				Debug.Log("Downloaded");
+				string rootPath = Path.Combine(XTweenEditorManager.AbsPath, "/Assets/Toki/XTween/Scripts");
+				string[] dirs = 
+					new string[]{Path.Combine(rootPath, "Editor"), Path.Combine(rootPath, "Runtime")};
+				foreach ( var path in dirs )
+				{
+					Directory.Delete(path,true);
+				}
+				
 				AssetDatabase.ImportPackage(filePath, false);
 			}
 			else
