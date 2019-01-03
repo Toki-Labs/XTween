@@ -457,7 +457,6 @@ public struct XHash : IClassicHandlable
         }
     }
 
-	
 	/*********************************** Add Methods **********************************/
     public XHash AddX( float end, bool isRelative = false )
     {

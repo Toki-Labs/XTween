@@ -51,12 +51,12 @@ public interface IAni
 	}
 
     void StopOnDestroy();
-	void Play();
+	IAni Play();
 	WaitForTweenPlay WaitForPlay();
 	WaitForTweenPlay WaitForGotoAndPlay( float position );
 	void Stop();	
 	void TogglePause();
-	void GotoAndPlay( float position );
+	IAni GotoAndPlay( float position );
 	void GotoAndStop( float position );
 	IAni Clone();
 }

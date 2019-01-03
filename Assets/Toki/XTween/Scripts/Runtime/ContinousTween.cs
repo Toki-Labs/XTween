@@ -101,18 +101,20 @@ namespace Toki.Tween
 			return true;
 		}
 
-		public override void Play()
+		public override IAni Play()
 		{
 			if( !_isPlaying )
 			{
 				_position = 0;
 			}
 			base.Play();
+			return this;
 		}
 
-		public override void GotoAndPlay( float position )
+		public override IAni GotoAndPlay( float position )
 		{
 			//Not implement
+			return null;
 		}
 
 		public override void GotoAndStop( float position )

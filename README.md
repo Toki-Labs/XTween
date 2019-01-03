@@ -24,7 +24,32 @@ XTween은?
 Implementation
 ---
 ```csharp
-XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f)).Play();
+/********************* Simple Use *****************************/
+XTween.To(moveObj, XHash.New.Position(600f,200f)).Play();
+
+
+/********************* Use with shortcut **********************/
+//when moveObj is Transform or GameObject
+IAni tween = moveObj.To(XHash.New.Position(600f,200f)).Play();
+//When you want to stop tween
+tween.Stop();
+
+
+/********************* Use with Coroutine *********************/
+//You can use this like normal yield instruction.
+IEnumerator tweenCoroutine = CoroutineTween();
+StartCoroutine(tweenCoroutine);
+
+IEnumerator CoroutineTween()
+{
+	yield return XTween.To(moveObj, XHash.New.Position(600f,200f)).WaitForPlay();
+
+	//or use shortcut, when moveObj is Transform or GameObject
+	yield return moveObj.To(XHash.New.Position(600f,200f)).WaitForPlay();
+}
+
+//When you want to stop tween
+StopCoroutine(tweenCoroutine);
 ```
 
 
@@ -130,7 +155,7 @@ XTween.ValueTo(XObjectHash.New.Add("value", 10f, 200f), UpdateValue).Play();
 
 void UpdateValue(XObjectHash hash)
 {
-  Debug.Log(hash.Now("value"));
+	Debug.Log(hash.Now("value"));
 }
 
 //or Property tween
@@ -146,7 +171,7 @@ ani.Play();
 
 void OnTweenEnd(float value)
 {
-  Debug.Log(value);
+	Debug.Log(value);
 }
 
 //or
@@ -157,7 +182,10 @@ Coroutine
 ---
 Support use with coroutine
 ```csharp
-StartCoroutine(CoroutineTween());
+//Start tween
+IEnumerator tweenCoroutine = CoroutineTween();
+StartCoroutine(tweenCoroutine);
+
 IEnumerator CoroutineTween()
 {
 	XHash hash = XHash.New.AddX(200f).AddY(50f).AddZ(-1500f);
@@ -165,11 +193,13 @@ IEnumerator CoroutineTween()
 	Debug.Log("On Complete First Tween");
 
 	//Start other tween start at 0.3sec
-	XHash hash = XHash.New.AddX(100f).AddY(500f)
+	XHash hash = XHash.New.AddX(100f).AddY(500f);
 	yield return XTween.To(this.target3D, hash).WaitForGotoAndPlay(0.3f);
 	Debug.Log("On Complete Second Tween");
 }
 
+//Stop tween;
+StopCoroutine(tweenCoroutine);
 ```
 
 Serial

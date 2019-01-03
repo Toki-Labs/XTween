@@ -27,12 +27,14 @@ namespace Toki.Tween
 			}
 		}
 
-		public override void Play()
+		public override IAni Play()
 		{
-			if (!_isPlaying) {
+			if (!_isPlaying) 
+			{
 				_baseTween.StartPlay();
 				base.Play();
 			}
+			return this;
 		}
 			
 		public override void StartPlay()

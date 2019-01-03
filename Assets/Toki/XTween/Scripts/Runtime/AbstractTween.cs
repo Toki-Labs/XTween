@@ -152,10 +152,11 @@ namespace Toki.Tween
 		}
 
 		//Play Directly
-		public virtual void Play()
+		public virtual IAni Play()
 		{
 			TickerChange();
 			PlayTween();
+			return this;
 		}
 
 		private void PlayTween()
@@ -241,10 +242,11 @@ namespace Toki.Tween
 		}
 			
 		//Goto And Play Directly
-		public virtual void GotoAndPlay( float position )
+		public virtual IAni GotoAndPlay( float position )
 		{
 			TickerChange();
 			GotoAndPlayTween(position);
+			return this;
 		}
 
 		private void GotoAndPlayTween(float position)

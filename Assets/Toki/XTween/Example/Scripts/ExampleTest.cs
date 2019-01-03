@@ -11,6 +11,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class ExampleTest : ExampleBase
 {
@@ -77,22 +78,15 @@ public class ExampleTest : ExampleBase
 		}
 		else
 		{
-			/* XHash hash = XHash.New.AddX(200f).AddY(50f).AddZ(-1500f);
-			this._tween = XTween.To(this.target3D, hash, data.time, data.Easing);
-			this._tween.OnComplete = Executor.New(()=> 
-			{
-				this._tween.GotoAndStop(0.5f);
-				Debug.Log("Complete");
-			});
-			this._tween.Play(); */
-			XObjectHash hash = XObjectHash.New.Add("fieldOfView", 6f);
-			this._tween = XTween.ValueTo<Camera>(this.camera3D,hash,data.time,data.Easing);
-			this._tween.OnComplete = Executor.New(() => 
-			{
-				this.StartCoroutine(this.Test());
-			});
-			yield return this._tween.WaitForGotoAndPlay(0.2f);
-
+			// this._tween = XTween.To(this.target3D, hash, data.time, data.Easing);
+			// XObjectHash hash = XObjectHash.New.Add("fieldOfView", 6f);
+			// this._tween = XTween.ValueTo<Camera>(this.camera3D,hash,data.time,data.Easing);
+			// this._tween.OnComplete = Executor.New(() => this.StartCoroutine(this.Test()));
+			// yield return this._tween.WaitForGotoAndPlay(0.2f);
+			XHash hash = XHash.New.Position(200f,50f,-1500f);
+			yield return this.target3D.To(hash, data.time).WaitForPlay();
+			// this.target3D.transform.DOLocalMove(new Vector3(200f,50f,-1500f), data.time).Play();
+			Debug.Log("Test");
 		}
 	}
 

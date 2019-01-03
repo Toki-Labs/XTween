@@ -176,7 +176,7 @@ namespace Toki.Tween
 			}
 		}
 
-		public override void Play()
+		public override IAni Play()
 		{
 			int l;
 			int i;
@@ -209,6 +209,7 @@ namespace Toki.Tween
 			}
 
 			base.Play();
+			return this;
 		}
 
 		public virtual void GroupStopOnDestroy( IIAni target )

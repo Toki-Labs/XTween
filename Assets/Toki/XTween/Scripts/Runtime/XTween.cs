@@ -103,7 +103,7 @@ public class XTween
     }
 
     /*===================================== Value ========================================*/
-	public static IAni ValueTo( XObjectHash source, Action<XObjectHash> UpdateHandler, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IAni To( XObjectHash source, Action<XObjectHash> UpdateHandler, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		ObjectTween tween = new ObjectTween( realTime ? (ITimer)_tickerReal : _ticker );
 		ObjectUpdater updater = (ObjectUpdater)_updaterFactory.Create( source );
@@ -117,7 +117,7 @@ public class XTween
 	}
 
 	//Proerpty Type Only
-	public static IAni ValueTo<T>( T target, XObjectHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IAni To<T>( T target, XObjectHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		ObjectTween tween = new ObjectTween( realTime ? (ITimer)_tickerReal : _ticker );
 		ObjectUpdater<T> updater = (ObjectUpdater<T>)UpdaterFactory.Create<T>( target, hash );
@@ -131,19 +131,19 @@ public class XTween
 
 	/*===================================== Color ========================================*/
 	//Sprite
-	public static IAni ColorTo( SpriteRenderer target, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IAni To( SpriteRenderer target, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
-		return ColorTo<SpriteRenderer>(target, "color", hash, time, easing, frameSkip, realTime);
+		return To<SpriteRenderer>(target, "color", hash, time, easing, frameSkip, realTime);
 	}
 
 	//UI
-	public static IAni ColorTo( Graphic target, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IAni To( Graphic target, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
-		return ColorTo<Graphic>(target, "color", hash, time, easing, frameSkip, realTime);
+		return To<Graphic>(target, "color", hash, time, easing, frameSkip, realTime);
 	}
 
 	//Color Property
-	public static IAni ColorTo<T>( T target, string colorPropertyName, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IAni To<T>( T target, string colorPropertyName, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
@@ -283,5 +283,46 @@ public class XTween
 		IAni newTween = new DelayedTween( tween as IIAni, delay, postDelay );
 		newTween.FrameSkip = tween.FrameSkip;
 		return newTween;
+	}
+}
+
+public static class XTweenShorcutExtensions
+{
+	public static IAni To(this Transform trans, XHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		return XTween.To(trans.gameObject, hash, time, easing, frameSkip, realTime);
+	}
+
+	public static IAni To(this GameObject gameObject, XHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		return XTween.To(gameObject, hash, time, easing, frameSkip, realTime);
+	}
+
+	public static IAni To( XObjectHash source, Action<XObjectHash> UpdateHandler, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		return XTween.To(source, UpdateHandler, time, easing, frameSkip, realTime);
+	}
+
+	//Proerpty Type Only
+	public static IAni To<T>( T target, XObjectHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		return XTween.To<T>(target, hash, time, easing, frameSkip, realTime);
+	}
+
+	public static IAni To(this SpriteRenderer target, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		return XTween.To<SpriteRenderer>(target, "color", hash, time, easing, frameSkip, realTime);
+	}
+
+	//UI
+	public static IAni To(this Graphic target, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		return XTween.To<Graphic>(target, "color", hash, time, easing, frameSkip, realTime);
+	}
+
+	//Color Property
+	public static IAni To<T>(this T target, string colorPropertyName, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		return XTween.To<T>(target, colorPropertyName, hash, time, easing, frameSkip, realTime);
 	}
 }
