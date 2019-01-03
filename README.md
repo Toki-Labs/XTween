@@ -149,7 +149,7 @@ XTween.To(moveObj, hash).Play();
 Value
 ---
 ```csharp
-XTween.ValueTo(XObjectHash.New.Add("value", 10f, 200f), UpdateValue).Play();
+XTween.To(XObjectHash.New.Add("value", 10f, 200f), UpdateValue).Play();
 
 void UpdateValue(XObjectHash hash)
 {
@@ -157,7 +157,7 @@ void UpdateValue(XObjectHash hash)
 }
 
 //or Property tween
-XTween.ValueTo<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f)).Play();
+XTween.To<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f)).Play();
 ```
 
 Event Handling
@@ -240,10 +240,10 @@ XTween.To(dropdown, hashDropdown).Play();
 Color
 ---
 ```csharp
-XTween.ColorTo(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
+XTween.To(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
 
 //or when object has other type
-XTween.ColorTo<Image>(imageInstance, "color", XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
+XTween.To<Image>(imageInstance, "color", XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
 ```
 
 Custom Easing
