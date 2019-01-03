@@ -24,17 +24,17 @@ XTween은?
 Implementation
 ---
 ```csharp
-/********************* Simple Use *****************************/
+/******* Simple Use **************/
 XTween.To(moveObj, XHash.New.Position(600f,200f)).Play();
 
 
-/********************* Use with shortcut **********************/
+/******* Shortcut type ***********/
 //when moveObj is Transform or GameObject
 IAni tween = moveObj.To(XHash.New.Position(600f,200f)).Play();
 tween.Stop();
 
 
-/********************* Use with Coroutine *********************/
+/******* Use with Coroutine ******/
 //You can use this like normal yield instruction.
 IEnumerator tweenCoroutine = CoroutineTween();
 StartCoroutine(tweenCoroutine);
