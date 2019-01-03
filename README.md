@@ -98,7 +98,7 @@ Road Map
 - [x] Support UI RectTransform
 - [x] Performance check & polishing effciency
 - [x] Support Easing Edit in UI Graph
-- [ ] Support visiable editor
+- [ ] Support visual editor
 - [ ] Support path editor by GUI
 
 
