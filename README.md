@@ -97,8 +97,9 @@ Road Map
 - [x] Support property tween
 - [x] Support UI RectTransform
 - [x] Performance check & polishing effciency
-- [ ] Support path editor by GUI
 - [x] Support Easing Edit in UI Graph
+- [ ] Support visiable editor
+- [ ] Support path editor by GUI
 
 
 Lastest Release
@@ -259,7 +260,7 @@ XTween.To(target3D, hash, 1f, Ease.Get(EaseName.MyEasing).Play();
 Decorator
 ---
 ```csharp
-IAni tween = XTween.ColorTo(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f));
+IAni tween = XTween.To(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f));
 
 //Delay Tweener
 tween = XTween.Delay(tween, 1f/*Pre Delay*/, 1f/*Post Delay*/);
