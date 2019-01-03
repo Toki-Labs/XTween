@@ -140,6 +140,8 @@ namespace Toki.Tween
 				}
 
 				AssetDatabase.ImportPackage(filePath, false);
+				EditorPrefs.DeleteKey(STORE_CHECKED_DATE);
+				EditorPrefs.DeleteKey(STORE_LAST_VERSION);
 			}
 			else
 			{
