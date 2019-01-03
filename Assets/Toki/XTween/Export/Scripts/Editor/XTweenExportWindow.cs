@@ -62,12 +62,12 @@ namespace Toki.Tween
         ************************************************************************/
         void OnEnable()
         {
-            this._xtweenVersion = XTweenExporter.Instance.Data.version;
+            this._xtweenVersion = XTweenEditorManager.Instance.Data.version;
         }
 
         void OnGUI()
         {
-            XTweenData data = XTweenExporter.Instance.Data;
+            XTweenData data = XTweenEditorManager.Instance.Data;
             GUILayout.BeginVertical();
 
             GUILayout.BeginVertical("Box");
@@ -97,7 +97,7 @@ namespace Toki.Tween
             if (GUILayout.Button("Save", GUILayout.Width(100f)))
             {
                 data.version = this._xtweenVersion;
-                XTweenExporter.Instance.Save();
+                XTweenEditorManager.Instance.Save();
                 changed = false;
             }
             GUI.backgroundColor = Color.white;

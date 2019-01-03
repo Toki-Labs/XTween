@@ -93,6 +93,8 @@ namespace Toki.Tween
 		*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 		************************************************************************/
 		private PlayModeStateChange _playMode;
+		private XTweenData _data;
+		private string _xtweenVersion = "0.0.1";
 		
 		/************************************************************************
 		*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -114,9 +116,30 @@ namespace Toki.Tween
 			}
 		}
 
+		public XTweenData Data
+        {
+            get
+            {
+                return _data;
+            }
+        }
+
+		public string JsonPath
+        {
+            get
+            {
+                return XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/Editor/xtween_config.json";
+            }
+        }
+
 		/************************************************************************
 		*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 		************************************************************************/
+		public XTweenEditorManager()
+		{
+			this.Load();
+            this._xtweenVersion = Data.version;
+		}
 		
 		/************************************************************************
 		*	 	 	 	 	Coroutine Declaration	 	  			 	 		*
@@ -133,6 +156,20 @@ namespace Toki.Tween
 		/************************************************************************
 		*	 	 	 	 	Event Method Declaration	 	 	 	     	 	*
 		************************************************************************/
+		private void Load()
+        {
+            if( File.Exists(this.JsonPath) )
+            {
+                string jsonStr = XTweenEditorManager.ReadText(this.JsonPath);
+                this._data = JsonUtility.FromJson<XTweenData>(jsonStr);
+            }
+            else
+            {
+                this._data = new XTweenData();
+                this.Save();
+            }
+        }
+
 		private void ChangedPlayMode( PlayModeStateChange state )
 		{
 			if( this._playMode != state )
@@ -187,5 +224,10 @@ namespace Toki.Tween
 			}
 		}
 		
+		public void Save()
+        {
+            string jsonStr = JsonUtility.ToJson(this._data);
+            XTweenEditorManager.WriteText(this.JsonPath, jsonStr);
+        }
 	}
 }

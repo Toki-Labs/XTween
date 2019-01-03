@@ -79,12 +79,10 @@ namespace Toki.Tween
         /************************************************************************
         *	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
         ************************************************************************/
-        private XTweenData _data;
         private List<string> _folderList = new List<string>
         { 
             "Assets/Toki/XTween/Scripts"
         };
-        private string _xtweenVersion = "0.0.1";
         
         /************************************************************************
         *	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -99,22 +97,6 @@ namespace Toki.Tween
         /************************************************************************
         *	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
         ************************************************************************/
-        public XTweenData Data
-        {
-            get
-            {
-                return _data;
-            }
-        }
-
-        public string JsonPath
-        {
-            get
-            {
-                return XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Export/Scripts/Editor/xtween_config.json";
-            }
-        }
-
         public static string ExportDefaultPath
         {
             get
@@ -143,8 +125,7 @@ namespace Toki.Tween
         ************************************************************************/
         public XTweenExporter()
         {
-            this.Load();
-            this._xtweenVersion = Data.version;
+            
         }
 
         /************************************************************************
@@ -162,27 +143,14 @@ namespace Toki.Tween
             string target = content.Substring(indexStart, indexEnd - indexStart);
             return content.Replace(target, replaceString);
         }
-
-        private void Load()
-        {
-            if( File.Exists(this.JsonPath) )
-            {
-                string jsonStr = XTweenEditorManager.ReadText(this.JsonPath);
-                this._data = JsonUtility.FromJson<XTweenData>(jsonStr);
-            }
-            else
-            {
-                this._data = new XTweenData();
-                this.Save();
-            }
-        }
-
+        
         private void UpdateReleasePath()
         {
+            XTweenData data = XTweenEditorManager.Instance.Data;
             string first = "Version(Alpha) ";
             string end = ".unitypackage)";
             string replace = "Version(Alpha) {VER} - [XTween_{VER}.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_{VER}.unitypackage)";
-            replace = replace.Replace("{VER}", Data.version);
+            replace = replace.Replace("{VER}", data.version);
             string filePath = XTweenEditorManager.AbsPath + "/README.md";
             string content = XTweenEditorManager.ReadText(filePath);
             content = ReplaceTargetStringInContent(first, end, replace, content);
@@ -192,7 +160,7 @@ namespace Toki.Tween
             end = "Version End-->";
             replace = 
             "<!--Version Start-->\n" +
-            "<p>Version(Alpha) "+ Data.version +" - <a href=\"https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_"+ Data.version +".unitypackage\">XTween_"+ Data.version +".unitypackage</a></p>\n" +
+            "<p>Version(Alpha) "+ data.version +" - <a href=\"https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_"+ data.version +".unitypackage\">XTween_"+ data.version +".unitypackage</a></p>\n" +
             "<!--Version End-->";
             filePath = XTweenEditorManager.AbsPath + "/Export/index.html";
             content = XTweenEditorManager.ReadText(filePath);
@@ -212,7 +180,7 @@ namespace Toki.Tween
         {
             get
             {
-                string version = Data.version;
+                string version = XTweenEditorManager.Instance.Data.version;
                 if( string.IsNullOrEmpty( version ) )
                 {
                     return "0.0.1";
@@ -240,6 +208,7 @@ namespace Toki.Tween
         
         public void Export(bool packingAll, bool release = false )
         {
+            XTweenData data = XTweenEditorManager.Instance.Data;
             string addStr = "";
             string exportRootPath = XTweenEditorManager.AbsPath + "/Bin";
             List<string> exportPathList = new List<string>(this._folderList.ToArray());
@@ -254,11 +223,11 @@ namespace Toki.Tween
             }
             else
             {
-                this._xtweenVersion = this.ExportVersion;
-                Data.version = this._xtweenVersion;
-                Save();
+                string version = this.ExportVersion;
+                data.version = version;
+                XTweenEditorManager.Instance.Save();
             }
-            string exportFileName = "XTween_" + addStr + this._xtweenVersion + ".unitypackage";
+            string exportFileName = "XTween_" + addStr + data.version + ".unitypackage";
             string exportPath = exportRootPath + "/" + exportFileName;
             if( !release )
             {
@@ -270,12 +239,6 @@ namespace Toki.Tween
                 File.Copy(packageFile, exportPath);
                 File.Delete(packageFile);
             }
-        }
-
-        public void Save()
-        {
-            string jsonStr = JsonUtility.ToJson(this._data);
-            XTweenEditorManager.WriteText(this.JsonPath, jsonStr);
         }
     }
 }
