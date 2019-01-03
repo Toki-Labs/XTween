@@ -149,7 +149,6 @@ namespace Toki.Tween
 					GUI.backgroundColor = this._versionController.IsDownloading ? Color.gray : Color.green;
 					if( GUILayout.Button("Update to version " + this._lastVersion, GUILayout.Height(30f)) && !this._versionController.IsDownloading )
 					{
-						Debug.Log("Update");
 						if( EditorUtility.DisplayDialog("Update","Do you wanna update to version " + this._lastVersion + "?", "Yes", "No") )
 						{
 							this._versionController.Update();
@@ -210,13 +209,11 @@ namespace Toki.Tween
 							this._easingCurve = data.animationCurve;
 							GUIUtility.keyboardControl = 0;
 						}
-						// GUI.backgroundColor = this._easingIndex == i ? Color.white : Color.red;
 						if( GUILayout.Button("X", GUILayout.Width(20f)) )
 						{
 							this._data.easingDataList.RemoveAt(i);
 							XTweenEditorManager.UpdateEasingName();
 						}
-						// GUI.backgroundColor = Color.white;
 						
 						GUILayout.EndHorizontal();
 						GUI.color = Color.white;

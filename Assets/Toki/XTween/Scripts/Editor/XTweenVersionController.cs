@@ -131,7 +131,6 @@ namespace Toki.Tween
 			while (!this._http.isDone);
 			if( string.IsNullOrEmpty(this._http.error) )
 			{
-				Debug.Log("Downloaded");
 				string rootPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/";
 				string[] dirs = 
 					new string[]{rootPath + "Editor", rootPath + "Runtime"};
