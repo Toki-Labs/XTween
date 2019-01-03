@@ -2,21 +2,21 @@ XTween - Tweener for Unity
 ===
 Created by Lee Dong-Myung(Toki-Labs)
 
-XTween란?
+XTween?
 ---
-유니티에서 코드로 애니매이션 트윈을 구현하기 위한 라이브러리로, 강력한 퍼포먼스와 쉬운 사용방법으로 원하는 결과물을 쉽게 구현가능하게 합니다.
+XTween is Tweener library for unity using by code, It has powerful performance and easy to implement.
 
-XTween은?
-1. 몇줄의 코드로 Tween을 구현가능하다. (익히기 쉽고 Readablity가 좋다)
-2. Tween하고자 하는 Object의 명확한 코드힌트를 제공하여 사용자 실수가 없다.
-3. 이벤트 핸들링이 쉽다. (별도의 메서드 선언없이 Anonymous Method지원)
-4. Coroutine의 지원으로 다른 Instruction과의 조합이 용이하다.
-5. Custom Easing의 지원으로 원하는 애니매이션을 얼마든지 만들어 낼 수있다.
-6. 생성한 트윈은 Instance화 할 수 있어 재사용성이 높고 시간제어가 쉽다.
-7. 강력한 퍼포먼스로 메모리와 CPU사용량이 적다. (객체마다 MonoBehaviour를 생성시키지 않아 가볍다.)
-8. 에디터 모드에서 사용은 물론, 모든 플랫폼에서 사용가능하다.
+XTween is
+1. Can make tweener by few code (easy to learn and good readablity)
+2. Provide code hint.
+3. Easy to control event. (Support Anonymous Method)
+4. Support coroutine. (Easy to combine with other instruction)
+5. Support custom easing.
+6. Can make instance. This good at resuablity and time control.
+7. Less use of memory and cpu. (XTween is don't create MonoBehaviour each by tween.)
+8. Support in editor mode(Not Play mode) and Available on all types of platforms
 
-예제는 [XTween Example](http://toki-labs.com/xtween)에서 확인하실 수 있습니다.
+You can check example at [XTween Example](http://toki-labs.com/xtween)
 
 
 
@@ -59,20 +59,20 @@ Version(Alpha) 0.0.62 - [XTween_0.0.62.unitypackage](https://github.com/Toki-Lab
 
 Performance
 ---
-Unity에서 보편적으로 쓰이는 Tween과 XTween과의 성능비교
+Performance compare with other tween.
 
 __Garbage Alloc__
 >__Start__
 >
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Start.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start.png)
->XTween이 74.2배 적은 Garbage 생성, 객체 생성시 비용 또한 3.4배 적음
+>Garbage produce 1/74 than other tween, Creation cost 1/3 than other tween.
 
 >__End__
 >
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_End.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.png)
->XTween이 50배 적은 Garbage 생성
+>Garbage produe 1/50 than other tween.
 
 >Gabage Alloc Time|Other Tween|XTween
 >--------|-----------|------
@@ -80,13 +80,13 @@ __Garbage Alloc__
 >End|1KB|0.02KB
 >Total|186.5KB|2.52KB
 > 
->XTween이 74배 이상의 적은 Garbage 생성
+>Garbage produce 1/74 than other tween.
 
 __CPU Performance__
->100개의 GameObject를 동시에 움직일시 움직일때의 CPU사용 비교
+>Compare when move 100 gameObject
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Update.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Update.png)
->XTween이 약2배 빠름
+>XTween faster 2 times.
 
 __Code Compare__
  >__Other Tween Code__
