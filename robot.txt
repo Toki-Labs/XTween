@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: http://toki-labs.github.io/sitemap.xml
