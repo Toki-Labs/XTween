@@ -59,37 +59,37 @@ Version(Alpha) 0.0.62 - [XTween_0.0.62.unitypackage](https://github.com/Toki-Lab
 
 Performance
 ---
-Performance compare with other tween.
+Performance compare with other tweener.
 
 __Garbage Alloc__
 >__Start__
 >
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Start.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start.png)
->Garbage produce 1/74 than other tween, Creation cost 1/3 than other tween.
+>Garbage produce 1/74 than other tweener, Creation cost 1/3 than other tweener.
 
 >__End__
 >
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_End.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.png)
->Garbage produe 1/50 than other tween.
+>Garbage produe 1/50 than other tweener.
 
->Gabage Alloc Time|Other Tween|XTween
+>Gabage Alloc Time|Other Tweener|XTween
 >--------|-----------|------
 >Start|185.5K|2.5KB
 >End|1KB|0.02KB
 >Total|186.5KB|2.52KB
 > 
->Garbage produce 1/74 than other tween.
+>Garbage produce 1/74 than other tweener.
 
 __CPU Performance__
 >Compare when move 100 gameObject
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Update.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Update.png)
->XTween faster 2 times.
+>XTween is 2 times faster than other tweener.
 
 __Code Compare__
- >__Other Tween Code__
+ >__Other Tweener Code__
  >
  >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Code.JPG)
  
