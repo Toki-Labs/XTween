@@ -31,7 +31,6 @@ XTween.To(moveObj, XHash.New.Position(600f,200f)).Play();
 /********************* Use with shortcut **********************/
 //when moveObj is Transform or GameObject
 IAni tween = moveObj.To(XHash.New.Position(600f,200f)).Play();
-//When you want to stop tween
 tween.Stop();
 
 
@@ -44,11 +43,10 @@ IEnumerator CoroutineTween()
 {
 	yield return XTween.To(moveObj, XHash.New.Position(600f,200f)).WaitForPlay();
 
-	//or use shortcut, when moveObj is Transform or GameObject
+	//or
 	yield return moveObj.To(XHash.New.Position(600f,200f)).WaitForPlay();
 }
 
-//When you want to stop tween
 StopCoroutine(tweenCoroutine);
 ```
 
