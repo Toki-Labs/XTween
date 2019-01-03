@@ -153,7 +153,7 @@ namespace Toki.Tween
 		private void EmptyTemp()
 		{
 			string tempPath = this.TempPath;
-			if( Directory.Exists(tempPath) ) Directory.Delete(tempPath);
+			if( Directory.Exists(tempPath) ) Directory.Delete(tempPath, true);
 		}
 		
 		/************************************************************************
