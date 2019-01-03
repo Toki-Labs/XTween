@@ -150,7 +150,7 @@ namespace Toki.Tween
 					if( GUILayout.Button("Update to version " + this._lastVersion, GUILayout.Height(30f)) && !this._versionController.IsDownloading )
 					{
 						Debug.Log("Update");
-						if( EditorUtility.DisplayDialog("Do you wanna update to version " + this._lastVersion + "?", "Yes", "No") )
+						if( EditorUtility.DisplayDialog("Update","Do you wanna update to version " + this._lastVersion + "?", "Yes", "No") )
 						{
 							this._versionController.Update();
 						}
