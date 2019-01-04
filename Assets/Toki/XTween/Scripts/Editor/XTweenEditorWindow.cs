@@ -68,6 +68,7 @@ namespace Toki.Tween
 		private AnimationCurve _easingCurve;
 		private bool _checkResult;
 		private string _lastVersion = INIT_MSG;
+		private bool _checkForce = false;
 		
 		/************************************************************************
 		*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -145,7 +146,9 @@ namespace Toki.Tween
 				GUILayout.Space(10f);
 				int currentVersionInt = int.Parse(currentVersion.Replace(".", ""));
 				int lastVersionInt = int.Parse(this._lastVersion.Replace(".", ""));
-				if( lastVersionInt < currentVersionInt && !this._versionController.IsChecking )
+				if( lastVersionInt < currentVersionInt && 
+					!this._versionController.IsChecking &&
+					!this._versionController.IsDownloading )
 				{
 					this._versionController.Check(true);
 				}
@@ -168,6 +171,7 @@ namespace Toki.Tween
 				{
 					if(GUILayout.Button("Check Update", GUILayout.Height(30f)))
 					{
+						this._checkForce = true;
 						this._versionController.Check(true);
 					}
 				}
@@ -383,8 +387,9 @@ namespace Toki.Tween
 			else
 			{
 				string current = XTweenEditorManager.Instance.Data.version;
-				if( !this._checkResult && version == current )
+				if( !this._checkResult && version == current && this._checkForce )
 				{
+					this._checkForce = false;
 					EditorUtility.DisplayDialog("Infomation", "You had already lastest version.", "OK");
 				}
 				//set downloaded
