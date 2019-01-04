@@ -149,6 +149,8 @@ namespace Toki.Tween
 				XTweenEditorManager.Instance.Data.version = this.StoredLastVersion;
 				EditorPrefs.DeleteKey(STORE_CHECKED_DATE);
 				EditorPrefs.DeleteKey(STORE_LAST_VERSION);
+
+				EditorUtility.DisplayDialog("Information", "You had successfully updated!", "OK");
 			}
 			else
 			{
