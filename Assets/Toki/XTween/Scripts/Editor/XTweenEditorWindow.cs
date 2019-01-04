@@ -358,7 +358,6 @@ namespace Toki.Tween
 
 		private void CheckedLastVersion( string version )
 		{
-			string currentVersion = XTweenEditorManager.Instance.Data.version;
 			if( string.IsNullOrEmpty(version) )
 			{
 				//set stored

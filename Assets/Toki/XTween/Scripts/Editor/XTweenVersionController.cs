@@ -104,7 +104,11 @@ namespace Toki.Tween
 					this._listener(data.version);
 					isSuccess = true;
 				}
-				catch ( System.Exception e ) {}
+				catch ( System.Exception e ) 
+				{
+					Debug.Log(e.Message);
+					this._listener("error");
+				}
 			}
 
 			if( !isSuccess )

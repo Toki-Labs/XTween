@@ -96,7 +96,6 @@ public class ExampleColor : ExampleBase
 	************************************************************************/
 	public override void UIChangeHandler()
 	{
-		RectTransform trans = this.transInputCode;
 		TweenUIData data = this.uiContainer.Data;
 		string easing = data.easingType.ToString() + ".ease" + data.inOutType.ToString();
 		string input = 

@@ -56,8 +56,9 @@ namespace Toki.Tween
 	#if UNITY_EDITOR
 				string absPath = Application.dataPath;
 				return absPath.Substring( 0, absPath.LastIndexOf( "/" ) );
-	#endif
+	#else
 				return Application.dataPath;
+	#endif
 			}
 		}
 
@@ -94,7 +95,6 @@ namespace Toki.Tween
 		************************************************************************/
 		private PlayModeStateChange _playMode;
 		private XTweenData _data;
-		private string _xtweenVersion = "0.0.1";
 		
 		/************************************************************************
 		*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -138,7 +138,6 @@ namespace Toki.Tween
 		public XTweenEditorManager()
 		{
 			this.Load();
-            this._xtweenVersion = Data.version;
 		}
 		
 		/************************************************************************

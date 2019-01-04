@@ -104,7 +104,7 @@ public class TweenUIContainer : MonoBehaviour
 	void Start()
 	{
 		this.inputTime.text = this.defaultTime.ToString();
-		this.inputTime.onValueChange.AddListener( x=> this.uiChangeHandler() );
+		this.inputTime.onValueChanged.AddListener( x=> this.uiChangeHandler() );
 		this.dropdownEasing.dropdown.value = this.defaultEasingType;
 		this.dropdownEasing.dropdown.onValueChanged.AddListener( x => this.uiChangeHandler() );
 		this.dropdownInOut.dropdown.onValueChanged.AddListener( x => this.uiChangeHandler() );

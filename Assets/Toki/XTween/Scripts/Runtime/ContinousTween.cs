@@ -31,20 +31,6 @@ namespace Toki.Tween
 			DisplayContinousUpdater display = (DisplayContinousUpdater)_updater;
 			display.ResolveValues();
 		}
-
-		public bool IsPlaying
-		{
-			get { return _isPlaying; }
-			set 
-			{
-				this._isPlaying = value;
-				// Debug.Log( "isPlaying" );
-				if( !this._isPlaying )
-				{
-					_ticker.RemoveTimer(this);
-				}
-			}
-		}
 			
 		public IUpdating updater
 		{
@@ -122,7 +108,7 @@ namespace Toki.Tween
 			//Not implement
 		}
 
-		public virtual void UpdateTween( float time )
+		public override void UpdateTween( float time )
 		{
 			//Not implement
 		}
