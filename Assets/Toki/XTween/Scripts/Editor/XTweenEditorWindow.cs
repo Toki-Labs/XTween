@@ -157,7 +157,7 @@ namespace Toki.Tween
 					GUI.backgroundColor = this._versionController.IsDownloading ? Color.gray : Color.green;
 					if( GUILayout.Button("Update to lastest version", GUILayout.Height(30f)) && !this._versionController.IsDownloading )
 					{
-						if( EditorUtility.DisplayDialog("Update", "Do you wanna update to version " + this._lastVersion + "?", "Yes", "No") )
+						if( EditorUtility.DisplayDialog("Update", "Do you wanna update to lastest version?", "Yes", "No") )
 						{
 							this._versionController.Update();
 						}

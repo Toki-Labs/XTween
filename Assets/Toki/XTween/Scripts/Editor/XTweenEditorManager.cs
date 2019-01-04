@@ -155,20 +155,6 @@ namespace Toki.Tween
 		/************************************************************************
 		*	 	 	 	 	Event Method Declaration	 	 	 	     	 	*
 		************************************************************************/
-		private void Load()
-        {
-            if( File.Exists(this.JsonPath) )
-            {
-                string jsonStr = XTweenEditorManager.ReadText(this.JsonPath);
-                this._data = JsonUtility.FromJson<XTweenData>(jsonStr);
-            }
-            else
-            {
-                this._data = new XTweenData();
-                this.Save();
-            }
-        }
-
 		private void ChangedPlayMode( PlayModeStateChange state )
 		{
 			if( this._playMode != state )
@@ -222,6 +208,20 @@ namespace Toki.Tween
 				this.CheckEditorData();
 			}
 		}
+
+		public void Load()
+        {
+            if( File.Exists(this.JsonPath) )
+            {
+                string jsonStr = XTweenEditorManager.ReadText(this.JsonPath);
+                this._data = JsonUtility.FromJson<XTweenData>(jsonStr);
+            }
+            else
+            {
+                this._data = new XTweenData();
+                this.Save();
+            }
+        }
 		
 		public void Save()
         {
