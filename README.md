@@ -190,13 +190,11 @@ StartCoroutine(tweenCoroutine);
 
 IEnumerator CoroutineTween()
 {
-	XHash hash = XHash.Position(200f,50f,-1500f);
-	yield return XTween.To(this.target3D, hash).WaitForPlay();
+	yield return XTween.To(target3D, XHash.Position(200f,50f,-1500f)).WaitForPlay();
 	Debug.Log("On Complete First Tween");
 
 	//Start other tween start at 0.3sec
-	XHash hash = XHash.Position(100f,500f);
-	yield return XTween.To(this.target3D, hash).WaitForGotoAndPlay(0.3f);
+	yield return XTween.To(this.target3D, XHash.Position(100f,500f)).WaitForGotoAndPlay(0.3f);
 	Debug.Log("On Complete Second Tween");
 }
 
