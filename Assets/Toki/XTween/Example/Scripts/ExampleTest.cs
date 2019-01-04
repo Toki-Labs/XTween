@@ -84,8 +84,8 @@ public class ExampleTest : ExampleBase
 			// this._tween.OnComplete = Executor.New(() => this.StartCoroutine(this.Test()));
 			// yield return this._tween.WaitForGotoAndPlay(0.2f);
 			yield return XTween.SerialTweens(false, 
-				this.target3D.To(XHash.New.Scale(300f,100f,400f), data.time),
-				this.target3D.To(XHash.New.Position(200f,50f,-1500f), data.time)).WaitForPlay();
+				this.target3D.To(XHash.Scale(300f,100f,400f), data.time),
+				this.target3D.To(XHash.Position(200f,50f,-1500f), data.time)).WaitForPlay();
 			// this.target3D.transform.DOLocalMove(new Vector3(200f,50f,-1500f), data.time).Play();
 			Debug.Log("Test");
 		}

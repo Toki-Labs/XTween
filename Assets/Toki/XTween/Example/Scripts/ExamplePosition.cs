@@ -60,7 +60,6 @@ public class ExamplePosition : ExampleBase
 	************************************************************************/
 	protected override IEnumerator CoroutineStart()
 	{
-		// yield return new WaitForSeconds(0.1f);
 		if( this._tween != null )
 		{
 			this._tween.Stop();
@@ -72,12 +71,12 @@ public class ExamplePosition : ExampleBase
 		TweenUIData data = this.uiContainer.Data;
 		if( this.container2D.activeSelf )
 		{
-			this._tween = XTween.To(this.target2D, XHash.New.AddX(800f).AddY(300f), data.time, data.Easing);
+			this._tween = XTween.To(this.target2D, XHash.Position(800f,300f), data.time, data.Easing);
 			this._tween.Play();
 		}
 		else
 		{
-			this._tween = XTween.To(this.target3D, XHash.New.AddX(200f).AddY(50f).AddZ(-1500f), data.time, data.Easing);
+			this._tween = XTween.To(this.target3D, XHash.Position(200f,50f,-1500f), data.time, data.Easing);
 			this._tween.Play();
 		}
 	}

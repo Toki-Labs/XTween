@@ -169,11 +169,14 @@ namespace Toki.Tween
 				}
 				else
 				{
-					if(GUILayout.Button("Check Update", GUILayout.Height(30f)))
+					bool enableButton = !this._versionController.IsChecking && !this._versionController.IsDownloading;
+					GUI.backgroundColor = enableButton ? Color.white : Color.gray;
+					if(GUILayout.Button("Check Update", GUILayout.Height(30f)) && enableButton )
 					{
 						this._checkForce = true;
 						this._versionController.Check(true);
 					}
+					GUI.backgroundColor = Color.white;
 				}
 				GUILayout.Space(10f);
 			}

@@ -129,29 +129,29 @@ public struct XHash : IClassicHandlable
 		}
 	}
 	public float[] ControlPointZ { get{ return _controlZ; } set{ _controlZ = value; } }
-	public XHash Position( float x, float y, bool isRelative = false )
+	public XHash AddPosition( float x, float y, bool isRelative = false )
 	{
 		this.AddX( x, isRelative );
 		this.AddY( y, isRelative );
 		return this;
 	}
-	public XHash Position( float x, float y, float z, bool isRelative = false )
+	public XHash AddPosition( float x, float y, float z, bool isRelative = false )
     {
         this.AddX( x, isRelative );
         this.AddY( y, isRelative );
         this.AddZ( z, isRelative );
         return this;
     }
-	public XHash Position( Vector3 position, bool isRelative = false )
+	public XHash AddPosition( Vector3 position, bool isRelative = false )
 	{
 		this.AddX( position.x, isRelative );
 		this.AddY( position.y, isRelative );
 		this.AddZ( position.z, isRelative );
 		return this;
 	}
-	public XHash Position( Vector3 start, Vector3 end, bool isRelative = false )
+	public XHash AddPosition( Vector3 start, Vector3 end, bool isRelative = false )
 	{
-		this._start = this.GetStart().Position(start, isRelative);
+		this._start = this.GetStart().AddPosition(start, isRelative);
 		this.AddX( end.x, isRelative );
 		this.AddY( end.y, isRelative );
 		this.AddZ( end.z, isRelative );
@@ -210,7 +210,7 @@ public struct XHash : IClassicHandlable
 		}
 	}
 	public float[] ControlPointBottom { get{ return _controlBottom; } set{ _controlBottom = value; } }
-	public XHash Rect( float left, float top, float right, float bottom, bool isRelative = false )
+	public XHash AddRect( float left, float top, float right, float bottom, bool isRelative = false )
     {
         this.AddLeft( left, isRelative );
         this.AddTop( top, isRelative );
@@ -218,7 +218,7 @@ public struct XHash : IClassicHandlable
         this.AddBottom( bottom, isRelative );
         return this;
     }
-	public XHash Rect( Toki.Tween.UIRect rect, bool isRelative = false )
+	public XHash AddRect( Toki.Tween.UIRect rect, bool isRelative = false )
 	{
 		this.AddLeft( rect.left, isRelative );
         this.AddTop( rect.top, isRelative );
@@ -226,9 +226,9 @@ public struct XHash : IClassicHandlable
         this.AddBottom( rect.bottom, isRelative );
 		return this;
 	}
-	public XHash Rect( Toki.Tween.UIRect start, Toki.Tween.UIRect end, bool isRelative = false )
+	public XHash AddRect( Toki.Tween.UIRect start, Toki.Tween.UIRect end, bool isRelative = false )
 	{
-		this._start = this.GetStart().Rect(start, isRelative);
+		this._start = this.GetStart().AddRect(start, isRelative);
 		this.AddLeft( end.left, isRelative );
         this.AddTop( end.top, isRelative );
 		this.AddRight( end.right, isRelative );
@@ -264,21 +264,21 @@ public struct XHash : IClassicHandlable
 		}
 	}
 	public float[] ControlPointHeight { get{ return _controlHeight; } set{ _controlHeight = value; } }
-	public XHash SizeDelta( float width, float height, bool isRelative = false )
+	public XHash AddSizeDelta( float width, float height, bool isRelative = false )
 	{
 		this.AddWidth( width, isRelative );
 		this.AddHeight( height, isRelative );
 		return this;
 	}
-	public XHash SizeDelta( Vector2 sizeDelta, bool isRelative = false )
+	public XHash AddSizeDelta( Vector2 sizeDelta, bool isRelative = false )
 	{
 		this.AddWidth( sizeDelta.x, isRelative );
 		this.AddHeight( sizeDelta.y, isRelative );
 		return this;
 	}
-	public XHash SizeDelta( Vector2 start, Vector2 end, bool isRelative = false )
+	public XHash AddSizeDelta( Vector2 start, Vector2 end, bool isRelative = false )
 	{
-		this._start = this.GetStart().SizeDelta(start, isRelative);
+		this._start = this.GetStart().AddSizeDelta(start, isRelative);
 		this.AddWidth( end.x, isRelative );
 		this.AddHeight( end.y, isRelative );
 		return this;
@@ -324,20 +324,20 @@ public struct XHash : IClassicHandlable
 		}
 	}
 	public float[] ControlPointScaleZ { get{ return _controlScaleZ; } set{ _controlScaleZ = value; } }
-	public XHash Scale( float x, float y, bool isRelative = false )
+	public XHash AddScale( float x, float y, bool isRelative = false )
 	{
 		this.AddScaleX( x, isRelative );
 		this.AddScaleY( y, isRelative );
 		return this;
 	}
-	public XHash Scale( float x, float y, float z, bool isRelative = false )
+	public XHash AddScale( float x, float y, float z, bool isRelative = false )
     {
         this.AddScaleX( x, isRelative );
 		this.AddScaleY( y, isRelative );
 		this.AddScaleZ( z, isRelative );
         return this;
     }
-	public XHash Scale( Vector3 scale, bool isRelative = false )
+	public XHash AddScale( Vector3 scale, bool isRelative = false )
 	{
 		this.AddScaleX( scale.x, isRelative );
 		this.AddScaleY( scale.y, isRelative );
@@ -345,9 +345,9 @@ public struct XHash : IClassicHandlable
 		return this;
 	}
 
-	public XHash Scale( Vector3 start, Vector3 end, bool isRelative = false )
+	public XHash AddScale( Vector3 start, Vector3 end, bool isRelative = false )
 	{
-		this._start = this.GetStart().Scale(start, isRelative);
+		this._start = this.GetStart().AddScale(start, isRelative);
 		this.AddScaleX( end.x, isRelative );
 		this.AddScaleY( end.y, isRelative );
 		this.AddScaleZ( end.z, isRelative );
@@ -419,23 +419,23 @@ public struct XHash : IClassicHandlable
 			this._rotateZClockwise = value;
 		}
 	}
-	public XHash Rotation( float x, float y, float z, bool isRelative = false )
+	public XHash AddRotation( float x, float y, float z, bool isRelative = false )
     {
         this.AddRotationX( x, isRelative );
 		this.AddRotationY( y, isRelative );
 		this.AddRotationZ( z, isRelative );
         return this;
     }
-    public XHash Rotation( Vector3 rotation, bool isRelative = false )
+    public XHash AddRotation( Vector3 rotation, bool isRelative = false )
     {
         this.AddRotationX( rotation.x, isRelative );
 		this.AddRotationY( rotation.y, isRelative );
 		this.AddRotationZ( rotation.z, isRelative );
         return this;
     }
-	public XHash Rotation( Vector3 start, Vector3 end, bool isRelative = false )
+	public XHash AddRotation( Vector3 start, Vector3 end, bool isRelative = false )
     {
-		this._start = this.GetStart().Rotation(start, isRelative);
+		this._start = this.GetStart().AddRotation(start, isRelative);
         this.AddRotationX( end.x, isRelative );
 		this.AddRotationY( end.y, isRelative );
 		this.AddRotationZ( end.z, isRelative );
@@ -456,6 +456,66 @@ public struct XHash : IClassicHandlable
             return new XHash();
         }
     }
+
+	public static XHash Position( Vector3 vector, bool isRelative = false )
+	{
+		return New.AddPosition(vector,isRelative);
+	}
+
+	public static XHash Position( float x, float y, float z, bool isRelative = false )
+	{
+		return New.AddPosition(x,y,z,isRelative);
+	}
+
+	public static XHash Position( float x, float y, bool isRelative = false )
+	{
+		return New.AddPosition(x,y,isRelative);
+	}
+
+	public static XHash Scale( Vector3 vector, bool isRelative = false )
+	{
+		return New.AddScale(vector,isRelative);
+	}
+
+	public static XHash Scale( float x, float y, float z, bool isRelative = false )
+	{
+		return New.AddScale(x,y,z,isRelative);
+	}
+
+	public static XHash Scale( float x, float y, bool isRelative = false )
+	{
+		return New.AddScale(x,y,isRelative);
+	}
+
+	public static XHash Rotation( Vector3 vector, bool isRelative = false )
+	{
+		return New.AddRotation(vector,isRelative);
+	}
+
+	public static XHash Rotation( float x, float y, float z, bool isRelative = false )
+	{
+		return New.AddRotation(x,y,z,isRelative);
+	}
+
+	public static XHash Rect( UIRect rect, bool isRelative = false )
+	{
+		return New.AddRect(rect, isRelative);
+	}
+
+	public static XHash Rect( float left, float top, float right, float bottom, bool isRelative = false )
+	{
+		return New.AddRect(left, top, right, bottom, isRelative);
+	}
+
+	public static XHash SizeDelta( Vector2 vector, bool isRelative = false )
+	{
+		return New.AddSizeDelta(vector,isRelative);
+	}
+
+	public static XHash SizeDelta( float width, float height, bool isRelative = false )
+	{
+		return New.AddSizeDelta(width,height,isRelative);
+	}
 
 	/*********************************** Add Methods **********************************/
     public XHash AddX( float end, bool isRelative = false )
@@ -757,9 +817,19 @@ public struct XHash : IClassicHandlable
 		this.OnPlay = value;
 		return this;
 	}
+	public XHash AddOnPlay( Action listener )
+	{
+		this.OnPlay = Executor.New(listener);
+		return this;
+	}
 	public XHash AddOnUpdate( IExecutable value )
 	{
 		this.OnUpdate = value;
+		return this;
+	}
+	public XHash AddOnUpdate( Action listener )
+	{
+		this.OnUpdate = Executor.New(listener);
 		return this;
 	}
 	public XHash AddOnStop( IExecutable value )
@@ -767,9 +837,19 @@ public struct XHash : IClassicHandlable
 		this.OnStop = value;
 		return this;
 	}
+	public XHash AddOnStop( Action listener )
+	{
+		this.OnStop = Executor.New(listener);
+		return this;
+	}
 	public XHash AddOnComplete( IExecutable value )
 	{
 		this.OnComplete = value;
+		return this;
+	}
+	public XHash AddOnComplete( Action listener )
+	{
+		this.OnComplete = Executor.New(listener);
 		return this;
 	}
 

@@ -112,7 +112,6 @@ public class ExampleBase : MonoBehaviour
 		{
 			this.StopCoroutine(this._coroutineStart);
 			this._coroutineStart = null;
-			return;
 		}
 		this._coroutineStart = this.CoroutineStart();
 		this.StartCoroutine(this._coroutineStart);

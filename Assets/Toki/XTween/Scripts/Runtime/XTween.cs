@@ -134,6 +134,11 @@ public class XTween
 		return null;
 	}
 
+	public static IAni To( Func<float> setter, float to, float from, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		return null;
+	}
+
 	/*===================================== Color ========================================*/
 	//Sprite
 	public static IAni To( SpriteRenderer target, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
