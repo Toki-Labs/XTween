@@ -149,9 +149,9 @@ namespace Toki.Tween
 				if( this._checkResult )
 				{
 					GUI.backgroundColor = this._versionController.IsDownloading ? Color.gray : Color.green;
-					if( GUILayout.Button("Update to version " + this._lastVersion, GUILayout.Height(30f)) && !this._versionController.IsDownloading )
+					if( GUILayout.Button("Update to lastest version", GUILayout.Height(30f)) && !this._versionController.IsDownloading )
 					{
-						if( EditorUtility.DisplayDialog("Update","Do you wanna update to version " + this._lastVersion + "?", "Yes", "No") )
+						if( EditorUtility.DisplayDialog("Update", "Do you wanna update to version " + this._lastVersion + "?", "Yes", "No") )
 						{
 							this._versionController.Update();
 						}
@@ -376,6 +376,11 @@ namespace Toki.Tween
 			}
 			else
 			{
+				string current = XTweenEditorManager.Instance.Data.version;
+				if( !this._checkResult && version == current )
+				{
+					EditorUtility.DisplayDialog("Infomation", "You had already lastest version.", "OK");
+				}
 				//set downloaded
 				this._lastVersion = version;
 			}

@@ -42,6 +42,7 @@ namespace Toki.Tween
 		*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 		************************************************************************/
 		private Action<string> _listener;
+		private Action _packageLoad;
 
 		/************************************************************************
 		*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
@@ -102,7 +103,6 @@ namespace Toki.Tween
 					EditorPrefs.SetString(STORE_CHECKED_DATE, this.GetToday());
 					EditorPrefs.SetString(STORE_LAST_VERSION, data.version);
 					this._listener(data.version);
-					Debug.Log(data.version);
 					isSuccess = true;
 				}
 				catch ( System.Exception e ) 
@@ -112,9 +112,9 @@ namespace Toki.Tween
 				}
 			}
 
-			//Error
-			if( !isSuccess ) this._listener("error");
 			this._http.Dispose();
+			if( !isSuccess ) this._listener("error");
+			if( this._packageLoad != null ) this._packageLoad();
 		}
 
 		private IEnumerator CoroutinePackageLoad()
@@ -152,6 +152,8 @@ namespace Toki.Tween
 				//Error
 				EditorUtility.DisplayDialog("Error!", "Something wrong with download file. try next time.", "OK");
 			}
+			this._http.Dispose();
+			this._packageLoad = null;
 		}
 
 		private void EmptyTemp()
@@ -206,7 +208,8 @@ namespace Toki.Tween
 
 		public void Update()
 		{
-			EditorCoroutine.Start(CoroutinePackageLoad());
+			this.Check(true);
+			this._packageLoad = () => EditorCoroutine.Start(CoroutinePackageLoad());
 		}
 	}
 	
