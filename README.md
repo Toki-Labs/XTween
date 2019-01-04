@@ -251,7 +251,7 @@ Custom Easing
 ```csharp
 XHash hash = XHash.New.Position(200f,50f,-1500f)
 	     .AddControlPointX(-1000f,550f).AddControlPointY(550f,-300f);
-XTween.To(target3D, hash, 1f, Ease.Get(EaseName.MyEasing)).Play();
+XTween.To(target3D, hash, EaseName.MyEasing).Play();
 ```
 
 Decorator
