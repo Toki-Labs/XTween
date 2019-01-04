@@ -139,6 +139,7 @@ XTween.To(moveObj, XHash.Rotation(60f,-180f,-45f)).Play();
 Combination
 ---
 ```csharp
+//Position, Scale, Rotation tween in same time, same easing
 XTween.To(moveObj, XHash.New.AddX(600f).AddScaleX(200f).AddRotationZ(180f)).Play();
 ```
 
