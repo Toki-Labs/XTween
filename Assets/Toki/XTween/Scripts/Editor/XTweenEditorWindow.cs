@@ -143,9 +143,15 @@ namespace Toki.Tween
 				GUILayout.EndHorizontal();
 
 				GUILayout.Space(10f);
+				int currentVersionInt = int.Parse(currentVersion.Replace(".", ""));
+				int lastVersionInt = int.Parse(this._lastVersion.Replace(".", ""));
+				if( lastVersionInt < currentVersionInt && !this._versionController.IsChecking )
+				{
+					this._versionController.Check(true);
+				}
 				this._checkResult = this._lastVersion != NETWORK_ERROR_MSG && 
 									this._lastVersion != INIT_MSG &&
-									this._lastVersion != currentVersion;
+									lastVersionInt > currentVersionInt;
 				if( this._checkResult )
 				{
 					GUI.backgroundColor = this._versionController.IsDownloading ? Color.gray : Color.green;

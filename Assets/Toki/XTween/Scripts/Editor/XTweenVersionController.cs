@@ -48,6 +48,7 @@ namespace Toki.Tween
 		*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
 		************************************************************************/
 		public bool IsDownloading { get; set; }
+		public bool IsChecking { get; set; }
 		public string StoredLastVersion
 		{
 			get
@@ -114,6 +115,7 @@ namespace Toki.Tween
 
 			this._http.Dispose();
 			if( !isSuccess ) this._listener("error");
+			this.IsChecking = false;
 			if( this._packageLoad != null ) this._packageLoad();
 		}
 
@@ -153,6 +155,7 @@ namespace Toki.Tween
 				EditorUtility.DisplayDialog("Error!", "Something wrong with download file. try next time.", "OK");
 			}
 			this._http.Dispose();
+			this.IsDownloading = false;
 			this._packageLoad = null;
 		}
 
@@ -198,6 +201,7 @@ namespace Toki.Tween
 
 			if( needToCheck )
 			{
+				this.IsChecking = true;
 				EditorCoroutine.Start(CoroutineVersionLoad());
 			}
 			else
@@ -208,6 +212,7 @@ namespace Toki.Tween
 
 		public void Update()
 		{
+			this.IsDownloading = true;
 			this.Check(true);
 			this._packageLoad = () => EditorCoroutine.Start(CoroutinePackageLoad());
 		}
