@@ -24,12 +24,12 @@ Implementation
 ---
 ```csharp
 /******* Simple Use **************/
-XTween.To(moveObj, XHash.New.Position(600f,200f)).Play();
+XTween.To(moveObj, XHash.Position(600f,200f)).Play();
 
 
 /******* Shortcut type ***********/
 //when moveObj is Transform or GameObject
-IAni tween = moveObj.To(XHash.New.Position(600f,200f)).Play();
+IAni tween = moveObj.To(XHash.Position(600f,200f)).Play();
 tween.Stop();
 
 
@@ -40,10 +40,10 @@ StartCoroutine(tweenCoroutine);
 
 IEnumerator CoroutineTween()
 {
-	yield return XTween.To(moveObj, XHash.New.Position(600f,200f)).WaitForPlay();
+	yield return XTween.To(moveObj, XHash.Position(600f,200f)).WaitForPlay();
 
 	//or
-	yield return moveObj.To(XHash.New.Position(600f,200f)).WaitForPlay();
+	yield return moveObj.To(XHash.Position(600f,200f)).WaitForPlay();
 }
 
 StopCoroutine(tweenCoroutine);
@@ -115,7 +115,7 @@ Position
 XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f).AddZ(100f)).Play();
 
 //or
-XTween.To(moveObj, XHash.New.Position(600f,200f)).Play();
+XTween.To(moveObj, XHash.Position(600f,200f)).Play();
 ```
 
 Scale
@@ -124,7 +124,7 @@ Scale
 XTween.To(moveObj, XHash.New.AddScaleX(1f).AddScaleY(1.5f).AddScaleZ(0.5f)).Play();
 
 //or
-XTween.To(moveObj, XHash.New.Scale(1f,1.5f)).Play();
+XTween.To(moveObj, XHash.Scale(1f,1.5f)).Play();
 ```
 
 Rotation
@@ -133,7 +133,7 @@ Rotation
 XTween.To(moveObj, XHash.New.AddRotationZ(600f)).Play();
 
 //or
-XTween.To(moveObj, XHash.New.Rotation(60f,-180f,-45f)).Play();
+XTween.To(moveObj, XHash.Rotation(60f,-180f,-45f)).Play();
 ```
 
 Combination
@@ -145,7 +145,7 @@ XTween.To(moveObj, XHash.New.AddX(600f).AddScaleX(200f).AddRotationZ(180f)).Play
 Bezier
 ---
 ```csharp
-XHash hash = XHash.New.AddX(0f).AddY(0f).AddControlPointX(1000f).AddControlPoint(-500f);
+XHash hash = XHash.Position(0f,0f).AddControlPointX(1000f).AddControlPoint(-500f);
 XTween.To(moveObj, hash).Play();
 ```
 
@@ -189,12 +189,12 @@ StartCoroutine(tweenCoroutine);
 
 IEnumerator CoroutineTween()
 {
-	XHash hash = XHash.New.AddX(200f).AddY(50f).AddZ(-1500f);
+	XHash hash = XHash.Position(200f,50f,-1500f);
 	yield return XTween.To(this.target3D, hash).WaitForPlay();
 	Debug.Log("On Complete First Tween");
 
 	//Start other tween start at 0.3sec
-	XHash hash = XHash.New.AddX(100f).AddY(500f);
+	XHash hash = XHash.Position(100f,500f);
 	yield return XTween.To(this.target3D, hash).WaitForGotoAndPlay(0.3f);
 	Debug.Log("On Complete Second Tween");
 }
@@ -206,26 +206,22 @@ StopCoroutine(tweenCoroutine);
 Serial
 ---
 ```csharp
-XHash endPosition = XHash.New.AddX(1000f).AddY(300f);
-XHash endScale = XHash.New.AddScaleX(200f).AddScaleY(200f);
 XTween.SerialTweens
 (	
 	false, 
-	XTween.To(moveObj, endPosition), 
-	XTween.To(moveObj, endScale)
+	XTween.To(moveObj, XHash.Position(1000f,300f)), 
+	XTween.To(moveObj, XHash.Scale(200f,200f))
 ).Play();
 ```
 
 Parallel
 ---
 ```csharp
-XHash endPosition = XHash.New.AddX(1000f).AddY(300f);
-XHash endScale = XHash.New.AddScaleX(200f).AddScaleY(200f);
 XTween.ParallelTweens
 (	
 	false, 
-	XTween.To(moveObj, endPosition), 
-	XTween.To(moveObj, endScale)
+	XTween.To(moveObj, XHash.Position(1000f,300f)), 
+	XTween.To(moveObj, XHash.Scale(200f,200f))
 ).Play();
 ```
 
@@ -254,9 +250,9 @@ Custom Easing
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/EaseCurve.png)
 >Customizable Easing, Support code hint for use of ease name, TopMenu -> Windows -> XTween Editor
 ```csharp
-XHash hash = XHash.New.AddX(200f).AddY(50f).AddZ(-1500f)
+XHash hash = XHash.New.Position(200f,50f,-1500f)
 	     .AddControlPointX(-1000f,550f).AddControlPointY(550f,-300f);
-XTween.To(target3D, hash, 1f, Ease.Get(EaseName.MyEasing).Play();
+XTween.To(target3D, hash, 1f, Ease.Get(EaseName.MyEasing)).Play();
 ```
 
 Decorator
