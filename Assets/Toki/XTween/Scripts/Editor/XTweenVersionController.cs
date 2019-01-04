@@ -136,15 +136,15 @@ namespace Toki.Tween
 			if( string.IsNullOrEmpty(this._http.error) )
 			{
 				string rootPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/";
-				Directory.Delete(rootPath,true);
-				/* string[] dirs = new string[]{rootPath + "Editor", rootPath + "Runtime"};
+				string[] dirs = new string[]{rootPath + "Editor", rootPath + "Runtime"};
 				foreach ( var path in dirs )
 				{
 					Directory.Delete(path,true);
-				} */
-
+				}
+				string namePath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/EaseName.cs";
+				string content = XTweenEditorManager.ReadText(namePath);
 				AssetDatabase.ImportPackage(filePath, false);
-				XTweenEditorManager.UpdateEasingName();
+				XTweenEditorManager.WriteText(namePath, content);
 				EditorPrefs.DeleteKey(STORE_CHECKED_DATE);
 				EditorPrefs.DeleteKey(STORE_LAST_VERSION);
 			}
