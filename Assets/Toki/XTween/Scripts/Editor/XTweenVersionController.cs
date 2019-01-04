@@ -146,7 +146,7 @@ namespace Toki.Tween
 				string content = XTweenEditorManager.ReadText(namePath);
 				AssetDatabase.ImportPackage(filePath, false);
 				XTweenEditorManager.WriteText(namePath, content);
-				XTweenEditorManager.Instance.Load();
+				XTweenEditorManager.Instance.Data.version = this.StoredLastVersion;
 				EditorPrefs.DeleteKey(STORE_CHECKED_DATE);
 				EditorPrefs.DeleteKey(STORE_LAST_VERSION);
 			}
