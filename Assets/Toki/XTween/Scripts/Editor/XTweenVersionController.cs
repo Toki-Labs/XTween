@@ -176,11 +176,11 @@ namespace Toki.Tween
 		/************************************************************************
 		*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
 		************************************************************************/
-		public void Check()
+		public void Check( bool checkForce = false )
 		{
+			bool needToCheck = checkForce;
 			this.EmptyTemp();
 			string date = EditorPrefs.GetString(STORE_CHECKED_DATE, null);
-			bool needToCheck = false;
 			if( string.IsNullOrEmpty(date) )
 			{
 				needToCheck = true;

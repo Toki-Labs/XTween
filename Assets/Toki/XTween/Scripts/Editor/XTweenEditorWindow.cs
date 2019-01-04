@@ -66,6 +66,7 @@ namespace Toki.Tween
 		private Vector2 _easingScroll = Vector2.zero;
 		private string _easingName = "";
 		private AnimationCurve _easingCurve;
+		private bool _checkResult;
 		private string _lastVersion = INIT_MSG;
 		
 		/************************************************************************
@@ -142,9 +143,10 @@ namespace Toki.Tween
 				GUILayout.EndHorizontal();
 
 				GUILayout.Space(10f);
-				if( this._lastVersion != NETWORK_ERROR_MSG && 
-					this._lastVersion != INIT_MSG &&
-					this._lastVersion != currentVersion )
+				this._checkResult = this._lastVersion != NETWORK_ERROR_MSG && 
+									this._lastVersion != INIT_MSG &&
+									this._lastVersion != currentVersion;
+				if( this._checkResult )
 				{
 					GUI.backgroundColor = this._versionController.IsDownloading ? Color.gray : Color.green;
 					if( GUILayout.Button("Update to version " + this._lastVersion, GUILayout.Height(30f)) && !this._versionController.IsDownloading )
@@ -158,7 +160,10 @@ namespace Toki.Tween
 				}
 				else
 				{
-					GUILayout.Space(30f);
+					if(GUILayout.Button("Check Update", GUILayout.Height(30f)))
+					{
+						this._versionController.Check(true);
+					}
 				}
 				GUILayout.Space(10f);
 			}
@@ -191,6 +196,7 @@ namespace Toki.Tween
 				GUI.backgroundColor = Color.white;
                 GUILayout.BeginVertical("Box", GUILayout.Height(110f));
                 this._easingScroll = EditorGUILayout.BeginScrollView(this._easingScroll, GUILayout.MaxHeight(110f));
+				GUILayout.Space(0f);
                 int length = easeList.Count;
 				if( length > 0 )
 				{
@@ -198,9 +204,9 @@ namespace Toki.Tween
 					{
 						EasingData data = this._data.easingDataList[i];
 						GUILayout.Space(-1f);
-						GUI.color = (this._easingIndex == i) ? Color.cyan : Color.white;
-						GUILayout.BeginHorizontal("AS TextArea", GUILayout.Height(25f));
-						bool clicked0 = GUILayout.Button((i + 1).ToString(), "OL TextField", GUILayout.MaxWidth(30f));
+						GUI.color = (this._easingIndex == i) ? Color.grey : Color.white;
+						GUILayout.BeginHorizontal("Box", GUILayout.Height(25f));
+						bool clicked0 = GUILayout.Button((i + 1).ToString(), "BoldLabel", GUILayout.MaxWidth(30f));
 						bool clicked1 = GUILayout.Button( data.name, "BoldLabel");
 						if ( clicked0 || clicked1 )
 						{
@@ -218,6 +224,7 @@ namespace Toki.Tween
 						// GUI.backgroundColor = Color.white;
 						
 						GUILayout.EndHorizontal();
+						GUILayout.Space(-4f);
 						GUI.color = Color.white;
 					}
 				}
