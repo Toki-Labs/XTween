@@ -117,7 +117,7 @@ public class XTween
 	}
 
 	//Proerpty Type Only
-	public static IAni To<T>( T target, XObjectHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IAni To<T>( T target, XObjectHash hash, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		ObjectTween tween = new ObjectTween( realTime ? (ITimer)_tickerReal : _ticker );
 		ObjectUpdater<T> updater = (ObjectUpdater<T>)UpdaterFactory.Create<T>( target, hash );
@@ -128,6 +128,11 @@ public class XTween
 		tween.easing = ( easing != null ) ? easing : Linear.easeNone;
 		return tween;
     }
+
+	public static IAni To( Func<float> getter, Action<float> setter, XObjectHash hash, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		return null;
+	}
 
 	/*===================================== Color ========================================*/
 	//Sprite

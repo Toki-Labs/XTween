@@ -136,14 +136,15 @@ namespace Toki.Tween
 			if( string.IsNullOrEmpty(this._http.error) )
 			{
 				string rootPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/";
-				string[] dirs = 
-					new string[]{rootPath + "Editor", rootPath + "Runtime"};
+				Directory.Delete(rootPath,true);
+				/* string[] dirs = new string[]{rootPath + "Editor", rootPath + "Runtime"};
 				foreach ( var path in dirs )
 				{
 					Directory.Delete(path,true);
-				}
+				} */
 
 				AssetDatabase.ImportPackage(filePath, false);
+				XTweenEditorManager.UpdateEasingName();
 				EditorPrefs.DeleteKey(STORE_CHECKED_DATE);
 				EditorPrefs.DeleteKey(STORE_LAST_VERSION);
 			}
