@@ -80,10 +80,10 @@ namespace Toki.Tween
 		************************************************************************/
 		private IEnumerator CoroutineVersionLoad()
 		{
-			this._http = UnityWebRequest.Get(URL);
+			this._http = new UnityWebRequest(URL);
 			this._http.SetRequestHeader("Content-Type", "application/json");
 			this._http.SetRequestHeader("Accepted", "application/json");
-
+			this._http.downloadHandler = new DownloadHandlerBuffer();
 			yield return this._http.SendWebRequest();
 			do
 			{
@@ -102,6 +102,7 @@ namespace Toki.Tween
 					EditorPrefs.SetString(STORE_CHECKED_DATE, this.GetToday());
 					EditorPrefs.SetString(STORE_LAST_VERSION, data.version);
 					this._listener(data.version);
+					Debug.Log(data.version);
 					isSuccess = true;
 				}
 				catch ( System.Exception e ) 
@@ -111,11 +112,9 @@ namespace Toki.Tween
 				}
 			}
 
-			if( !isSuccess )
-			{
-				//Error
-				this._listener("error");
-			}
+			//Error
+			if( !isSuccess ) this._listener("error");
+			this._http.Dispose();
 		}
 
 		private IEnumerator CoroutinePackageLoad()
