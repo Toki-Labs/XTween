@@ -53,7 +53,7 @@ StopCoroutine(tweenCoroutine);
 
 Lastest Release
 ---
-Version(Alpha) 0.0.71 - [XTween_0.0.71.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.71.unitypackage)
+Version(Alpha) 0.0.72 - [XTween_0.0.72.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.72.unitypackage)
 
 
 
