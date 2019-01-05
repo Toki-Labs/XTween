@@ -156,7 +156,7 @@ namespace Toki.Tween
         
         private void UpdateReleasePath()
         {
-            XTweenData data = XTweenEditorManager.Instance.Data;
+            XTweenConfigData data = XTweenEditorManager.Instance.Data;
             string first = "Version(Alpha) ";
             string end = ".unitypackage)";
             string replace = "Version(Alpha) {VER} - [XTween_{VER}.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_{VER}.unitypackage)";
@@ -218,7 +218,7 @@ namespace Toki.Tween
         
         public void Export(bool packingAll, bool release = false )
         {
-            XTweenData data = XTweenEditorManager.Instance.Data;
+            XTweenConfigData data = XTweenEditorManager.Instance.Data;
             string addStr = "";
             string exportRootPath = XTweenEditorManager.AbsPath + "/Bin";
             List<string> exportPathList = new List<string>(this._folderList.ToArray());

@@ -59,4 +59,12 @@ public interface IAni
 	IAni GotoAndPlay( float position );
 	void GotoAndStop( float position );
 	IAni Clone();
+	IAni AddOnComplete(Action listener);
+	IAni AddOnComplete(IExecutable executor);
+	IAni AddOnStop(Action listener);
+	IAni AddOnStop(IExecutable executor);
+	IAni AddOnPlay(Action listener);
+	IAni AddOnPlay(IExecutable executor);
+	IAni AddOnUpdate(Action listener);
+	IAni AddOnUpdate(IExecutable executor);
 }

@@ -62,6 +62,7 @@ public class ExampleTest : ExampleBase
 	************************************************************************/
 	protected override IEnumerator CoroutineStart()
 	{
+		WaitForSeconds wait = new WaitForSeconds(0.1f);
 		if( this._tween != null )
 		{
 			this._tween.Stop();
@@ -78,16 +79,36 @@ public class ExampleTest : ExampleBase
 		}
 		else
 		{
-			// this._tween = XTween.To(this.target3D, hash, data.time, data.Easing);
+			Debug.Log("Start");
+			Transform trans = this.target3D.transform;
+			IEasing ease = Quint.easeIn;
+			yield return wait;
+			// yield return XTween.ToValue(x=>
+			// {
+			// 	Vector3 pos = trans.localPosition;
+			// 	pos.x = x;
+			// 	trans.localPosition = pos;
+			// }, 0f, 1000f, 1f, Ease.Custom(EaseCustom.MyEasing)).AddOnComplete(Debug.Break).WaitForPlay();
+
+			camera3D.ToProperty("fieldOfView", 6f).Play();
+
+			// XTween.To(this.target3D, XHash.Position(200f,50f,-1500f), data.time, data.Easing)
+			// 		.AddOnComplete(()=>Debug.Break()).Play();
+
 			// XObjectHash hash = XObjectHash.New.Add("fieldOfView", 6f);
 			// this._tween = XTween.ValueTo<Camera>(this.camera3D,hash,data.time,data.Easing);
 			// this._tween.OnComplete = Executor.New(() => this.StartCoroutine(this.Test()));
 			// yield return this._tween.WaitForGotoAndPlay(0.2f);
-			yield return XTween.SerialTweens(false, 
-				this.target3D.To(XHash.Scale(300f,100f,400f), data.time),
-				this.target3D.To(XHash.Position(200f,50f,-1500f), data.time)).WaitForPlay();
+
+			// yield return XTween.SerialTweens(false, 
+			// 	this.target3D.To(XHash.Scale(300f,100f,400f), data.time).AddOnUpdate(()=>Debug.Log("Tween1")),
+			// 	this.target3D.To(XHash.Position(200f,50f,-1500f), data.time).AddOnComplete(()=>Debug.Log("Tween2"))).WaitForPlay();
+
 			// this.target3D.transform.DOLocalMove(new Vector3(200f,50f,-1500f), data.time).Play();
-			Debug.Log("Test");
+
+			// Debug.Log("Test");
+			// yield return wait;
+			// Debug.Break();
 		}
 	}
 

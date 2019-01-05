@@ -78,7 +78,7 @@ public class ExampleColor : ExampleBase
 		yield return new WaitForSeconds(0.5f);
 		TweenUIData data = this.uiContainer.Data;
 		XColorHash hash = XColorHash.New.AddRed(0.56f).AddGreen(0.83f).AddAlpha(1f);
-		this._tween = XTween.To(sprite, hash, data.time, data.Easing);
+		this._tween = XTween.ToColor(sprite, hash, data.time, data.Easing);
 		this._tween.Play();
 
 	}

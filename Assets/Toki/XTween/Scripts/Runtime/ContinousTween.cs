@@ -14,13 +14,13 @@ namespace Toki.Tween
 		protected IUpdating _updater;
 		protected IEasing _easing;
 
-		public float time
+		public float Time
 		{
 			get { return _duration; }
 			set { _duration = value; }
 		}
 		
-		public IEasing easing
+		public IEasing Easing
 		{
 			get { return _easing; }
 			set { _easing = value; }
@@ -32,7 +32,7 @@ namespace Toki.Tween
 			display.ResolveValues();
 		}
 			
-		public IUpdating updater
+		public IUpdating Updater
 		{
 			get { return _updater; }
 			set 

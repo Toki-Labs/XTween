@@ -50,7 +50,7 @@ namespace Toki.Tween
 		/************************************************************************
 		 *	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 		 ************************************************************************/
-		private Dictionary<EaseName, EaseCustom> _easingDic;
+		private Dictionary<EaseCustom, EaseCustomData> _easingDic;
 
 		/************************************************************************
 		 *	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -114,16 +114,16 @@ namespace Toki.Tween
 			return exist;
 		}
 
-		public EaseCustom GetEasingData(EaseName name)
+		public EaseCustomData GetEasingData(EaseCustom name)
 		{
-			EaseCustom data = null;
+			EaseCustomData data = null;
 			if( this._easingDic == null )
 			{
-				this._easingDic = new Dictionary<EaseName, EaseCustom>();
+				this._easingDic = new Dictionary<EaseCustom, EaseCustomData>();
 				foreach( var item in this.easingDataList )
 				{
-					EaseName easingName = (EaseName)Enum.Parse(typeof(EaseName), item.name);
-					this._easingDic[easingName] = new EaseCustom(item.animationCurve);
+					EaseCustom easingName = (EaseCustom)Enum.Parse(typeof(EaseCustom), item.name);
+					this._easingDic[easingName] = new EaseCustomData(item.animationCurve);
 				}
 			}
 			if( this._easingDic.ContainsKey(name) )

@@ -71,6 +71,7 @@ public struct XObjectHash : IClassicHandlable
 
     public XObjectHash AddControlPoint( string key, params float[] values )
     {
+        if( values == null ) return this;
         if( !this._objectSet.ContainsKey(key) ) Add(key, 0f);
         XObjectSet objSet = this._objectSet[key];
         XObjectValues value = objSet.value;

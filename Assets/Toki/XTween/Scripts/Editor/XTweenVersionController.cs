@@ -100,7 +100,7 @@ namespace Toki.Tween
 				//Check version
 				try
 				{
-					XTweenData data = JsonUtility.FromJson<XTweenData>(this._http.downloadHandler.text);
+					XTweenConfigData data = JsonUtility.FromJson<XTweenConfigData>(this._http.downloadHandler.text);
 					EditorPrefs.SetString(STORE_CHECKED_DATE, this.GetToday());
 					EditorPrefs.SetString(STORE_LAST_VERSION, data.version);
 					this._listener(data.version);

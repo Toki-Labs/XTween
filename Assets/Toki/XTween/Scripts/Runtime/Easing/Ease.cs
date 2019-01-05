@@ -3,27 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using Toki.Tween;
 
-public class Ease
+public static class Ease
 {
-	public static IEasing Get(EaseName name)
+	public static IEasing QuintIn { get{return Quint.easeIn;} }
+	public static IEasing QuintOut { get{return Quint.easeOut;} }
+	
+	public static IEasing Custom(EaseCustom name)
 	{
-		EaseCustom data = XTweenEditorData.Instance.GetEasingData(name);
-		if( data == null ) return new EaseCustom();
+		EaseCustomData data = XTweenEditorData.Instance.GetEasingData(name);
+		if( data == null ) return new EaseCustomData();
 		else return data;
 	}
 }
 
 namespace Toki.Tween
 {
-	public class EaseCustom : IEasing
+	public class EaseCustomData : IEasing
 	{
 		private AnimationCurve _curve;
-		public EaseCustom()
+		public EaseCustomData()
 		{
 			this._curve = new AnimationCurve (new Keyframe (0f, 0f, 0f, 1f), new Keyframe (1f, 1f, 1f, 0f));
 		}
 
-		public EaseCustom(AnimationCurve curve)
+		public EaseCustomData(AnimationCurve curve)
 		{
 			this._curve = curve;
 		}

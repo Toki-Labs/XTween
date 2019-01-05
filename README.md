@@ -8,7 +8,7 @@ XTween is Tweener library for unity using by code, It has powerful performance a
 
 XTween is
 1. Can make tweener by few code (easy to learn and good readablity)
-2. Provide code hint.
+2. Provide code hint. (You just write start with "To" than You can use tween)
 3. Easy to control event. (Support Anonymous Method)
 4. Support coroutine. (Easy to combine with other instruction)
 5. Support custom easing.

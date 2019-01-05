@@ -67,7 +67,7 @@ namespace Toki.Tween
 
         void OnGUI()
         {
-            XTweenData data = XTweenEditorManager.Instance.Data;
+            XTweenConfigData data = XTweenEditorManager.Instance.Data;
             GUILayout.BeginVertical();
 
             GUILayout.BeginVertical("Box");

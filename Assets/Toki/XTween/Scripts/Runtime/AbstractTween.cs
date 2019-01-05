@@ -406,5 +406,49 @@ namespace Toki.Tween
 				_classicHandlers.CopyFrom(source._classicHandlers);
 			}
 		}
+
+		public IAni AddOnComplete(Action listener)
+		{
+			return AddOnComplete(Executor.New(listener));
+		}
+
+		public IAni AddOnComplete(IExecutable executor)
+		{
+			_classicHandlers.OnComplete = executor;
+			return this;
+		}
+
+		public IAni AddOnStop(Action listener)
+		{
+			return AddOnStop(Executor.New(listener));
+		}
+
+		public IAni AddOnStop(IExecutable executor)
+		{
+			_classicHandlers.OnStop = executor;
+			return this;
+		}
+
+		public IAni AddOnPlay(Action listener)
+		{
+			return AddOnPlay(Executor.New(listener));
+		}
+
+		public IAni AddOnPlay(IExecutable executor)
+		{
+			_classicHandlers.OnPlay = executor;
+			return this;
+		}
+
+		public IAni AddOnUpdate(Action listener)
+		{
+			return AddOnUpdate(Executor.New(listener));
+		}
+
+		public IAni AddOnUpdate(IExecutable executor)
+		{
+			_classicHandlers.OnUpdate = executor;
+			return this;
+		}
 	}
 }

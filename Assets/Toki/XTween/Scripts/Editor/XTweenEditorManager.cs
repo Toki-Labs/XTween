@@ -15,7 +15,7 @@ using UnityEditor;
 namespace Toki.Tween
 {
 	[Serializable]
-	public class XTweenData
+	public class XTweenConfigData
 	{
 		public string version;
 	}
@@ -81,10 +81,10 @@ namespace Toki.Tween
 			easingList.ForEach(x => easingNameList.Add(x.name));
 			string[] names = easingNameList.ToArray();
 			string replaceStr = string.Join(",\n\t", names);
-			string path = AbsPath + "/Assets/Toki/XTween/Scripts/Editor/EaseNameTemplete";
+			string path = AbsPath + "/Assets/Toki/XTween/Scripts/Editor/EaseCustomTemplete";
 			string content = ReadText(path);
 			content = content.Replace("/* Name List */", replaceStr);
-			path = AbsPath + "/Assets/Toki/XTween/Scripts/EaseName.cs";
+			path = AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
 			WriteText(path, content);
 			XTweenEditorData.Instance.Save();
 			AssetDatabase.Refresh();
@@ -94,7 +94,7 @@ namespace Toki.Tween
 		*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 		************************************************************************/
 		private PlayModeStateChange _playMode;
-		private XTweenData _data;
+		private XTweenConfigData _data;
 		
 		/************************************************************************
 		*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -116,7 +116,7 @@ namespace Toki.Tween
 			}
 		}
 
-		public XTweenData Data
+		public XTweenConfigData Data
         {
             get
             {
@@ -214,11 +214,11 @@ namespace Toki.Tween
             if( File.Exists(this.JsonPath) )
             {
                 string jsonStr = XTweenEditorManager.ReadText(this.JsonPath);
-                this._data = JsonUtility.FromJson<XTweenData>(jsonStr);
+                this._data = JsonUtility.FromJson<XTweenConfigData>(jsonStr);
             }
             else
             {
-                this._data = new XTweenData();
+                this._data = new XTweenConfigData();
                 this.Save();
             }
         }

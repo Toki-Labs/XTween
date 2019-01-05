@@ -14,19 +14,19 @@ namespace Toki.Tween
 		protected IEasing _easing;
 		protected IUpdating _updater;
 			
-		public float time
+		public float Time
 		{
 			get { return _duration; }
 			set { _duration = value; }
 		}
 			
-		public IEasing easing
+		public IEasing Easing
 		{
 			get { return _easing; }
 			set { _easing = value; }
 		}
 			
-		public IUpdating updater
+		public IUpdating Updater
 		{
 			get { return _updater; }
 			set 

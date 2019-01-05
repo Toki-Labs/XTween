@@ -85,8 +85,7 @@ public class ExampleBezier : ExampleBase
 		{
 			XHash hash = XHash.New.AddX(200f).AddY(50f).AddZ(-1500f)
 						.AddControlPointX(-1000f,550f).AddControlPointY(550f,-300f);
-			this._tween = XTween.To(this.target3D, hash, data.time, data.Easing);
-			this._tween.Play();
+			this._tween = this.target3D.To(hash, data.time, data.Easing).Play();
 		}
 	}
 	
