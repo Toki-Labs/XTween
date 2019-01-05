@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Toki.Tween
 {
-	public class ContinousTween : AbstractTween, IIAniObject
+	public class ContinousTween : AbstractTween, IIXTweenObject
 	{
 		public ContinousTween( ITimer ticker ) : base( ticker, 0 )
 		{
@@ -87,7 +87,7 @@ namespace Toki.Tween
 			return true;
 		}
 
-		public override IAni Play()
+		public override IXTween Play()
 		{
 			if( !_isPlaying )
 			{
@@ -97,7 +97,7 @@ namespace Toki.Tween
 			return this;
 		}
 
-		public override IAni GotoAndPlay( float position )
+		public override IXTween GotoAndPlay( float position )
 		{
 			//Not implement
 			return null;

@@ -5,7 +5,7 @@ namespace Toki.Tween
 {
 	public class DelayedTween : TweenDecorator
 	{
-		public DelayedTween( IIAni baseTween, float preDelay, float postDelay ) : base(baseTween, 0)
+		public DelayedTween( IIXTween baseTween, float preDelay, float postDelay ) : base(baseTween, 0)
 		{
 			_duration = preDelay + baseTween.Duration + postDelay;
 			_preDelay = preDelay;
@@ -32,7 +32,7 @@ namespace Toki.Tween
 			
 		protected override AbstractTween NewInstance()
 		{
-			return new DelayedTween(_baseTween.Clone() as IIAni, _preDelay, _postDelay);
+			return new DelayedTween(_baseTween.Clone() as IIXTween, _preDelay, _postDelay);
 		}
 	}
 }

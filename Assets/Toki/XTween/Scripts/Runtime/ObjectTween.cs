@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Toki.Tween
 {
-	public class ObjectTween : AbstractTween, IIAniObject
+	public class ObjectTween : AbstractTween, IIXTweenObject
 	{
 		public ObjectTween( ITimer ticker ) : base( ticker, 0 )
 		{

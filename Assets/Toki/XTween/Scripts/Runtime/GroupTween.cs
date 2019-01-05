@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace Toki.Tween
 {
-	public class GroupTween : AbstractTween, IIAniGroup
+	public class GroupTween : AbstractTween, IIXTweenGroup
 	{
 		/************************************************************************
 			*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
@@ -23,11 +23,11 @@ namespace Toki.Tween
 		/************************************************************************
 			*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
 			************************************************************************/
-		protected IIAni _a;
-		protected IIAni _b;
-		protected IIAni _c;
-		protected IIAni _d;
-		protected IIAni[] _targets;
+		protected IIXTween _a;
+		protected IIXTween _b;
+		protected IIXTween _c;
+		protected IIXTween _d;
+		protected IIXTween[] _targets;
 			
 			
 		/************************************************************************
@@ -62,7 +62,7 @@ namespace Toki.Tween
 		/************************************************************************
 			*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
 			************************************************************************/
-		public IIAni[] tweens
+		public IIXTween[] tweens
 		{
 			get
 			{
@@ -70,7 +70,7 @@ namespace Toki.Tween
 			}
 		}
 			
-		public bool Contains( IAni tween)
+		public bool Contains( IXTween tween)
 		{
 			if (tween == null) {
 				return false;
@@ -88,12 +88,12 @@ namespace Toki.Tween
 				return true;
 			}
 			if (_targets != null) {
-				return System.Array.IndexOf<IIAni>( _targets, tween as IIAni) != -1;
+				return System.Array.IndexOf<IIXTween>( _targets, tween as IIXTween) != -1;
 			}
 			return false;
 		}
 			
-		public IAni GetTweenAt( int index )
+		public IXTween GetTweenAt( int index )
 		{
 			if (index < 0) {
 				return null;
@@ -118,7 +118,7 @@ namespace Toki.Tween
 			return null;
 		}
 			
-		public int GetTweenIndex( IAni tween )
+		public int GetTweenIndex( IXTween tween )
 		{
 			if (tween == null) {
 				return -1;
@@ -136,7 +136,7 @@ namespace Toki.Tween
 				return 3;
 			}
 			if (_targets != null) {
-				int i = System.Array.IndexOf<IIAni>(_targets, tween as IIAni);
+				int i = System.Array.IndexOf<IIXTween>(_targets, tween as IIXTween);
 				if (i != -1) {
 					return i + 4;
 				}
@@ -148,7 +148,7 @@ namespace Toki.Tween
 		{
 			int l;
 			int i;
-			IIAni t;
+			IIXTween t;
 			if (_a != null)
 			{
 				_a.ResolveValues();
@@ -176,11 +176,11 @@ namespace Toki.Tween
 			}
 		}
 
-		public override IAni Play()
+		public override IXTween Play()
 		{
 			int l;
 			int i;
-			IIAni t;
+			IIXTween t;
 
 			if (_a != null)
 			{
@@ -212,7 +212,7 @@ namespace Toki.Tween
 			return this;
 		}
 
-		public virtual void GroupStopOnDestroy( IIAni target )
+		public virtual void GroupStopOnDestroy( IIXTween target )
 		{
 
 		}

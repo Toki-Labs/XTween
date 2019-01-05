@@ -2,7 +2,7 @@ using System;
 
 namespace Toki.Tween
 {
-	public interface IIAni : IAni
+	public interface IIXTween : IXTween
 	{
 		ITimer Ticker
 		{

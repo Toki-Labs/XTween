@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Toki.Tween;
 
-public interface IAni
+public interface IXTween
 {
 	float Duration
 	{
@@ -51,20 +51,20 @@ public interface IAni
 	}
 
     void StopOnDestroy();
-	IAni Play();
+	IXTween Play();
 	WaitForTweenPlay WaitForPlay();
 	WaitForTweenPlay WaitForGotoAndPlay( float position );
 	void Stop();	
 	void TogglePause();
-	IAni GotoAndPlay( float position );
+	IXTween GotoAndPlay( float position );
 	void GotoAndStop( float position );
-	IAni Clone();
-	IAni AddOnComplete(Action listener);
-	IAni AddOnComplete(IExecutable executor);
-	IAni AddOnStop(Action listener);
-	IAni AddOnStop(IExecutable executor);
-	IAni AddOnPlay(Action listener);
-	IAni AddOnPlay(IExecutable executor);
-	IAni AddOnUpdate(Action listener);
-	IAni AddOnUpdate(IExecutable executor);
+	IXTween Clone();
+	IXTween AddOnComplete(Action listener);
+	IXTween AddOnComplete(IExecutable executor);
+	IXTween AddOnStop(Action listener);
+	IXTween AddOnStop(IExecutable executor);
+	IXTween AddOnPlay(Action listener);
+	IXTween AddOnPlay(IExecutable executor);
+	IXTween AddOnUpdate(Action listener);
+	IXTween AddOnUpdate(IExecutable executor);
 }

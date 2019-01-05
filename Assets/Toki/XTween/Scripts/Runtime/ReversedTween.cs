@@ -5,7 +5,7 @@ namespace Toki.Tween
 {
 	public class ReversedTween : TweenDecorator
 	{
-		public ReversedTween( IIAni baseTween, float position ) : base( baseTween, position )
+		public ReversedTween( IIXTween baseTween, float position ) : base( baseTween, position )
 		{
 			_duration = baseTween.Duration;
 		}
@@ -17,7 +17,7 @@ namespace Toki.Tween
 
 		protected override AbstractTween NewInstance()
 		{
-			return new ReversedTween(_baseTween.Clone() as IIAni, 0);
+			return new ReversedTween(_baseTween.Clone() as IIXTween, 0);
 		}
 	}
 }

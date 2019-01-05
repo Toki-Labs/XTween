@@ -30,7 +30,7 @@ public class ExampleBase : MonoBehaviour
 	*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
 	************************************************************************/
 	protected IEnumerator _coroutineStart;
-	protected IAni _tween;
+	protected IXTween _tween;
 		
 	/************************************************************************
 	*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*

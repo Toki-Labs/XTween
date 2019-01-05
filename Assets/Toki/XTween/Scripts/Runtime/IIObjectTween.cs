@@ -2,7 +2,7 @@ using System;
 
 namespace Toki.Tween
 {
-	public interface IIObjectTween : IObjectTween, IIAni
+	public interface IIObjectTween : IObjectTween, IIXTween
 	{
 		float time
 		{

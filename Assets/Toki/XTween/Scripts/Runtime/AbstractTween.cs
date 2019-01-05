@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Toki.Tween
 {
-	public class AbstractTween : TimerListener, IIAni
+	public class AbstractTween : TimerListener, IIXTween
 	{
 		public AbstractTween( ITimer ticker, float position )
 		{
@@ -152,7 +152,7 @@ namespace Toki.Tween
 		}
 
 		//Play Directly
-		public virtual IAni Play()
+		public virtual IXTween Play()
 		{
 			TickerChange();
 			PlayTween();
@@ -242,7 +242,7 @@ namespace Toki.Tween
 		}
 			
 		//Goto And Play Directly
-		public virtual IAni GotoAndPlay( float position )
+		public virtual IXTween GotoAndPlay( float position )
 		{
 			TickerChange();
 			GotoAndPlayTween(position);
@@ -381,7 +381,7 @@ namespace Toki.Tween
 				
 		}
 			
-		public IAni Clone()
+		public IXTween Clone()
 		{
 			AbstractTween instance = NewInstance();
 			if (instance != null) {
@@ -407,45 +407,45 @@ namespace Toki.Tween
 			}
 		}
 
-		public IAni AddOnComplete(Action listener)
+		public IXTween AddOnComplete(Action listener)
 		{
 			return AddOnComplete(Executor.New(listener));
 		}
 
-		public IAni AddOnComplete(IExecutable executor)
+		public IXTween AddOnComplete(IExecutable executor)
 		{
 			_classicHandlers.OnComplete = executor;
 			return this;
 		}
 
-		public IAni AddOnStop(Action listener)
+		public IXTween AddOnStop(Action listener)
 		{
 			return AddOnStop(Executor.New(listener));
 		}
 
-		public IAni AddOnStop(IExecutable executor)
+		public IXTween AddOnStop(IExecutable executor)
 		{
 			_classicHandlers.OnStop = executor;
 			return this;
 		}
 
-		public IAni AddOnPlay(Action listener)
+		public IXTween AddOnPlay(Action listener)
 		{
 			return AddOnPlay(Executor.New(listener));
 		}
 
-		public IAni AddOnPlay(IExecutable executor)
+		public IXTween AddOnPlay(IExecutable executor)
 		{
 			_classicHandlers.OnPlay = executor;
 			return this;
 		}
 
-		public IAni AddOnUpdate(Action listener)
+		public IXTween AddOnUpdate(Action listener)
 		{
 			return AddOnUpdate(Executor.New(listener));
 		}
 
-		public IAni AddOnUpdate(IExecutable executor)
+		public IXTween AddOnUpdate(IExecutable executor)
 		{
 			_classicHandlers.OnUpdate = executor;
 			return this;

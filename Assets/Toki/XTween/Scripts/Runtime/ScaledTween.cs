@@ -5,7 +5,7 @@ namespace Toki.Tween
 {
 	public class ScaledTween : TweenDecorator
 	{
-		public ScaledTween( IIAni baseTween, float scale ) : base(baseTween, 0)
+		public ScaledTween( IIXTween baseTween, float scale ) : base(baseTween, 0)
 		{
 			_duration = baseTween.Duration * scale;
 			_scale = scale;
@@ -25,7 +25,7 @@ namespace Toki.Tween
 			
 		protected override AbstractTween NewInstance()
 		{
-			return new ScaledTween(_baseTween.Clone() as IIAni, _scale);
+			return new ScaledTween(_baseTween.Clone() as IIXTween, _scale);
 		}
 	}
 }

@@ -5,16 +5,16 @@ namespace Toki.Tween
 {
 	public class TweenDecorator : AbstractTween
 	{
-		public TweenDecorator( IIAni baseTween, float position ) : base( baseTween.Ticker, position )
+		public TweenDecorator( IIXTween baseTween, float position ) : base( baseTween.Ticker, position )
 		{
 			_baseTween = baseTween;
 			_baseTween.DecoratorStopOnDestroy = this.StopOnDestroy;
 			_duration = baseTween.Duration;
 		}
 			
-		protected IIAni _baseTween;
+		protected IIXTween _baseTween;
 			
-		public IIAni baseTween
+		public IIXTween baseTween
 		{
 			get { return _baseTween; }
 		}
@@ -27,7 +27,7 @@ namespace Toki.Tween
 			}
 		}
 
-		public override IAni Play()
+		public override IXTween Play()
 		{
 			if (!_isPlaying) 
 			{

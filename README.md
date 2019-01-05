@@ -8,12 +8,12 @@ XTween is Tweener library for unity using by code, It has powerful performance a
 
 XTween is
 1. Can make tweener by few code (easy to learn and good readablity)
-2. Provide code hint. (You just write start with "To" than You can use tween)
+2. Provide code hint. (You just start with "To" than You can use tweener)
 3. Easy to control event. (Support Anonymous Method)
 4. Support coroutine. (Easy to combine with other instruction)
 5. Support custom easing.
 6. Can make instance. This good at resuablity and time control.
-7. Less use of memory and cpu. (XTween is don't create MonoBehaviour each by tween.)
+7. Less use of memory and cpu. (XTween is don't create MonoBehaviour each by tween)
 8. Support in editor mode(Not Play mode) and Available on all types of platforms
 
 You can check example at [XTween Example](http://toki-labs.com/xtween)
@@ -29,8 +29,7 @@ XTween.To(moveObj, XHash.Position(600f,200f)).Play();
 
 /******* Shortcut type ***********/
 //when moveObj is Transform or GameObject
-IAni tween = moveObj.To(XHash.Position(600f,200f)).Play();
-tween.Stop();
+moveObj.To(XHash.Position(600f,200f)).Play();
 
 
 /******* Use with Coroutine ******/
@@ -115,7 +114,7 @@ Position
 XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f).AddZ(100f)).Play();
 
 //or
-XTween.To(moveObj, XHash.Position(600f,200f)).Play();
+moveObj.To(XHash.Position(600f,200f)).Play();
 ```
 
 Scale
@@ -124,7 +123,7 @@ Scale
 XTween.To(moveObj, XHash.New.AddScaleX(1f).AddScaleY(1.5f).AddScaleZ(0.5f)).Play();
 
 //or
-XTween.To(moveObj, XHash.Scale(1f,1.5f)).Play();
+moveObj.To(XHash.Scale(1f,1.5f)).Play();
 ```
 
 Rotation
@@ -133,7 +132,7 @@ Rotation
 XTween.To(moveObj, XHash.New.AddRotationZ(600f)).Play();
 
 //or
-XTween.To(moveObj, XHash.Rotation(60f,-180f,-45f)).Play();
+moveObj.To(XHash.Rotation(60f,-180f,-45f)).Play();
 ```
 
 Combination
@@ -141,6 +140,9 @@ Combination
 ```csharp
 //Position, Scale, Rotation tween in same time, same easing
 XTween.To(moveObj, XHash.New.AddX(600f).AddScaleX(200f).AddRotationZ(180f)).Play();
+
+//or
+moveObj.To(XHash.Position(0f,10f).AddScaleX(200f).AddRotationZ(60f)).Play();
 ```
 
 Bezier
@@ -148,26 +150,42 @@ Bezier
 ```csharp
 XHash hash = XHash.Position(0f,0f).AddControlPointX(1000f).AddControlPoint(-500f);
 XTween.To(moveObj, hash).Play();
+
+//or
+moveObj.To(hash).Play();
 ```
 
 Value
 ---
 ```csharp
-XTween.To(XObjectHash.New.Add("value", 10f, 200f), UpdateValue).Play();
+//Setter
+XTween.ToValue(x=>camera3D.fieldOfView=x, 10f).Play();
+
+//or multi type
+XTween.ToValue(XObjectHash.New.Add("value", 50f, 10f), UpdateValue).Play();
 
 void UpdateValue(XObjectHash hash)
 {
-	Debug.Log(hash.Now("value"));
+	camera3D.fieldOfView = hash.Now("value");
 }
+```
 
-//or Property tween
+Property
+---
+```csharp
+camera3D.ToProperty("fieldOfView", 6f).Play();
+
+//or
 XTween.To<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f)).Play();
 ```
 
 Event Handling
 ---
 ```csharp
-IAni ani = XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f));
+XTween.To(moveObj, XHash.Position(600f,200f)).AddOnComplete(()=>Debug.Log("OnComplete")).Play();
+
+//or
+IXTween ani = XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f));
 ani.OnComplete = Executor<float>.New(OnTweenEnd, 10f);
 ani.Play();
 
@@ -175,9 +193,6 @@ void OnTweenEnd(float value)
 {
 	Debug.Log(value);
 }
-
-//or
-XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f)).AddOnComplete(()=>Debug.Log("OnComplete")).Play();
 ```
 
 Coroutine
@@ -190,11 +205,11 @@ StartCoroutine(tweenCoroutine);
 
 IEnumerator CoroutineTween()
 {
-	yield return XTween.To(target3D, XHash.Position(200f,50f,-1500f)).WaitForPlay();
+	yield return gameObject.To(XHash.Position(200f,50f,-1500f)).WaitForPlay();
 	Debug.Log("On Complete First Tween");
 
 	//Start other tween start at 0.3sec
-	yield return XTween.To(this.target3D, XHash.Position(100f,500f)).WaitForGotoAndPlay(0.3f);
+	yield return gameObject.To(XHash.Position(100f,500f)).WaitForGotoAndPlay(0.3f);
 	Debug.Log("On Complete Second Tween");
 }
 
@@ -208,8 +223,8 @@ Serial
 XTween.SerialTweens
 (	
 	false, 
-	XTween.To(moveObj, XHash.Position(1000f,300f)), 
-	XTween.To(moveObj, XHash.Scale(200f,200f))
+	moveObj.To(XHash.Position(1000f,300f)), 
+	moveObj.To(XHash.Scale(200f,200f))
 ).Play();
 ```
 
@@ -219,8 +234,8 @@ Parallel
 XTween.ParallelTweens
 (	
 	false, 
-	XTween.To(moveObj, XHash.Position(1000f,300f)), 
-	XTween.To(moveObj, XHash.Scale(200f,200f))
+	moveObj.To(XHash.Position(1000f,300f)), 
+	moveObj.To(XHash.Scale(200f,200f))
 ).Play();
 ```
 
@@ -238,10 +253,10 @@ XTween.To(dropdown, hashDropdown).Play();
 Color
 ---
 ```csharp
-XTween.To(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
+XTween.ToColor(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
 
 //or when object has other type
-XTween.To<Image>(imageInstance, "color", XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
+XTween.ToColor<Image>(imageInstance, "color", XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
 ```
 
 Custom Easing
@@ -257,7 +272,7 @@ XTween.To(target3D, hash, EaseName.MyEasing).Play();
 Decorator
 ---
 ```csharp
-IAni tween = XTween.To(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f));
+IXTween tween = XTween.ToColor(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f));
 
 //Delay Tweener
 tween = XTween.Delay(tween, 1f/*Pre Delay*/, 1f/*Post Delay*/);
