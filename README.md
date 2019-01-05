@@ -24,12 +24,11 @@ Implementation
 ---
 ```csharp
 /******* Simple Use **************/
-XTween.To(moveObj, XHash.Position(600f,200f)).Play();
+XTween.To(gameObject, XHash.Position(600f,200f)).Play();
 
 
 /******* Shortcut type ***********/
-//when moveObj is Transform or GameObject
-moveObj.To(XHash.Position(600f,200f)).Play();
+gameObject.To(XHash.Position(600f,200f)).Play();
 
 
 /******* Use with Coroutine ******/
@@ -39,10 +38,10 @@ StartCoroutine(tweenCoroutine);
 
 IEnumerator CoroutineTween()
 {
-	yield return XTween.To(moveObj, XHash.Position(600f,200f)).WaitForPlay();
+	yield return XTween.To(gameObject, XHash.Position(600f,200f)).WaitForPlay();
 
 	//or
-	yield return moveObj.To(XHash.Position(600f,200f)).WaitForPlay();
+	yield return gameObject.To(XHash.Position(600f,200f)).WaitForPlay();
 }
 
 StopCoroutine(tweenCoroutine);
@@ -111,48 +110,48 @@ Road Map
 Position
 ---
 ```csharp
-XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f).AddZ(100f)).Play();
+XTween.To(gameObject, XHash.New.AddX(600f).AddY(200f).AddZ(100f)).Play();
 
 //or
-moveObj.To(XHash.Position(600f,200f)).Play();
+gameObject.To(XHash.Position(600f,200f)).Play();
 ```
 
 Scale
 ---
 ```csharp
-XTween.To(moveObj, XHash.New.AddScaleX(1f).AddScaleY(1.5f).AddScaleZ(0.5f)).Play();
+XTween.To(gameObject, XHash.New.AddScaleX(1f).AddScaleY(1.5f).AddScaleZ(0.5f)).Play();
 
 //or
-moveObj.To(XHash.Scale(1f,1.5f)).Play();
+gameObject.To(XHash.Scale(1f,1.5f)).Play();
 ```
 
 Rotation
 ---
 ```csharp
-XTween.To(moveObj, XHash.New.AddRotationZ(600f)).Play();
+XTween.To(gameObject, XHash.New.AddRotationZ(600f)).Play();
 
 //or
-moveObj.To(XHash.Rotation(60f,-180f,-45f)).Play();
+gameObject.To(XHash.Rotation(60f,-180f,-45f)).Play();
 ```
 
 Combination
 ---
 ```csharp
 //Position, Scale, Rotation tween in same time, same easing
-XTween.To(moveObj, XHash.New.AddX(600f).AddScaleX(200f).AddRotationZ(180f)).Play();
+XTween.To(gameObject, XHash.New.AddX(600f).AddScaleX(200f).AddRotationZ(180f)).Play();
 
 //or
-moveObj.To(XHash.Position(0f,10f).AddScaleX(200f).AddRotationZ(60f)).Play();
+gameObject.To(XHash.Position(0f,10f).AddScaleX(200f).AddRotationZ(60f)).Play();
 ```
 
 Bezier
 ---
 ```csharp
 XHash hash = XHash.Position(0f,0f).AddControlPointX(1000f).AddControlPoint(-500f);
-XTween.To(moveObj, hash).Play();
+XTween.To(gameObject, hash).Play();
 
 //or
-moveObj.To(hash).Play();
+gameObject.To(hash).Play();
 ```
 
 Value
@@ -182,10 +181,10 @@ XTween.To<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f)).Play();
 Event Handling
 ---
 ```csharp
-XTween.To(moveObj, XHash.Position(600f,200f)).AddOnComplete(()=>Debug.Log("OnComplete")).Play();
+XTween.To(gameObject, XHash.Position(600f,200f)).AddOnComplete(()=>Debug.Log("OnComplete")).Play();
 
 //or
-IXTween ani = XTween.To(moveObj, XHash.New.AddX(600f).AddY(200f));
+IXTween ani = XTween.To(gameObject, XHash.New.AddX(600f).AddY(200f));
 ani.OnComplete = Executor<float>.New(OnTweenEnd, 10f);
 ani.Play();
 
@@ -223,8 +222,8 @@ Serial
 XTween.SerialTweens
 (	
 	false, 
-	moveObj.To(XHash.Position(1000f,300f)), 
-	moveObj.To(XHash.Scale(200f,200f))
+	gameObject.To(XHash.Position(1000f,300f)), 
+	gameObject.To(XHash.Scale(200f,200f))
 ).Play();
 ```
 
@@ -234,8 +233,8 @@ Parallel
 XTween.ParallelTweens
 (	
 	false, 
-	moveObj.To(XHash.Position(1000f,300f)), 
-	moveObj.To(XHash.Scale(200f,200f))
+	gameObject.To(XHash.Position(1000f,300f)), 
+	gameObject.To(XHash.Scale(200f,200f))
 ).Play();
 ```
 
