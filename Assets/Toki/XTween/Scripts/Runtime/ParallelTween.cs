@@ -8,8 +8,9 @@ namespace Toki.Tween
 	{
 		protected List<IIXTween> _destroyList;
 
-		public ParallelTween( IXTween[] targets, ITimer ticker, float position ) : base(ticker, position)
+		public void Initialize(IXTween[] targets, ITimer ticker, float position)
 		{
+			base.Initialize(ticker,position);
 			int l = targets.Length;
 				
 			_duration = 0;
@@ -86,7 +87,9 @@ namespace Toki.Tween
 					targets.Add(t[i].Clone());
 				}
 			}
-			return new ParallelTween(targets.ToArray(), _ticker, 0);
+			ParallelTween tween = new ParallelTween();
+			tween.Initialize(targets.ToArray(), _ticker, 0);
+			return tween;
 		}
 	}
 }

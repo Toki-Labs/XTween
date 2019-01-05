@@ -5,8 +5,9 @@ namespace Toki.Tween
 {
 	public class TweenDecorator : AbstractTween
 	{
-		public TweenDecorator( IIXTween baseTween, float position ) : base( baseTween.Ticker, position )
+		public virtual void Initialize( IIXTween baseTween, float position )
 		{
+			base.Initialize(baseTween.Ticker, position);
 			_baseTween = baseTween;
 			_baseTween.DecoratorStopOnDestroy = this.StopOnDestroy;
 			_duration = baseTween.Duration;

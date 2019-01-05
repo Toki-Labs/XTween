@@ -5,8 +5,9 @@ namespace Toki.Tween
 {
 	public class ScaledTween : TweenDecorator
 	{
-		public ScaledTween( IIXTween baseTween, float scale ) : base(baseTween, 0)
+		public override void Initialize( IIXTween baseTween, float scale )
 		{
+			base.Initialize(baseTween, 0);
 			_duration = baseTween.Duration * scale;
 			_scale = scale;
 		}
@@ -25,7 +26,9 @@ namespace Toki.Tween
 			
 		protected override AbstractTween NewInstance()
 		{
-			return new ScaledTween(_baseTween.Clone() as IIXTween, _scale);
+			ScaledTween tween = new ScaledTween();
+			tween.Initialize(_baseTween.Clone() as IIXTween, _scale);
+			return tween;
 		}
 	}
 }

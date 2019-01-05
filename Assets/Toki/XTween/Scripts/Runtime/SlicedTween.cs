@@ -5,8 +5,9 @@ namespace Toki.Tween
 {
 	public class SlicedTween : TweenDecorator
 	{
-		public SlicedTween( IIXTween baseTween, float begin, float end ) : base(baseTween, 0)
+		public void Initialize( IIXTween baseTween, float begin, float end )
 		{
+			base.Initialize(baseTween, 0);
 			_duration = end - begin;
 			_begin = begin;
 			_end = end;
@@ -42,7 +43,9 @@ namespace Toki.Tween
 			
 		protected override AbstractTween NewInstance()
 		{
-			return new SlicedTween(_baseTween.Clone() as IIXTween, _begin, _end);
+			SlicedTween tween = new SlicedTween();
+			tween.Initialize(_baseTween.Clone() as IIXTween, _begin, _end);
+			return tween;
 		}
 	}
 }

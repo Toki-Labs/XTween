@@ -5,8 +5,9 @@ namespace Toki.Tween
 {
 	public class RepeatedTween : TweenDecorator
 	{
-		public RepeatedTween( IIXTween baseTween, int repeatCount ) : base( baseTween, 0f )
+		public void Initialize( IIXTween baseTween, int repeatCount )
 		{
+			base.Initialize( baseTween, 0f );
 			_baseDuration = baseTween.Duration;
 			_repeatCount = repeatCount;
 			_duration = _baseDuration * repeatCount;
@@ -32,7 +33,9 @@ namespace Toki.Tween
 			
 		protected override AbstractTween NewInstance()
 		{
-			return new RepeatedTween(_baseTween.Clone() as IIXTween, repeatCount);
+			RepeatedTween tween = new RepeatedTween();
+			tween.Initialize(_baseTween.Clone() as IIXTween, repeatCount);
+			return tween;
 		}
 	}
 }

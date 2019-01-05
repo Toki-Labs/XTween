@@ -83,7 +83,7 @@ public class ExampleValue : ExampleBase
 		if( this.container2D.activeSelf )
 		{
 			XObjectHash hash = XObjectHash.New.Add("r",1f,0.56f).Add("g",1f,0.83f);
-			this._tween = XTween.ToValueMuli(hash,UpdateColor,data.time,data.Easing);
+			this._tween = XTween.ToValueMulti(hash,UpdateColor,data.time,data.Easing);
 			this._tween.Play();
 		}
 		else

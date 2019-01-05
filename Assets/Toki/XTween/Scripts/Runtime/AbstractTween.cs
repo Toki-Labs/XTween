@@ -7,7 +7,7 @@ namespace Toki.Tween
 {
 	public class AbstractTween : TimerListener, IIXTween
 	{
-		public AbstractTween( ITimer ticker, float position )
+		public virtual void Initialize( ITimer ticker, float position )
 		{
 			_ticker = ticker;
 			_isRealTime = (ticker is UpdateTickerReal);
@@ -15,6 +15,7 @@ namespace Toki.Tween
 		}
 
 		protected ITimer _ticker;
+		protected float _time;
 		protected float _position = 0f;
 		protected float _duration = 0f;
 		protected float _startTime;
@@ -24,12 +25,12 @@ namespace Toki.Tween
 		protected uint _frameSkip = 1;
 		protected uint _frameSkipCount = 0;
 		protected bool _enableGroup = true;
+		protected bool _autoDispose = true;
 		//when wrapped in decorator
 		protected Action _decoratorStopOnDestroy;
 		protected IClassicHandlable _classicHandlers;
 		protected TickListener _tickListener;
 			
-		protected float _time;
 			
 		public ITimer Ticker
 		{
@@ -128,11 +129,7 @@ namespace Toki.Tween
 				_isPlaying = false;
 			}
 			_enableGroup = false;
-		}
-
-		public virtual void StopFromDisposeList()
-		{
-			_isPlaying = false;
+			this.Release();
 		}
 
 		public void IntializeGroup()
@@ -147,9 +144,18 @@ namespace Toki.Tween
 				_ticker = (_ticker as WaitForTweenPlay).Ticker;
 		}
 
+		private void CheckDisposed()
+		{
+			if( _ticker == null )
+			{
+				throw new System.Exception("Tweener is disposed. if you want to use for reusable instance. Set to \"Lock()\" in instance");
+			}
+		}
+
 		//Play Directly
 		public virtual IXTween Play()
 		{
+			CheckDisposed();
 			TickerChange();
 			PlayTween();
 			return this;
@@ -169,6 +175,7 @@ namespace Toki.Tween
 
 		public virtual WaitForTweenPlay WaitForPlay()
 		{
+			CheckDisposed();
 			WaitForTweenPlay wait;
 			if( _ticker is WaitForTweenPlay )
 			{
@@ -176,7 +183,8 @@ namespace Toki.Tween
 			}
 			else
 			{
-				wait = new WaitForTweenPlay(_ticker, this);
+				wait = Pool<WaitForTweenPlay>.Pop();
+				wait.Initialize(_ticker, this);
 				_ticker = wait;
 			}
 			PlayTween();
@@ -221,8 +229,16 @@ namespace Toki.Tween
 			{
 				_isPlaying = false;
 				if (_classicHandlers != null && _classicHandlers.OnStop != null) 
+				{
 					_classicHandlers.OnStop.Execute();
+					InternalRelease();
+				}
 			}
+		}
+
+		public virtual void Reset()
+		{
+			GotoAndStop(0);
 		}
 
 		public virtual void StartStop()
@@ -231,15 +247,10 @@ namespace Toki.Tween
 				_classicHandlers.OnStop.Execute();
 		}
 			
-		public virtual void TogglePause()
-		{
-			if (_isPlaying) Stop();
-			else Play();
-		}
-			
 		//Goto And Play Directly
 		public virtual IXTween GotoAndPlay( float position )
 		{
+			CheckDisposed();
 			TickerChange();
 			GotoAndPlayTween(position);
 			return this;
@@ -258,6 +269,7 @@ namespace Toki.Tween
 		
 		public virtual WaitForTweenPlay WaitForGotoAndPlay(float position)
 		{
+			CheckDisposed();
 			WaitForTweenPlay wait;
 			if( _ticker is WaitForTweenPlay )
 			{
@@ -265,7 +277,8 @@ namespace Toki.Tween
 			}
 			else
 			{
-				wait = new WaitForTweenPlay(_ticker, this);
+				wait = Pool<WaitForTweenPlay>.Pop();
+				wait.Initialize(_ticker, this);
 				_ticker = wait;
 			}
 			GotoAndPlayTween(position);
@@ -274,6 +287,7 @@ namespace Toki.Tween
 
 		public virtual void GotoAndStop( float position ) 
 		{
+			CheckDisposed();
 			if (position < 0) position = 0;
 			if (position > _duration) position = _duration;
 			
@@ -307,6 +321,8 @@ namespace Toki.Tween
 				{
 					if (_classicHandlers != null && _classicHandlers.OnComplete != null)
 						_classicHandlers.OnComplete.Execute();
+
+					InternalRelease();
 				}
 			}	
 		}
@@ -342,6 +358,7 @@ namespace Toki.Tween
 						_position = t - _duration;
 						_startTime = time - _position;
 						Tick(time);
+						InternalRelease();
 					}
 				}
 				return false;
@@ -357,6 +374,8 @@ namespace Toki.Tween
 				_isPlaying = false;
 				if (_classicHandlers != null && _classicHandlers.OnComplete != null)
 					_classicHandlers.OnComplete.Execute();
+
+				InternalRelease();
 			}
 		}
 
@@ -403,6 +422,12 @@ namespace Toki.Tween
 			}
 		}
 
+		public IXTween Lock()
+		{
+			this._autoDispose = false;
+			return this;
+		}
+
 		public IXTween AddOnComplete(Action listener)
 		{
 			return AddOnComplete(Executor.New(listener));
@@ -445,6 +470,39 @@ namespace Toki.Tween
 		{
 			_classicHandlers.OnUpdate = executor;
 			return this;
+		}
+
+		//Force Release
+		public virtual void Release()
+		{
+			throw new System.Exception("You should implement this method in sub class");
+		}
+
+		protected virtual void InternalRelease()
+		{
+			throw new System.Exception("You should implement this method in sub class");
+		}
+
+		public virtual void Dispose()
+		{
+			WaitForTweenPlay wait;
+			if( (wait = this._ticker as WaitForTweenPlay) != null ) 
+				wait.PoolPush();
+			this._ticker = null;
+			this._time = 0f;
+			this._position = 0f;
+			this._duration = 0f;
+			this._startTime = 0f;
+			this._isPlaying = false;
+			this._isRealTime = false;
+			this._stopOnComplete = true;
+			this._frameSkip = 1;
+			this._frameSkipCount = 0;
+			this._autoDispose = true;
+			this._enableGroup = true;
+			this._decoratorStopOnDestroy = null;
+			this._classicHandlers = null;
+			this._tickListener = null;
 		}
 	}
 }

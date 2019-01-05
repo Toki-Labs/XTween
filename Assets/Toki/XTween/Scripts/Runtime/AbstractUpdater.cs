@@ -76,5 +76,13 @@ namespace Toki.Tween
             
         public abstract void ResolveValues();
         protected abstract void UpdateObject();
+        public abstract void Release();
+        public virtual void Dispose()
+        {
+            this._invert = 0f;
+            this._factor = 0f;
+            this._resolvedValues = false;
+            this._stopOnDestroyHandler = null;
+        }
     }
 }

@@ -65,11 +65,15 @@ public class ExampleTest : ExampleBase
 		WaitForSeconds wait = new WaitForSeconds(0.1f);
 		if( this._tween != null )
 		{
-			this._tween.Stop();
-			this._tween = null;
+			// this._tween.Stop();
+			// this._tween = null;
 		}
-		this.target2D.transform.localPosition = this._position2D;
-		this.target3D.transform.localPosition = this._position3D;
+
+		if( this.target3D != null )
+		{
+			this.target2D.transform.localPosition = this._position2D;
+			this.target3D.transform.localPosition = this._position3D;
+		}
 		yield return new WaitForSeconds(0.5f);
 		TweenUIData data = this.uiContainer.Data;
 		if( this.container2D.activeSelf )
@@ -80,10 +84,15 @@ public class ExampleTest : ExampleBase
 		else
 		{
 			Debug.Log("Start");
-			Transform trans = this.target3D.transform;
 			IEasing ease = Ease.ElasticOut;
 			yield return wait;
-			yield return trans.To(XHash.New.AddX(0f,1000f), 1f, Ease.ElasticOut).AddOnComplete(Debug.Break).WaitForPlay();
+			// yield return target3D.To(XHash.New.AddX(1000f), 1f).WaitForPlay();
+			if( this._tween == null ) this._tween = this.camera3D.ToProperty("fieldOfView", 6f).Lock();
+			else this._tween.Reset();
+				
+			yield return this._tween.WaitForPlay();
+			yield return wait;
+			// Debug.Break();
 
 			// camera3D.ToProperty("fieldOfView", 6f, 1f, ease).Play();
 

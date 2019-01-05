@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Toki.Tween
 {
-	public interface IUpdating
+	public interface IUpdating : IDisposable
 	{		
 		Action StopOnDestroyHandler
 		{
@@ -22,5 +22,6 @@ namespace Toki.Tween
 			
 		void ResolveValues();
 		void Updating( float factor );
+		void Release();
 	}
 }

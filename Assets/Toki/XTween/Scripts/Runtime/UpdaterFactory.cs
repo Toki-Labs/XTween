@@ -7,27 +7,28 @@ namespace Toki.Tween
 {
 	public class UpdaterFactory
 	{
-		public static IUpdating Create<T>( T target, XObjectHash source )
+		public static ObjectUpdater<T> Create<T>( T target, XObjectHash source )
 		{
-			ObjectUpdater<T> updator = new ObjectUpdater<T>();
+			ObjectUpdater<T> updator = Pool<ObjectUpdater<T>>.Pop();
 			updator.Target = target;
 			updator.Finish = source;
 			return updator;
 		}
 
-		public static GetSetUpdater Create( Action<float> setter, float start, float end, float[] controlPoints )
+		public static GetSetUpdater Create( Action<float> setter, float start, float end, float[] controlPoints, XEventHash hash )
 		{
-			GetSetUpdater updater = new GetSetUpdater();
+			GetSetUpdater updater = Pool<GetSetUpdater>.Pop();
 			updater.Setter = setter;
 			updater.StartValue = start;
 			updater.EndValue = end;
 			updater.ControlPoints = controlPoints;
+			updater.Finish = hash;
 			return updater;
 		}
 
 		public static ColorUpdater<T> Create<T>( T target, string propertyName, XColorHash dest, XColorHash source )
 		{
-			ColorUpdater<T> updator = new ColorUpdater<T>();
+			ColorUpdater<T> updator = Pool<ColorUpdater<T>>.Pop();
 			updator.Target = target;
 			updator.PropertyName = propertyName;
 			updator.Start = source;
@@ -37,23 +38,23 @@ namespace Toki.Tween
 
 		public static ObjectUpdater Create( IClassicHandlable source )
 		{
-			ObjectUpdater updator = new ObjectUpdater();
+			ObjectUpdater updator = Pool<ObjectUpdater>.Pop();
 			updator.Finish = source;
 			return updator;
 		}
 			
 		public static DisplayUpdater Create( GameObject target, IClassicHandlable dest, IClassicHandlable source )
 		{
-			DisplayUpdater updater = new DisplayUpdater();
+			DisplayUpdater updater = Pool<DisplayUpdater>.Pop();
 			updater.Start = source;
 			updater.Finish = dest;
 			updater.Target = target;
 			return updater;
 		}
 
-		public IUpdating CreateContinous( GameObject target, IClassicHandlable dest, IClassicHandlable source )
+		public static DisplayContinousUpdater CreateContinous( GameObject target, IClassicHandlable dest, IClassicHandlable source )
 		{
-			DisplayContinousUpdater updater = new DisplayContinousUpdater();
+			DisplayContinousUpdater updater = Pool<DisplayContinousUpdater>.Pop();
 			updater.Start = source;
 			updater.Finish = dest;
 			updater.Target = target;

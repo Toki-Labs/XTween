@@ -4,12 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Toki.Tween;
 
-public struct XEventHash : IClassicHandlable
+public class XEventHash : IClassicHandlable
 {
-	private IExecutable _onPlay;
-    private IExecutable _onStop;
-    private IExecutable _onUpdate;
-    private IExecutable _onComplete;
+	protected IExecutable _onPlay;
+    protected IExecutable _onStop;
+    protected IExecutable _onUpdate;
+    protected IExecutable _onComplete;
 
     public IExecutable OnPlay
     {
@@ -66,4 +66,12 @@ public struct XEventHash : IClassicHandlable
         this._onUpdate = source.OnUpdate;
         this._onComplete = source.OnComplete;
     }
+
+	public virtual void Dispose()
+	{
+        this._onPlay = null;
+        this._onStop = null;
+        this._onUpdate = null;
+        this._onComplete = null;
+	}
 }

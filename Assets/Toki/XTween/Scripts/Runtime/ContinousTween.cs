@@ -6,9 +6,9 @@ namespace Toki.Tween
 {
 	public class ContinousTween : AbstractTween, IIXTweenObject
 	{
-		public ContinousTween( ITimer ticker ) : base( ticker, 0 )
+		public override void Initialize( ITimer ticker, float position )
 		{
-				
+			base.Initialize( ticker, position );
 		}
 			
 		protected IUpdating _updater;

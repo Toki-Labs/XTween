@@ -8,17 +8,11 @@ namespace Toki.Tween
 {
 	public class ObjectUpdater : AbstractUpdater
 	{
-		protected Dictionary<string, XObjectSet> _valueDic;
+		protected Dictionary<string, XObjectSet> _valueDic = new Dictionary<string, XObjectSet>();
 		protected string[] _keys;
 		protected int _keyLength;
 		protected XObjectHash _source;
 		protected Action<XObjectHash> _updateHandler;
-		protected Action _StopOnDestroyHandler;
-			
-		public override Action StopOnDestroyHandler
-		{
-			set { _StopOnDestroyHandler = value; }
-		}
 			
 		public override IClassicHandlable Start { set{}	}
 		public override IClassicHandlable Finish
@@ -52,7 +46,7 @@ namespace Toki.Tween
 			foreach ( var item in this._valueDic )
 			{
 				XObjectValues objValue = item.Value.value;
-				item.Value.updator = objValue.controlPoint == null ? 
+				item.Value.updater = objValue.controlPoint == null ? 
 				(Action<float,float>)delegate( float invert, float factor )
 				{
 					objValue.current = objValue.start * invert + objValue.end * factor;
@@ -72,9 +66,28 @@ namespace Toki.Tween
 		{
 			for (int i = 0; i < this._keyLength; ++i)
 			{
-				this._valueDic[this._keys[i]].updator(_invert, _factor);
+				this._valueDic[this._keys[i]].updater(_invert, _factor);
 			}
 			if( this._updateHandler != null ) this._updateHandler(_source);
+		}
+
+		public override void Release()
+		{
+			if( this._source != null ) this._source.PoolPush();
+			foreach (var item in this._valueDic)
+				item.Value.PoolPush();
+
+			this.PoolPush();
+		}
+
+		public override void Dispose()
+		{
+			base.Dispose();
+			this._valueDic.Clear();
+			this._keys = null;
+			this._keyLength = 0;
+			this._source = null;
+			this._updateHandler = null;
 		}
 	}
 
@@ -89,10 +102,11 @@ namespace Toki.Tween
 				_target = value;
 			}
 		}
+
 		public override void ResolveValues()
 		{
 			if( _resolvedValues ) return;
-			if( IsNullTarget() ) return;
+			if( IsNullTarget() ) throw new System.NullReferenceException("Tweener target is Null at start point");
 			base.ComposeDic();
 
 			Type type = typeof(T);
@@ -112,7 +126,7 @@ namespace Toki.Tween
 				{
 					objValue.start = (float)pInfo.GetValue(_target, null);
 				}
-				item.Value.updator = objValue.controlPoint == null ? 
+				item.Value.updater = objValue.controlPoint == null ? 
 				(Action<float,float>)delegate( float invert, float factor )
 				{
 					if( IsNullTarget() ) return;
@@ -139,9 +153,7 @@ namespace Toki.Tween
 			{
 				if( _stopOnDestroyHandler != null )
 					_stopOnDestroyHandler.Invoke();
-				_stopOnDestroyHandler = null;
-				_valueDic.Clear();
-				_target = default(T);
+					
 				return true;
 			}
 			return false;
@@ -153,9 +165,19 @@ namespace Toki.Tween
 			base.UpdateObject();
 		}
 
-		public void Dispose()
+		public override void Release()
 		{
-			
+			if( this._source != null ) this._source.PoolPush();
+			foreach (var item in this._valueDic)
+				item.Value.PoolPush();
+
+			this.PoolPush();
+		}
+
+		public override void Dispose()
+		{
+			base.Dispose();
+			this._target = default(T);
 		}
 	}
 }

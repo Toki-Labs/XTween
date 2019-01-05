@@ -1,10 +1,11 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using Toki.Tween;
 
 namespace Toki.Tween
 {
-    public class WaitForTweenPlay : IEnumerator, ITimer
+    public class WaitForTweenPlay : IEnumerator, ITimer, IDisposable
     {
         /************************************************************************
         *	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
@@ -15,7 +16,6 @@ namespace Toki.Tween
         /************************************************************************
         *	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
         ************************************************************************/
-
 
         /************************************************************************
         *	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
@@ -37,6 +37,7 @@ namespace Toki.Tween
         }
 
         public ITimer Ticker { get{return _ticker;} }
+        public object Current { get{return null;} }
 
         /************************************************************************
         *	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
@@ -45,14 +46,27 @@ namespace Toki.Tween
         /************************************************************************
         *	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
         ************************************************************************/
-        public WaitForTweenPlay(ITimer ticker, AbstractTween tween)
+        
+        /************************************************************************
+        *	 	 	 	 	Coroutine Declaration	 	  			 	 		*
+        ************************************************************************/
+
+        /************************************************************************
+        *	 	 	 	 	Private Method Declaration	 	 	 	 	 		*
+        ************************************************************************/
+
+        /************************************************************************
+        *	 	 	 	 	Protected Method Declaration	 	 	 	 	 	*
+        ************************************************************************/
+
+        /************************************************************************
+        *	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
+        ************************************************************************/
+        public void Initialize(ITimer ticker, AbstractTween tween)
         {
             _ticker = ticker;
             _tween = tween;
         }
-
-        public object Current { get{return null;} }
-
         public bool MoveNext()
         {
             bool isDone = false;
@@ -63,35 +77,20 @@ namespace Toki.Tween
             if( isDone ) _tween.TickerRemoved();
             return !isDone;
         }
-
         public void Reset()
         {
             _tween.GotoAndStop(0);
+        
         }
-
-        /************************************************************************
-        *	 	 	 	 	Coroutine Declaration	 	  			 	 		*
-        ************************************************************************/
-
-
-        /************************************************************************
-        *	 	 	 	 	Private Method Declaration	 	 	 	 	 		*
-        ************************************************************************/
-
-
-        /************************************************************************
-        *	 	 	 	 	Protected Method Declaration	 	 	 	 	 	*
-        ************************************************************************/
-
-
-        /************************************************************************
-        *	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
-        ************************************************************************/
         public float GetDeltaTime( int frameSkip )
         {
             return _ticker.GetDeltaTime( frameSkip );
         }
-
+        public void Dispose()
+        {
+            this._tween = null;
+            this._ticker = null;
+        }
         public void Initialize() {}
         public void AddTimer( TimerListener listener ) {}
         public void RemoveTimer( TimerListener listener ) {}

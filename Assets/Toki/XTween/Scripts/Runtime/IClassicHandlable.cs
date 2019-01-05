@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Toki.Tween
 {
-    public interface IClassicHandlable
+    public interface IClassicHandlable : IDisposable
     {
         IExecutable OnPlay
         {

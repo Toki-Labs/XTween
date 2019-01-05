@@ -2,7 +2,7 @@ using System;
 
 namespace Toki.Tween
 {
-	public interface IIXTween : IXTween
+	public interface IIXTween : IXTween, IDisposable
 	{
 		ITimer Ticker
 		{
@@ -13,6 +13,7 @@ namespace Toki.Tween
 			set;
 		}
 
+		void Initialize( ITimer ticker, float position );
 		void IntializeGroup();
 		void StartPlay();
 		void StartStop();

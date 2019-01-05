@@ -54,11 +54,12 @@ public interface IXTween
 	IXTween Play();
 	WaitForTweenPlay WaitForPlay();
 	WaitForTweenPlay WaitForGotoAndPlay( float position );
-	void Stop();	
-	void TogglePause();
 	IXTween GotoAndPlay( float position );
 	void GotoAndStop( float position );
+	void Stop();
+	void Reset();
 	IXTween Clone();
+	IXTween Lock();
 	IXTween AddOnComplete(Action listener);
 	IXTween AddOnComplete(IExecutable executor);
 	IXTween AddOnStop(Action listener);
@@ -67,4 +68,5 @@ public interface IXTween
 	IXTween AddOnPlay(IExecutable executor);
 	IXTween AddOnUpdate(Action listener);
 	IXTween AddOnUpdate(IExecutable executor);
+	void Release();
 }

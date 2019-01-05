@@ -6,9 +6,9 @@ namespace Toki.Tween
 {
 	public class ObjectTween : AbstractTween, IIXTweenObject
 	{
-		public ObjectTween( ITimer ticker ) : base( ticker, 0 )
+		public override void Initialize( ITimer ticker, float position )
 		{
-				
+			base.Initialize(ticker, 0);
 		}
 			
 		protected IEasing _easing;
@@ -65,7 +65,28 @@ namespace Toki.Tween
 			
 		protected override AbstractTween NewInstance()
 		{
-			return new ObjectTween(_ticker);
+			AbstractTween tween = new ObjectTween();
+			tween.Initialize(_ticker, 0);
+			return tween;
+		}
+
+		public override void Release()
+		{
+			this._autoDispose = true;
+			this.InternalRelease();
+		}
+
+		protected override void InternalRelease()
+		{
+			if( this._autoDispose ) this.PoolPush();
+		}
+
+		public override void Dispose()
+		{
+			base.Dispose();
+			this._updater.Release();
+			this._easing = null;
+			this._updater = null;
 		}
 	}
 }

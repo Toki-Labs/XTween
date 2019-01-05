@@ -43,9 +43,9 @@ namespace Toki.Tween
 		/************************************************************************
 			*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 			************************************************************************/
-		public GroupTween( ITimer ticker, float position ) : base(ticker, position)
+		public override void Initialize( ITimer ticker, float position )
 		{
-				
+			base.Initialize(ticker, position);
 		}
 			
 			

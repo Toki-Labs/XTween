@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Toki.Tween
 {
-	public class ColorUpdater<T> : AbstractUpdater, IUpdating
+	public class ColorUpdater<T> : AbstractUpdater
 	{
 		protected int _updateCount;
 		protected T _target = default(T);
@@ -16,8 +16,8 @@ namespace Toki.Tween
 		protected Color _col;
 		protected XColorHash _start;
 		protected XColorHash _finish;
-		protected Action<T,Color> _updator;
-		protected List<Action> _updateList;
+		protected Action<T,Color> _updater;
+		protected List<Action> _updateList = new List<Action>();
 			
 
 		public T Target
@@ -56,14 +56,12 @@ namespace Toki.Tween
 			Type type = typeof(T);
 			PropertyInfo pInfo = type.GetProperty(_propertyName);
 			_col = (Color)pInfo.GetValue(_target, null);
-			_updator = (Action<T, Color>)Delegate.CreateDelegate
+			_updater = (Action<T, Color>)Delegate.CreateDelegate
 			(
 				typeof(Action<T, Color>),
 				typeof(T).GetProperty(_propertyName).GetSetMethod()
 			);
 
-			this._updateList = new List<Action>();
-			
 			if (_start.ContainRed)
 			{
 				_col.r = _start.Red;
@@ -194,7 +192,29 @@ namespace Toki.Tween
 
 		protected void Updator()
 		{
-			_updator(_target, _col);
+			_updater(_target, _col);
+		}
+
+		public override void Release()
+		{
+			if( this._start != null ) this._start.PoolPush();
+			if( this._finish != null ) this._finish.PoolPush();
+			this.PoolPush();
+		}
+
+		public override void Dispose()
+		{
+			base.Dispose();
+			this._updateCount = 0;
+			this._target = default(T);
+			this._propertyName = null;
+			this._sColor = default(Color);
+			this._dColor = default(Color);
+			this._col = default(Color);
+			this._start = null;
+			this._finish = null;
+			this._updater = null;
+			this._updateList.Clear();
 		}
 	}
 }

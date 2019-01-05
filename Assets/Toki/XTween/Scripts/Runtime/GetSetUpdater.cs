@@ -8,8 +8,7 @@ namespace Toki.Tween
 {
 	public class GetSetUpdater : AbstractUpdater
 	{
-		protected XObjectHash _source;
-		protected Action _StopOnDestroyHandler;
+		protected XEventHash _source;
 		protected Action _updater;
 		protected Action<float> _setter;
 		protected float[] _controlPoints;
@@ -18,7 +17,7 @@ namespace Toki.Tween
 			
 		public override Action StopOnDestroyHandler
 		{
-			set { _StopOnDestroyHandler = value; }
+			set { _stopOnDestroyHandler = value; }
 		}
 
 		public float StartValue { set{this._startValue = value;} }
@@ -27,7 +26,7 @@ namespace Toki.Tween
 		public Action<float> Setter { set{this._setter = value;} }
 			
 		public override IClassicHandlable Start { set{}	}
-		public override IClassicHandlable Finish { set{} }
+		public override IClassicHandlable Finish { set{_source = (XEventHash)value;} }
 		
 		public override void ResolveValues()
 		{
@@ -49,6 +48,23 @@ namespace Toki.Tween
 		protected void UpdateBezierValue()
 		{
 			_setter( Calcurate(_controlPoints, _startValue, _endValue) );
+		}
+
+		public override void Release()
+		{
+			this._source.PoolPush();
+			this.PoolPush();
+		}
+
+		public override void Dispose()
+		{
+			base.Dispose();
+			this._source = null;
+			this._updater = null;
+			this._setter = null;
+			this._controlPoints = null;
+			this._startValue = 0f;
+			this._endValue = 0f;
 		}
 	}
 }

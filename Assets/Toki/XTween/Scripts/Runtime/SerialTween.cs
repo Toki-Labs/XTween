@@ -6,13 +6,14 @@ namespace Toki.Tween
 {
 	public class SerialTween : GroupTween
 	{
-		private float _lastTime = 0;
+		private float _lastTime = 0f;
 			
-		public SerialTween( IXTween[] targets, ITimer ticker, float position ) : base(ticker, position)
+		public void Initialize( IXTween[] targets, ITimer ticker, float position )
 		{
+			base.Initialize(ticker, position);
 			int l = targets.Length;
 				
-			_duration = 0;
+			_duration = 0f;
 				
 			if (l > 0) {
 				_a = targets[0] as IIXTween;
@@ -153,7 +154,9 @@ namespace Toki.Tween
 					targets.Add(t[i].Clone());
 				}
 			}
-			return new SerialTween(targets.ToArray(), Ticker, 0);
+			SerialTween tween = Pool<SerialTween>.Pop();
+			tween.Initialize(targets.ToArray(), Ticker, 0);
+			return tween;
 		}
 	}
 }

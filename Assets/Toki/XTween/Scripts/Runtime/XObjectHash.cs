@@ -3,14 +3,21 @@ using System;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
+using Toki;
 using Toki.Tween;
 
 namespace Toki.Tween
 {
-    public class XObjectSet
+    public class XObjectSet : IDisposable
     {
-        public Action<float,float> updator;
+        public Action<float,float> updater;
         public XObjectValues value;
+
+        public void Dispose()
+        {
+            this.updater = null;
+            this.value = default(XObjectValues);
+        }
     }
 
     public struct XObjectValues
@@ -40,9 +47,9 @@ namespace Toki.Tween
     }
 }
 
-public struct XObjectHash : IClassicHandlable
+public class XObjectHash : XEventHash
 {
-    private Dictionary<string, XObjectSet> _objectSet;
+    private Dictionary<string, XObjectSet> _objectSet = new Dictionary<string, XObjectSet>();
     public Dictionary<string, XObjectSet> ObjectSet { get{return this._objectSet;} }
     
     public XObjectHash Add( string key, float start, float end )
@@ -82,8 +89,7 @@ public struct XObjectHash : IClassicHandlable
 
     private XObjectHash AddValue( string key, XObjectValues value )
     {
-        if( this._objectSet == null ) this._objectSet = new Dictionary<string, XObjectSet>();
-        XObjectSet set = new XObjectSet();
+        XObjectSet set = Pool<XObjectSet>.Pop();
         set.value = value;
         this._objectSet.Add(key, set);
         return this;
@@ -94,72 +100,20 @@ public struct XObjectHash : IClassicHandlable
         return _objectSet[key].value.current;
     }
 
-    private IExecutable _onPlay;
-    private IExecutable _onStop;
-    private IExecutable _onUpdate;
-    private IExecutable _onComplete;
-    
-    public IExecutable OnPlay
-    {
-        get
-        {
-            return this._onPlay;
-        }
-        set
-        {
-            this._onPlay = value;
-        }
-    }
-
-    public IExecutable OnStop
-    {
-        get
-        {
-            return this._onStop;
-        }
-        set
-        {
-            this._onStop = value;
-        }
-    }
-
-    public IExecutable OnUpdate
-    {
-        get
-        {
-            return this._onUpdate;
-        }
-        set
-        {
-            this._onUpdate = value;
-        }
-    }
-
-    public IExecutable OnComplete
-    {
-        get
-        {
-            return this._onComplete;
-        }
-        set
-        {
-            this._onComplete = value;
-        }
-    }
-
-    public void CopyFrom( IClassicHandlable source )
-    {
-        this._onPlay = source.OnPlay;
-        this._onStop = source.OnStop;
-        this._onUpdate = source.OnUpdate;
-        this._onComplete = source.OnComplete;
-    }
-
     public static XObjectHash New
     {
         get
         {
-            return new XObjectHash();
+            return Pool<XObjectHash>.Pop();
         }
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        foreach ( var item in this._objectSet )
+            item.Value.PoolPush();
+        
+        this._objectSet.Clear();
     }
 }

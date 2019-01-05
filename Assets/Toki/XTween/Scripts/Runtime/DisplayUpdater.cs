@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Toki.Tween
 {
-	public class DisplayUpdater : AbstractUpdater, IUpdating
+	public class DisplayUpdater : AbstractUpdater
 	{
 		protected int _updateCount;
 		protected GameObject _target = null;
@@ -28,7 +28,7 @@ namespace Toki.Tween
 		protected Vector3 _sca;
 		protected XHash _start;
 		protected XHash _finish;
-		protected List<Action> _updateList;
+		protected List<Action> _updateList = new List<Action>();
 		public GameObject Target
 		{
 			get { return _target; }
@@ -54,11 +54,8 @@ namespace Toki.Tween
 			if( _resolvedValues ) return;
 			if( _target == null )
 			{
-				if( this._stopOnDestroyHandler != null )
-				{
-					this._stopOnDestroyHandler.Invoke();
-				}
-				return;
+				this._stopOnDestroyHandler.Invoke();
+				throw new System.NullReferenceException("Tweener target is Null at start point");
 			}
 
 			this._transform = this._target.transform;
@@ -147,7 +144,6 @@ namespace Toki.Tween
 			bool changedSize = false;
 			bool changedSca = false;
 			bool changedRot = false;
-			this._updateList = new List<Action>();
 				
 			float x = _pos.x;
 			float y = _pos.y;
@@ -421,7 +417,6 @@ namespace Toki.Tween
 			if (this._target == null)
 			{
 				this._stopOnDestroyHandler.Invoke();
-				this.Dispose();
 			}
 			else
 			{
@@ -430,15 +425,6 @@ namespace Toki.Tween
 					this._updateList[i].Invoke();
 				}
 			}
-		}
-
-		public void Dispose()
-		{
-			// Debug.Log ("Dispose");
-			this._stopOnDestroyHandler = null;
-			this._updateList.Clear();
-			this._updateList = null;
-			this._transform = null;
 		}
 
 		protected virtual Action GetUpdateX() { return _finish.ControlPointX == null ? (Action)this.UpdateX : this.UpdateBezierX; }
@@ -611,6 +597,38 @@ namespace Toki.Tween
 		private void UpdateRotation()
 		{
 			this._transform.localEulerAngles = _rot;
+		}
+
+		public override void Release()
+		{
+			if( this._start != null ) this._start.PoolPush();
+			if( this._finish != null ) this._finish.PoolPush();
+			this.PoolPush();
+		}
+
+		public override void Dispose()
+		{
+			base.Dispose();
+			this._updateCount = 0;
+			this._target = null;
+			this._transform = null;
+			this._transformRect = null;
+			this._sPos = default(Vector3);
+			this._dPos = default(Vector3);
+			this._sRect = default(UIRect);
+			this._dRect = default(UIRect);
+			this._sSize = default(Vector2);
+			this._dSize = default(Vector2);
+			this._sSca = default(Vector3);
+			this._dSca = default(Vector3);
+			this._sRot = default(Vector3);
+			this._dRot = default(Vector3);
+			this._pos = default(Vector3);
+			this._rect = default(UIRect);
+			this._size = default(Vector2);
+			this._rot = default(Vector3);
+			this._sca = default(Vector3);
+			this._updateList.Clear();
 		}
 	}
 }

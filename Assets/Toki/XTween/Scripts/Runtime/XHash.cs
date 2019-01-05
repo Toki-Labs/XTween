@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Toki;
 using Toki.Tween;
 
 namespace Toki.Tween
@@ -25,7 +26,7 @@ namespace Toki.Tween
 	}
 }
 
-public class XHash : IClassicHandlable
+public class XHash : XEventHash
 {
 	private IExecutable _onPlay;
     private IExecutable _onStop;
@@ -87,7 +88,7 @@ public class XHash : IClassicHandlable
         this._onUpdate = source.OnUpdate;
         this._onComplete = source.OnComplete;
     }
-	private IClassicHandlable _start;
+	private XHash _start;
 
 	/*********************************** Position **********************************/
     public bool IsRelativeX { get; set; }
@@ -453,7 +454,7 @@ public class XHash : IClassicHandlable
     {
         get
         {
-            return new XHash();
+            return Pool<XHash>.Pop();
         }
     }
 
@@ -855,7 +856,34 @@ public class XHash : IClassicHandlable
 
 	public XHash GetStart()
 	{
-		if( this._start == null ) this._start = new XHash();
-		return (XHash)this._start;
+		if( this._start == null ) 
+			this._start = Pool<XHash>.Pop();
+			
+		return this._start;
+	}
+
+	public override void Dispose()
+	{
+		base.Dispose();
+		this.IsRelativeX = this.IsRelativeY = this.IsRelativeZ = false;
+		this.IsRelativeScaleX = this.IsRelativeScaleY = this.IsRelativeScaleZ = false;
+		this.IsRelativeRotateX = this.IsRelativeRotateY = this.IsRelativeRotateZ = false;
+		this.IsRelativeLeft = this.IsRelativeRight = this.IsRelativeTop = this.IsRelativeBottom = false;
+		this.IsRelativeWidth = this.IsRelativeHeight = false;
+		this._containX = this._containY = this._containZ = false;
+		this._x = this._y = this._z = 0f;
+		this._controlX = this._controlY = this._controlZ = null;
+		this._containLeft = this._containRight = this._containTop = this._containBottom = false;
+		this._left = this._right = this._top = this._bottom = 0f;
+		this._controlLeft = this._controlRight = this._controlTop = this._controlBottom = null;
+		this._containWidth = this._containHeight = false;
+		this._width = this._height = 0f;
+		this._controlBottom = this._controlHeight = null;
+		this._containScaleX = this._containScaleY = this._containScaleZ = false;
+		this._controlRotationX = this._controlRotationY = this._controlRotationZ = null;
+		this._rotateXClockwise = this._rotateYClockwise = this._rotateZClockwise = false;
+		this._rotationX = this._rotationY = this._rotationZ = 0f;
+		this._rotateXCount = this._rotateYCount = this._rotateZCount = 0;
+		this._start = null;
 	}
 }

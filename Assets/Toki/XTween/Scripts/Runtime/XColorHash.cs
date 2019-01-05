@@ -2,71 +2,12 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Toki;
 using Toki.Tween;
 
-public struct XColorHash : IClassicHandlable
+public class XColorHash : XEventHash
 {
-	private IExecutable _onPlay;
-    private IExecutable _onStop;
-    private IExecutable _onUpdate;
-    private IExecutable _onComplete;
-
-    public IExecutable OnPlay
-    {
-        get
-        {
-            return this._onPlay;
-        }
-        set
-        {
-            this._onPlay = value;
-        }
-    }
-
-    public IExecutable OnStop
-    {
-        get
-        {
-            return this._onStop;
-        }
-        set
-        {
-            this._onStop = value;
-        }
-    }
-
-    public IExecutable OnUpdate
-    {
-        get
-        {
-            return this._onUpdate;
-        }
-        set
-        {
-            this._onUpdate = value;
-        }
-    }
-
-    public IExecutable OnComplete
-    {
-        get
-        {
-            return this._onComplete;
-        }
-        set
-        {
-            this._onComplete = value;
-        }
-    }
-
-    public void CopyFrom( IClassicHandlable source )
-    {
-        this._onPlay = source.OnPlay;
-        this._onStop = source.OnStop;
-        this._onUpdate = source.OnUpdate;
-        this._onComplete = source.OnComplete;
-    }
-	private IClassicHandlable _start;
+	private XColorHash _start;
 
 	/*********************************** Color **********************************/
     public bool IsRelativeRed { get; set; }
@@ -141,7 +82,7 @@ public struct XColorHash : IClassicHandlable
     {
         get
         {
-            return new XColorHash();
+            return Pool<XColorHash>.Pop();
         }
     }
 
@@ -242,7 +183,19 @@ public struct XColorHash : IClassicHandlable
 
 	public XColorHash GetStart()
 	{
-		if( this._start == null ) this._start = new XColorHash();
-		return (XColorHash)this._start;
+		if( this._start == null ) 
+			this._start = Pool<XColorHash>.Pop();
+			
+		return this._start;
+	}
+
+	public override void Dispose()
+	{
+		base.Dispose();
+		this.IsRelativeRed = this.IsRelativeGreen = this.IsRelativeBlue = this.IsRelativeAlpha = false;
+		this._containRed = this._containGreen = this._containBlue = this._containAlpha = false;
+		this._red = this._green = this._blue = this._alpha = 0f;
+		this._controlRed = this._controlGreen = this._controlBlue = this._controlAlpha = null;
+		
 	}
 }
