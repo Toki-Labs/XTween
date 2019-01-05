@@ -25,7 +25,7 @@ namespace Toki.Tween
 	}
 }
 
-public struct XHash : IClassicHandlable
+public class XHash : IClassicHandlable
 {
 	private IExecutable _onPlay;
     private IExecutable _onStop;

@@ -1,13 +1,16 @@
 using UnityEngine;
 using System.Collections;
 
-public class QuarticEaseInOut : IEasing
+namespace Toki.Tween
 {
-	public float Calculate( float t, float b, float c, float d )
+	public class QuarticEaseInOut : IEasing
 	{
-		if ((t /= d / 2f) < 1f) {
-			return c / 2f * t * t * t * t + b;
+		public float Calculate( float t, float b, float c, float d )
+		{
+			if ((t /= d / 2f) < 1f) {
+				return c / 2f * t * t * t * t + b;
+			}
+			return -c / 2f * ((t -= 2f) * t * t * t - 2f) + b;
 		}
-		return -c / 2f * ((t -= 2f) * t * t * t - 2f) + b;
 	}
 }

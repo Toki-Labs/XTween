@@ -23,16 +23,15 @@ You can check example at [XTween Example](http://toki-labs.com/xtween)
 Implementation
 ---
 ```csharp
-/******* Simple Use **************/
+// Simple use
 XTween.To(gameObject, XHash.Position(600f,200f)).Play();
 
 
-/******* Shortcut type ***********/
+// Shortcut type
 gameObject.To(XHash.Position(600f,200f)).Play();
 
 
-/******* Use with Coroutine ******/
-//You can use this like normal yield instruction.
+// Use with coroutine
 IEnumerator tweenCoroutine = CoroutineTween();
 StartCoroutine(tweenCoroutine);
 
@@ -258,6 +257,12 @@ XTween.ToColor(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
 XTween.ToColor<Image>(imageInstance, "color", XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
 ```
 
+Easing
+---
+```csharp
+gameObject.To(XHash.Position(600f,200f), 1f, Ease.QuintOut).Play();
+```
+
 Custom Easing
 ---
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/EaseCurve.png)
@@ -265,7 +270,7 @@ Custom Easing
 ```csharp
 XHash hash = XHash.New.Position(200f,50f,-1500f)
 	     .AddControlPointX(-1000f,550f).AddControlPointY(550f,-300f);
-XTween.To(target3D, hash, EaseName.MyEasing).Play();
+XTween.To(target3D, hash, Ease.Custom(EaseCustom.MyEasing)).Play();
 ```
 
 Decorator

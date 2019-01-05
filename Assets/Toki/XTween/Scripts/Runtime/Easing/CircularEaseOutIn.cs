@@ -2,13 +2,16 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class CircularEaseOutIn : IEasing
+namespace Toki.Tween
 {
-	public float Calculate( float t, float b, float c, float d )
+	public class CircularEaseOutIn : IEasing
 	{
-		if (t < d / 2f) {
-			return (c / 2f) * (float)Math.Sqrt(1f - (t = (t * 2f) / d - 1f) * t) + b;
+		public float Calculate( float t, float b, float c, float d )
+		{
+			if (t < d / 2f) {
+				return (c / 2f) * (float)Math.Sqrt(1f - (t = (t * 2f) / d - 1f) * t) + b;
+			}
+			return -(c / 2f) * ((float)Math.Sqrt(1f - (t = (t * 2f - d) / d) * t) - 1f) + (b + c / 2f);
 		}
-		return -(c / 2f) * ((float)Math.Sqrt(1f - (t = (t * 2f - d) / d) * t) - 1f) + (b + c / 2f);
 	}
 }

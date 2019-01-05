@@ -1,18 +1,21 @@
 using UnityEngine;
 using System.Collections;
 
-public class Bounce
+namespace Toki.Tween
 {
-	static Bounce()
+	public class Bounce
 	{
-		easeIn =  new BounceEaseIn();
-		easeOut = new BounceEaseOut();
-		easeInOut = new BounceEaseInOut();
-		easeOutIn = new BounceEaseOutIn();
+		static Bounce()
+		{
+			easeIn =  new BounceEaseIn();
+			easeOut = new BounceEaseOut();
+			easeInOut = new BounceEaseInOut();
+			easeOutIn = new BounceEaseOutIn();
+		}
+			
+		public static IEasing easeIn;
+		public static IEasing easeOut;
+		public static IEasing easeInOut;
+		public static IEasing easeOutIn;
 	}
-		
-	public static IEasing easeIn;
-	public static IEasing easeOut;
-	public static IEasing easeInOut;
-	public static IEasing easeOutIn;
 }

@@ -1,10 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
-public class CubicEaseOut : IEasing
+namespace Toki.Tween
 {
-	public float Calculate( float t, float b, float c, float d )
+	public class CubicEaseOut : IEasing
 	{
-		return c * ((t = t / d - 1f) * t * t + 1f) + b;
+		public float Calculate( float t, float b, float c, float d )
+		{
+			return c * ((t = t / d - 1f) * t * t + 1f) + b;
+		}
 	}
 }

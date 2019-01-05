@@ -2,10 +2,13 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class ExponentialEaseIn : IEasing
+namespace Toki.Tween
 {
-	public float Calculate( float t, float b, float c, float d )
+	public class ExponentialEaseIn : IEasing
 	{
-		return t == 0f ? b : c * (float)Math.Pow(2f, 10f * (t / d - 1f)) + b;
+		public float Calculate( float t, float b, float c, float d )
+		{
+			return t == 0f ? b : c * (float)Math.Pow(2f, 10f * (t / d - 1f)) + b;
+		}
 	}
 }

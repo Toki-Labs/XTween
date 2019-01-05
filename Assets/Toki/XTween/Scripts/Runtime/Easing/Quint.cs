@@ -1,18 +1,21 @@
 using UnityEngine;
 using System.Collections;
 
-public class Quint
+namespace Toki.Tween
 {
-	static Quint()
+	public class Quint
 	{
-		easeIn = new QuinticEaseIn();
-		easeOut = new QuinticEaseOut();
-		easeInOut = new QuinticEaseInOut();
-		easeOutIn = new QuinticEaseOutIn();
+		static Quint()
+		{
+			easeIn = new QuinticEaseIn();
+			easeOut = new QuinticEaseOut();
+			easeInOut = new QuinticEaseInOut();
+			easeOutIn = new QuinticEaseOutIn();
+		}
+			
+		public static IEasing easeIn;
+		public static IEasing easeOut;
+		public static IEasing easeInOut;
+		public static IEasing easeOutIn;
 	}
-		
-	public static IEasing easeIn;
-	public static IEasing easeOut;
-	public static IEasing easeInOut;
-	public static IEasing easeOutIn;
 }

@@ -81,16 +81,11 @@ public class ExampleTest : ExampleBase
 		{
 			Debug.Log("Start");
 			Transform trans = this.target3D.transform;
-			IEasing ease = Quint.easeIn;
+			IEasing ease = Ease.ElasticOut;
 			yield return wait;
-			// yield return XTween.ToValue(x=>
-			// {
-			// 	Vector3 pos = trans.localPosition;
-			// 	pos.x = x;
-			// 	trans.localPosition = pos;
-			// }, 0f, 1000f, 1f, Ease.Custom(EaseCustom.MyEasing)).AddOnComplete(Debug.Break).WaitForPlay();
+			yield return trans.To(XHash.New.AddX(0f,1000f), 1f, Ease.ElasticOut).AddOnComplete(Debug.Break).WaitForPlay();
 
-			camera3D.ToProperty("fieldOfView", 6f).Play();
+			// camera3D.ToProperty("fieldOfView", 6f, 1f, ease).Play();
 
 			// XTween.To(this.target3D, XHash.Position(200f,50f,-1500f), data.time, data.Easing)
 			// 		.AddOnComplete(()=>Debug.Break()).Play();

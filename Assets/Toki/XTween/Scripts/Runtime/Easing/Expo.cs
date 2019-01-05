@@ -1,18 +1,21 @@
 using UnityEngine;
 using System.Collections;
 
-public class Expo
+namespace Toki.Tween
 {
-	static Expo()
+	public class Expo
 	{
-		easeIn = new ExponentialEaseIn();
-		easeOut = new ExponentialEaseOut();
-		easeInOut = new ExponentialEaseInOut();
-		easeOutIn = new ExponentialEaseOutIn();
+		static Expo()
+		{
+			easeIn = new ExponentialEaseIn();
+			easeOut = new ExponentialEaseOut();
+			easeInOut = new ExponentialEaseInOut();
+			easeOutIn = new ExponentialEaseOutIn();
+		}
+			
+		public static IEasing easeIn;
+		public static IEasing easeOut;
+		public static IEasing easeInOut;
+		public static IEasing easeOutIn;
 	}
-		
-	public static IEasing easeIn;
-	public static IEasing easeOut;
-	public static IEasing easeInOut;
-	public static IEasing easeOutIn;
 }

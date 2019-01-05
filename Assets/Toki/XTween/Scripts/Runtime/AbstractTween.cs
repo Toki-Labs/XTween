@@ -24,6 +24,7 @@ namespace Toki.Tween
 		protected uint _frameSkip = 1;
 		protected uint _frameSkipCount = 0;
 		protected bool _enableGroup = true;
+		//when wrapped in decorator
 		protected Action _decoratorStopOnDestroy;
 		protected IClassicHandlable _classicHandlers;
 		protected TickListener _tickListener;
@@ -81,44 +82,39 @@ namespace Toki.Tween
 		
 		public IClassicHandlable ClassicHandlers
 		{
-			get { return _classicHandlers; }
+			get 
+			{
+				if( _classicHandlers == null )
+				{
+					_classicHandlers = new XHash();
+				} 
+				return _classicHandlers; 
+			}
 			set { _classicHandlers = value; }
 		}
 			
 		public IExecutable OnPlay
 		{
 			get { return _classicHandlers != null ? _classicHandlers.OnPlay : null; }
-			set { GetClassicHandlers.OnPlay = value; }
+			set { ClassicHandlers.OnPlay = value; }
 		}
 			
 		public IExecutable OnStop
 		{
 			get { return _classicHandlers != null ? _classicHandlers.OnStop : null; }
-			set { GetClassicHandlers.OnStop = value; }
+			set { ClassicHandlers.OnStop = value; }
 		}
 			
 		public IExecutable OnUpdate
 		{
 			get { return _classicHandlers != null ? _classicHandlers.OnUpdate : null; }
-			set { GetClassicHandlers.OnUpdate = value; }
+			set { ClassicHandlers.OnUpdate = value; }
 		}
 			
 		public IExecutable OnComplete
 		{
 			get { return _classicHandlers != null ? _classicHandlers.OnComplete : null; }
-			set { GetClassicHandlers.OnComplete = value; }
-		}
-			
-		protected IClassicHandlable GetClassicHandlers
-		{
-			get 
-			{
-				if( this._classicHandlers == null )
-				{
-					this._classicHandlers = new XHash();
-				}
-				return _classicHandlers; 
-			}
+			set { ClassicHandlers.OnComplete = value; }
 		}
 
 		public override void StopOnDestroy()

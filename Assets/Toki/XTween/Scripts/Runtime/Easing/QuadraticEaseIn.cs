@@ -1,10 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
-public class QuadraticEaseIn : IEasing
+namespace Toki.Tween
 {
-	public float Calculate( float t, float b, float c, float d )
+	public class QuadraticEaseIn : IEasing
 	{
-		return c * (t /= d) * t + b;
+		public float Calculate( float t, float b, float c, float d )
+		{
+			return c * (t /= d) * t + b;
+		}
 	}
 }

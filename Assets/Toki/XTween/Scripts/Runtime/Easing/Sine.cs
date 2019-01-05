@@ -1,18 +1,21 @@
 using UnityEngine;
 using System.Collections;
 
-public class Sine
+namespace Toki.Tween
 {
-	static Sine()
+	public class Sine
 	{
-		easeIn = new SineEaseIn();
-		easeOut = new SineEaseOut();
-		easeInOut = new SineEaseInOut();
-		easeOutIn = new SineEaseOutIn();
+		static Sine()
+		{
+			easeIn = new SineEaseIn();
+			easeOut = new SineEaseOut();
+			easeInOut = new SineEaseInOut();
+			easeOutIn = new SineEaseOutIn();
+		}
+			
+		public static IEasing easeIn;
+		public static IEasing easeOut;
+		public static IEasing easeInOut;
+		public static IEasing easeOutIn;
 	}
-		
-	public static IEasing easeIn;
-	public static IEasing easeOut;
-	public static IEasing easeInOut;
-	public static IEasing easeOutIn;
 }

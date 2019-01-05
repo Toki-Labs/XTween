@@ -2,10 +2,13 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class SineEaseOut : IEasing
+namespace Toki.Tween
 {
-	public float Calculate( float t, float b, float c, float d )
+	public class SineEaseOut : IEasing
 	{
-        return c * (float)Math.Sin(t / d * ((float)Math.PI / 2f)) + b;
+		public float Calculate( float t, float b, float c, float d )
+		{
+		return c * (float)Math.Sin(t / d * ((float)Math.PI / 2f)) + b;
+		}
 	}
 }

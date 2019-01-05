@@ -1,10 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
-public class QuinticEaseIn : IEasing
+namespace Toki.Tween
 {
-	public float Calculate( float t, float b, float c, float d )
+	public class QuinticEaseIn : IEasing
 	{
-		return c * (t /= d) * t * t * t * t + b;
+		public float Calculate( float t, float b, float c, float d )
+		{
+			return c * (t /= d) * t * t * t * t + b;
+		}
 	}
 }
