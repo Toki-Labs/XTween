@@ -61,29 +61,33 @@ Performance compare with other tweener.
 __Garbage Alloc__
 >__Start__
 >
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Start.png)
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start.png)
->Garbage produce 1/12 than other tweener, Creation cost 1/10 than other tweener.
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start_1000.JPG)
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/iTween_Start_1000.JPG)
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/DTween_Start_1000.JPG)
+>XTween rarely produces Garbage
 
 >__End__
 >
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_End.png)
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.png)
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End_1000.JPG)
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/iTween_End_1000.JPG)
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/DTween_End_1000.JPG)
 >XTween is don't produce garbage.
 
->Gabage Alloc Time|Other Tweener|XTween
->--------|-----------|------
->Start|4.7K|0.4KB
->End|0.17KB|0KB
->Total|4.9KB|0.4KB
-> 
->Garbage produce 1/12 than other tweener.
-
 __CPU Performance__
->Compare when move 100 gameObject
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Update.png)
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Update.png)
->XTween is 2 times faster than other tweener.
+>Compare when move 1000 gameObject
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Update_1000.JPG)
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/iTween_Update_1000.JPG)
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/DTween_Update_1000.JPG)
+>XTween is similar to DTween, but 2 times faster than i Tweener.
+
+>Gabage Alloc Time/Cost|XTween|D Tween|I Tween
+>--------|-----------|------
+>Start|122B/2.7ms|0.6MB/1.8ms|4.7MB/158ms
+>End|0B/1ms|0B/1ms|169.9KB|80ms
+>Update|0.8ms|0.8ms|1.7ms
+>Total|122B/4.5ms|0.6MB/3.6ms|4.9MB/240ms
+> 
+>XTween does not produce Garbage because it uses Pooling. and had good performance at cpu
 
 __Code Compare__
  >__Other Tweener Code__
