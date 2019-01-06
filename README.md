@@ -56,7 +56,7 @@ Version(Alpha) 0.0.86 - [XTween_0.0.86.unitypackage](https://github.com/Toki-Lab
 
 Performance
 ---
-Performance compare with other tweener.
+Tweener comparison when moving 1000 gameObjects.
 
 __Garbage Alloc__
 >__Start__
@@ -74,7 +74,6 @@ __Garbage Alloc__
 >XTween is don't produce garbage.
 
 __CPU Performance__
->Compare when move 1000 gameObject
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Update_1000.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/DTween_Update_1000.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/iTween_Update_1000.png)
