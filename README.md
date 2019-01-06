@@ -63,21 +63,21 @@ __Garbage Alloc__
 >
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Start.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start.png)
->Garbage produce 1/74 than other tweener, Creation cost 1/3 than other tweener.
+>Garbage produce 1/12 than other tweener, Creation cost 1/10 than other tweener.
 
 >__End__
 >
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_End.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.png)
->Garbage produe 1/50 than other tweener.
+>XTween is don't produce garbage.
 
 >Gabage Alloc Time|Other Tweener|XTween
 >--------|-----------|------
->Start|185.5K|2.5KB
->End|1KB|0.02KB
->Total|186.5KB|2.52KB
+>Start|4.7K|0.4KB
+>End|0.17KB|0KB
+>Total|4.9KB|0.4KB
 > 
->Garbage produce 1/74 than other tweener.
+>Garbage produce 1/12 than other tweener.
 
 __CPU Performance__
 >Compare when move 100 gameObject
@@ -293,10 +293,40 @@ tween = XTween.Repeat(tween, 3/*3 time repeat*/);
 //Reverse Tweener
 tween = XTween.Reverse(tween);
 tween.Play();
+```
 
-//When end tweener
-tween.GotoAndStop(0.5f); //Move to Tweener's 0.5sec
-tween.GotoAndPlay(0.3f); //Move to 0.3sec and play;
+Reuse
+---
+XTween is basically autodispose. when the tweener is completed or stopped.
+So, you should set to "Lock" for reuse tweener
+```csharp
+//This Tweener will not dispose when stop or complete.
+IXTween tween = gameObject.To(XHash.Position(600f,200f)).Lock().Play();
+
+//When the tweener after completed or stopped. You can reuse this.
+tween.Reset(); //Set to play position 0;
+tween.Play(); //Replay
+
+//When you are not using twin anymore. You should "Release" this tween.
+tween.Release();
+tween = null;
+```
+
+Time Control
+---
+```csharp
+//Start
+IXTween tween = gameObject.To(XHash.Position(600f,200f)).Lock().Play();
+//Stop at this position
+tween.Stop();
+//Resume
+tween.Play();
+//Move to 0.5sec and Stop
+tween.GotoAndStop(0.5f); 
+//Move to 0.3sec and play;
+tween.GotoAndPlay(0.3f); 
+//Position set to 0 and Stop
+tween.Reset();
 ```
 
 Author Info
