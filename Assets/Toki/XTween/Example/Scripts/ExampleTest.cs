@@ -86,15 +86,12 @@ public class ExampleTest : ExampleBase
 			Debug.Log("Start");
 			IEasing ease = Ease.ElasticOut;
 			yield return wait;
-			// yield return target3D.To(XHash.New.AddX(1000f), 1f).WaitForPlay();
-			if( this._tween == null ) this._tween = this.camera3D.ToProperty("fieldOfView", 6f).Lock();
-			else this._tween.Reset();
-				
-			yield return this._tween.WaitForPlay();
-			yield return wait;
+			
+			// if( this._tween == null ) this._tween = this.camera3D.ToProperty("fieldOfView", 6f, 1f, Ease.ExpoOut).Lock();
+			// else this._tween.Reset();
+			// yield return this._tween.WaitForPlay();
+			// yield return wait;
 			// Debug.Break();
-
-			// camera3D.ToProperty("fieldOfView", 6f, 1f, ease).Play();
 
 			// XTween.To(this.target3D, XHash.Position(200f,50f,-1500f), data.time, data.Easing)
 			// 		.AddOnComplete(()=>Debug.Break()).Play();
@@ -113,32 +110,37 @@ public class ExampleTest : ExampleBase
 			// Debug.Log("Test");
 			// yield return wait;
 			// Debug.Break();
+
+			this.StartiTween(this.target3D);
+
 		}
 	}
 
-	private IEnumerator Test()
-	{
-		yield return new WaitForSeconds(1f);
-		yield return this._tween.WaitForGotoAndPlay(0.3f);
-	}
-
+	private bool _isBreak = false;
+	
 	private void StartiTween(GameObject target)
 	{
 		Hashtable hash = new Hashtable();
-		hash.Add("x", 0f);
-		hash.Add("y", 0f);
-		hash.Add("z", -200f);
+		hash.Add("x", 200f);
+		hash.Add("y", 5f);
+		hash.Add("z", -1500f);
 		hash.Add("time", 1f);
 		hash.Add("islocal", true);
 		hash.Add("easetype", "easeOutElastic");
 		hash.Add("oncomplete", "OnComplete");
 		hash.Add("oncompletetarget", this.gameObject);
-		// iTween.MoveTo(target, hash);
+		iTween.MoveTo(target, hash);
+	}
+
+	private void StartXTween()
+	{
+		target3D.To(XHash.Position(200f,50f,-1500f), 1f, Ease.ElasticOut)
+				.AddOnComplete(()=>Debug.Log("Complete")).Play();
 	}
 	
 	void OnComplete()
 	{
-		// _isBreak = true;
+		_isBreak = true;
 	}
 	
 	/************************************************************************
