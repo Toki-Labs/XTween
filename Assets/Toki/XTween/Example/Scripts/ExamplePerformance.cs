@@ -11,7 +11,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-// using DG.Tweening;
+using DG.Tweening;
 
 public class ObjectSet
 {
@@ -159,12 +159,12 @@ public class ExamplePerformance : ExampleBase
 		hash.Add("easetype", "easeOutElastic");
 		hash.Add("oncomplete", "OnComplete");
 		hash.Add("oncompletetarget", this.gameObject);
-		// iTween.MoveTo(target, hash);
+		iTween.MoveTo(target, hash);
 	}
 
 	private void StartDOTween(GameObject target)
 	{
-		// target.transform.DOLocalMove(new Vector3(0f,0f,-200f), 1f).SetEase(DG.Tweening.Ease.OutElastic).Play();
+		target.transform.DOLocalMove(new Vector3(0f,0f,-200f), 1f).SetEase(DG.Tweening.Ease.OutElastic).Play();
 	}
 	
 	void OnComplete()

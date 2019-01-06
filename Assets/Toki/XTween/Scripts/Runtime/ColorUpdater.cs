@@ -11,13 +11,11 @@ namespace Toki.Tween
 		protected int _updateCount;
 		protected T _target = default(T);
 		protected string _propertyName;
-		protected Color _sColor;
-		protected Color _dColor;
+		protected UpdaterColor _updaterColor = new UpdaterColor();
 		protected Color _col;
 		protected XColorHash _start;
 		protected XColorHash _finish;
 		protected Action<T,Color> _updater;
-		protected List<Action> _updateList = new List<Action>();
 			
 
 		public T Target
@@ -56,7 +54,7 @@ namespace Toki.Tween
 
 			Type type = typeof(T);
 			PropertyInfo pInfo = type.GetProperty(_propertyName);
-			_col = (Color)pInfo.GetValue(_target, null);
+			Color col = (Color)pInfo.GetValue(_target, null);
 			_updater = (Action<T, Color>)Delegate.CreateDelegate
 			(
 				typeof(Action<T, Color>),
@@ -65,68 +63,75 @@ namespace Toki.Tween
 
 			if (_start.ContainRed)
 			{
-				_col.r = _start.Red;
+				col.r = _start.Red;
 			}
 			if (_start.ContainGreen)
 			{
-				_col.g = _start.Green;
+				col.g = _start.Green;
 			}
 			if (_start.ContainBlue)
 			{
-				_col.b = _start.Blue;
+				col.b = _start.Blue;
 			}
 			if (_start.ContainAlpha)
 			{
-				_col.a = _start.Alpha;
+				col.a = _start.Alpha;
 			}
 
-			float red = _col.r;
-			float green = _col.g;
-			float blue = _col.b;
-			float alpha = _col.a;
+			bool changeRed = false;
+			bool changeGreen = false;
+			bool changeBlue = false;
+			bool changeAlpha = false;
 
-			if( _finish.ControlPointRed != null && !_finish.ContainRed ) _finish.Red = _col.r;
-			if( _finish.ControlPointGreen != null && !_finish.ContainGreen ) _finish.Green = _col.g;
-			if( _finish.ControlPointBlue != null && !_finish.ContainBlue ) _finish.Blue = _col.b;
-			if( _finish.ControlPointAlpha != null && !_finish.ContainAlpha ) _finish.Alpha = _col.a;
+			float red = col.r;
+			float green = col.g;
+			float blue = col.b;
+			float alpha = col.a;
+
+			if( _finish.ControlPointRed != null && !_finish.ContainRed ) _finish.Red = col.r;
+			if( _finish.ControlPointGreen != null && !_finish.ContainGreen ) _finish.Green = col.g;
+			if( _finish.ControlPointBlue != null && !_finish.ContainBlue ) _finish.Blue = col.b;
+			if( _finish.ControlPointAlpha != null && !_finish.ContainAlpha ) _finish.Alpha = col.a;
 
 			if (_finish.ContainRed)
 			{
 				if (red != _finish.Red || _finish.ControlPointRed != null || _finish.IsRelativeRed)
 				{
+					changeRed = true;
 					red = _finish.IsRelativeRed ? red + _finish.Red : _finish.Red;
-					this._updateList.Add(GetUpdateRed());
 				}
 			}
 			if (_finish.ContainGreen)
 			{
 				if (green != _finish.Green || _finish.ControlPointGreen != null || _finish.IsRelativeGreen)
 				{
+					changeGreen = true;
 					green = _finish.IsRelativeGreen ? green + _finish.Green : _finish.Green;
-					this._updateList.Add(GetUpdateGreen());
 				}
 			}
 			if (_finish.ContainBlue)
 			{
 				if (blue != _finish.Blue || _finish.ControlPointBlue != null || _finish.IsRelativeBlue)
 				{
+					changeBlue = true;
 					blue = _finish.IsRelativeBlue ? blue + _finish.Blue : _finish.Blue;
-					this._updateList.Add(GetUpdateBlue());
 				}
 			}
 			if (_finish.ContainAlpha)
 			{
 				if (alpha != _finish.Alpha || _finish.ControlPointAlpha != null || _finish.IsRelativeAlpha)
 				{
+					changeAlpha = true;
 					alpha = _finish.IsRelativeAlpha ? alpha + _finish.Alpha : _finish.Alpha;
-					this._updateList.Add(GetUpdateAlpha());
 				}
 			}
 
-			this._sColor = new Color(_col.r, _col.b, _col.g, _col.a);
-			this._dColor = new Color(red, green, blue, alpha);
-			this._updateList.Add(Updator);
-			this._updateCount = this._updateList.Count;
+			_col = col;
+			Color sColor = new Color(col.r, col.b, col.g, col.a);
+			Color dColor = new Color(red, green, blue, alpha);
+			this._updaterColor.Initialize(sColor, dColor, 
+				_finish.ControlPointRed, _finish.ControlPointGreen, _finish.ControlPointBlue, _finish.ControlPointAlpha, 
+				changeRed, changeGreen, changeBlue, changeAlpha);
 			this._resolvedValues = true;
 		}
 
@@ -134,10 +139,7 @@ namespace Toki.Tween
 		{
 			if (IsNullTarget()) return;
 
-			for (int i = 0; i < this._updateCount; ++i)
-			{
-				this._updateList[i].Invoke();
-			}
+			_updater(_target, this._updaterColor.Update(_invert, _factor, _col));
 		}
 
 		private bool IsNullTarget()
@@ -148,48 +150,6 @@ namespace Toki.Tween
 				return true;
 			}
 			return false;
-		}
-		
-		protected virtual Action GetUpdateRed() { return _finish.ControlPointRed == null ? (Action)this.UpdateRed : this.UpdateBezierRed; }
-		protected virtual Action GetUpdateGreen() { return _finish.ControlPointGreen == null ? (Action)this.UpdateGreen : this.UpdateBezierGreen; }
-		protected virtual Action GetUpdateBlue() { return _finish.ControlPointBlue == null ? (Action)this.UpdateBlue : this.UpdateBezierBlue; }
-		protected virtual Action GetUpdateAlpha() { return _finish.ControlPointAlpha == null ? (Action)this.UpdateAlpha : this.UpdateBezierAlpha; }
-		protected virtual void UpdateRed()
-		{
-			_col.r = _sColor.r * _invert + _dColor.r * _factor;
-		}
-		protected virtual void UpdateBezierRed()
-		{
-			// _col.r = Calcurate( _finish.ControlPointRed, _sColor.r, _dColor.r );
-		}
-		protected virtual void UpdateGreen()
-		{
-			_col.g = _sColor.g * _invert + _dColor.g * _factor;
-		}
-		protected virtual void UpdateBezierGreen()
-		{
-			// _col.g = Calcurate( _finish.ControlPointGreen, _sColor.g, _dColor.g );
-		}
-		protected virtual void UpdateBlue()
-		{
-			_col.b = _sColor.b * _invert + _dColor.b * _factor;
-		}
-		protected virtual void UpdateBezierBlue()
-		{
-			// _col.b = Calcurate( _finish.ControlPointBlue, _sColor.b, _dColor.b );
-		}
-		protected virtual void UpdateAlpha()
-		{
-			_col.a = _sColor.a * _invert + _dColor.a * _factor;
-		}
-		protected virtual void UpdateBezierAlpha()
-		{
-			// _col.a = Calcurate( _finish.ControlPointAlpha, _sColor.a, _dColor.a );
-		}
-
-		protected void Updator()
-		{
-			_updater(_target, _col);
 		}
 
 		public override void Release()
@@ -202,16 +162,14 @@ namespace Toki.Tween
 		public override void Dispose()
 		{
 			base.Dispose();
+			this._updaterColor.Dispose();
 			this._updateCount = 0;
 			this._target = default(T);
 			this._propertyName = null;
-			this._sColor = default(Color);
-			this._dColor = default(Color);
 			this._col = default(Color);
 			this._start = null;
 			this._finish = null;
 			this._updater = null;
-			this._updateList.Clear();
 		}
 	}
 }
