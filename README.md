@@ -81,11 +81,11 @@ __CPU Performance__
 >XTween is similar to DTween, but 2 times faster than i Tweener.
 
 >Gabage Alloc Time/Cost|XTween|D Tween|I Tween
->--------|-----------|------
->Start|122B/2.7ms|0.6MB/1.8ms|4.7MB/158ms
->End|0B/1ms|0B/1ms|169.9KB|80ms
+>----------------------|------|-------|-------
+>Start|122B|0.6MB|4.7MB
+>End|0B|0B|169.9KB|80ms
 >Update|0.8ms|0.8ms|1.7ms
->Total|122B/4.5ms|0.6MB/3.6ms|4.9MB/240ms
+>Total|122B/0.8ms|0.6MB/0.8ms|4.9MB/1.7ms
 > 
 >XTween does not produce Garbage because it uses Pooling. and had good performance at cpu
 
