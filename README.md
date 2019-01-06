@@ -71,7 +71,7 @@ __Garbage Alloc__
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End_1000.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/DTween_End_1000.png)
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/iTween_End_1000.png)
->XTween is don't produce garbage.
+>XTween is don't produces garbage.
 
 __CPU Performance__
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Update_1000.png)

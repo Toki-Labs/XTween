@@ -9,10 +9,13 @@ namespace Toki.Tween
         protected float _invert;
         protected float _factor = 0f;
         protected bool _resolvedValues = false;
-        protected Action _stopOnDestroyHandler;
-        public virtual Action StopOnDestroyHandler
+        protected AbstractTween _tweener;
+        public AbstractTween Tweener
         {
-            set { _stopOnDestroyHandler = value; }
+            set
+            {
+                this._tweener = value;
+            }
         }
         public abstract IClassicHandlable Start {set;}
         public abstract IClassicHandlable Finish {set;}
@@ -22,7 +25,11 @@ namespace Toki.Tween
             _factor = factor;
             UpdateObject();
         }
-        protected float Calcurate( float[] cpVec, float source, float finish )
+        public static float Calcurate( float source, float finish, float invert, float factor )
+        {
+            return source * invert + finish * factor;
+        }
+        public static float Calcurate( float[] cpVec, float source, float finish, float invert, float factor )
         {
             float l;
             int ip;
@@ -31,16 +38,16 @@ namespace Toki.Tween
             float p2;
             float result;
 
-            if (_factor != 1f)
+            if (factor != 1f)
             {
                 if ((l = cpVec.Length) == 1)
                 {
-                    result = source + _factor * (2 * _invert * (cpVec[0] - source) + _factor * (finish - source));
+                    result = source + factor * (2 * invert * (cpVec[0] - source) + factor * (finish - source));
                 }
                 else
                 {
-                    ip = (int)(_factor * l) >> 0;
-                    it = (_factor - (ip * (1 / l))) * l;
+                    ip = (int)(factor * l) >> 0;
+                    it = (factor - (ip * (1 / l))) * l;
                     if (ip == 0)
                     {
                         p1 = source;
@@ -56,7 +63,7 @@ namespace Toki.Tween
                         if( ip >= l )
                         {
                             ip = (int)l - 1;
-                            return source + _factor * (2 * _invert * (cpVec[ip] - source) + _factor * (finish - source));
+                            return source + factor * (2 * invert * (cpVec[ip] - source) + factor * (finish - source));
                         }
                         else
                         {
@@ -69,7 +76,7 @@ namespace Toki.Tween
             }
             else
             {
-                result = source * _invert + finish * _factor;
+                result = source * invert + finish * factor;
             }
             return result;
         }
@@ -82,7 +89,7 @@ namespace Toki.Tween
             this._invert = 0f;
             this._factor = 0f;
             this._resolvedValues = false;
-            this._stopOnDestroyHandler = null;
+            this._tweener = null;
         }
     }
 }

@@ -86,6 +86,17 @@ namespace Toki.Tween
 
 		}
 
+		private TimerListener SetRemoveListener( TimerListener currentListener, TimerListener addListener )
+		{
+			if( currentListener != null )
+			{
+				currentListener.nextListener = addListener;
+				addListener.prevListener = currentListener;
+			}
+
+			return addListener;
+		}
+
 		protected virtual void UpdateTickers ()
 		{
 			this.TimeSet();
@@ -104,7 +115,7 @@ namespace Toki.Tween
 			if ((l.nextListener = _first) != null) {
 				_first.prevListener = l;
 			}
-				
+			
 			TimerListener removeListener = null;
 			while (listener.nextListener != null) {
 				if ((listener = listener.nextListener).Tick(t)) {
@@ -120,7 +131,7 @@ namespace Toki.Tween
 					ll = listener.prevListener;
 					listener.nextListener = null;
 					listener.prevListener = null;
-					removeListener = listener;
+					removeListener = SetRemoveListener(removeListener, listener);
 					listener = ll;
 					--_numListeners;
 				}
@@ -137,7 +148,7 @@ namespace Toki.Tween
 					ll = listener.prevListener;
 					listener.nextListener = null;
 					listener.prevListener = null;
-					removeListener = listener;
+					removeListener = SetRemoveListener(removeListener, listener);
 					listener = ll;
 					--_numListeners;
 				}
@@ -154,7 +165,7 @@ namespace Toki.Tween
 					ll = listener.prevListener;
 					listener.nextListener = null;
 					listener.prevListener = null;
-					removeListener = listener;
+					removeListener = SetRemoveListener(removeListener, listener);
 					listener = ll;
 					--_numListeners;
 				}
@@ -171,7 +182,7 @@ namespace Toki.Tween
 					ll = listener.prevListener;
 					listener.nextListener = null;
 					listener.prevListener = null;
-					removeListener = listener;
+					removeListener = SetRemoveListener(removeListener, listener);
 					listener = ll;
 					--_numListeners;
 				}
@@ -188,7 +199,7 @@ namespace Toki.Tween
 					ll = listener.prevListener;
 					listener.nextListener = null;
 					listener.prevListener = null;
-					removeListener = listener;
+					removeListener = SetRemoveListener(removeListener, listener);
 					listener = ll;
 					--_numListeners;
 				}
@@ -205,7 +216,7 @@ namespace Toki.Tween
 					ll = listener.prevListener;
 					listener.nextListener = null;
 					listener.prevListener = null;
-					removeListener = listener;
+					removeListener = SetRemoveListener(removeListener, listener);
 					listener = ll;
 					--_numListeners;
 				}
@@ -222,7 +233,7 @@ namespace Toki.Tween
 					ll = listener.prevListener;
 					listener.nextListener = null;
 					listener.prevListener = null;
-					removeListener = listener;
+					removeListener = SetRemoveListener(removeListener, listener);
 					listener = ll;
 					--_numListeners;
 				}
@@ -239,7 +250,7 @@ namespace Toki.Tween
 					ll = listener.prevListener;
 					listener.nextListener = null;
 					listener.prevListener = null;
-					removeListener = listener;
+					removeListener = SetRemoveListener(removeListener, listener);
 					listener = ll;
 					--_numListeners;
 				}
@@ -250,7 +261,19 @@ namespace Toki.Tween
 				_first.prevListener = null;
 			}
 			l.nextListener = _tickerListenerPaddings[n + 1];
-			if( removeListener != null ) removeListener.TickerRemoved();
+			if( removeListener != null )
+			{
+				TimerListener prevListener;
+				do
+				{
+					prevListener = removeListener.prevListener;
+					removeListener.TickerRemoved();
+					removeListener.prevListener = null;
+					removeListener.nextListener = null;
+					removeListener = prevListener;
+				}
+				while( removeListener != null );
+			}
 		}
 			
 		public float Time
@@ -265,7 +288,8 @@ namespace Toki.Tween
 				return;
 			}
 			if (_first != null) {
-				if (_first.prevListener != null) {
+				if (_first.prevListener != null) 
+				{
 					_first.prevListener.nextListener = listener;
 					listener.prevListener = _first.prevListener;
 				}

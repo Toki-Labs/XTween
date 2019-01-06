@@ -7,28 +7,18 @@ namespace Toki.Tween
 {
 	public class DisplayUpdater : AbstractUpdater
 	{
-		protected int _updateCount;
 		protected GameObject _target = null;
 		protected Transform _transform;
 		protected RectTransform _transformRect;
-		protected Vector3 _sPos;
-		protected Vector3 _dPos;
-		protected UIRect _sRect;
-		protected UIRect _dRect;
-		protected Vector2 _sSize;
-		protected Vector2 _dSize;
-		protected Vector3 _sSca;
-		protected Vector3 _dSca;
-		protected Vector3 _sRot;
-		protected Vector3 _dRot;
-		protected Vector3 _pos;
-		protected UIRect _rect;
-		protected Vector2 _size;
-		protected Vector3 _rot;
-		protected Vector3 _sca;
 		protected XHash _start;
 		protected XHash _finish;
-		protected List<Action> _updateList = new List<Action>();
+		protected UpdaterVector3 _updaterPosition = new UpdaterVector3();
+		protected UpdaterVector3 _updaterAnchoredPosition = new UpdaterVector3();
+		protected UpdaterVector2 _updaterSizeDelta = new UpdaterVector2();
+		protected UpdaterUIRect _updaterUIRect = new UpdaterUIRect();
+		protected UpdaterVector3 _updaterScale = new UpdaterVector3();
+		protected UpdaterVector3 _updaterRotation = new UpdaterVector3();
+
 		public GameObject Target
 		{
 			get { return _target; }
@@ -54,121 +44,141 @@ namespace Toki.Tween
 			if( _resolvedValues ) return;
 			if( _target == null )
 			{
-				this._stopOnDestroyHandler.Invoke();
+				this._tweener.StopOnDestroy();
 				throw new System.NullReferenceException("Tweener target is Null at start point");
 			}
 
 			this._transform = this._target.transform;
 			this._transformRect = this._target.transform as RectTransform;
-				
+			
+			Vector3 pos;
+			Vector2 size = Vector3.zero;
+			Vector3 rot;
+			Vector3 sca;
+			Rect rect = Rect.zero;
 			if( this._transformRect == null )
 			{
-				_pos = this._transform.localPosition;
+				pos = this._transform.localPosition;
 			}
 			else
 			{
-				_pos = this._transformRect.anchoredPosition3D;
-				_size = this._transformRect.sizeDelta;
-				_rect = new UIRect( this._transformRect.offsetMin.x, 
+				pos = this._transformRect.anchoredPosition3D;
+				size = this._transformRect.sizeDelta;
+				rect = new Rect( this._transformRect.offsetMin.x, 
 									-this._transformRect.offsetMax.y,
 									-this._transformRect.offsetMax.x,
 									this._transformRect.offsetMin.y);
 			}
-			_rot = this._transform.localEulerAngles;
-			_sca = this._transform.localScale;
+			rot = this._transform.localEulerAngles;
+			sca = this._transform.localScale;
 			
 			//if exist source, set values
 			if( _start.ContainX )
 			{
-				_pos.x = _start.X;
+				pos.x = _start.X;
 			}
 			if( _start.ContainY )
 			{
-				_pos.y = _start.Y;
+				pos.y = _start.Y;
 			}
 			if( _start.ContainZ )
 			{
-				_pos.z = _start.Z;
+				pos.z = _start.Z;
 			}
 			if( _start.ContainLeft )
 			{
-				_rect.left = _start.Left;
+				rect.x = _start.Left;
 			}
 			if( _start.ContainTop )
 			{
-				_rect.top = _start.Top;
+				rect.y = _start.Top;
 			}
 			if( _start.ContainRight )
 			{
-				_rect.right = _start.Right;
+				rect.width = _start.Right;
 			}
 			if( _start.ContainBottom )
 			{
-				_rect.bottom = _start.Bottom;
+				rect.height = _start.Bottom;
 			}
 			if( _start.ContainWidth )
 			{
-				_size.x = _start.Width;
+				size.x = _start.Width;
 			}
 			if( _start.ContainHeight )
 			{
-				_size.x = _start.Height;
+				size.x = _start.Height;
 			}
 			if( _start.ContainScaleX )
 			{
-				_sca.x = _start.ScaleX;
+				sca.x = _start.ScaleX;
 			}
 			if( _start.ContainScaleY )
 			{
-				_sca.y = _start.ScaleY;
+				sca.y = _start.ScaleY;
 			}
 			if( _start.ContainScaleZ )
 			{
-				_sca.z = _start.ScaleZ;
+				sca.z = _start.ScaleZ;
 			}
 			if( _start.ContainRotationX )
 			{
-				_rot.x = _start.RotationX;
+				rot.x = _start.RotationX;
 			}
 			if( _start.ContainRotationY )
 			{
-				_rot.y = _start.RotationY;
+				rot.y = _start.RotationY;
 			}
 			if( _start.ContainRotationZ )
 			{
-				_rot.z = _start.RotationZ;
+				rot.z = _start.RotationZ;
 			}
 			
 			bool changedPos = false;
-			bool changedRect = false;
-			bool changedSize = false;
-			bool changedSca = false;
-			bool changedRot = false;
+			bool changeX = false;
+			bool changeY = false;
+			bool changeZ = false;
+			bool changeRect = false;
+			bool changeRectLeft = false;
+			bool changeRectTop = false;
+			bool changeRectRight = false;
+			bool changeRectBottom = false;
+			bool changeSize = false;
+			bool changeSizeX = false;
+			bool changeSizeY = false;
+			bool changeSca = false;
+			bool changeScaX = false;
+			bool changeScaY = false;
+			bool changeScaZ = false;
+			bool changeRot = false;
+			bool changeRotX = false;
+			bool changeRotY = false;
+			bool changeRotZ = false;
 				
-			float x = _pos.x;
-			float y = _pos.y;
-			float z = _pos.z;
+			float x = pos.x;
+			float y = pos.y;
+			float z = pos.z;
 
-			if( _finish.ControlPointX != null && !_finish.ContainX ) _finish.X = _pos.x;
-			if( _finish.ControlPointY != null && !_finish.ContainY ) _finish.Y = _pos.y;
-			if( _finish.ControlPointZ != null && !_finish.ContainZ ) _finish.Z = _pos.z;
+			if( _finish.ControlPointX != null && !_finish.ContainX ) _finish.X = pos.x;
+			if( _finish.ControlPointY != null && !_finish.ContainY ) _finish.Y = pos.y;
+			if( _finish.ControlPointZ != null && !_finish.ContainZ ) _finish.Z = pos.z;
 			
 			if( _finish.ContainX )
 			{
 				if( x != _finish.X || _finish.ControlPointX != null || _finish.IsRelativeX )
 				{ 
 					changedPos = true;
+					changeX = true;
 					x = _finish.IsRelativeX ? x + _finish.X : _finish.X;
-					this._updateList.Add(GetUpdateX());
 				}
 			}
 			if( _finish.ContainY )
 			{
 				if( y != _finish.Y || _finish.ControlPointY != null || _finish.IsRelativeY )
 				{
-					changedPos = true;;
+					changedPos = true;
+					changeY = true;
 					y = _finish.IsRelativeY ? y + _finish.Y : _finish.Y;
-					this._updateList.Add(GetUpdateY());
 				}
 			}
 			if( _finish.ContainZ )
@@ -176,131 +186,131 @@ namespace Toki.Tween
 				if( z != _finish.Z || _finish.ControlPointZ != null || _finish.IsRelativeZ )
 				{
 					changedPos = true;
+					changeZ = true;
 					z = _finish.IsRelativeZ ? z + _finish.Z : _finish.Z;
-					this._updateList.Add(GetUpdateZ());
 				}
 			}
-			float left = _rect.left;
-			float top = _rect.top;
-			float right = _rect.right;
-			float bottom = _rect.bottom;
+			float left = rect.x;
+			float top = rect.y;
+			float right = rect.width;
+			float bottom = rect.height;
 
-			if( _finish.ControlPointLeft != null && !_finish.ContainLeft ) _finish.Left = _rect.left;
-			if( _finish.ControlPointRight != null && !_finish.ContainRight ) _finish.Right = _rect.right;
-			if( _finish.ControlPointTop != null && !_finish.ContainTop ) _finish.Top = _rect.top;
-			if( _finish.ControlPointBottom != null && !_finish.ContainBottom ) _finish.Bottom = _rect.bottom;
+			if( _finish.ControlPointLeft != null && !_finish.ContainLeft ) _finish.Left = rect.x;
+			if( _finish.ControlPointRight != null && !_finish.ContainRight ) _finish.Right = rect.width;
+			if( _finish.ControlPointTop != null && !_finish.ContainTop ) _finish.Top = rect.y;
+			if( _finish.ControlPointBottom != null && !_finish.ContainBottom ) _finish.Bottom = rect.height;
 
 			if( _finish.ContainLeft )
 			{
 				if( left != _finish.Left || _finish.ControlPointLeft != null || _finish.IsRelativeLeft )
 				{ 
-					changedRect = true;
+					changeRect = true;
+					changeRectLeft = true;
 					left = _finish.IsRelativeLeft ? left + _finish.Left : _finish.Left;
-					this._updateList.Add(GetUpdateLeft());
 				}
 			}
 			if( _finish.ContainRight )
 			{
 				if( right != _finish.Right || _finish.ControlPointRight != null || _finish.IsRelativeRight )
 				{ 
-					changedRect = true;
+					changeRect = true;
+					changeRectRight = true;
 					right = _finish.IsRelativeRight ? right + _finish.Right : _finish.Right;
-					this._updateList.Add(GetUpdateRight());
 				}
 			}
 			if( _finish.ContainTop )
 			{
 				if( top != _finish.Top || _finish.ControlPointTop != null || _finish.IsRelativeTop )
 				{ 
-					changedRect = true;
+					changeRect = true;
+					changeRectTop = true;
 					top = _finish.IsRelativeTop ? top + _finish.Top : _finish.Top;
-					this._updateList.Add(GetUpdateTop());
 				}
 			}
 			if( _finish.ContainBottom )
 			{
 				if( bottom != _finish.Bottom || _finish.ControlPointBottom != null || _finish.IsRelativeBottom )
 				{ 
-					changedRect = true;
+					changeRect = true;
+					changeRectBottom = true;
 					bottom = _finish.IsRelativeBottom ? bottom + _finish.Bottom : _finish.Bottom;
-					this._updateList.Add(GetUpdateBottom());
 				}
 			}
-			float width = _size.x;
-			float height = _size.y;
+			float width = size.x;
+			float height = size.y;
 
-			if( _finish.ControlPointWidth != null && !_finish.ContainWidth ) _finish.Width = _size.x;
-			if( _finish.ControlPointHeight != null && !_finish.ContainHeight ) _finish.Height = _size.y;
+			if( _finish.ControlPointWidth != null && !_finish.ContainWidth ) _finish.Width = size.x;
+			if( _finish.ControlPointHeight != null && !_finish.ContainHeight ) _finish.Height = size.y;
 
 			if( _finish.ContainWidth )
 			{
 				if( width != _finish.Width || _finish.ControlPointWidth != null || _finish.IsRelativeWidth )
 				{
-					changedSize = true;
+					changeSize = true;
+					changeSizeX = true;
 					width = _finish.IsRelativeWidth ? width + _finish.Width : _finish.Width;
-					this._updateList.Add(GetUpdateWidth());
 				}
 			}
 			if( _finish.ContainHeight )
 			{
 				if( height != _finish.Height || _finish.ControlPointHeight != null || _finish.IsRelativeHeight )
 				{
-					changedSize = true;
+					changeSize = true;
+					changeSizeY = true;
 					height = _finish.IsRelativeHeight ? height + _finish.Height : _finish.Height;
-					this._updateList.Add(GetUpdateHeight());
 				}
 			}
-			float scaleX = _sca.x;
-			float scaleY = _sca.y;
-			float scaleZ = _sca.z;
+			float scaleX = sca.x;
+			float scaleY = sca.y;
+			float scaleZ = sca.z;
 
-			if( _finish.ControlPointScaleX != null && !_finish.ContainScaleX ) _finish.ScaleX = _sca.x;
-			if( _finish.ControlPointScaleY != null && !_finish.ContainScaleY ) _finish.ScaleY = _sca.y;
-			if( _finish.ControlPointScaleZ != null && !_finish.ContainScaleZ ) _finish.ScaleZ = _sca.z;
+			if( _finish.ControlPointScaleX != null && !_finish.ContainScaleX ) _finish.ScaleX = sca.x;
+			if( _finish.ControlPointScaleY != null && !_finish.ContainScaleY ) _finish.ScaleY = sca.y;
+			if( _finish.ControlPointScaleZ != null && !_finish.ContainScaleZ ) _finish.ScaleZ = sca.z;
 
 			if( _finish.ContainScaleX )
 			{
 				if( scaleX != _finish.ScaleX || _finish.ControlPointScaleX != null || _finish.IsRelativeScaleX )
 				{
-					changedSca = true;
+					changeSca = true;
+					changeScaX = true;
 					scaleX = _finish.IsRelativeScaleX ? scaleX + _finish.ScaleX : _finish.ScaleX;
-					this._updateList.Add(GetUpdateScaleX());
 				}
 			}
 			if( _finish.ContainScaleY )
 			{
 				if( scaleY != _finish.ScaleY || _finish.ControlPointScaleY != null || _finish.IsRelativeScaleY )
 				{
-					changedSca = true;
+					changeSca = true;
+					changeScaY = true;
 					scaleY = _finish.IsRelativeScaleY ? scaleY + _finish.ScaleY : _finish.ScaleY;
-					this._updateList.Add(GetUpdateScaleY());
 				}
 			}
 			if( _finish.ContainScaleZ )
 			{
 				if( scaleZ != _finish.ScaleZ || _finish.ControlPointScaleZ != null || _finish.IsRelativeScaleZ )
 				{
-					changedSca = true;
+					changeSca = true;
+					changeScaZ = true;
 					scaleZ = _finish.IsRelativeScaleZ ? scaleZ + _finish.ScaleZ : _finish.ScaleZ;
-					this._updateList.Add(GetUpdateScaleZ());
 				}
 			}
-			float rotationX = _rot.x;
-			float rotationY = _rot.y;
-			float rotationZ = _rot.z;
+			float rotationX = rot.x;
+			float rotationY = rot.y;
+			float rotationZ = rot.z;
 
-			if( _finish.ControlPointRotationX != null && !_finish.ContainRotationX ) _finish.RotationX = _rot.x;
-			if( _finish.ControlPointRotationY != null && !_finish.ContainRotationY ) _finish.RotationY = _rot.y;
-			if( _finish.ControlPointRotationZ != null && !_finish.ContainRotationZ ) _finish.RotationZ = _rot.z;
+			if( _finish.ControlPointRotationX != null && !_finish.ContainRotationX ) _finish.RotationX = rot.x;
+			if( _finish.ControlPointRotationY != null && !_finish.ContainRotationY ) _finish.RotationY = rot.y;
+			if( _finish.ControlPointRotationZ != null && !_finish.ContainRotationZ ) _finish.RotationZ = rot.z;
 
 			if( _finish.ContainRotationX )
 			{
 				if( rotationX != _finish.RotationX || _finish.ControlPointRotationX != null || 
 					_finish.RotateXCount > 0 || _finish.IsRelativeRotateX )
 				{
-					changedRot = true;
-					rotationX = _finish.IsRelativeRotateX ? rotationX + _finish.RotationX : this.GetRotation( _rot.x, _finish.RotationX, _finish.RotateXClockwise, _finish.RotateXCount );
-					this._updateList.Add(GetUpdateRotationX());
+					changeRot = true;
+					changeRotX = true;
+					rotationX = _finish.IsRelativeRotateX ? rotationX + _finish.RotationX : this.GetRotation( rot.x, _finish.RotationX, _finish.RotateXClockwise, _finish.RotateXCount );
 				}
 			}
 			if( _finish.ContainRotationY )
@@ -308,9 +318,9 @@ namespace Toki.Tween
 				if( rotationY != _finish.RotationY || _finish.ControlPointRotationY != null || 
 					_finish.RotateYCount > 0 || _finish.IsRelativeRotateY )
 				{
-					changedRot = true;
-					rotationY = _finish.IsRelativeRotateY ? rotationY + _finish.RotationY : this.GetRotation( _rot.y, _finish.RotationY, _finish.RotateYClockwise, _finish.RotateYCount );
-					this._updateList.Add(GetUpdateRotationY());
+					changeRot = true;
+					changeRotY = true;
+					rotationY = _finish.IsRelativeRotateY ? rotationY + _finish.RotationY : this.GetRotation( rot.y, _finish.RotationY, _finish.RotateYClockwise, _finish.RotateYCount );
 				}
 			}
 			if( _finish.ContainRotationZ )
@@ -318,62 +328,64 @@ namespace Toki.Tween
 				if( rotationZ != _finish.RotationZ || _finish.ControlPointRotationZ != null || 
 					_finish.RotateZCount > 0 || _finish.IsRelativeRotateZ )
 				{
-					changedRot = true;
-					rotationZ = _finish.IsRelativeRotateZ ? rotationZ + _finish.RotationZ : this.GetRotation( _rot.z, _finish.RotationZ, _finish.RotateZClockwise, _finish.RotateZCount );
-					this._updateList.Add(GetUpdateRotationZ());
+					changeRot = true;
+					changeRotZ = true;
+					rotationZ = _finish.IsRelativeRotateZ ? rotationZ + _finish.RotationZ : this.GetRotation( rot.z, _finish.RotationZ, _finish.RotateZClockwise, _finish.RotateZCount );
 				}
 			}
 
-			if( (changedRect || changedSize) && this._transformRect == null )
+			if( (changeRect || changeSize) && this._transformRect == null )
 			{
 				throw new Exception("'Width,Height,Left,Right,Top,Bottom' properties, can use only in UI object");
 			}
 
 			if( changedPos )
 			{
-				this._transform.localPosition = _pos;
-				this._sPos = new Vector3( _pos.x, _pos.y, _pos.z );
-				this._dPos = new Vector3( x, y, z );
-				Action positionUpdator = this._transformRect == null ?
-					(Action)this.UpdatePosition : (Action)this.UpdateAnchoredPosition;
-				positionUpdator();
-				this._updateList.Add(positionUpdator);
+				this._transform.localPosition = pos;
+				Vector3 sPos = new Vector3( pos.x, pos.y, pos.z );
+				Vector3 dPos = new Vector3( x, y, z );
+				if( _transformRect == null )
+					this._updaterPosition.Initialize(sPos, dPos, _finish.ControlPointX, _finish.ControlPointY, _finish.ControlPointZ, changeX, changeY, changeZ);
+				else
+					this._updaterAnchoredPosition.Initialize(sPos, dPos, _finish.ControlPointX, _finish.ControlPointY, _finish.ControlPointZ, changeX, changeY, changeZ);
 			}
-			if( changedRect )
+			if( changeRect )
 			{
-				this._transformRect.offsetMin = new Vector2(_rect.left, _rect.bottom);
-				this._transformRect.offsetMax = new Vector2(_rect.right, _rect.top) * -1f;
-				this._sRect = new UIRect( _rect.left, _rect.top, _rect.right, _rect.bottom );
-				this._dRect = new UIRect( left, top, right, bottom );
-				this.UpdateRect();
-				this._updateList.Add(UpdateRect);
+				this._transformRect.offsetMin = new Vector2(rect.x, rect.height);
+				this._transformRect.offsetMax = new Vector2(rect.width, rect.y) * -1f;
+				Rect sRect = new Rect( rect.x, rect.y, rect.width, rect.height );
+				Rect dRect = new Rect( left, top, right, bottom );
+				this._updaterUIRect.Initialize(sRect, dRect, _finish.ControlPointLeft, 
+					_finish.ControlPointRight, _finish.ControlPointTop, _finish.ControlPointBottom,
+					changeRectLeft, changeRectRight, changeRectTop, changeRectBottom);
 			}
-			if( changedSize )
+			if( changeSize )
 			{
-				this._transformRect.sizeDelta = _size;
-				this._sSize = new Vector2( _size.x, _size.y );
-				this._dSize = new Vector2( width, height );
-				this.UpdateSize();
-				this._updateList.Add(UpdateSize);
+				this._transformRect.sizeDelta = size;
+				Vector2 sSize = new Vector2( size.x, size.y );
+				Vector2 dSize = new Vector2( width, height );
+				this._updaterSizeDelta.Initialize(sSize, dSize, 
+					_finish.ControlPointWidth, _finish.ControlPointHeight, changeSizeX, changeSizeY);
 			}
-			if( changedSca )
+			if( changeSca )
 			{
-				this._transform.localScale = _sca;
-				this._sSca = new Vector3( _sca.x, _sca.y, _sca.z );
-				this._dSca = new Vector3( scaleX, scaleY, scaleZ );
-				this.UpdateScale();
-				this._updateList.Add(UpdateScale);
+				this._transform.localScale = sca;
+				Vector3 sSca = new Vector3( sca.x, sca.y, sca.z );
+				Vector3 dSca = new Vector3( scaleX, scaleY, scaleZ );
+				this._updaterScale.Initialize(sSca, dSca, 
+					_finish.ControlPointScaleX, _finish.ControlPointScaleY, _finish.ControlPointScaleZ, 
+					changeScaX, changeScaY, changeScaZ);
 			}
-			if( changedRot )
+			if( changeRot )
 			{
-				this._transform.localEulerAngles = _rot;
-				this._sRot = new Vector3( _rot.x, _rot.y, _rot.z );
-				this._dRot = new Vector3( rotationX, rotationY, rotationZ );
-				this.UpdateRotation();
-				this._updateList.Add(UpdateRotation);
+				this._transform.localEulerAngles = rot;
+				Vector3 sRot = new Vector3( rot.x, rot.y, rot.z );
+				Vector3 dRot = new Vector3( rotationX, rotationY, rotationZ );
+				this._updaterRotation.Initialize(sRot, dRot, 
+					_finish.ControlPointRotationX, _finish.ControlPointRotationY, _finish.ControlPointRotationZ, 
+					changeRotX, changeRotY, changeRotZ);
 			}
 
-			this._updateCount = this._updateList.Count;
 			this._resolvedValues = true;
 		}
 
@@ -416,187 +428,33 @@ namespace Toki.Tween
 		{
 			if (this._target == null)
 			{
-				this._stopOnDestroyHandler.Invoke();
+				this._tweener.StopOnDestroy();
 			}
 			else
 			{
-				for (int i = 0; i < this._updateCount; ++i)
-				{
-					this._updateList[i].Invoke();
-				}
+				if( _updaterPosition.Initialized ) 
+					_transform.localPosition = _updaterPosition.Update(_invert, _factor, _transform.localPosition);
+				if( _updaterAnchoredPosition.Initialized )
+					_transformRect.anchoredPosition3D = _updaterAnchoredPosition.Update(_invert, _factor, _transformRect.anchoredPosition3D);
+				if( _updaterUIRect.Initialized )
+					_updaterUIRect.Update(_invert, _factor, _transformRect);
+				if( _updaterScale.Initialized ) 
+					_transform.localScale = _updaterScale.Update(_invert, _factor, _transform.localScale);
+				if( _updaterSizeDelta.Initialized )
+					_transformRect.sizeDelta = _updaterSizeDelta.Update(_invert, _factor, _transformRect.sizeDelta);
+				if( _updaterRotation.Initialized ) 
+					_transform.localEulerAngles = _updaterRotation.Update(_invert, _factor, _transform.localEulerAngles);
 			}
 		}
 
-		protected virtual Action GetUpdateX() { return _finish.ControlPointX == null ? (Action)this.UpdateX : this.UpdateBezierX; }
-		protected virtual Action GetUpdateY() { return _finish.ControlPointY == null ? (Action)this.UpdateY : this.UpdateBezierY; }
-		protected virtual Action GetUpdateZ() { return _finish.ControlPointZ == null ? (Action)this.UpdateZ : this.UpdateBezierZ; }
-		protected virtual Action GetUpdateLeft() { return _finish.ControlPointLeft == null ? (Action)this.UpdateLeft : this.UpdateBezierLeft; }
-		protected virtual Action GetUpdateTop() { return _finish.ControlPointTop == null ? (Action)this.UpdateTop : this.UpdateBezierTop; }
-		protected virtual Action GetUpdateRight() { return _finish.ControlPointRight == null ? (Action)this.UpdateRight : this.UpdateBezierRight; }
-		protected virtual Action GetUpdateBottom() { return _finish.ControlPointBottom == null ? (Action)this.UpdateBottom : this.UpdateBezierBottom; }
-		protected virtual Action GetUpdateWidth() { return _finish.ControlPointWidth == null ? (Action)this.UpdateWidth : this.UpdateBezierWidth; }
-		protected virtual Action GetUpdateHeight() { return _finish.ControlPointHeight == null ? (Action)this.UpdateHeight : this.UpdateBezierHeight; }
-		protected virtual Action GetUpdateScaleX() { return _finish.ControlPointScaleX == null ? (Action)this.UpdateScaleX : this.UpdateBezierScaleX; }
-		protected virtual Action GetUpdateScaleY() { return _finish.ControlPointScaleY == null ? (Action)this.UpdateScaleY : this.UpdateBezierScaleY; }
-		protected virtual Action GetUpdateScaleZ() { return _finish.ControlPointScaleZ == null ? (Action)this.UpdateScaleZ : this.UpdateBezierScaleZ; }
-		protected virtual Action GetUpdateRotationX() { return _finish.ControlPointRotationX == null ? (Action)this.UpdateRotationX : this.UpdateBezierRotationX; }
-		protected virtual Action GetUpdateRotationY() { return _finish.ControlPointRotationY == null ? (Action)this.UpdateRotationY : this.UpdateBezierRotationY; }
-		protected virtual Action GetUpdateRotationZ() { return _finish.ControlPointRotationZ == null ? (Action)this.UpdateRotationZ : this.UpdateBezierRotationZ; }
-
-		protected virtual void UpdateX()
-		{
-			_pos.x = _sPos.x * _invert + _dPos.x * _factor;
-		}
-		protected virtual void UpdateBezierX()
-		{
-			_pos.x = base.Calcurate( _finish.ControlPointX, _sPos.x, _dPos.x );
-		}
-		protected virtual void UpdateY()
-		{
-			_pos.y = _sPos.y * _invert + _dPos.y * _factor;
-		}
-		protected virtual void UpdateBezierY()
-		{
-			_pos.y = base.Calcurate( _finish.ControlPointY, _sPos.y, _dPos.y );
-		}
-		protected virtual void UpdateZ()
-		{
-			_pos.z = _sPos.z * _invert + _dPos.z * _factor;
-		}
-		protected virtual void UpdateBezierZ()
-		{
-			_pos.z = base.Calcurate( _finish.ControlPointZ, _sPos.z, _dPos.z );
-		}
-		protected virtual void UpdateLeft()
-		{
-			_rect.left = _sRect.left * _invert + _dRect.left * _factor;
-		}
-		protected virtual void UpdateBezierLeft()
-		{
-			_rect.left = base.Calcurate( _finish.ControlPointLeft, _sRect.left, _dRect.left );
-		}
-		protected virtual void UpdateTop()
-		{
-			_rect.top = _sRect.top * _invert + _dRect.top * _factor;
-		}
-		protected virtual void UpdateBezierTop()
-		{
-			_rect.top = base.Calcurate( _finish.ControlPointTop, _sRect.top, _dRect.top );
-		}
-		protected virtual void UpdateRight()
-		{
-			_rect.right = _sRect.right * _invert + _dRect.right * _factor;
-		}
-		protected virtual void UpdateBezierRight()
-		{
-			_rect.right = base.Calcurate( _finish.ControlPointRight, _sRect.right, _dRect.right );
-		}
-		protected virtual void UpdateBottom()
-		{
-			_rect.bottom = _sRect.bottom * _invert + _dRect.bottom * _factor;
-		}
-		protected virtual void UpdateBezierBottom()
-		{
-			_rect.bottom = base.Calcurate( _finish.ControlPointBottom, _sRect.bottom, _dRect.bottom );
-		}
-		protected virtual void UpdateWidth()
-		{
-			_size.x = _sSize.x * _invert + _dSize.x * _factor;
-		}
-		protected virtual void UpdateBezierWidth()
-		{
-			_size.x = base.Calcurate( _finish.ControlPointWidth, _sSize.x, _dSize.x );
-		}
-		protected virtual void UpdateHeight()
-		{
-			_size.y = _sSize.y * _invert + _dSize.y * _factor;
-		}
-		protected virtual void UpdateBezierHeight()
-		{
-			_size.y = base.Calcurate( _finish.ControlPointHeight, _sSize.y, _dSize.y );
-		}
-		protected virtual void UpdateScaleX()
-		{
-			_sca.x = _sSca.x * _invert + _dSca.x * _factor;
-		}
-		protected virtual void UpdateBezierScaleX()
-		{
-			_sca.x = base.Calcurate( _finish.ControlPointScaleX, _sSca.x, _dSca.x );
-		}
-		protected virtual void UpdateScaleY()
-		{
-			_sca.y = _sSca.y * _invert + _dSca.y * _factor;
-		}
-		protected virtual void UpdateBezierScaleY()
-		{
-			_sca.y = base.Calcurate( _finish.ControlPointScaleY, _sSca.y, _dSca.y );
-		}
-		protected virtual void UpdateScaleZ()
-		{
-			_sca.z = _sSca.z * _invert + _dSca.z * _factor;
-		}
-		protected virtual void UpdateBezierScaleZ()
-		{
-			_sca.z = base.Calcurate( _finish.ControlPointScaleZ, _sSca.z, _dSca.z );
-		}
-		protected virtual void UpdateRotationX()
-		{
-			_rot.x = _sRot.x * _invert + _dRot.x * _factor;
-		}
-		protected virtual void UpdateBezierRotationX()
-		{
-			_rot.x = base.Calcurate( _finish.ControlPointRotationX, _sRot.x, _dRot.x );
-		}
-		protected virtual void UpdateRotationY()
-		{
-			_rot.y = _sRot.y * _invert + _dRot.y * _factor;
-		}
-		protected virtual void UpdateBezierRotationY()
-		{
-			_rot.y = base.Calcurate( _finish.ControlPointRotationY, _sRot.y, _dRot.y );
-		}
-		protected virtual void UpdateRotationZ()
-		{
-			_rot.z = _sRot.z * _invert + _dRot.z * _factor;
-		}
-		protected virtual void UpdateBezierRotationZ()
-		{
-			_rot.z = base.Calcurate( _finish.ControlPointRotationZ, _sRot.z, _dRot.z );
-		}
-		//update transform
-		private void UpdatePosition()
-		{
-			this._transform.localPosition = _pos;
-		}
+		// protected virtual void UpdateBezierBottom()
+		// {
+		// 	_rect.height = base.Calcurate( _finish.ControlPointBottom, _sRect.height, _dRect.height );
+		// }
+		
 		private void UpdateAnchoredPosition()
 		{
-			this._transformRect.anchoredPosition3D = _pos;
-		}
-		private void UpdateRect()
-		{
-			Vector2 offset = this._transformRect.offsetMin;
-			if(_finish.ContainLeft) offset.x = _rect.left;
-			if(_finish.ContainBottom) offset.y = _rect.bottom;
-			this._transformRect.offsetMin = offset;
-			offset = this._transformRect.offsetMax;
-			if(_finish.ContainRight) offset.x = -_rect.right;
-			if(_finish.ContainTop) offset.y = -_rect.top;
-			this._transformRect.offsetMax = offset;
-		}
-		private void UpdateSize()
-		{
-			Vector2 size = this._transformRect.sizeDelta;
-			if(_finish.ContainWidth) size.x = _size.x;
-			if(_finish.ContainHeight) size.y = _size.y;
-			this._transformRect.sizeDelta = size;
-		}
-		private void UpdateScale()
-		{
-			this._transform.localScale = _sca;
-		}
-		private void UpdateRotation()
-		{
-			this._transform.localEulerAngles = _rot;
+			// this._transformRect.anchoredPosition3D = _pos;
 		}
 
 		public override void Release()
@@ -609,26 +467,15 @@ namespace Toki.Tween
 		public override void Dispose()
 		{
 			base.Dispose();
-			this._updateCount = 0;
+			this._updaterPosition.Dispose();
+			this._updaterAnchoredPosition.Dispose();
+			this._updaterSizeDelta.Dispose();
+			this._updaterUIRect.Dispose();
+			this._updaterScale.Dispose();
+			this._updaterRotation.Dispose();
 			this._target = null;
 			this._transform = null;
 			this._transformRect = null;
-			this._sPos = default(Vector3);
-			this._dPos = default(Vector3);
-			this._sRect = default(UIRect);
-			this._dRect = default(UIRect);
-			this._sSize = default(Vector2);
-			this._dSize = default(Vector2);
-			this._sSca = default(Vector3);
-			this._dSca = default(Vector3);
-			this._sRot = default(Vector3);
-			this._dRot = default(Vector3);
-			this._pos = default(Vector3);
-			this._rect = default(UIRect);
-			this._size = default(Vector2);
-			this._rot = default(Vector3);
-			this._sca = default(Vector3);
-			this._updateList.Clear();
 		}
 	}
 }

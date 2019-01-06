@@ -5,27 +5,6 @@ using System.Collections.Generic;
 using Toki;
 using Toki.Tween;
 
-namespace Toki.Tween
-{
-	public struct UIRect
-	{
-		public float left, right, top, bottom;
-		public UIRect( float left, float top, float right, float bottom )
-		{
-			this.left = left;
-			this.top = top;
-			this.right = right;
-			this.bottom = bottom;
-		}
-
-		public override string ToString()
-		{
-			return "(" + this.left.ToString() + ", " + this.top.ToString() + ", " + 
-					this.right.ToString() + ", " + this.bottom.ToString() + ")";
-		}
-	}
-}
-
 public class XHash : XEventHash
 {
 	private XHash _start;
@@ -159,21 +138,21 @@ public class XHash : XEventHash
         this.AddBottom( bottom, isRelative );
         return this;
     }
-	public XHash AddRect( Toki.Tween.UIRect rect, bool isRelative = false )
+	public XHash AddRect( Rect rect, bool isRelative = false )
 	{
-		this.AddLeft( rect.left, isRelative );
-        this.AddTop( rect.top, isRelative );
-		this.AddRight( rect.right, isRelative );
-        this.AddBottom( rect.bottom, isRelative );
+		this.AddLeft( rect.x, isRelative );
+        this.AddTop( rect.y, isRelative );
+		this.AddRight( rect.width, isRelative );
+        this.AddBottom( rect.height, isRelative );
 		return this;
 	}
-	public XHash AddRect( Toki.Tween.UIRect start, Toki.Tween.UIRect end, bool isRelative = false )
+	public XHash AddRect( Rect start, Rect end, bool isRelative = false )
 	{
 		this._start = this.GetStart().AddRect(start, isRelative);
-		this.AddLeft( end.left, isRelative );
-        this.AddTop( end.top, isRelative );
-		this.AddRight( end.right, isRelative );
-        this.AddBottom( end.bottom, isRelative );
+		this.AddLeft( end.x, isRelative );
+        this.AddTop( end.y, isRelative );
+		this.AddRight( end.width, isRelative );
+        this.AddBottom( end.height, isRelative );
 		return this;
 	}
 
@@ -438,7 +417,7 @@ public class XHash : XEventHash
 		return New.AddRotation(x,y,z,isRelative);
 	}
 
-	public static XHash Rect( UIRect rect, bool isRelative = false )
+	public static XHash Rect( Rect rect, bool isRelative = false )
 	{
 		return New.AddRect(rect, isRelative);
 	}

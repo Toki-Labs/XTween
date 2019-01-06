@@ -35,7 +35,7 @@ namespace Toki.Tween
 					
 				if( _updater != null )
 				{
-					_updater.StopOnDestroyHandler = this.StopOnDestroy;
+					_updater.Tweener = this;
 				}
 			}
 		}
@@ -53,11 +53,11 @@ namespace Toki.Tween
 			{
 				if (time < _duration) 
 				{
-					factor = _easing.Calculate(time, 0.0f, 1.0f, _duration);
+					factor = _easing.Calculate(time, 0f, 1f, _duration);
 				}
 				else 
 				{
-					factor = 1.0f;
+					factor = 1f;
 				}
 			}
 			_updater.Updating(factor);

@@ -11,6 +11,19 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+
+public class ObjectSet
+{
+	public GameObject obj;
+	public Vector3 pos;
+
+	public void SetDefault()
+	{
+		Transform trans = this.obj.transform;
+		trans.localPosition = this.pos;
+	}
+}
 
 public class ExamplePerformance : ExampleBase
 {
@@ -28,6 +41,7 @@ public class ExamplePerformance : ExampleBase
 	private Vector3 _position2D;
 	private Vector3 _position3D;
 	private bool _isBreak = false;
+	private List<ObjectSet> _objList;
     
 	/************************************************************************
 	*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -53,6 +67,7 @@ public class ExamplePerformance : ExampleBase
 	************************************************************************/
 	protected override IEnumerator StartExample()
 	{
+		XTween.Initialize(1000);
 		yield return null;
 		this._position2D = this.target2D.transform.localPosition;
 		this._position3D = this.target3D.transform.localPosition;
@@ -61,6 +76,10 @@ public class ExamplePerformance : ExampleBase
 	/************************************************************************
 	*	 	 	 	 	Coroutine Declaration	 	  			 	 		*
 	************************************************************************/
+	//XTween 1000 - x,y,z - Start: 122B|2.7ms, End: 0B|1ms, Update: 0.8ms
+	//DTween 1000 - x,y,z - Start: 0.6MB|1.8ms, End: 0B|1ms, Update: 0.8ms
+	//iTween 1000 - x,y,z - Start: 4.7MB|158ms, End: 169.9KB|80ms, Update: 1.7ms
+
 	protected override IEnumerator CoroutineStart()
 	{
 		if( this._tween != null )
@@ -70,34 +89,55 @@ public class ExamplePerformance : ExampleBase
 		}
 		this.target2D.transform.localPosition = this._position2D;
 		this.target3D.transform.localPosition = this._position3D;
-		List<GameObject> targetList = new List<GameObject>();
-		const int COUNT = 100;
-		for ( int i = 0; i < COUNT; ++i )
+		int length = 1000;
+
+		if( this._objList == null )
 		{
-			GameObject target = GameObject.Instantiate(this.target3D);
-			Transform trans = target.transform;
-			trans.SetParent( this.target3D.transform.parent );
-			trans.localPosition = new Vector3( UnityEngine.Random.Range(-1200f,1200f), UnityEngine.Random.Range(-500f,500f), -100f );
-			trans.localScale = Vector3.one * 100f;
-			targetList.Add(target);
+			this._objList = new List<ObjectSet>();
+			for ( int i = 0; i < length; ++i )
+			{
+				GameObject target = GameObject.Instantiate(this.target3D);
+				Transform trans = target.transform;
+				trans.SetParent( this.target3D.transform.parent );
+				Vector3 pos = new Vector3( UnityEngine.Random.Range(-1200f,1200f), UnityEngine.Random.Range(-500f,500f), -100f );
+				trans.localPosition = pos;
+				trans.localScale = Vector3.one * 100f;
+				ObjectSet set = new ObjectSet();
+				set.obj = target;
+				set.pos = pos;
+				this._objList.Add(set);
+			}
 		}
+		else
+		{
+			for ( int i = 0; i < length; ++i )
+			{
+				this._objList[i].SetDefault();
+			}
+		}
+		WaitForSeconds wait = new WaitForSeconds(0.1f);
 		GC.Collect();
 		yield return new WaitForSeconds(0.5f);
 		TweenUIData data = this.uiContainer.Data;
 
-		for ( int i = 0; i < COUNT; ++i )
+
+		for ( int i = 0; i < length; ++i )
 		{
-			this.StartXTween(targetList[i]);
-			// this.StartiTween(targetList[i]);
+			this.StartXTween(this._objList[i].obj);
+			// this.StartiTween(this._objList[i].obj);
+			// this.StartDOTween(this._objList[i].obj);
 		}
 	
 		while( true )
 		{
 			if( _isBreak )
 			{
+				yield return wait;
 				GC.Collect();
-				yield return new WaitForSeconds(0.1f);
+				yield return wait;
 				Debug.Break();
+				_isBreak = false;
+				yield break;
 			}
 			yield return null;
 		}
@@ -105,9 +145,7 @@ public class ExamplePerformance : ExampleBase
 
 	private void StartXTween(GameObject target)
 	{
-		IXTween ani = XTween.To(target, XHash.New.AddPosition(0f,0f,-400f), 1f, Ease.ElasticOut);
-		ani.OnComplete = Executor.New(() => _isBreak = true);
-		ani.Play();
+		target.To(XHash.New.AddPosition(0f,0f,-400f), 1f, Ease.ElasticOut).Play();
 	}
 
 	private void StartiTween(GameObject target)
@@ -121,7 +159,12 @@ public class ExamplePerformance : ExampleBase
 		hash.Add("easetype", "easeOutElastic");
 		hash.Add("oncomplete", "OnComplete");
 		hash.Add("oncompletetarget", this.gameObject);
-		// iTween.MoveTo(target, hash);
+		iTween.MoveTo(target, hash);
+	}
+
+	private void StartDOTween(GameObject target)
+	{
+		target.transform.DOLocalMove(new Vector3(0f,0f,-200f), 1f).SetEase(DG.Tweening.Ease.OutElastic).Play();
 	}
 	
 	void OnComplete()

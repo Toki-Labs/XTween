@@ -22,15 +22,13 @@ namespace Toki.Tween
 		protected bool _isPlaying = false;
 		protected bool _isRealTime = false;
 		protected bool _stopOnComplete = true;
-		protected uint _frameSkip = 1;
+		protected uint _frameSkip = 0;
 		protected uint _frameSkipCount = 0;
 		protected bool _enableGroup = true;
 		protected bool _autoDispose = true;
 		//when wrapped in decorator
 		protected Action _decoratorStopOnDestroy;
 		protected IClassicHandlable _classicHandlers;
-		protected TickListener _tickListener;
-			
 			
 		public ITimer Ticker
 		{
@@ -72,11 +70,6 @@ namespace Toki.Tween
 				if( this._frameSkip > 0 )
 				{
 					if( this._frameSkip > 4 ) this._frameSkip = 4;
-					this._tickListener = this.TickByCount;
-				}
-				else
-				{
-					this._tickListener = this.TickNormal;
 				}
 			}
 		}
@@ -329,7 +322,8 @@ namespace Toki.Tween
 
 		public override bool Tick( float time )
 		{
-			return _tickListener( time );
+			if(_frameSkip < 1) return TickNormal(time);
+			else return TickByCount(time);
 		}
 
 		public virtual bool TickNormal( float time )
@@ -368,7 +362,6 @@ namespace Toki.Tween
 
 		public override void TickerRemoved()
 		{
-			// Debug.Log("Remove Ticker");
 			if(_isPlaying && _stopOnComplete)
 			{
 				_isPlaying = false;
@@ -502,7 +495,6 @@ namespace Toki.Tween
 			this._enableGroup = true;
 			this._decoratorStopOnDestroy = null;
 			this._classicHandlers = null;
-			this._tickListener = null;
 		}
 	}
 }

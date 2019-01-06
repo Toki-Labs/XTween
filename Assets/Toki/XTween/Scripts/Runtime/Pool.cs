@@ -37,6 +37,11 @@ namespace Toki
 			}
 		}
 
+		public static void Initialize( int size )
+		{
+			Pool<T>.Instance.InitialCreate(size);
+		}
+
 		public static T Pop()
 		{
 			return Pool<T>.Instance.PopInstance();
@@ -92,6 +97,7 @@ namespace Toki
 		/************************************************************************
 		*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
 		************************************************************************/
+		// private int _count = 0;
 		public void InitialCreate( int size )
 		{
 			while( this._stack.Count < size )
@@ -110,8 +116,10 @@ namespace Toki
 			}
 			else
 			{
+				// _count++;
 				instance = new T();
 			}
+			// Debug.Log(typeof(T) + " - Create Count: " + this._stack.Count);
 			return instance;
 		}
 
@@ -119,7 +127,8 @@ namespace Toki
 		{
 			target.Dispose();
 			this._stack.Push(target);
-			// Debug.Log(target.GetType() + " - Size: " + this._stack.Count );
+			// _count--;
+			// Debug.Log(target.GetType() + " - Dispose: " + _count );
 		}
 
 		public bool ContainsInstance(T target)

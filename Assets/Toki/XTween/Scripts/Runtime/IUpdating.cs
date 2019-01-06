@@ -4,12 +4,12 @@ using UnityEngine;
 namespace Toki.Tween
 {
 	public interface IUpdating : IDisposable
-	{		
-		Action StopOnDestroyHandler
+	{
+		AbstractTween Tweener
 		{
 			set;
-		}
-			
+		}		
+		
 		IClassicHandlable Start
 		{
 			set;
@@ -19,7 +19,7 @@ namespace Toki.Tween
 		{
 			set;
 		}
-			
+	
 		void ResolveValues();
 		void Updating( float factor );
 		void Release();

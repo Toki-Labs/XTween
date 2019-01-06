@@ -51,7 +51,8 @@ namespace Toki.Tween
 		public override void ResolveValues()
 		{
 			if (_resolvedValues) return;
-			if (IsNullTarget() || _propertyName == null) return;
+			if (IsNullTarget() || _propertyName == null)
+				throw new System.NullReferenceException("Tweener target or propertyName is Null at start point");
 
 			Type type = typeof(T);
 			PropertyInfo pInfo = type.GetProperty(_propertyName);
@@ -143,11 +144,7 @@ namespace Toki.Tween
 		{
 			if(EqualityComparer<T>.Default.Equals(_target, default(T))) 
 			{
-				if( _stopOnDestroyHandler != null )
-					_stopOnDestroyHandler.Invoke();
-				this._stopOnDestroyHandler = null;
-				this._updateList.Clear();
-				this._updateList = null;
+				this._tweener.StopOnDestroy();
 				return true;
 			}
 			return false;
@@ -163,7 +160,7 @@ namespace Toki.Tween
 		}
 		protected virtual void UpdateBezierRed()
 		{
-			_col.r = base.Calcurate( _finish.ControlPointRed, _sColor.r, _dColor.r );
+			// _col.r = Calcurate( _finish.ControlPointRed, _sColor.r, _dColor.r );
 		}
 		protected virtual void UpdateGreen()
 		{
@@ -171,7 +168,7 @@ namespace Toki.Tween
 		}
 		protected virtual void UpdateBezierGreen()
 		{
-			_col.g = base.Calcurate( _finish.ControlPointGreen, _sColor.g, _dColor.g );
+			// _col.g = Calcurate( _finish.ControlPointGreen, _sColor.g, _dColor.g );
 		}
 		protected virtual void UpdateBlue()
 		{
@@ -179,7 +176,7 @@ namespace Toki.Tween
 		}
 		protected virtual void UpdateBezierBlue()
 		{
-			_col.b = base.Calcurate( _finish.ControlPointBlue, _sColor.b, _dColor.b );
+			// _col.b = Calcurate( _finish.ControlPointBlue, _sColor.b, _dColor.b );
 		}
 		protected virtual void UpdateAlpha()
 		{
@@ -187,7 +184,7 @@ namespace Toki.Tween
 		}
 		protected virtual void UpdateBezierAlpha()
 		{
-			_col.a = base.Calcurate( _finish.ControlPointAlpha, _sColor.a, _dColor.a );
+			// _col.a = Calcurate( _finish.ControlPointAlpha, _sColor.a, _dColor.a );
 		}
 
 		protected void Updator()

@@ -14,11 +14,6 @@ namespace Toki.Tween
 		protected float[] _controlPoints;
 		protected float _startValue;
 		protected float _endValue;
-			
-		public override Action StopOnDestroyHandler
-		{
-			set { _stopOnDestroyHandler = value; }
-		}
 
 		public float StartValue { set{this._startValue = value;} }
 		public float EndValue { set{this._endValue = value;} }
@@ -47,7 +42,7 @@ namespace Toki.Tween
 
 		protected void UpdateBezierValue()
 		{
-			_setter( Calcurate(_controlPoints, _startValue, _endValue) );
+			_setter( Calcurate(_controlPoints, _startValue, _endValue, _invert, _factor) );
 		}
 
 		public override void Release()

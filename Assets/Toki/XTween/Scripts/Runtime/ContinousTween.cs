@@ -44,7 +44,7 @@ namespace Toki.Tween
 					DisplayContinousUpdater display = (DisplayContinousUpdater)_updater;
 					display.ticker = this._ticker;
 					display.frameSkip = (int)this._frameSkip;
-					display.StopOnDestroyHandler = this.StopOnDestroy;
+					display.Tweener = this;
 				}
 			}
 		}

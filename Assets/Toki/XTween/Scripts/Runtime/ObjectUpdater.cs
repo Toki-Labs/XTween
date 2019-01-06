@@ -54,7 +54,7 @@ namespace Toki.Tween
 				} :
 				delegate( float invert, float factor )
 				{
-					objValue.current = Calcurate(objValue.controlPoint, objValue.start, objValue.end);
+					objValue.current = Calcurate(objValue.controlPoint, objValue.start, objValue.end, invert, factor);
 					item.Value.value = objValue;
 				};
 				item.Value.value = objValue;
@@ -139,7 +139,7 @@ namespace Toki.Tween
 				{
 					if( IsNullTarget() ) return;
 
-					objValue.current = Calcurate(objValue.controlPoint, objValue.start, objValue.end);
+					objValue.current = Calcurate(objValue.controlPoint, objValue.start, objValue.end, invert, factor);
 					item.Value.value = objValue;
 					setter(_target, objValue.current);
 				};
@@ -151,9 +151,7 @@ namespace Toki.Tween
 		{
 			if(EqualityComparer<T>.Default.Equals(_target, default(T))) 
 			{
-				if( _stopOnDestroyHandler != null )
-					_stopOnDestroyHandler.Invoke();
-					
+				this._tweener.StopOnDestroy();					
 				return true;
 			}
 			return false;

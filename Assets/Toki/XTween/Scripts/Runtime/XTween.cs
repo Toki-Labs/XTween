@@ -52,6 +52,17 @@ public class XTween
 		}
 	}
 
+	public static void Initialize( int size )
+	{
+		Pool<XHash>.Initialize(size * 2);
+		Pool<DisplayUpdater>.Initialize(size);
+		Pool<ObjectTween>.Initialize(size);
+		Pool<XObjectHash>.Initialize(size);
+		Pool<ObjectUpdater>.Initialize(size);
+		Pool<XColorHash>.Initialize(size);
+		Pool<WaitForTweenPlay>.Initialize(size);
+	}
+
 	static XTween()
 	{
 #if UNITY_EDITOR
