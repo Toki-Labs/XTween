@@ -70,17 +70,18 @@ namespace Toki.Tween
         
         public bool MoveNext()
         {
-            bool isDone = false;
-            if( _tween.IsPlaying )
+            bool isDone = true;
+            if( _tween != null )
             {
-                isDone = _tween.Tick(_ticker.Time);
+                if( _tween.IsPlaying )
+                {
+                    isDone = _tween.Tick(_ticker.Time);
+                }
+                if( _tween == null )
+                    isDone = true;
+                else 
+                    if( isDone ) _tween.TickerRemoved();
             }
-
-            if( _tween == null )
-                isDone = true;
-            else 
-                if( isDone ) _tween.TickerRemoved();
-
             return !isDone;
         }
 

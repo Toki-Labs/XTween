@@ -336,6 +336,7 @@ namespace Toki.Tween
 						_classicHandlers.OnComplete.Execute();
 
 					InternalRelease();
+					return true;
 				}
 				return false;
 			}			
