@@ -19,6 +19,7 @@ namespace Toki.Tween
 		/************************************************************************
 		*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
 		************************************************************************/
+		public static bool importedPackage = false;
 		
 		/************************************************************************
 		*	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
@@ -390,11 +391,13 @@ namespace Toki.Tween
 			else
 			{
 				string current = XTweenEditorManager.Instance.Data.version;
-				if( !this._checkResult && version == current && this._checkForce )
+				if( !this._checkResult && version == current && this._checkForce && !importedPackage )
 				{
 					this._checkForce = false;
 					EditorUtility.DisplayDialog("Infomation", "You had already lastest version.", "OK");
 				}
+
+				if( importedPackage ) importedPackage = false;
 				//set downloaded
 				this._lastVersion = version;
 			}
