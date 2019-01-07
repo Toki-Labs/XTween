@@ -168,7 +168,7 @@ namespace Toki.Tween
 				string nameStartPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
 				if( File.Exists(tempNamePath) )
 				{
-					File.Copy(tempNamePath, nameStartPath);
+					File.Copy(tempNamePath, nameStartPath, true);
 				}
 				Directory.Delete(tempPath, true);
 			}
