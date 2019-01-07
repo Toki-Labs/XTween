@@ -142,7 +142,7 @@ namespace Toki.Tween
 				{
 					Directory.Delete(path,true);
 				}
-				string namePath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/EaseName.cs";
+				string namePath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
 				string content = XTweenEditorManager.ReadText(namePath);
 				AssetDatabase.ImportPackage(filePath, false);
 				XTweenEditorManager.WriteText(namePath, content);
