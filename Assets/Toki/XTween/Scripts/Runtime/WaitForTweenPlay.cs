@@ -67,6 +67,7 @@ namespace Toki.Tween
             _ticker = ticker;
             _tween = tween;
         }
+        
         public bool MoveNext()
         {
             bool isDone = false;
@@ -74,23 +75,32 @@ namespace Toki.Tween
             {
                 isDone = _tween.Tick(_ticker.Time);
             }
-            if( isDone ) _tween.TickerRemoved();
+
+            if( _tween == null )
+                isDone = true;
+            else 
+                if( isDone ) _tween.TickerRemoved();
+
             return !isDone;
         }
+
         public void Reset()
         {
             _tween.GotoAndStop(0);
         
         }
+
         public float GetDeltaTime( int frameSkip )
         {
             return _ticker.GetDeltaTime( frameSkip );
         }
+
         public void Dispose()
         {
             this._tween = null;
             this._ticker = null;
         }
+
         public void Initialize() {}
         public void AddTimer( TimerListener listener ) {}
         public void RemoveTimer( TimerListener listener ) {}
