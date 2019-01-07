@@ -162,7 +162,16 @@ namespace Toki.Tween
 		private void EmptyTemp()
 		{
 			string tempPath = XTweenEditorManager.TempPath;
-			if( Directory.Exists(tempPath) ) Directory.Delete(tempPath, true);
+			if( Directory.Exists(tempPath) )
+			{
+				string tempNamePath = Path.Combine(tempPath, "EaseCustomTemp");
+				string nameStartPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
+				if( File.Exists(tempNamePath) )
+				{
+					File.Copy(tempNamePath, nameStartPath);
+				}
+				Directory.Delete(tempPath, true);
+			}
 		}
 		
 		/************************************************************************

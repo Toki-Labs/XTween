@@ -89,6 +89,7 @@ namespace Toki.Tween
 			if( File.Exists(tempNamePath) )
 			{
 				File.Copy(tempNamePath, nameStartPath);
+				File.Delete(tempNamePath);
 				return;
 			}
 
