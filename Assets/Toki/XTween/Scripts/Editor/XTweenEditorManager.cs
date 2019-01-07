@@ -84,15 +84,6 @@ namespace Toki.Tween
 
 		public static void UpdateEasingName()
 		{
-			string tempNamePath = Path.Combine(TempPath, "EaseCustomTemp");
-			string nameStartPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
-			if( File.Exists(tempNamePath) )
-			{
-				File.Copy(tempNamePath, nameStartPath, true);
-				File.Delete(tempNamePath);
-				return;
-			}
-
 			List<EasingData> easingList = XTweenEditorData.Instance.easingDataList;
 			List<string> easingNameList = new List<string>();
 			easingList.ForEach(x => easingNameList.Add(x.name));

@@ -144,14 +144,17 @@ namespace Toki.Tween
 				EditorPrefs.DeleteKey(STORE_CHECKED_DATE);
 				EditorPrefs.DeleteKey(STORE_LAST_VERSION);
 
-				if( EditorUtility.DisplayDialog("Information", "You had successfully updated!", "OK") )
+				EditorUtility.DisplayDialog("Information", "You had successfully updated!", "OK");
+
+				yield return null;
+				Debug.Log("-------------");
+				string tempNamePath = Path.Combine(XTweenEditorManager.TempPath, "EaseCustomTemp");
+				if( File.Exists(tempNamePath) )
 				{
-					Debug.Log("Test");
-					string tempNamePath = Path.Combine(tempPath, "EaseCustomTemp");
-					if( File.Exists(tempNamePath) )
-					{
-						File.Copy(tempNamePath, nameStartPath, true);
-					}
+					File.Copy(tempNamePath, nameStartPath, true);
+					AssetDatabase.Refresh();
+					yield return null;
+					Debug.Log("Clear Log!");
 				}
 			}
 			else
@@ -169,12 +172,6 @@ namespace Toki.Tween
 			string tempPath = XTweenEditorManager.TempPath;
 			if( Directory.Exists(tempPath) )
 			{
-				string tempNamePath = Path.Combine(tempPath, "EaseCustomTemp");
-				string nameStartPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
-				if( File.Exists(tempNamePath) )
-				{
-					File.Copy(tempNamePath, nameStartPath, true);
-				}
 				Directory.Delete(tempPath, true);
 			}
 		}
