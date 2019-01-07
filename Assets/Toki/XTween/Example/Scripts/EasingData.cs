@@ -110,22 +110,11 @@ public class EasingData
 		}
 	}
 
-	public static string[] GetEnumNameList<T>() where T : struct, IConvertible
-	{
-		int length = Enum.GetNames(typeof(T)).Length;
-		string[] enums = new string[length];
-		for ( int i = 0; i < length; ++i )
-		{
-			enums[i] = Enum.GetName( typeof(T), i );
-		}
-		return enums;
-	}
-	
 	public static List<string> EasingList
 	{
 		get
 		{
-			return new List<string>(GetEnumNameList<EasingType>());
+			return new List<string>(XTweenDataUtil.GetEnumNameList<EasingType>());
 		}
 	}
 
@@ -133,7 +122,7 @@ public class EasingData
 	{
 		get
 		{
-			return new List<string>(GetEnumNameList<EasingInOutType>());
+			return new List<string>(XTweenDataUtil.GetEnumNameList<EasingInOutType>());
 		}
 	}
 

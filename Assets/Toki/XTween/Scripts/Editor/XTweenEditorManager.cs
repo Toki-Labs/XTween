@@ -80,14 +80,44 @@ namespace Toki.Tween
 			List<string> easingNameList = new List<string>();
 			easingList.ForEach(x => easingNameList.Add(x.name));
 			string[] names = easingNameList.ToArray();
-			string replaceStr = string.Join(",\n\t", names);
-			string path = AbsPath + "/Assets/Toki/XTween/Scripts/Editor/EaseCustomTemplete";
-			string content = ReadText(path);
-			content = content.Replace("/* Name List */", replaceStr);
-			path = AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
-			WriteText(path, content);
-			XTweenEditorData.Instance.Save();
-			AssetDatabase.Refresh();
+			string filePath = AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
+
+			bool refresh = false;
+			if( File.Exists(filePath) )
+			{
+				List<string> scriptEnumList = new List<string>(XTweenDataUtil.GetEnumNameList<EaseCustom>());
+				if( scriptEnumList.Count == easingNameList.Count )
+				{
+					int length = easingNameList.Count;
+					for ( int i = 0; i < length; ++i )
+					{
+						if( !scriptEnumList.Contains(easingNameList[i]) )
+						{
+							refresh = true;
+							break;
+						}
+					}
+				}
+				else
+				{
+					refresh = true;
+				}
+			}
+			else
+			{
+				refresh = true;
+			}
+
+			if( refresh )
+			{
+				string replaceStr = string.Join(",\n\t", names);
+				string path = AbsPath + "/Assets/Toki/XTween/Scripts/Editor/EaseCustomTemplete";
+				string content = ReadText(path);
+				content = content.Replace("/* Name List */", replaceStr);
+				WriteText(filePath, content);
+				XTweenEditorData.Instance.Save();
+				AssetDatabase.Refresh();
+			}
 		}
 
 		/************************************************************************

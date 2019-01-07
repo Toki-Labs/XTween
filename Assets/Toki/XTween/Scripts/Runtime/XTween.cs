@@ -29,17 +29,6 @@ public class XTween
 		return _tickerReal.GetDeltaTime( frameSkip );
 	}
 
-	public static T[] GetArrayFromCollection<T>( System.Collections.ICollection list )
-	{
-		if( list == null )
-        {
-            return null;
-        }
-		T[] arr = new T[list.Count];
-		list.CopyTo( arr, 0 );
-		return arr;
-	}
-
 	public static ITimer GetTicker( bool isReal )
 	{
 		if( isReal )

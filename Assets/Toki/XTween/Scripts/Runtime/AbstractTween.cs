@@ -131,7 +131,7 @@ namespace Toki.Tween
 		{
 			if( _ticker == null )
 			{
-				throw new System.Exception("Tweener is disposed. if you want to use for reusable instance. Set to \"Lock()\" in instance");
+				throw new System.Exception("Tweener were disposed. if you want to use for reusable instance. Set to \"Lock()\" in instance");
 			}
 		}
 

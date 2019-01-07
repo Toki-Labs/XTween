@@ -137,14 +137,7 @@ namespace Toki.Tween
 		public void Save()
 		{
 			EditorUtility.SetDirty(this);
-			try 
-			{
-				AssetDatabase.SaveAssets();
-			} 
-			catch ( System.Exception e )
-			{
-				Debug.Log(e.Message);
-			}
+			AssetDatabase.SaveAssets();
 		}
 #endif
 	}

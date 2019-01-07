@@ -34,7 +34,7 @@ namespace Toki.Tween
 		protected void ComposeDic()
 		{
 			this._valueDic = _source.ObjectSet;
-			this._keys = XTween.GetArrayFromCollection<string>(this._valueDic.Keys);
+			this._keys = XTweenDataUtil.GetArrayFromCollection<string>(this._valueDic.Keys);
 			this._keyLength = this._keys.Length;
 		}
 
