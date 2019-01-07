@@ -57,13 +57,7 @@ namespace Toki.Tween
 			}
 		}
 
-		private string TempPath
-		{
-			get
-			{
-				return Path.Combine(XTweenEditorManager.AbsPath, "XTweenTemp");
-			}
-		}
+		
 		
 		/************************************************************************
 		*	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
@@ -122,7 +116,7 @@ namespace Toki.Tween
 		private IEnumerator CoroutinePackageLoad()
 		{
 			string fileName = "XTween_" + this.StoredLastVersion + ".unitypackage";
-			string tempPath = this.TempPath;
+			string tempPath = XTweenEditorManager.TempPath;
 			Directory.CreateDirectory(tempPath);
 			string filePath = Path.Combine(tempPath, fileName);
 			string url = "https://github.com/Toki-Labs/XTween/raw/master/Bin/" + fileName;
@@ -137,7 +131,7 @@ namespace Toki.Tween
 			if( string.IsNullOrEmpty(this._http.error) )
 			{
 				string nameStartPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
-				string nameDestPath = Path.Combine( this.TempPath, "EaseCustomTemp" );
+				string nameDestPath = Path.Combine( tempPath, "EaseCustomTemp" );
 				File.Copy(nameStartPath, nameDestPath);
 				string rootPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/";
 				string[] dirs = new string[]{rootPath + "Editor", rootPath + "Runtime"};
@@ -167,7 +161,7 @@ namespace Toki.Tween
 
 		private void EmptyTemp()
 		{
-			string tempPath = this.TempPath;
+			string tempPath = XTweenEditorManager.TempPath;
 			if( Directory.Exists(tempPath) ) Directory.Delete(tempPath, true);
 		}
 		
