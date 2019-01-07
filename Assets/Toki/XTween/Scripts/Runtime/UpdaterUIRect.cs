@@ -13,7 +13,7 @@ namespace Toki.Tween
 		protected float[] _controlRight;
 		protected float[] _controlTop;
 		protected float[] _controlBottom;
-		protected bool _initialized = false;
+		public bool initialized = false;
 		protected bool _updateLeft;
 		protected bool _updateRight;
 		protected bool _updateTop;
@@ -22,8 +22,6 @@ namespace Toki.Tween
 		protected int _updateRightIndex = 0;
 		protected int _updateTopIndex = 0;
 		protected int _updateBottomIndex = 0;
-
-		public bool Initialized { get{ return _initialized; } }
 
 		public void Initialize( Rect sRect, Rect dRect,
 								float[] controlLeft, float[] controlRight, float[] controlTop, float[] controlBottom,
@@ -43,7 +41,7 @@ namespace Toki.Tween
 			this._updateRightIndex = _updateRight ? _controlRight == null ? 1 : 2 : 0;
 			this._updateTopIndex = _updateTop ? _controlTop == null ? 1 : 2 : 0;
 			this._updateBottomIndex = _updateBottom ? _controlBottom == null ? 1 : 2 : 0;
-			this._initialized = true;
+			this.initialized = true;
 		}
 
 		public void Update( float invert, float factor, RectTransform transform )
@@ -90,7 +88,7 @@ namespace Toki.Tween
 			this._updateRight = false;
 			this._updateTop = false;
 			this._updateBottom = false;
-			this._initialized = false;
+			this.initialized = false;
 		}
 	}
 }

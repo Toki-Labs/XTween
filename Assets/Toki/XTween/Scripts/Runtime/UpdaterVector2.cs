@@ -11,13 +11,11 @@ namespace Toki.Tween
 		protected Vector2 _dSize;
 		protected float[] _controlX;
 		protected float[] _controlY;
-		protected bool _initialized = false;
+		public bool initialized = false;
 		protected bool _updateX;
 		protected bool _updateY;
 		protected int _updateXIndex = 0;
 		protected int _updateYIndex = 0;
-
-		public bool Initialized { get{ return _initialized; } }
 
 		public void Initialize( Vector3 sPos, Vector3 dPos,
 								float[] controlX, float[] controlY,
@@ -31,7 +29,7 @@ namespace Toki.Tween
 			this._updateY = updateY;
 			this._updateXIndex = _updateX ? _controlX == null ? 1 : 2 : 0;
 			this._updateYIndex = _updateY ? _controlY == null ? 1 : 2 : 0;
-			this._initialized = true;
+			this.initialized = true;
 		}
 
 		public Vector2 Update( float invert, float factor, Vector2 vect )
@@ -57,7 +55,7 @@ namespace Toki.Tween
 			this._controlY = null;
 			this._updateX = false;
 			this._updateY = false;
-			this._initialized = false;
+			this.initialized = false;
 		}
 	}
 }

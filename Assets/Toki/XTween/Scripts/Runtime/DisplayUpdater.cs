@@ -436,17 +436,17 @@ namespace Toki.Tween
 			}
 			else
 			{
-				if( _updaterPosition.Initialized ) 
+				if( _updaterPosition.initialized ) 
 					_transform.localPosition = _updaterPosition.Update(_invert, _factor, _transform.localPosition);
-				if( _updaterAnchoredPosition.Initialized )
+				if( _updaterAnchoredPosition.initialized )
 					_transformRect.anchoredPosition3D = _updaterAnchoredPosition.Update(_invert, _factor, _transformRect.anchoredPosition3D);
-				if( _updaterUIRect.Initialized )
+				if( _updaterUIRect.initialized )
 					_updaterUIRect.Update(_invert, _factor, _transformRect);
-				if( _updaterScale.Initialized ) 
+				if( _updaterScale.initialized ) 
 					_transform.localScale = _updaterScale.Update(_invert, _factor, _transform.localScale);
-				if( _updaterSizeDelta.Initialized )
+				if( _updaterSizeDelta.initialized )
 					_transformRect.sizeDelta = _updaterSizeDelta.Update(_invert, _factor, _transformRect.sizeDelta);
-				if( _updaterRotation.Initialized ) 
+				if( _updaterRotation.initialized ) 
 					_transform.localEulerAngles = _updaterRotation.Update(_invert, _factor, _transform.localEulerAngles);
 			}
 		}

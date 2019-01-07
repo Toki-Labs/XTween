@@ -13,7 +13,7 @@ namespace Toki.Tween
 		protected float[] _controlGreen;
 		protected float[] _controlBlue;
 		protected float[] _controlAlpha;
-		protected bool _initialized = false;
+		public bool initialized = false;
 		protected bool _updateRed;
 		protected bool _updateGreen;
 		protected bool _updateBlue;
@@ -22,9 +22,6 @@ namespace Toki.Tween
 		protected int _updateGreenIndex = 0;
 		protected int _updateBlueIndex = 0;
 		protected int _updateAlphaIndex = 0;
-
-
-		public bool Initialized { get{ return _initialized; } }
 
 		public void Initialize( Color sColor, Color dColor,
 								float[] controlRed, float[] controlGreen, float[] controlBlue, float[] controlAlpha,
@@ -44,7 +41,7 @@ namespace Toki.Tween
 			this._updateGreenIndex = _updateGreen ? _controlGreen == null ? 1 : 2 : 0;
 			this._updateBlueIndex = _updateBlue ? _controlBlue == null ? 1 : 2 : 0;
 			this._updateAlphaIndex = _updateAlpha ? _controlAlpha == null ? 1 : 2 : 0;
-			this._initialized = true;
+			this.initialized = true;
 		}
 
 		public Color Update( float invert, float factor, Color color )
@@ -83,7 +80,7 @@ namespace Toki.Tween
 			this._updateGreen = false;
 			this._updateBlue = false;
 			this._updateAlpha = false;
-			this._initialized = false;
+			this.initialized = false;
 		}
 	}
 }

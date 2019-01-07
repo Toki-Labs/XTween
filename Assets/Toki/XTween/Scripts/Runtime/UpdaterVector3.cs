@@ -12,15 +12,13 @@ namespace Toki.Tween
 		protected float[] _controlX;
 		protected float[] _controlY;
 		protected float[] _controlZ;
-		protected bool _initialized = false;
+		public bool initialized = false;
 		protected bool _updateX;
 		protected bool _updateY;
 		protected bool _updateZ;
 		protected int _updateXIndex = 0;
 		protected int _updateYIndex = 0;
 		protected int _updateZIndex = 0;
-
-		public bool Initialized { get{ return _initialized; } }
 
 		public void Initialize( Vector3 sPos, Vector3 dPos,
 								float[] controlX, float[] controlY, float[] controlZ,
@@ -37,7 +35,7 @@ namespace Toki.Tween
 			this._updateXIndex = _updateX ? _controlX == null ? 1 : 2 : 0;
 			this._updateYIndex = _updateY ? _controlY == null ? 1 : 2 : 0;
 			this._updateZIndex = _updateZ ? _controlZ == null ? 1 : 2 : 0;
-			this._initialized = true;
+			this.initialized = true;
 		}
 
 		public Vector3 Update( float invert, float factor, Vector3 vect )
@@ -69,7 +67,7 @@ namespace Toki.Tween
 			this._updateX = false;
 			this._updateY = false;
 			this._updateZ = false;
-			this._initialized = false;
+			this.initialized = false;
 		}
 	}
 }
