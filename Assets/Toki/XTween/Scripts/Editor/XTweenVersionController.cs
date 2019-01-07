@@ -147,14 +147,11 @@ namespace Toki.Tween
 				EditorUtility.DisplayDialog("Information", "You had successfully updated!", "OK");
 
 				yield return null;
-				Debug.Log("-------------");
 				string tempNamePath = Path.Combine(XTweenEditorManager.TempPath, "EaseCustomTemp");
 				if( File.Exists(tempNamePath) )
 				{
 					File.Copy(tempNamePath, nameStartPath, true);
 					AssetDatabase.Refresh();
-					yield return null;
-					Debug.Log("Clear Log!");
 				}
 			}
 			else
