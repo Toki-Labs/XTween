@@ -5,13 +5,16 @@
 /*		Created Date 	: 2016-7-27
 /*		Modified Date 	: 
 /**********************************************************************************/
+#define PERFORMANCE_TEST
 
 using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if PERFORMANCE_TEST
 using DG.Tweening;
+#endif
 
 public class ObjectSet
 {
@@ -123,9 +126,9 @@ public class ExamplePerformance : ExampleBase
 
 		for ( int i = 0; i < length; ++i )
 		{
-			this.StartXTween(this._objList[i].obj);
+			// this.StartXTween(this._objList[i].obj);
 			// this.StartiTween(this._objList[i].obj);
-			// this.StartDOTween(this._objList[i].obj);
+			this.StartDOTween(this._objList[i].obj);
 		}
 	
 		while( true )
@@ -145,7 +148,7 @@ public class ExamplePerformance : ExampleBase
 
 	private void StartXTween(GameObject target)
 	{
-		target.To(XHash.New.AddPosition(0f,0f,-400f), 1f, Ease.ElasticOut).Play();
+		target.To(XHash.Position(0f,0f,-400f), 1f, Ease.ElasticOut).Play();
 	}
 
 	private void StartiTween(GameObject target)
@@ -159,12 +162,16 @@ public class ExamplePerformance : ExampleBase
 		hash.Add("easetype", "easeOutElastic");
 		hash.Add("oncomplete", "OnComplete");
 		hash.Add("oncompletetarget", this.gameObject);
+	#if PERFORMANCE_TEST
 		iTween.MoveTo(target, hash);
+	#endif
 	}
 
 	private void StartDOTween(GameObject target)
 	{
+	#if PERFORMANCE_TEST
 		target.transform.DOLocalMove(new Vector3(0f,0f,-200f), 1f).SetEase(DG.Tweening.Ease.OutElastic).Play();
+	#endif
 	}
 	
 	void OnComplete()
