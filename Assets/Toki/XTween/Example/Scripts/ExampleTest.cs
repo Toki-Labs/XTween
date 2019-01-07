@@ -130,7 +130,7 @@ public class ExampleTest : ExampleBase
 		hash.Add("easetype", "easeOutElastic");
 		hash.Add("oncomplete", "OnComplete");
 		hash.Add("oncompletetarget", this.gameObject);
-		iTween.MoveTo(target, hash);
+		// iTween.MoveTo(target, hash);
 	}
 
 	private void StartXTween(GameObject target)
