@@ -145,40 +145,43 @@ namespace Toki.Tween
 
 				GUILayout.Space(10f);
 				int currentVersionInt = int.Parse(currentVersion.Replace(".", ""));
-				int lastVersionInt = int.Parse(this._lastVersion.Replace(".", ""));
-				if( lastVersionInt < currentVersionInt && 
-					!this._versionController.IsChecking &&
-					!this._versionController.IsDownloading )
+				if( !string.IsNullOrEmpty(this._lastVersion) )
 				{
-					this._versionController.Check(true);
-				}
-				this._checkResult = this._lastVersion != NETWORK_ERROR_MSG && 
-									this._lastVersion != INIT_MSG &&
-									lastVersionInt > currentVersionInt;
-				if( this._checkResult )
-				{
-					GUI.backgroundColor = this._versionController.IsDownloading ? Color.gray : Color.green;
-					if( GUILayout.Button("Update to lastest version", GUILayout.Height(30f)) && !this._versionController.IsDownloading )
+					int lastVersionInt = int.Parse(this._lastVersion.Replace(".", ""));
+					if( lastVersionInt < currentVersionInt && 
+						!this._versionController.IsChecking &&
+						!this._versionController.IsDownloading )
 					{
-						if( EditorUtility.DisplayDialog("Update", "Do you wanna update to lastest version?", "Yes", "No") )
-						{
-							this._versionController.Update();
-						}
-					}
-					GUI.backgroundColor = Color.white;
-				}
-				else
-				{
-					bool enableButton = !this._versionController.IsChecking && !this._versionController.IsDownloading;
-					GUI.backgroundColor = enableButton ? Color.white : Color.gray;
-					if(GUILayout.Button("Check Update", GUILayout.Height(30f)) && enableButton )
-					{
-						this._checkForce = true;
 						this._versionController.Check(true);
 					}
-					GUI.backgroundColor = Color.white;
+					this._checkResult = this._lastVersion != NETWORK_ERROR_MSG && 
+										this._lastVersion != INIT_MSG &&
+										lastVersionInt > currentVersionInt;
+					if( this._checkResult )
+					{
+						GUI.backgroundColor = this._versionController.IsDownloading ? Color.gray : Color.green;
+						if( GUILayout.Button("Update to lastest version", GUILayout.Height(30f)) && !this._versionController.IsDownloading )
+						{
+							if( EditorUtility.DisplayDialog("Update", "Do you wanna update to lastest version?", "Yes", "No") )
+							{
+								this._versionController.Update();
+							}
+						}
+						GUI.backgroundColor = Color.white;
+					}
+					else
+					{
+						bool enableButton = !this._versionController.IsChecking && !this._versionController.IsDownloading;
+						GUI.backgroundColor = enableButton ? Color.white : Color.gray;
+						if(GUILayout.Button("Check Update", GUILayout.Height(30f)) && enableButton )
+						{
+							this._checkForce = true;
+							this._versionController.Check(true);
+						}
+						GUI.backgroundColor = Color.white;
+					}
+					GUILayout.Space(10f);
 				}
-				GUILayout.Space(10f);
 			}
 			else
 			{
