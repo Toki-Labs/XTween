@@ -215,18 +215,24 @@ namespace Toki.Tween
 		public override void Dispose()
 		{
 			base.Dispose();
-			if( this._a != null ) this._a.Release();
-			if( this._b != null ) this._b.Release();
-			if( this._c != null ) this._c.Release();
-			if( this._d != null ) this._d.Release();
+			if( this._a != null ) if( !this._a.Disposed ) this._a.Release();
+			if( this._b != null ) if( !this._b.Disposed ) this._b.Release();
+			if( this._c != null ) if( !this._c.Disposed ) this._c.Release();
+			if( this._d != null ) if( !this._d.Disposed ) this._d.Release();
 			if( this._targets != null )
 			{
 				int length = this._targets.Length;
 				for ( int i = 0; i < length; ++i )
 				{
-					this._targets[i].Release();
+					if( !this._targets[i].Disposed ) 
+						this._targets[i].Release();
 				}
 			}
+			this._a = null;
+			this._b = null;
+			this._c = null;
+			this._d = null;
+			this._targets = null;
 		}
 	}
 }

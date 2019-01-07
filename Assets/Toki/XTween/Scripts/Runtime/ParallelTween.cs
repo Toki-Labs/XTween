@@ -49,18 +49,18 @@ namespace Toki.Tween
 		protected override void InternalUpdate( float time )
 		{
 			if (_a != null) {
-				_a.UpdateTween(time);
+				if( !_a.Disposed ) _a.UpdateTween(time);
 				if (_b != null) {
-					_b.UpdateTween(time);
+					if( !_b.Disposed ) _b.UpdateTween(time);
 					if (_c != null) {
-						_c.UpdateTween(time);
+						if( !_c.Disposed ) _c.UpdateTween(time);
 						if (_d != null) {
-							_d.UpdateTween(time);
+							if( !_d.Disposed ) _d.UpdateTween(time);
 							if (_targets != null) {
 								IIXTween[] targets = _targets;
 								int l = targets.Length;
 								for (int i = 0; i < l; ++i) {
-									targets[i].UpdateTween(time);
+									if( !targets[i].Disposed ) targets[i].UpdateTween(time);
 								}
 							}
 						}

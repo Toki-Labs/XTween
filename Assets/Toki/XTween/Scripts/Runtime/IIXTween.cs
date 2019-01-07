@@ -13,6 +13,11 @@ namespace Toki.Tween
 			set;
 		}
 
+		bool Disposed
+		{
+			get;
+		}
+
 		void Initialize( ITimer ticker, float position );
 		void IntializeGroup();
 		void StartPlay();

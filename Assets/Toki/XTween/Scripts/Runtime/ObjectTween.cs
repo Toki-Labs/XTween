@@ -19,6 +19,14 @@ namespace Toki.Tween
 			get { return _duration; }
 			set { _duration = value; }
 		}
+
+		public override bool Disposed
+		{
+			get
+			{
+				return _updater == null;
+			}
+		}
 			
 		public IEasing Easing
 		{
@@ -78,7 +86,8 @@ namespace Toki.Tween
 		public override void Dispose()
 		{
 			base.Dispose();
-			this._updater.Release();
+			if( this._updater != null ) 
+				this._updater.Release();
 			this._easing = null;
 			this._updater = null;
 		}

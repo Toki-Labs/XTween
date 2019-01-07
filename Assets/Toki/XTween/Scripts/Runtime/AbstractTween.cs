@@ -33,6 +33,14 @@ namespace Toki.Tween
 		{
 			get { return _ticker; }
 		}
+
+		public virtual bool Disposed
+		{
+			get
+			{
+				return true;
+			}
+		}
 			
 		public float Duration
 		{

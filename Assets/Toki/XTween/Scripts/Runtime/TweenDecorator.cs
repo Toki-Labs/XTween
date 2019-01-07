@@ -21,6 +21,14 @@ namespace Toki.Tween
 			get { return _baseTween; }
 		}
 
+		public override bool Disposed
+		{
+			get
+			{
+				return _baseTween == null;
+			}
+		}
+
 		public override TweenDecorator Decorator
 		{
 			set
@@ -73,6 +81,7 @@ namespace Toki.Tween
 		{
 			base.Dispose();
 			this._baseTween.Release();
+			this._baseTween = null;
 		}
 	}
 }

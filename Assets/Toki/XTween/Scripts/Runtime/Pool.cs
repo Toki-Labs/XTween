@@ -105,12 +105,11 @@ namespace Toki
 				T instance = new T();
 				this._stack.Push(instance);
 			}
-			// _test = true;
 		}
-		private bool _test = false;
+		private bool _test = false;//true;
 		private HashSet<Type> _checkTypes = new HashSet<Type>
 		{
-			typeof(ReversedTween), typeof(ScaledTween)
+			/* typeof(ParallelTween),  */typeof(ObjectTween)
 		};
 
 		public T PopInstance()
