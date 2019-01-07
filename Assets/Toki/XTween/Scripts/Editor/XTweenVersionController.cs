@@ -153,8 +153,6 @@ namespace Toki.Tween
 				{
 					File.Copy(tempNamePath, nameStartPath, true);
 					AssetDatabase.Refresh();
-					yield return null;
-					XTweenEditorWindow.importedPackage = true;
 				}
 			}
 			else
