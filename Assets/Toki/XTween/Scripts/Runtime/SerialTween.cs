@@ -17,25 +17,31 @@ namespace Toki.Tween
 				
 			if (l > 0) {
 				_a = targets[0] as IIXTween;
+				_a.Lock();
 				_a.IntializeGroup();
 				_duration += _a.Duration;
 				if (l > 1) {
 					_b = targets[1] as IIXTween;
+					_b.Lock();
 					_b.IntializeGroup();
 					_duration += _b.Duration;
 					if (l > 2) {
 						_c = targets[2] as IIXTween;
+						_c.Lock();
 						_c.IntializeGroup();
 						_duration += _c.Duration;
 						if (l > 3) {
 							_d = targets[3] as IIXTween;
+							_d.Lock();
 							_d.IntializeGroup();
 							_duration += _d.Duration;
 							if (l > 4) {
 								int length = l - 4;
 								_targets = new IIXTween[length];
-								for (int i = 4; i < l; ++i) {
+								for (int i = 4; i < l; ++i) 
+								{
 									IIXTween t = targets[i] as IIXTween;
+									t.Lock();
 									t.IntializeGroup();
 									_targets[i - 4] = t;
 									_duration += t.Duration;
@@ -130,6 +136,17 @@ namespace Toki.Tween
 				}
 			}
 			_lastTime = time;
+		}
+
+		protected override void InternalRelease()
+		{
+			if( this._autoDispose ) this.PoolPush();
+		}
+
+		public override void Dispose()
+		{
+			base.Dispose();
+			this._lastTime = 0f;
 		}
 			
 		protected override AbstractTween NewInstance()

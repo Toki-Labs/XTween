@@ -30,6 +30,18 @@ namespace Toki.Tween
 		{
 			_baseTween.UpdateTween(time - _preDelay);
 		}
+
+		protected override void InternalRelease()
+		{
+			if( this._autoDispose ) this.PoolPush();
+		}
+
+		public override void Dispose()
+		{
+			base.Dispose();
+			this._preDelay = 0f;
+			this._postDelay = 0f;
+		}
 			
 		protected override AbstractTween NewInstance()
 		{

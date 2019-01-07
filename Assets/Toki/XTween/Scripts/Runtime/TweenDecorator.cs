@@ -9,6 +9,7 @@ namespace Toki.Tween
 		{
 			base.Initialize(baseTween.Ticker, position);
 			_baseTween = baseTween;
+			_baseTween.Lock();
 			_baseTween.DecoratorStopOnDestroy = this.StopOnDestroy;
 			_duration = baseTween.Duration;
 		}
@@ -66,6 +67,12 @@ namespace Toki.Tween
 		protected override void InternalUpdate( float time )
 		{
 			_baseTween.UpdateTween(time);
+		}
+
+		public override void Dispose()
+		{
+			base.Dispose();
+			this._baseTween.Release();
 		}
 	}
 }

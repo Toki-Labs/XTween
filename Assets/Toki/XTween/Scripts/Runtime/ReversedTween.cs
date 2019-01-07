@@ -16,6 +16,11 @@ namespace Toki.Tween
 			_baseTween.UpdateTween(_duration - time);
 		}
 
+		protected override void InternalRelease()
+		{
+			if( this._autoDispose ) this.PoolPush();
+		}
+
 		protected override AbstractTween NewInstance()
 		{
 			ReversedTween tween = new ReversedTween();

@@ -70,12 +70,6 @@ namespace Toki.Tween
 			return tween;
 		}
 
-		public override void Release()
-		{
-			this._autoDispose = true;
-			this.InternalRelease();
-		}
-
 		protected override void InternalRelease()
 		{
 			if( this._autoDispose ) this.PoolPush();

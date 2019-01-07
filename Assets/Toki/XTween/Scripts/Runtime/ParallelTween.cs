@@ -6,8 +6,6 @@ namespace Toki.Tween
 {
 	public class ParallelTween : GroupTween
 	{
-		protected List<IIXTween> _destroyList;
-
 		public void Initialize(IXTween[] targets, ITimer ticker, float position)
 		{
 			base.Initialize(ticker,position);
@@ -17,21 +15,27 @@ namespace Toki.Tween
 				
 			if (l > 0) {
 				_a = targets[0] as IIXTween;
+				_a.Lock();
 				_duration = _a.Duration > _duration ? _a.Duration : _duration;
 				if (l > 1) {
 					_b = targets[1] as IIXTween;
+					_b.Lock();
 					_duration = _b.Duration > _duration ? _b.Duration : _duration;
 					if (l > 2) {
 						_c = targets[2] as IIXTween;
+						_c.Lock();
 						_duration = _c.Duration > _duration ? _c.Duration : _duration;
 						if (l > 3) {
 							_d = targets[3] as IIXTween;
+							_d.Lock();
 							_duration = _d.Duration > _duration ? _d.Duration : _duration;
 							if (l > 4) {
 								int length = l - 4;
 								_targets = new IIXTween[length];
-								for (int i = 4; i < l; ++i) {
+								for (int i = 4; i < l; ++i) 
+								{
 									IIXTween t = targets[i] as IIXTween;
+									t.Lock();
 									_targets[i - 4] = t;
 									_duration = t.Duration > _duration ? t.Duration : _duration;
 								}
@@ -90,6 +94,11 @@ namespace Toki.Tween
 			ParallelTween tween = new ParallelTween();
 			tween.Initialize(targets.ToArray(), _ticker, 0);
 			return tween;
+		}
+
+		protected override void InternalRelease()
+		{
+			if( this._autoDispose ) this.PoolPush();
 		}
 	}
 }

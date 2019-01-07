@@ -212,10 +212,21 @@ namespace Toki.Tween
 			return this;
 		}
 
-		public virtual void GroupStopOnDestroy( IIXTween target )
+		public override void Dispose()
 		{
-
+			base.Dispose();
+			if( this._a != null ) this._a.Release();
+			if( this._b != null ) this._b.Release();
+			if( this._c != null ) this._c.Release();
+			if( this._d != null ) this._d.Release();
+			if( this._targets != null )
+			{
+				int length = this._targets.Length;
+				for ( int i = 0; i < length; ++i )
+				{
+					this._targets[i].Release();
+				}
+			}
 		}
-			
 	}
 }

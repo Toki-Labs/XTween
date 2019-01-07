@@ -345,9 +345,13 @@ namespace Toki.Tween
 				Vector3 sPos = new Vector3( pos.x, pos.y, pos.z );
 				Vector3 dPos = new Vector3( x, y, z );
 				if( _transformRect == null )
-					this._updaterPosition.Initialize(sPos, dPos, _finish.ControlPointX, _finish.ControlPointY, _finish.ControlPointZ, changeX, changeY, changeZ);
+					this._updaterPosition.Initialize(sPos, dPos, 
+						_finish.ControlPointX, _finish.ControlPointY, _finish.ControlPointZ, 
+						changeX, changeY, changeZ);
 				else
-					this._updaterAnchoredPosition.Initialize(sPos, dPos, _finish.ControlPointX, _finish.ControlPointY, _finish.ControlPointZ, changeX, changeY, changeZ);
+					this._updaterAnchoredPosition.Initialize(sPos, dPos, 
+						_finish.ControlPointX, _finish.ControlPointY, _finish.ControlPointZ, 
+						changeX, changeY, changeZ);
 			}
 			if( changeRect )
 			{
@@ -355,8 +359,8 @@ namespace Toki.Tween
 				this._transformRect.offsetMax = new Vector2(rect.width, rect.y) * -1f;
 				Rect sRect = new Rect( rect.x, rect.y, rect.width, rect.height );
 				Rect dRect = new Rect( left, top, right, bottom );
-				this._updaterUIRect.Initialize(sRect, dRect, _finish.ControlPointLeft, 
-					_finish.ControlPointRight, _finish.ControlPointTop, _finish.ControlPointBottom,
+				this._updaterUIRect.Initialize(sRect, dRect, 
+					_finish.ControlPointLeft, _finish.ControlPointRight, _finish.ControlPointTop, _finish.ControlPointBottom,
 					changeRectLeft, changeRectRight, changeRectTop, changeRectBottom);
 			}
 			if( changeSize )

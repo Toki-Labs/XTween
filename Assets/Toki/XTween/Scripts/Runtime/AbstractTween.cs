@@ -468,12 +468,13 @@ namespace Toki.Tween
 		//Force Release
 		public virtual void Release()
 		{
-			throw new System.Exception("You should implement this method in sub class");
+			this._autoDispose = true;
+			this.InternalRelease();
 		}
 
 		protected virtual void InternalRelease()
 		{
-			throw new System.Exception("You should implement this method in sub class");
+			throw new System.Exception("You should implement this method in sub class. " + this.GetType());
 		}
 
 		public virtual void Dispose()

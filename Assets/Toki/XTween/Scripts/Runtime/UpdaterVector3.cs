@@ -36,7 +36,7 @@ namespace Toki.Tween
 			this._updateZ = updateZ;
 			this._updateXIndex = _updateX ? _controlX == null ? 1 : 2 : 0;
 			this._updateYIndex = _updateY ? _controlY == null ? 1 : 2 : 0;
-			this._updateYIndex = _updateZ ? _controlZ == null ? 1 : 2 : 0;
+			this._updateZIndex = _updateZ ? _controlZ == null ? 1 : 2 : 0;
 			this._initialized = true;
 		}
 
