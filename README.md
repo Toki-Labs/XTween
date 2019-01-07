@@ -82,7 +82,7 @@ __CPU Performance__
 >Gabage Alloc Time/Cost|XTween|D Tween|I Tween
 >----------------------|------|-------|-------
 >Start|122B|0.6MB|4.7MB
->End|0B|0B|169.9KB|80ms
+>End|0B|0B|169.9KB
 >Update|0.8ms|0.8ms|1.7ms
 >Total|122B/0.8ms|0.6MB/0.8ms|4.9MB/1.7ms
 > 

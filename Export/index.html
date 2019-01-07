@@ -117,37 +117,34 @@
 <p>XTween is</p>
 <ol>
   <li>Can make tweener by few code (easy to learn and good readablity)</li>
-  <li>Provide code hint.</li>
+  <li>Provide code hint. (You just start with “To” than You can use tweener)</li>
   <li>Easy to control event. (Support Anonymous Method)</li>
   <li>Support coroutine. (Easy to combine with other instruction)</li>
   <li>Support custom easing.</li>
   <li>Can make instance. This good at resuablity and time control.</li>
-  <li>Less use of memory and cpu. (XTween is don’t create MonoBehaviour each by tween.)</li>
+  <li>Less use of memory and cpu. (XTween is don’t create MonoBehaviour each by tween)</li>
   <li>Support in editor mode(Not Play mode) and Available on all types of platforms</li>
 </ol>
 
 <h2 id="implementation">Implementation</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/******* Simple Use **************/</span>
-<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Simple use</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 
 
-<span class="cm">/******* Shortcut type ***********/</span>
-<span class="c1">//when moveObj is Transform or GameObject</span>
-<span class="n">IAni</span> <span class="n">tween</span> <span class="p">=</span> <span class="n">moveObj</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
-<span class="n">tween</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
+<span class="c1">// Shortcut type</span>
+<span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 
 
-<span class="cm">/******* Use with Coroutine ******/</span>
-<span class="c1">//You can use this like normal yield instruction.</span>
+<span class="c1">// Use with coroutine</span>
 <span class="n">IEnumerator</span> <span class="n">tweenCoroutine</span> <span class="p">=</span> <span class="nf">CoroutineTween</span><span class="p">();</span>
 <span class="nf">StartCoroutine</span><span class="p">(</span><span class="n">tweenCoroutine</span><span class="p">);</span>
 
 <span class="n">IEnumerator</span> <span class="nf">CoroutineTween</span><span class="p">()</span>
 <span class="p">{</span>
-	<span class="k">yield</span> <span class="k">return</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">WaitForPlay</span><span class="p">();</span>
+	<span class="k">yield</span> <span class="k">return</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">WaitForPlay</span><span class="p">();</span>
 
 	<span class="c1">//or</span>
-	<span class="k">yield</span> <span class="k">return</span> <span class="n">moveObj</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">WaitForPlay</span><span class="p">();</span>
+	<span class="k">yield</span> <span class="k">return</span> <span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">WaitForPlay</span><span class="p">();</span>
 <span class="p">}</span>
 
 <span class="nf">StopCoroutine</span><span class="p">(</span><span class="n">tweenCoroutine</span><span class="p">);</span>
@@ -159,63 +156,77 @@
 <p>Version(Alpha) 0.0.88 - <a href="https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.88.unitypackage">XTween_0.0.88.unitypackage</a></p>
 <!--Version End-->
 
+
 <h2 id="performance">Performance</h2>
-<p>Performance compare with other tweener.</p>
+<p>Tweener comparison when moving 1000 gameObjects.</p>
 
 <p><strong>Garbage Alloc</strong></p>
 <blockquote>
   <p><strong>Start</strong></p>
 
-  <p><img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Start.png" alt="" />
-<img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start.png" alt="" />
-Garbage produce 1/9 than other tweener, Creation cost 1/10 than other tweener.</p>
+  <p><img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start_1000.png" alt="" />
+<img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/DTween_Start_1000.png" alt="" />
+<img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/iTween_Start_1000.png" alt="" />
+XTween rarely produces Garbage</p>
 </blockquote>
 
 <blockquote>
   <p><strong>End</strong></p>
 
-  <p><img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_End.png" alt="" />
-<img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End.png" alt="" />
-XTween is don't produce garbage.</p>
+  <p><img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End_1000.png" alt="" />
+<img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/DTween_End_1000.png" alt="" />
+<img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/iTween_End_1000.png" alt="" />
+XTween is don’t produces garbage.</p>
+</blockquote>
+
+<p><strong>CPU Performance</strong></p>
+<blockquote>
+  <p><img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Update_1000.png" alt="" />
+<img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/DTween_Update_1000.png" alt="" />
+<img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/iTween_Update_1000.png" alt="" />
+XTween is similar to DTween, but 2 times faster than i Tweener.</p>
 </blockquote>
 
 <blockquote>
   <table>
     <thead>
       <tr>
-        <th>Gabage Alloc Time</th>
-        <th>Other Tweener</th>
+        <th>Gabage Alloc Time/Cost</th>
         <th>XTween</th>
+        <th>D Tween</th>
+        <th>I Tween</th>
+        <th> </th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>Start</td>
-        <td>3.4KB</td>
-        <td>0.4KB</td>
+        <td>122B</td>
+        <td>0.6MB</td>
+        <td>4.7MB</td>
       </tr>
       <tr>
         <td>End</td>
-        <td>0.17KB</td>
-        <td>0KB</td>
+        <td>0B</td>
+        <td>0B</td>
+        <td>169.9KB</td>
+      </tr>
+      <tr>
+        <td>Update</td>
+        <td>0.8ms</td>
+        <td>0.8ms</td>
+        <td>1.7ms</td>
       </tr>
       <tr>
         <td>Total</td>
-        <td>3.6KB</td>
-        <td>0.4KB</td>
+        <td>122B/0.8ms</td>
+        <td>0.6MB/0.8ms</td>
+        <td>4.9MB/1.7ms</td>
       </tr>
     </tbody>
   </table>
 
-  <p>Garbage produce 1/9 than other tweener.</p>
-</blockquote>
-
-<p><strong>CPU Performance</strong></p>
-<blockquote>
-  <p>Compare when move 100 gameObject
-<img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/U_Tween_Update.png" alt="" />
-<img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Update.png" alt="" />
-XTween is 2 times faster than other tweener.</p>
+  <p>XTween does not produce Garbage because it uses Pooling. and had good performance at cpu</p>
 </blockquote>
 
 <p><strong>Code Compare</strong></p>
@@ -243,49 +254,67 @@ XTween is 2 times faster than other tweener.</p>
 </ul>
 
 <h2 id="position">Position</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddZ</span><span class="p">(</span><span class="m">100f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddZ</span><span class="p">(</span><span class="m">100f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="c1">//or</span>
-<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+<span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="scale">Scale</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">1f</span><span class="p">).</span><span class="nf">AddScaleY</span><span class="p">(</span><span class="m">1.5f</span><span class="p">).</span><span class="nf">AddScaleZ</span><span class="p">(</span><span class="m">0.5f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">1f</span><span class="p">).</span><span class="nf">AddScaleY</span><span class="p">(</span><span class="m">1.5f</span><span class="p">).</span><span class="nf">AddScaleZ</span><span class="p">(</span><span class="m">0.5f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="c1">//or</span>
-<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Scale</span><span class="p">(</span><span class="m">1f</span><span class="p">,</span><span class="m">1.5f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+<span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Scale</span><span class="p">(</span><span class="m">1f</span><span class="p">,</span><span class="m">1.5f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="rotation">Rotation</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRotationZ</span><span class="p">(</span><span class="m">600f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRotationZ</span><span class="p">(</span><span class="m">600f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="c1">//or</span>
-<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Rotation</span><span class="p">(</span><span class="m">60f</span><span class="p">,-</span><span class="m">180f</span><span class="p">,-</span><span class="m">45f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+<span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Rotation</span><span class="p">(</span><span class="m">60f</span><span class="p">,-</span><span class="m">180f</span><span class="p">,-</span><span class="m">45f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="combination">Combination</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddRotationZ</span><span class="p">(</span><span class="m">180f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Position, Scale, Rotation tween in same time, same easing</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddRotationZ</span><span class="p">(</span><span class="m">180f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+
+<span class="c1">//or</span>
+<span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">0f</span><span class="p">,</span><span class="m">10f</span><span class="p">).</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddRotationZ</span><span class="p">(</span><span class="m">60f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="bezier">Bezier</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">0f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">0f</span><span class="p">).</span><span class="nf">AddControlPointX</span><span class="p">(</span><span class="m">1000f</span><span class="p">).</span><span class="nf">AddControlPoint</span><span class="p">(-</span><span class="m">500f</span><span class="p">);</span>
-<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">hash</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">0f</span><span class="p">,</span><span class="m">0f</span><span class="p">).</span><span class="nf">AddControlPointX</span><span class="p">(</span><span class="m">1000f</span><span class="p">).</span><span class="nf">AddControlPoint</span><span class="p">(-</span><span class="m">500f</span><span class="p">);</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">hash</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+
+<span class="c1">//or</span>
+<span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">hash</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="value">Value</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XObjectHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"value"</span><span class="p">,</span> <span class="m">10f</span><span class="p">,</span> <span class="m">200f</span><span class="p">),</span> <span class="n">UpdateValue</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Setter</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">ToValue</span><span class="p">(</span><span class="n">x</span><span class="p">=&gt;</span><span class="n">camera3D</span><span class="p">.</span><span class="n">fieldOfView</span><span class="p">=</span><span class="n">x</span><span class="p">,</span> <span class="m">10f</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+
+<span class="c1">//or multi type</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">ToValue</span><span class="p">(</span><span class="n">XObjectHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"value"</span><span class="p">,</span> <span class="m">50f</span><span class="p">,</span> <span class="m">10f</span><span class="p">),</span> <span class="n">UpdateValue</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="k">void</span> <span class="nf">UpdateValue</span><span class="p">(</span><span class="n">XObjectHash</span> <span class="n">hash</span><span class="p">)</span>
 <span class="p">{</span>
-	<span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="n">hash</span><span class="p">.</span><span class="nf">Now</span><span class="p">(</span><span class="s">"value"</span><span class="p">));</span>
+	<span class="n">camera3D</span><span class="p">.</span><span class="n">fieldOfView</span> <span class="p">=</span> <span class="n">hash</span><span class="p">.</span><span class="nf">Now</span><span class="p">(</span><span class="s">"value"</span><span class="p">);</span>
 <span class="p">}</span>
+</code></pre></div></div>
 
-<span class="c1">//or Property tween</span>
+<h2 id="property">Property</h2>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">camera3D</span><span class="p">.</span><span class="nf">ToProperty</span><span class="p">(</span><span class="s">"fieldOfView"</span><span class="p">,</span> <span class="m">6f</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+
+<span class="c1">//or</span>
 <span class="n">XTween</span><span class="p">.</span><span class="n">To</span><span class="p">&lt;</span><span class="n">Camera</span><span class="p">&gt;(</span><span class="n">camera3D</span><span class="p">,</span> <span class="n">XObjectHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"fieldOfView"</span><span class="p">,</span> <span class="m">6f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="event-handling">Event Handling</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">IAni</span> <span class="n">ani</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">200f</span><span class="p">));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">AddOnComplete</span><span class="p">(()=&gt;</span><span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"OnComplete"</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+
+<span class="c1">//or</span>
+<span class="n">IXTween</span> <span class="n">ani</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">200f</span><span class="p">));</span>
 <span class="n">ani</span><span class="p">.</span><span class="n">OnComplete</span> <span class="p">=</span> <span class="n">Executor</span><span class="p">&lt;</span><span class="kt">float</span><span class="p">&gt;.</span><span class="nf">New</span><span class="p">(</span><span class="n">OnTweenEnd</span><span class="p">,</span> <span class="m">10f</span><span class="p">);</span>
 <span class="n">ani</span><span class="p">.</span><span class="nf">Play</span><span class="p">();</span>
 
@@ -293,9 +322,6 @@ XTween is 2 times faster than other tweener.</p>
 <span class="p">{</span>
 	<span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="k">value</span><span class="p">);</span>
 <span class="p">}</span>
-
-<span class="c1">//or</span>
-<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">600f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">200f</span><span class="p">)).</span><span class="nf">AddOnComplete</span><span class="p">(()=&gt;</span><span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"OnComplete"</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="coroutine">Coroutine</h2>
@@ -306,13 +332,11 @@ XTween is 2 times faster than other tweener.</p>
 
 <span class="n">IEnumerator</span> <span class="nf">CoroutineTween</span><span class="p">()</span>
 <span class="p">{</span>
-	<span class="n">XHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">50f</span><span class="p">).</span><span class="nf">AddZ</span><span class="p">(-</span><span class="m">1500f</span><span class="p">);</span>
-	<span class="k">yield</span> <span class="k">return</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">target3D</span><span class="p">,</span> <span class="n">hash</span><span class="p">).</span><span class="nf">WaitForPlay</span><span class="p">();</span>
+	<span class="k">yield</span> <span class="k">return</span> <span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">200f</span><span class="p">,</span><span class="m">50f</span><span class="p">,-</span><span class="m">1500f</span><span class="p">)).</span><span class="nf">WaitForPlay</span><span class="p">();</span>
 	<span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"On Complete First Tween"</span><span class="p">);</span>
 
 	<span class="c1">//Start other tween start at 0.3sec</span>
-	<span class="n">XHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">100f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">500f</span><span class="p">);</span>
-	<span class="k">yield</span> <span class="k">return</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">target3D</span><span class="p">,</span> <span class="n">hash</span><span class="p">).</span><span class="nf">WaitForGotoAndPlay</span><span class="p">(</span><span class="m">0.3f</span><span class="p">);</span>
+	<span class="k">yield</span> <span class="k">return</span> <span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">100f</span><span class="p">,</span><span class="m">500f</span><span class="p">)).</span><span class="nf">WaitForGotoAndPlay</span><span class="p">(</span><span class="m">0.3f</span><span class="p">);</span>
 	<span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"On Complete Second Tween"</span><span class="p">);</span>
 <span class="p">}</span>
 
@@ -321,24 +345,20 @@ XTween is 2 times faster than other tweener.</p>
 </code></pre></div></div>
 
 <h2 id="serial">Serial</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">endPosition</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">1000f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">300f</span><span class="p">);</span>
-<span class="n">XHash</span> <span class="n">endScale</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddScaleY</span><span class="p">(</span><span class="m">200f</span><span class="p">);</span>
-<span class="n">XTween</span><span class="p">.</span><span class="nf">SerialTweens</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">SerialTweens</span>
 <span class="p">(</span>	
 	<span class="k">false</span><span class="p">,</span> 
-	<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">endPosition</span><span class="p">),</span> 
-	<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">endScale</span><span class="p">)</span>
+	<span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">1000f</span><span class="p">,</span><span class="m">300f</span><span class="p">)),</span> 
+	<span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Scale</span><span class="p">(</span><span class="m">200f</span><span class="p">,</span><span class="m">200f</span><span class="p">))</span>
 <span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="parallel">Parallel</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">endPosition</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">1000f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">300f</span><span class="p">);</span>
-<span class="n">XHash</span> <span class="n">endScale</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddScaleX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddScaleY</span><span class="p">(</span><span class="m">200f</span><span class="p">);</span>
-<span class="n">XTween</span><span class="p">.</span><span class="nf">ParallelTweens</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">ParallelTweens</span>
 <span class="p">(</span>	
 	<span class="k">false</span><span class="p">,</span> 
-	<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">endPosition</span><span class="p">),</span> 
-	<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">moveObj</span><span class="p">,</span> <span class="n">endScale</span><span class="p">)</span>
+	<span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">1000f</span><span class="p">,</span><span class="m">300f</span><span class="p">)),</span> 
+	<span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Scale</span><span class="p">(</span><span class="m">200f</span><span class="p">,</span><span class="m">200f</span><span class="p">))</span>
 <span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
@@ -352,10 +372,14 @@ XTween is 2 times faster than other tweener.</p>
 </code></pre></div></div>
 
 <h2 id="color">Color</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">ToColor</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="c1">//or when object has other type</span>
-<span class="n">XTween</span><span class="p">.</span><span class="n">To</span><span class="p">&lt;</span><span class="n">Image</span><span class="p">&gt;(</span><span class="n">imageInstance</span><span class="p">,</span> <span class="s">"color"</span><span class="p">,</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+<span class="n">XTween</span><span class="p">.</span><span class="n">ToColor</span><span class="p">&lt;</span><span class="n">Image</span><span class="p">&gt;(</span><span class="n">imageInstance</span><span class="p">,</span> <span class="s">"color"</span><span class="p">,</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="easing">Easing</h2>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">),</span> <span class="m">1f</span><span class="p">,</span> <span class="n">Ease</span><span class="p">.</span><span class="n">QuintOut</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="custom-easing">Custom Easing</h2>
@@ -363,13 +387,13 @@ XTween is 2 times faster than other tweener.</p>
   <p><img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/EaseCurve.png" alt="" />
 Customizable Easing, Support code hint for use of ease name, TopMenu -&gt; Windows -&gt; XTween Editor</p>
 </blockquote>
-  <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddX</span><span class="p">(</span><span class="m">200f</span><span class="p">).</span><span class="nf">AddY</span><span class="p">(</span><span class="m">50f</span><span class="p">).</span><span class="nf">AddZ</span><span class="p">(-</span><span class="m">1500f</span><span class="p">)</span>
-	     <span class="p">.</span><span class="nf">AddControlPointX</span><span class="p">(-</span><span class="m">1000f</span><span class="p">,</span><span class="m">550f</span><span class="p">).</span><span class="nf">AddControlPointY</span><span class="p">(</span><span class="m">550f</span><span class="p">,-</span><span class="m">300f</span><span class="p">);</span>
-<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">target3D</span><span class="p">,</span> <span class="n">hash</span><span class="p">,</span> <span class="m">1f</span><span class="p">,</span> <span class="n">Ease</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="n">EaseName</span><span class="p">.</span><span class="n">MyEasing</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">200f</span><span class="p">,</span><span class="m">50f</span><span class="p">,-</span><span class="m">1500f</span><span class="p">)</span>
+      <span class="p">.</span><span class="nf">AddControlPointX</span><span class="p">(-</span><span class="m">1000f</span><span class="p">,</span><span class="m">550f</span><span class="p">).</span><span class="nf">AddControlPointY</span><span class="p">(</span><span class="m">550f</span><span class="p">,-</span><span class="m">300f</span><span class="p">);</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">target3D</span><span class="p">,</span> <span class="n">hash</span><span class="p">,</span> <span class="n">Ease</span><span class="p">.</span><span class="nf">Custom</span><span class="p">(</span><span class="n">EaseCustom</span><span class="p">.</span><span class="n">MyEasing</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div>  </div>
 
 <h2 id="decorator">Decorator</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">IAni</span> <span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">IXTween</span> <span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">ToColor</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">));</span>
 
 <span class="c1">//Delay Tweener</span>
 <span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">Delay</span><span class="p">(</span><span class="n">tween</span><span class="p">,</span> <span class="m">1f</span><span class="cm">/*Pre Delay*/</span><span class="p">,</span> <span class="m">1f</span><span class="cm">/*Post Delay*/</span><span class="p">);</span>
@@ -386,10 +410,36 @@ Customizable Easing, Support code hint for use of ease name, TopMenu -&gt; Windo
 <span class="c1">//Reverse Tweener</span>
 <span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">Reverse</span><span class="p">(</span><span class="n">tween</span><span class="p">);</span>
 <span class="n">tween</span><span class="p">.</span><span class="nf">Play</span><span class="p">();</span>
+</code></pre></div></div>
 
-<span class="c1">//When end tweener</span>
-<span class="n">tween</span><span class="p">.</span><span class="nf">GotoAndStop</span><span class="p">(</span><span class="m">0.5f</span><span class="p">);</span> <span class="c1">//Move to Tweener's 0.5sec</span>
-<span class="n">tween</span><span class="p">.</span><span class="nf">GotoAndPlay</span><span class="p">(</span><span class="m">0.3f</span><span class="p">);</span> <span class="c1">//Move to 0.3sec and play;</span>
+<h2 id="reuse">Reuse</h2>
+<p>XTween is basically autodispose. when the tweener is completed or stopped.
+So, you should set to “Lock” for reuse tweener</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//This Tweener will not dispose when stop or complete.</span>
+<span class="n">IXTween</span> <span class="n">tween</span> <span class="p">=</span> <span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Lock</span><span class="p">().</span><span class="nf">Play</span><span class="p">();</span>
+
+<span class="c1">//When the tweener after completed or stopped. You can reuse this.</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">Reset</span><span class="p">();</span> <span class="c1">//Set to play position 0;</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">Play</span><span class="p">();</span> <span class="c1">//Replay</span>
+
+<span class="c1">//When you are not using twin anymore. You should "Release" this tween.</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">Release</span><span class="p">();</span>
+<span class="n">tween</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="time-control">Time Control</h2>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Start</span>
+<span class="n">IXTween</span> <span class="n">tween</span> <span class="p">=</span> <span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Lock</span><span class="p">().</span><span class="nf">Play</span><span class="p">();</span>
+<span class="c1">//Stop at this position</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
+<span class="c1">//Resume</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">Play</span><span class="p">();</span>
+<span class="c1">//Move to 0.5sec and Stop</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">GotoAndStop</span><span class="p">(</span><span class="m">0.5f</span><span class="p">);</span> 
+<span class="c1">//Move to 0.3sec and play;</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">GotoAndPlay</span><span class="p">(</span><span class="m">0.3f</span><span class="p">);</span> 
+<span class="c1">//Position set to 0 and Stop</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">Reset</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="author-info">Author Info</h2>
