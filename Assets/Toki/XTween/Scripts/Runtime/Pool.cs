@@ -97,7 +97,7 @@ namespace Toki
 		/************************************************************************
 		*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
 		************************************************************************/
-		// private int _count = 0;
+		private int _count = 0;
 		public void InitialCreate( int size )
 		{
 			while( this._stack.Count < size )
@@ -105,7 +105,13 @@ namespace Toki
 				T instance = new T();
 				this._stack.Push(instance);
 			}
+			// _test = true;
 		}
+		private bool _test = false;
+		private HashSet<Type> _checkTypes = new HashSet<Type>
+		{
+			typeof(ReversedTween), typeof(ScaledTween)
+		};
 
 		public T PopInstance()
 		{
@@ -116,10 +122,13 @@ namespace Toki
 			}
 			else
 			{
-				// _count++;
 				instance = new T();
 			}
-			// Debug.Log(typeof(T) + " - Create Count: " + this._stack.Count);
+			_count++;
+			if( _checkTypes.Contains(instance.GetType()) && _test )
+			{
+				Debug.Log(instance.GetType() + " - Out: " + _count + ", Stack: " + this._stack.Count );
+			}
 			return instance;
 		}
 
@@ -127,8 +136,11 @@ namespace Toki
 		{
 			target.Dispose();
 			this._stack.Push(target);
-			// _count--;
-			// Debug.Log(target.GetType() + " - Dispose: " + _count );
+			_count--;
+			if( _checkTypes.Contains(target.GetType()) && _test )
+			{
+				Debug.Log(target.GetType() + " - Left: " + _count  + ", Stack: " + this._stack.Count);
+			}
 		}
 
 		public bool ContainsInstance(T target)

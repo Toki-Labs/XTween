@@ -21,13 +21,12 @@ namespace Toki.Tween
 		protected float _startTime;
 		protected bool _isPlaying = false;
 		protected bool _isRealTime = false;
-		protected bool _stopOnComplete = true;
 		protected uint _frameSkip = 0;
 		protected uint _frameSkipCount = 0;
 		protected bool _enableGroup = true;
 		protected bool _autoDispose = true;
 		//when wrapped in decorator
-		protected Action _decoratorStopOnDestroy;
+		protected TweenDecorator _decorator;
 		protected IClassicHandlable _classicHandlers;
 			
 		public ITimer Ticker
@@ -50,11 +49,11 @@ namespace Toki.Tween
 			get { return _isPlaying; }
 		}
 
-		public virtual Action DecoratorStopOnDestroy
+		public virtual TweenDecorator Decorator
 		{
 			set
 			{
-				this._decoratorStopOnDestroy = value;
+				this._decorator = value;
 			}
 		}
 
@@ -111,24 +110,15 @@ namespace Toki.Tween
 			set { ClassicHandlers.OnComplete = value; }
 		}
 
-		public override void StopOnDestroy()
-		{
-			if( this._decoratorStopOnDestroy != null )
-			{
-				this._decoratorStopOnDestroy.Invoke();
-			}
-			else
-			{
-				_isPlaying = false;
-			}
-			_enableGroup = false;
-			this.Release();
-		}
-
 		public void IntializeGroup()
 		{
 			this._position = 0f;
 			this._time = 0f;
+		}
+
+		public override void StopOnDestroy()
+		{
+			this.Release();
 		}
 
 		private void TickerChange()
@@ -222,10 +212,9 @@ namespace Toki.Tween
 			{
 				_isPlaying = false;
 				if (_classicHandlers != null && _classicHandlers.OnStop != null) 
-				{
 					_classicHandlers.OnStop.Execute();
-					InternalRelease();
-				}
+
+				InternalRelease();
 			}
 		}
 
@@ -303,7 +292,7 @@ namespace Toki.Tween
 			}
 				
 			_position = time;
-			if( this._enableGroup )
+			if( _enableGroup )
 			{
 				InternalUpdate(time);
 				
@@ -343,17 +332,10 @@ namespace Toki.Tween
 				if (t >= _duration) 
 				{
 					_position = _duration;
-					if (_stopOnComplete) return true;
-					else 
-					{
-						if (_classicHandlers != null && _classicHandlers.OnComplete != null)
-							_classicHandlers.OnComplete.Execute();
+					if (_classicHandlers != null && _classicHandlers.OnComplete != null)
+						_classicHandlers.OnComplete.Execute();
 
-						_position = t - _duration;
-						_startTime = time - _position;
-						Tick(time);
-						InternalRelease();
-					}
+					InternalRelease();
 				}
 				return false;
 			}			
@@ -362,7 +344,7 @@ namespace Toki.Tween
 
 		public override void TickerRemoved()
 		{
-			if(_isPlaying && _stopOnComplete)
+			if(_isPlaying)
 			{
 				_isPlaying = false;
 				if (_classicHandlers != null && _classicHandlers.OnComplete != null)
@@ -407,7 +389,6 @@ namespace Toki.Tween
 		{
 			_ticker = source._ticker;
 			_duration = source._duration;
-			_stopOnComplete = source._stopOnComplete;
 			if (source._classicHandlers != null) 
 			{
 				_classicHandlers = new XObjectHash();
@@ -469,7 +450,7 @@ namespace Toki.Tween
 		public virtual void Release()
 		{
 			this._autoDispose = true;
-			this.InternalRelease();
+			InternalRelease();
 		}
 
 		protected virtual void InternalRelease()
@@ -489,12 +470,11 @@ namespace Toki.Tween
 			this._startTime = 0f;
 			this._isPlaying = false;
 			this._isRealTime = false;
-			this._stopOnComplete = true;
 			this._frameSkip = 1;
 			this._frameSkipCount = 0;
 			this._autoDispose = true;
 			this._enableGroup = true;
-			this._decoratorStopOnDestroy = null;
+			this._decorator = null;
 			this._classicHandlers = null;
 		}
 	}

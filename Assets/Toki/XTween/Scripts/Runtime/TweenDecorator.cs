@@ -10,7 +10,7 @@ namespace Toki.Tween
 			base.Initialize(baseTween.Ticker, position);
 			_baseTween = baseTween;
 			_baseTween.Lock();
-			_baseTween.DecoratorStopOnDestroy = this.StopOnDestroy;
+			_baseTween.Decorator = this;
 			_duration = baseTween.Duration;
 		}
 			
@@ -21,11 +21,11 @@ namespace Toki.Tween
 			get { return _baseTween; }
 		}
 
-		public override Action DecoratorStopOnDestroy
+		public override TweenDecorator Decorator
 		{
 			set
 			{
-				_baseTween.DecoratorStopOnDestroy = value;
+				_baseTween.Decorator = value;
 			}
 		}
 

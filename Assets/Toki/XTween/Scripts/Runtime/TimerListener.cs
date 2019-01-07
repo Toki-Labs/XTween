@@ -11,11 +11,11 @@ namespace Toki.Tween
 		public TimerListener nextListener = null;
 		public virtual void TickerRemoved()
 		{
-			
+
 		}
 		public virtual void StopOnDestroy()
 		{
-
+			
 		}
 		public virtual bool Tick( float time )
 		{

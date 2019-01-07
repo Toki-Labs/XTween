@@ -8,7 +8,7 @@ namespace Toki.Tween
 		{
 			get;
 		}
-		Action DecoratorStopOnDestroy
+		TweenDecorator Decorator
 		{
 			set;
 		}

@@ -104,6 +104,7 @@ namespace Toki.Tween
 			t = _time;
 			for ( int i = 0; i < _deltaTimeLength; ++i )
 			{
+				if( this._deltaTimeArray[i] == null ) return;
 				this._deltaTimeArray[i].Update(_time);
 			}
 			n = 8 - (_numListeners % 8); 

@@ -126,9 +126,9 @@ public class ExamplePerformance : ExampleBase
 
 		for ( int i = 0; i < length; ++i )
 		{
-			// this.StartXTween(this._objList[i].obj);
+			this.StartXTween(this._objList[i].obj);
 			// this.StartiTween(this._objList[i].obj);
-			this.StartDOTween(this._objList[i].obj);
+			// this.StartDOTween(this._objList[i].obj);
 		}
 	
 		while( true )
@@ -148,7 +148,7 @@ public class ExamplePerformance : ExampleBase
 
 	private void StartXTween(GameObject target)
 	{
-		target.To(XHash.Position(0f,0f,-400f), 1f, Ease.ElasticOut).Play();
+		XTween.Reverse(target.To(XHash.Position(0f,0f,-400f), 1f, Ease.ElasticOut)).Play();
 	}
 
 	private void StartiTween(GameObject target)
