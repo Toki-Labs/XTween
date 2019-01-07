@@ -145,6 +145,7 @@ namespace Toki.Tween
 				string namePath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
 				string content = XTweenEditorManager.ReadText(namePath);
 				AssetDatabase.ImportPackage(filePath, false);
+				Debug.Log(content);
 				XTweenEditorManager.WriteText(namePath, content);
 				XTweenEditorManager.Instance.Data.version = this.StoredLastVersion;
 				EditorPrefs.DeleteKey(STORE_CHECKED_DATE);
