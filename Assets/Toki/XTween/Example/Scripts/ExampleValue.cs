@@ -94,8 +94,13 @@ public class ExampleValue : ExampleBase
 		}
 	}
 
-	void UpdateColor(XObjectHash hash)
+	private void UpdateColor(XObjectHash hash)
 	{
+		if( sprite == null )
+		{
+			this._tween.Stop();
+			return;
+		}
 		Color color = sprite.color;
 		color.r = hash.Now("r");
 		color.g = hash.Now("g");
