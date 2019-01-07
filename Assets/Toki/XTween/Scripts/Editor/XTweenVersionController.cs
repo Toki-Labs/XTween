@@ -147,9 +147,7 @@ namespace Toki.Tween
 				if( EditorUtility.DisplayDialog("Information", "You had successfully updated!", "OK") )
 				{
 					Debug.Log("Test");
-					string tempPath = XTweenEditorManager.TempPath;
 					string tempNamePath = Path.Combine(tempPath, "EaseCustomTemp");
-					string nameStartPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
 					if( File.Exists(tempNamePath) )
 					{
 						File.Copy(tempNamePath, nameStartPath, true);
