@@ -135,7 +135,7 @@ public class ExampleTest : ExampleBase
 
 	private void StartXTween(GameObject target)
 	{
-		target.To(XHash.Position(200f,50f,-1500f), 1f, Ease.Custom(EaseCustom.EaseIn)).AddOnComplete(Debug.Break).Play();
+		target.To(XHash.Position(200f,50f,-1500f), 1f, Ease.Custom(EaseCustom.Test)).AddOnComplete(Debug.Break).Play();
 	}
 	
 	void OnComplete()

@@ -136,22 +136,24 @@ namespace Toki.Tween
 			while (!this._http.isDone);
 			if( string.IsNullOrEmpty(this._http.error) )
 			{
+				string nameStartPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
+				string nameDestPath = Path.Combine( this.TempPath, "EaseCustomTemp" );
+				File.Copy(nameStartPath, nameDestPath);
 				string rootPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/";
 				string[] dirs = new string[]{rootPath + "Editor", rootPath + "Runtime"};
 				foreach ( var path in dirs )
 				{
 					Directory.Delete(path,true);
 				}
-				string namePath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
-				string content = XTweenEditorManager.ReadText(namePath);
 				AssetDatabase.ImportPackage(filePath, false);
-				Debug.Log(content);
-				XTweenEditorManager.WriteText(namePath, content);
 				XTweenEditorManager.Instance.Data.version = this.StoredLastVersion;
 				EditorPrefs.DeleteKey(STORE_CHECKED_DATE);
 				EditorPrefs.DeleteKey(STORE_LAST_VERSION);
 
-				EditorUtility.DisplayDialog("Information", "You had successfully updated!", "OK");
+				if( EditorUtility.DisplayDialog("Information", "You had successfully updated!", "OK") )
+				{
+					Debug.Log("Test");
+				}
 			}
 			else
 			{
