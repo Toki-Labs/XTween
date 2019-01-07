@@ -216,30 +216,33 @@ namespace Toki.Tween
 				{
 					for (int i = 0; i < length; ++i)
 					{
-						EasingData data = this._data.easingDataList[i];
-						GUILayout.Space(-1f);
-						GUI.color = (this._easingIndex == i) ? Color.grey : Color.white;
-						GUILayout.BeginHorizontal("Box", GUILayout.Height(25f));
-						bool clicked0 = GUILayout.Button((i + 1).ToString(), "BoldLabel", GUILayout.MaxWidth(30f));
-						bool clicked1 = GUILayout.Button( data.name, "BoldLabel");
-						if ( clicked0 || clicked1 )
+						if( i < this._data.easingDataList.Count )
 						{
-							this._easingIndex = i;
-							this._easingName = data.name;
-							this._easingCurve = data.animationCurve;
-							GUIUtility.keyboardControl = 0;
+							EasingData data = this._data.easingDataList[i];
+							GUILayout.Space(-1f);
+							GUI.color = (this._easingIndex == i) ? Color.grey : Color.white;
+							GUILayout.BeginHorizontal("Box", GUILayout.Height(25f));
+							bool clicked0 = GUILayout.Button((i + 1).ToString(), "BoldLabel", GUILayout.MaxWidth(30f));
+							bool clicked1 = GUILayout.Button( data.name, "BoldLabel");
+							if ( clicked0 || clicked1 )
+							{
+								this._easingIndex = i;
+								this._easingName = data.name;
+								this._easingCurve = data.animationCurve;
+								GUIUtility.keyboardControl = 0;
+							}
+							// GUI.backgroundColor = this._easingIndex == i ? Color.white : Color.red;
+							if( GUILayout.Button("X", GUILayout.Width(20f)) )
+							{
+								this._data.easingDataList.RemoveAt(i);
+								XTweenEditorManager.UpdateEasingName();
+							}
+							// GUI.backgroundColor = Color.white;
+							
+							GUILayout.EndHorizontal();
+							GUILayout.Space(-4f);
+							GUI.color = Color.white;
 						}
-						// GUI.backgroundColor = this._easingIndex == i ? Color.white : Color.red;
-						if( GUILayout.Button("X", GUILayout.Width(20f)) )
-						{
-							this._data.easingDataList.RemoveAt(i);
-							XTweenEditorManager.UpdateEasingName();
-						}
-						// GUI.backgroundColor = Color.white;
-						
-						GUILayout.EndHorizontal();
-						GUILayout.Space(-4f);
-						GUI.color = Color.white;
 					}
 				}
                 EditorGUILayout.EndScrollView();
