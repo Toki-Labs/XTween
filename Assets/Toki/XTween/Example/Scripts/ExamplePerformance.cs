@@ -5,7 +5,7 @@
 /*		Created Date 	: 2016-7-27
 /*		Modified Date 	: 
 /**********************************************************************************/
-#define PERFORMANCE_TEST
+// #define PERFORMANCE_TEST
 
 using UnityEngine;
 using UnityEngine.UI;
