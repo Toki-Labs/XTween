@@ -404,6 +404,7 @@ namespace Toki.Tween
 				//set downloaded
 				this._lastVersion = version;
 			}
+			this.SetDirty();
 		}
 		
 		/************************************************************************

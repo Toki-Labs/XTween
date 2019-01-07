@@ -97,7 +97,8 @@ namespace Toki.Tween
 					XTweenConfigData data = JsonUtility.FromJson<XTweenConfigData>(this._http.downloadHandler.text);
 					EditorPrefs.SetString(STORE_CHECKED_DATE, this.GetToday());
 					EditorPrefs.SetString(STORE_LAST_VERSION, data.version);
-					this._listener(data.version);
+					if( !IsDownloading )
+						this._listener(data.version);
 					isSuccess = true;
 				}
 				catch ( System.Exception e ) 
