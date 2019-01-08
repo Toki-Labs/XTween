@@ -32,8 +32,7 @@ gameObject.To(XHash.Position(600f,200f)).Play();
 
 
 // Use with coroutine
-IEnumerator tweenCoroutine = CoroutineTween();
-StartCoroutine(tweenCoroutine);
+StartCoroutine(CoroutineTween());
 
 IEnumerator CoroutineTween()
 {
@@ -42,8 +41,6 @@ IEnumerator CoroutineTween()
 	//or
 	yield return gameObject.To(XHash.Position(600f,200f)).WaitForPlay();
 }
-
-StopCoroutine(tweenCoroutine);
 ```
 
 
