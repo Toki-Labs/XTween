@@ -53,7 +53,7 @@ Version(Alpha) 0.0.99 - [XTween_0.0.99.unitypackage](https://github.com/Toki-Lab
 
 Performance
 ---
-Tweener comparison when moving 1000 gameObjects.
+Tweener comparison when moving 1000 gameObjects. set x, y, z and use elastic easing.
 
 __Garbage Alloc__
 >__Start__
@@ -76,12 +76,12 @@ __CPU Performance__
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/iTween_Update_1000.png)
 >XTween is similar to DTween, but 2 times faster than i Tweener.
 
->Gabage Alloc Time/Cost|XTween|D Tween|I Tween
->----------------------|------|-------|-------
->Start|122B|0.6MB|4.7MB
->End|0B|0B|169.9KB
->Update|0.8ms|0.8ms|1.7ms
->Total|122B/0.8ms|0.6MB/0.8ms|4.9MB/1.7ms
+>Gabage Alloc Time/Cost|XTween|D Tween|L Tween|I Tween
+>----------------------|------|-------|-------|-------
+>Start|122B|0.6MB|406.4KB|4.7MB
+>End|0B|0B|0B|169.9KB
+>Update|0.8ms|0.8ms|1.2ms|1.7ms
+>Total|122B/0.8ms|0.6MB/0.8ms|406.4KB/1.2ms|4.9MB/1.7ms
 > 
 >XTween does not produce Garbage because it uses Pooling. and had good performance at cpu
 
