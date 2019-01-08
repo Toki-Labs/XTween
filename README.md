@@ -68,7 +68,7 @@ __Garbage Alloc__
 
 __CPU Performance__
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/Tween_Update.jpg)
->XTween is similar to DTween, but 2 times faster than i Tweener.
+>XTween is similar with D Tween, but 2 times faster than i Tweener.
 
 >Gabage Alloc Time/Cost|XTween|D Tween|L Tween|I Tween
 >----------------------|------|-------|-------|-------
@@ -77,7 +77,7 @@ __CPU Performance__
 >Update|0.8ms|0.8ms|1.2ms|1.7ms
 >Total|122B/0.8ms|0.6MB/0.8ms|406.4KB/1.2ms|4.9MB/1.7ms
 > 
->XTween does not produce Garbage because it uses Pooling. and had good performance at cpu
+>XTween does not produce Garbage because it uses Pooling. and XTween is good performance at cpu.
 
 __Code Compare__
  >__Other Tweener Code__
