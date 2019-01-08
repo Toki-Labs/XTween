@@ -174,7 +174,7 @@ Property
 camera3D.ToProperty("fieldOfView", 6f).Play();
 
 //or
-XTween.To<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f)).Play();
+XTween.ToPropertyMulti<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f)).Play();
 ```
 
 Event Handling
