@@ -160,7 +160,7 @@ Value
 XTween.ToValue(x=>camera3D.fieldOfView=x, 10f).Play();
 
 //or multi type
-XTween.ToValue(XObjectHash.New.Add("value", 50f, 10f), UpdateValue).Play();
+XTween.ToValueMulti(XObjectHash.New.Add("value", 50f, 10f), UpdateValue).Play();
 
 void UpdateValue(XObjectHash hash)
 {
