@@ -58,22 +58,16 @@ Tweener comparison when moving 1000 gameObjects. set x, y, z and use elastic eas
 __Garbage Alloc__
 >__Start__
 >
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Start_1000.png)
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/DTween_Start_1000.png)
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/iTween_Start_1000.png)
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/Tween_Start.jpg)
 >XTween rarely produces Garbage
 
 >__End__
 >
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_End_1000.png)
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/DTween_End_1000.png)
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/iTween_End_1000.png)
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/Tween_End.jpg)
 >XTween is don't produces garbage.
 
 __CPU Performance__
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/XTween_Update_1000.png)
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/DTween_Update_1000.png)
->![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/iTween_Update_1000.png)
+>![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/Tween_Update.jpg)
 >XTween is similar to DTween, but 2 times faster than i Tweener.
 
 >Gabage Alloc Time/Cost|XTween|D Tween|L Tween|I Tween
