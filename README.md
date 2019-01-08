@@ -149,7 +149,7 @@ gameObject.To(XHash.Position(0f,10f).AddScaleX(200f).AddRotationZ(60f)).Play();
 Bezier
 ---
 ```csharp
-XHash hash = XHash.Position(0f,0f).AddControlPointX(1000f).AddControlPoint(-500f);
+XHash hash = XHash.Position(0f,0f).AddControlPointX(1000f).AddControlPointZ(-500f);
 XTween.To(gameObject, hash).Play();
 
 //or
