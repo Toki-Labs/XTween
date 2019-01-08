@@ -18,7 +18,7 @@ XTween is
 
 You can check example at [XTween Example](http://toki-labs.com/xtween)
 
-
+Ps. Because it is still in the development stage(ALAPHA), the interface can change frequently. At this stage, you can use it for testing purposes. After in BETA, You can use it stably.
 
 Implementation
 ---
@@ -28,7 +28,7 @@ XTween.To(gameObject, XHash.Position(600f,200f)).Play();
 
 
 // Shortcut type
-gameObject.To(XHash.Position(600f,200f)).Play();
+gameObject.ToPosition2D(600f,200f).Play();
 
 
 // Use with coroutine
@@ -39,7 +39,7 @@ IEnumerator CoroutineTween()
 	yield return XTween.To(gameObject, XHash.Position(600f,200f)).WaitForPlay();
 
 	//or
-	yield return gameObject.To(XHash.Position(600f,200f)).WaitForPlay();
+	yield return gameObject.ToPosition2D(600f,200f).WaitForPlay();
 }
 ```
 
@@ -95,6 +95,9 @@ Road Map
 - [x] Support UI RectTransform
 - [x] Performance check & polishing effciency
 - [x] Support Easing Edit in UI Graph
+- [ ] Stabilize Interface
+- [ ] Documentaion
+- [ ] Specific examples
 - [ ] Support visual editor
 - [ ] Support path editor by GUI
 
@@ -106,7 +109,7 @@ Position
 XTween.To(gameObject, XHash.New.AddX(600f).AddY(200f).AddZ(100f)).Play();
 
 //or
-gameObject.To(XHash.Position(600f,200f)).Play();
+gameObject.ToPosition2D(600f,200f).Play();
 ```
 
 Scale
@@ -115,7 +118,7 @@ Scale
 XTween.To(gameObject, XHash.New.AddScaleX(1f).AddScaleY(1.5f).AddScaleZ(0.5f)).Play();
 
 //or
-gameObject.To(XHash.Scale(1f,1.5f)).Play();
+gameObject.ToScale2D(1f,1.5f).Play();
 ```
 
 Rotation
@@ -124,7 +127,7 @@ Rotation
 XTween.To(gameObject, XHash.New.AddRotationZ(600f)).Play();
 
 //or
-gameObject.To(XHash.Rotation(60f,-180f,-45f)).Play();
+gameObject.ToRotation3D(60f,-180f,-45f)).Play();
 ```
 
 Combination
