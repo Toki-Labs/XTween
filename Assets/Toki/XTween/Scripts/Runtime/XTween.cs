@@ -188,7 +188,7 @@ public class XTween
 	}
 
 	//Color Property
-	public static IXTween ToColor<T>( T target, string colorPropertyName, XColorHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToColor<T>( T target, string colorPropertyName, XColorHash hash, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
@@ -204,7 +204,7 @@ public class XTween
     }
 
 	/*===================================== Continue ========================================*/
-	public static ContinousTween Continous( GameObject target, XHash hash, float time = 1.0f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static ContinousTween Continous( GameObject target, XHash hash, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		ITimer tick = _ticker;
 		ITimer tickReal = _tickerReal; 
@@ -317,18 +317,18 @@ public class XTween
 public static class XTweenShorcutExtensions
 {
 	//Poistion -Trasform
-	public static IXTween To(this Transform trans, XHash hash, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween To(this Transform trans, XHash hash, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.To(trans.gameObject, hash, time, easing, frameSkip, realTime);
 	}
 
 	//Position - GameObject
-	public static IXTween To(this GameObject gameObject, XHash hash, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween To(this GameObject gameObject, XHash hash, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.To(gameObject, hash, time, easing, frameSkip, realTime);
 	}
 
-	public static IXTween ToPosition2D(this Transform trans, float? x, float? y, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToPosition2D(this Transform trans, float? x, float? y, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		XHash hash = XHash.New;
 		if( x != null ) hash.X = (float)x;
@@ -336,33 +336,33 @@ public static class XTweenShorcutExtensions
 		return XTween.To(trans.gameObject, hash, time, easing, frameSkip, realTime);
 	}
 
-	public static IXTween ToPosition3D(this Transform trans, float? x, float? y, float? z, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
-	{
-		XHash hash = XHash.New;
-		if( x != null ) hash.X = (float)x;
-		if( y != null ) hash.Y = (float)y;
-		if( z != null ) hash.Z = (float)z;
-		return XTween.To(trans.gameObject, hash, time, easing, frameSkip, realTime);
-	}
-
-	public static IXTween ToPosition2D(this GameObject gameObject, float? x, float? y, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
-	{
-		XHash hash = XHash.New;
-		if( x != null ) hash.X = (float)x;
-		if( y != null ) hash.Y = (float)y;
-		return XTween.To(gameObject, hash, time, easing, frameSkip, realTime);
-	}
-
-	public static IXTween ToPosition3D(this GameObject gameObject, float? x, float? y, float? z, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToPosition3D(this Transform trans, float? x, float? y, float? z, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		XHash hash = XHash.New;
 		if( x != null ) hash.X = (float)x;
 		if( y != null ) hash.Y = (float)y;
 		if( z != null ) hash.Z = (float)z;
+		return XTween.To(trans.gameObject, hash, time, easing, frameSkip, realTime);
+	}
+
+	public static IXTween ToPosition2D(this GameObject gameObject, float? x, float? y, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		XHash hash = XHash.New;
+		if( x != null ) hash.X = (float)x;
+		if( y != null ) hash.Y = (float)y;
 		return XTween.To(gameObject, hash, time, easing, frameSkip, realTime);
 	}
 
-	public static IXTween ToScale2D(this Transform trans, float? x, float? y, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToPosition3D(this GameObject gameObject, float? x, float? y, float? z, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		XHash hash = XHash.New;
+		if( x != null ) hash.X = (float)x;
+		if( y != null ) hash.Y = (float)y;
+		if( z != null ) hash.Z = (float)z;
+		return XTween.To(gameObject, hash, time, easing, frameSkip, realTime);
+	}
+
+	public static IXTween ToScale2D(this Transform trans, float? x, float? y, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		XHash hash = XHash.New;
 		if( x != null ) hash.ScaleX = (float)x;
@@ -370,40 +370,40 @@ public static class XTweenShorcutExtensions
 		return XTween.To(trans.gameObject, hash, time, easing, frameSkip, realTime);
 	}
 
-	public static IXTween ToScale3D(this Transform trans, float? x, float? y, float? z, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
-	{
-		XHash hash = XHash.New;
-		if( x != null ) hash.ScaleX = (float)x;
-		if( y != null ) hash.ScaleY = (float)y;
-		if( z != null ) hash.ScaleZ = (float)z;
-		return XTween.To(trans.gameObject, hash, time, easing, frameSkip, realTime);
-	}
-
-	public static IXTween ToScale2D(this GameObject gameObject, float? x, float? y, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
-	{
-		XHash hash = XHash.New;
-		if( x != null ) hash.ScaleX = (float)x;
-		if( y != null ) hash.ScaleY = (float)y;
-		return XTween.To(gameObject, hash, time, easing, frameSkip, realTime);
-	}
-
-	public static IXTween ToScale3D(this GameObject gameObject, float? x, float? y, float? z, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToScale3D(this Transform trans, float? x, float? y, float? z, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		XHash hash = XHash.New;
 		if( x != null ) hash.ScaleX = (float)x;
 		if( y != null ) hash.ScaleY = (float)y;
 		if( z != null ) hash.ScaleZ = (float)z;
+		return XTween.To(trans.gameObject, hash, time, easing, frameSkip, realTime);
+	}
+
+	public static IXTween ToScale2D(this GameObject gameObject, float? x, float? y, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		XHash hash = XHash.New;
+		if( x != null ) hash.ScaleX = (float)x;
+		if( y != null ) hash.ScaleY = (float)y;
 		return XTween.To(gameObject, hash, time, easing, frameSkip, realTime);
 	}
 
-	public static IXTween ToRotation2D(this Transform trans, float? z, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToScale3D(this GameObject gameObject, float? x, float? y, float? z, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	{
+		XHash hash = XHash.New;
+		if( x != null ) hash.ScaleX = (float)x;
+		if( y != null ) hash.ScaleY = (float)y;
+		if( z != null ) hash.ScaleZ = (float)z;
+		return XTween.To(gameObject, hash, time, easing, frameSkip, realTime);
+	}
+
+	public static IXTween ToRotation2D(this Transform trans, float? z, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		XHash hash = XHash.New;
 		if( z != null ) hash.Z = (float)z;
 		return XTween.To(trans.gameObject, hash, time, easing, frameSkip, realTime);
 	}
 
-	public static IXTween ToRotation3D(this Transform trans, float? x, float? y, float? z, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToRotation3D(this Transform trans, float? x, float? y, float? z, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		XHash hash = XHash.New;
 		if( x != null ) hash.X = (float)x;
@@ -412,14 +412,14 @@ public static class XTweenShorcutExtensions
 		return XTween.To(trans.gameObject, hash, time, easing, frameSkip, realTime);
 	}
 
-	public static IXTween ToRotation2D(this GameObject gameObject, float? z, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToRotation2D(this GameObject gameObject, float? z, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		XHash hash = XHash.New;
 		if( z != null ) hash.Z = (float)z;
 		return XTween.To(gameObject, hash, time, easing, frameSkip, realTime);
 	}
 
-	public static IXTween ToRotation3D(this GameObject gameObject, float? x, float? y, float? z, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToRotation3D(this GameObject gameObject, float? x, float? y, float? z, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		XHash hash = XHash.New;
 		if( x != null ) hash.X = (float)x;
@@ -428,72 +428,72 @@ public static class XTweenShorcutExtensions
 		return XTween.To(gameObject, hash, time, easing, frameSkip, realTime);
 	}
 
-	public static IXTween ToPosition(this Transform trans, Vector3 position, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToPosition(this Transform trans, Vector3 position, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.To(trans.gameObject, XHash.Position(position), time, easing, frameSkip, realTime);
 	}
 
-	public static IXTween ToPosition(this GameObject gameObject, Vector3 position, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToPosition(this GameObject gameObject, Vector3 position, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.To(gameObject, XHash.Position(position), time, easing, frameSkip, realTime);
 	}
 
 	//Value - setter
-	public static IXTween ToValue(this object obj, Action<float> setter, float start, float end, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToValue(this object obj, Action<float> setter, float start, float end, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.ToValueBezier(setter, start, end, null, time, easing, frameSkip, realTime);
 	}
 
 	//Value - setter Bezier
-	public static IXTween ToValueBezier(this object obj, Action<float> setter, float start, float end, float[] controlPoints, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToValueBezier(this object obj, Action<float> setter, float start, float end, float[] controlPoints, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.ToValueBezier(setter, start, end, controlPoints, time, easing, frameSkip, realTime);
 	}
 
 	//Value - Multi value
-	public static IXTween ToValueMulti(this object obj, XObjectHash source, Action<XObjectHash> UpdateHandler, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToValueMulti(this object obj, XObjectHash source, Action<XObjectHash> UpdateHandler, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.ToValueMulti(source, UpdateHandler, time, easing, frameSkip, realTime);
 	}
 
 	//Property - Property Type
-	public static IXTween ToProperty<T>(this T target, string propertyName, float end, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToProperty<T>(this T target, string propertyName, float end, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.ToProperty<T>(target, propertyName, end, time, easing, frameSkip, realTime);
 	}
 
 	//Property - Property Type
-	public static IXTween ToProperty<T>(this T target, string propertyName, float start, float end, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToProperty<T>(this T target, string propertyName, float start, float end, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.ToProperty<T>(target, propertyName, start, end, time, easing, frameSkip, realTime);
 	}
 
 	//Property - Property Bezier
-	public static IXTween ToPropertyBezier<T>(this T target, string propertyName, float start, float end, float[] controlPoints, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToPropertyBezier<T>(this T target, string propertyName, float start, float end, float[] controlPoints, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.ToPropertyBezier<T>(target, propertyName, start, end, controlPoints, time, easing, frameSkip, realTime);
 	}
 
 	//Property - Multi property
-	public static IXTween ToPropertyMulti<T>(this T target, XObjectHash hash, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToPropertyMulti<T>(this T target, XObjectHash hash, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.ToPropertyMulti<T>(target, hash, time, easing, frameSkip, realTime);
 	}
 
 	//Color - Sprite
-	public static IXTween ToColor(this SpriteRenderer target, XColorHash hash, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToColor(this SpriteRenderer target, XColorHash hash, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.ToColor<SpriteRenderer>(target, "color", hash, time, easing, frameSkip, realTime);
 	}
 
 	//Color - UI
-	public static IXTween ToColor(this Graphic target, XColorHash hash, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToColor(this Graphic target, XColorHash hash, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.ToColor<Graphic>(target, "color", hash, time, easing, frameSkip, realTime);
 	}
 
 	//Color - Property
-	public static IXTween ToColor<T>(this T target, string colorPropertyName, XColorHash hash, float time = 1f, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
+	public static IXTween ToColor<T>(this T target, string colorPropertyName, XColorHash hash, float time, IEasing easing = null, uint frameSkip = 0, bool realTime = false )
 	{
 		return XTween.ToColor<T>(target, colorPropertyName, hash, time, easing, frameSkip, realTime);
 	}

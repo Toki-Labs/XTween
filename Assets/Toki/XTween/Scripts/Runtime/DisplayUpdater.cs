@@ -447,10 +447,7 @@ namespace Toki.Tween
 				if( _updaterSizeDelta.initialized )
 					_transformRect.sizeDelta = _updaterSizeDelta.Update(_invert, _factor, _transformRect.sizeDelta);
 				if( _updaterRotation.initialized ) 
-				{
-					Debug.Log("Rotate!");
 					_transform.localEulerAngles = _updaterRotation.Update(_invert, _factor, _transform.localEulerAngles);
-				}
 			}
 		}
 

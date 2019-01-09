@@ -71,12 +71,12 @@ public class ExampleScale : ExampleBase
 		TweenUIData data = this.uiContainer.Data;
 		if( this.container2D.activeSelf )
 		{
-			this._tween = XTween.To(this.target2D, XHash.New.AddScaleX(400f).AddScaleY(400f), data.time, data.Easing);
+			this._tween = target2D.ToScale2D(400f, 400f, data.time, data.Easing);
 			this._tween.Play();
 		}
 		else
 		{
-			this._tween = XTween.To(this.target3D, XHash.New.AddScaleX(550f).AddScaleY(550f).AddScaleZ(550f), data.time, data.Easing);
+			this._tween = target3D.ToScale3D(550f, 550f, 550f, data.time, data.Easing);
 			this._tween.Play();
 		}
 	}
