@@ -71,6 +71,7 @@ public class ExamplePerformance : ExampleBase
 	protected override IEnumerator StartExample()
 	{
 		XTween.Initialize(1000);
+		LeanTween.init( 1100 );
 		yield return null;
 		this._position2D = this.target2D.transform.localPosition;
 		this._position3D = this.target3D.transform.localPosition;
@@ -126,9 +127,10 @@ public class ExamplePerformance : ExampleBase
 
 		for ( int i = 0; i < length; ++i )
 		{
-			this.StartXTween(this._objList[i].obj);
+			// this.StartXTween(this._objList[i].obj);
 			// this.StartiTween(this._objList[i].obj);
 			// this.StartDOTween(this._objList[i].obj);
+			this.StartLeanTween(this._objList[i].obj);
 		}
 	
 		while( true )
@@ -148,7 +150,7 @@ public class ExamplePerformance : ExampleBase
 
 	private void StartXTween(GameObject target)
 	{
-		XTween.Reverse(target.To(XHash.Position(0f,0f,-400f), 1f, Ease.ElasticOut)).Play();
+		target.To(XHash.Position(0f,0f,-400f), 1f, Ease.ElasticOut).Play();
 	}
 
 	private void StartiTween(GameObject target)
@@ -164,6 +166,13 @@ public class ExamplePerformance : ExampleBase
 		hash.Add("oncompletetarget", this.gameObject);
 	#if PERFORMANCE_TEST
 		iTween.MoveTo(target, hash);
+	#endif
+	}
+
+	private void StartLeanTween(GameObject target)
+	{
+	#if PERFORMANCE_TEST
+		LeanTween.moveLocal(target, new Vector3(0f,0f,-200f), 1f).setEase(LeanTweenType.easeInOutElastic);
 	#endif
 	}
 

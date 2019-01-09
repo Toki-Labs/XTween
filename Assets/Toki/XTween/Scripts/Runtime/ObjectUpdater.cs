@@ -34,7 +34,7 @@ namespace Toki.Tween
 		protected void ComposeDic()
 		{
 			this._valueDic = _source.ObjectSet;
-			this._keys = XTweenDataUtil.GetArrayFromCollection<string>(this._valueDic.Keys);
+			this._keys = this._valueDic.Keys.GetArrayFromCollection<string>();
 			this._keyLength = this._keys.Length;
 		}
 
@@ -113,36 +113,85 @@ namespace Toki.Tween
 			foreach ( var item in this._valueDic )
 			{
 				XObjectValues objValue = item.Value.value;
-				Action<T,float> setter = (Action<T, float>)Delegate.CreateDelegate(
-					typeof(Action<T, float>),
-					typeof(T).GetProperty(item.Key).GetSetMethod()
-				);
-				PropertyInfo pInfo = type.GetProperty(item.Key);
-				if( objValue.ContainStart )
+
+				PropertyInfo property = typeof(T).GetProperty(item.Key);
+				if( property == null )
 				{
-					setter(_target, objValue.start);
+					throw new System.ArgumentException("There is no property named \""+ item.Key + "\".");
 				}
 				else
 				{
-					objValue.start = (float)pInfo.GetValue(_target, null);
-				}
-				item.Value.updater = objValue.controlPoint == null ? 
-				(Action<float,float>)delegate( float invert, float factor )
-				{
-					if( IsNullTarget() ) return;
-					
-					objValue.current = objValue.start * invert + objValue.end * factor;
-					item.Value.value = objValue;
-					setter(_target, objValue.current);
-				} :
-				delegate( float invert, float factor )
-				{
-					if( IsNullTarget() ) return;
+					if(typeof(T).GetProperty(item.Key).GetType().Equals(typeof(float)))
+					{
+						Action<T,float> setter = (Action<T, float>)Delegate.CreateDelegate(
+							typeof(Action<T, float>),
+							typeof(T).GetProperty(item.Key).GetSetMethod()
+						);
+						PropertyInfo pInfo = type.GetProperty(item.Key);
+						if( objValue.ContainStart )
+						{
+							setter(_target, objValue.start);
+						}
+						else
+						{
+							objValue.start = (float)pInfo.GetValue(_target, null);
+						}
+						item.Value.updater = objValue.controlPoint == null ? 
+						(Action<float,float>)delegate( float invert, float factor )
+						{
+							if( IsNullTarget() ) return;
+							
+							objValue.current = objValue.start * invert + objValue.end * factor;
+							item.Value.value = objValue;
+							setter(_target, objValue.current);
+						} :
+						delegate( float invert, float factor )
+						{
+							if( IsNullTarget() ) return;
 
-					objValue.current = Calcurate(objValue.controlPoint, objValue.start, objValue.end, invert, factor);
-					item.Value.value = objValue;
-					setter(_target, objValue.current);
-				};
+							objValue.current = Calcurate(objValue.controlPoint, objValue.start, objValue.end, invert, factor);
+							item.Value.value = objValue;
+							setter(_target, objValue.current);
+						};
+					}
+					else if(typeof(T).GetProperty(item.Key).GetType().Equals(typeof(int)))
+					{
+						Action<T,int> setter = (Action<T, int>)Delegate.CreateDelegate(
+							typeof(Action<T, int>),
+							typeof(T).GetProperty(item.Key).GetSetMethod()
+						);
+						PropertyInfo pInfo = type.GetProperty(item.Key);
+						if( objValue.ContainStart )
+						{
+							setter(_target, Mathf.RoundToInt(objValue.start));
+						}
+						else
+						{
+							objValue.start = (float)pInfo.GetValue(_target, null);
+						}
+						item.Value.updater = objValue.controlPoint == null ? 
+						(Action<float,float>)delegate( float invert, float factor )
+						{
+							if( IsNullTarget() ) return;
+							
+							objValue.current = objValue.start * invert + objValue.end * factor;
+							item.Value.value = objValue;
+							setter(_target, Mathf.RoundToInt(objValue.current));
+						} :
+						delegate( float invert, float factor )
+						{
+							if( IsNullTarget() ) return;
+
+							objValue.current = Calcurate(objValue.controlPoint, objValue.start, objValue.end, invert, factor);
+							item.Value.value = objValue;
+							setter(_target, Mathf.RoundToInt(objValue.current));
+						};
+					}
+					else
+					{
+						throw new System.ArgumentException("Property type is must be int or float.");
+					}
+				}
 			}
 			_resolvedValues = true;
 		}

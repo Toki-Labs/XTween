@@ -22,7 +22,7 @@ namespace Toki.Tween
 		/************************************************************************
 		*	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
 		************************************************************************/
-		public static T[] GetArrayFromCollection<T>( System.Collections.ICollection list )
+		public static T[] GetArrayFromCollection<T>( this System.Collections.ICollection list )
 		{
 			if( list == null )
 			{

@@ -447,18 +447,11 @@ namespace Toki.Tween
 				if( _updaterSizeDelta.initialized )
 					_transformRect.sizeDelta = _updaterSizeDelta.Update(_invert, _factor, _transformRect.sizeDelta);
 				if( _updaterRotation.initialized ) 
+				{
+					Debug.Log("Rotate!");
 					_transform.localEulerAngles = _updaterRotation.Update(_invert, _factor, _transform.localEulerAngles);
+				}
 			}
-		}
-
-		// protected virtual void UpdateBezierBottom()
-		// {
-		// 	_rect.height = base.Calcurate( _finish.ControlPointBottom, _sRect.height, _dRect.height );
-		// }
-		
-		private void UpdateAnchoredPosition()
-		{
-			// this._transformRect.anchoredPosition3D = _pos;
 		}
 
 		public override void Release()

@@ -71,13 +71,11 @@ public class ExamplePosition : ExampleBase
 		TweenUIData data = this.uiContainer.Data;
 		if( this.container2D.activeSelf )
 		{
-			this._tween = XTween.To(this.target2D, XHash.Position(800f,300f), data.time, data.Easing);
-			this._tween.Play();
+			this._tween = this.target2D.ToPosition2D(800f, 300f, data.time, data.Easing).Play();
 		}
 		else
 		{
-			this._tween = XTween.To(this.target3D, XHash.Position(200f,50f,-1500f), data.time, data.Easing);
-			this._tween.Play();
+			this._tween = this.target3D.ToPosition3D(200f, 50f, -1500, data.time, data.Easing).Play();
 		}
 	}
 	

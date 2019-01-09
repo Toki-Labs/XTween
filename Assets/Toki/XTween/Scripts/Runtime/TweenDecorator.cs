@@ -56,8 +56,8 @@ namespace Toki.Tween
 		public override void Stop()
 		{
 			if (_isPlaying) {
-				base.Stop();
 				_baseTween.StartStop();
+				base.Stop();
 			}
 		}
 			
@@ -74,7 +74,14 @@ namespace Toki.Tween
 			
 		protected override void InternalUpdate( float time )
 		{
-			_baseTween.UpdateTween(time);
+			if( _baseTween.Disposed )
+			{
+				InternalRelease();
+			}
+			else
+			{
+				_baseTween.UpdateTween(time);
+			}
 		}
 
 		public override void Dispose()

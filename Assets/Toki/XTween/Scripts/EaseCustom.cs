@@ -4,5 +4,6 @@ public enum EaseCustom
 {
 	EaseIn,
 	MyEasing,
-	EaseInOut
+	EaseInOut,
+	Test3
 }

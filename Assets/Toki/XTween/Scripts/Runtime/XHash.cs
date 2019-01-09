@@ -78,7 +78,7 @@ public class XHash : XEventHash
 		return this;
 	}
 
-	/*********************************** Position **********************************/
+	/*********************************** UI **********************************/
     public bool IsRelativeLeft { get; set; }
     public bool IsRelativeTop { get; set; }
     public bool IsRelativeRight { get; set; }
