@@ -71,7 +71,9 @@ public class ExamplePerformance : ExampleBase
 	protected override IEnumerator StartExample()
 	{
 		XTween.Initialize(1000);
+	#if PERFORMANCE_TEST
 		LeanTween.init( 1100 );
+	#endif
 		yield return null;
 		this._position2D = this.target2D.transform.localPosition;
 		this._position3D = this.target3D.transform.localPosition;
