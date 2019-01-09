@@ -26,7 +26,7 @@ Implementation
 // Shortcut type
 gameObject.ToPosition2D(600f, 200f, 1f).Play();
 
-// Common type
+// Universal type
 XTween.To(gameObject, XHash.Position(600f, 200f), 1f).Play();
 
 // Use with coroutine
@@ -107,7 +107,7 @@ Position
 ```csharp
 gameObject.ToPosition2D(600f, 200f, 1f).Play();
 
-//Common type
+//Universal type
 XTween.To(gameObject, XHash.New.AddX(600f).AddY(200f).AddZ(100f), 1f).Play();
 ```
 
@@ -116,7 +116,7 @@ Scale
 ```csharp
 gameObject.ToScale2D(1f, 1.5f, 1f).Play();
 
-//Common type
+//Universal type
 XTween.To(gameObject, XHash.New.AddScaleX(1f).AddScaleY(1.5f).AddScaleZ(0.5f), 1f).Play();
 ```
 
@@ -125,7 +125,7 @@ Rotation
 ```csharp
 gameObject.ToRotation3D(60f, -180f, -45f, 1f).Play();
 
-//Common type
+//Universal type
 XTween.To(gameObject, XHash.New.AddRotationZ(600f), 1f).Play();
 ```
 
@@ -135,7 +135,7 @@ Combination
 //Position, Scale, Rotation tween in same time, same easing
 gameObject.To(XHash.Position(0f,10f).AddScaleX(200f).AddRotationZ(60f)).Play();
 
-//Common type
+//Universal type
 XTween.To(gameObject, XHash.New.AddX(600f).AddScaleX(200f).AddRotationZ(180f)).Play();
 ```
 
@@ -155,7 +155,7 @@ Value
 //Setter
 XTween.ToValue(x=>camera3D.fieldOfView=x, 10f, 1f).Play();
 
-//or multi type
+//or Multi value type
 XTween.ToValueMulti(XObjectHash.New.Add("value0", 50f, 10f).Add("value1", 0f, 10f), UpdateValue, 1f).Play();
 
 void UpdateValue(XObjectHash hash)
@@ -170,7 +170,7 @@ Property
 ```csharp
 camera3D.ToProperty("fieldOfView", 6f, 1f).Play();
 
-//Common type
+//Universal type
 XTween.ToPropertyMulti<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f), 1f).Play();
 ```
 
