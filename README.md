@@ -133,10 +133,10 @@ Combination
 ---
 ```csharp
 //Position, Scale, Rotation tween in same time, same easing
-gameObject.To(XHash.Position(0f,10f).AddScaleX(200f).AddRotationZ(60f)).Play();
+gameObject.To(XHash.Position(0f,10f).AddScaleX(200f).AddRotationZ(60f), 1f).Play();
 
 //Universal type
-XTween.To(gameObject, XHash.New.AddX(600f).AddScaleX(200f).AddRotationZ(180f)).Play();
+XTween.To(gameObject, XHash.New.AddX(600f).AddScaleX(200f).AddRotationZ(180f), 1f).Play();
 ```
 
 Bezier
@@ -169,9 +169,6 @@ Property
 ---
 ```csharp
 camera3D.ToProperty("fieldOfView", 6f, 1f).Play();
-
-//Universal type
-XTween.ToPropertyMulti<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f), 1f).Play();
 ```
 
 Event Handling
