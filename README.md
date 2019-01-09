@@ -23,13 +23,11 @@ __Ps. Because it is still in the development stage(ALAPHA), the interface can ch
 Implementation
 ---
 ```csharp
-// Simple use
-XTween.To(gameObject, XHash.Position(600f,200f), 1f).Play();
-
-
 // Shortcut type
 gameObject.ToPosition2D(600f, 200f, 1f).Play();
 
+// Common type
+XTween.To(gameObject, XHash.Position(600f, 200f), 1f).Play();
 
 // Use with coroutine
 StartCoroutine(CoroutineTween());
@@ -135,10 +133,10 @@ Combination
 ---
 ```csharp
 //Position, Scale, Rotation tween in same time, same easing
-XTween.To(gameObject, XHash.New.AddX(600f).AddScaleX(200f).AddRotationZ(180f)).Play();
-
-//or
 gameObject.To(XHash.Position(0f,10f).AddScaleX(200f).AddRotationZ(60f)).Play();
+
+//Common type
+XTween.To(gameObject, XHash.New.AddX(600f).AddScaleX(200f).AddRotationZ(180f)).Play();
 ```
 
 Bezier
@@ -172,7 +170,7 @@ Property
 ```csharp
 camera3D.ToProperty("fieldOfView", 6f, 1f).Play();
 
-//or
+//Common type
 XTween.ToPropertyMulti<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f), 1f).Play();
 ```
 
