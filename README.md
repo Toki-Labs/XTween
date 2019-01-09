@@ -24,11 +24,11 @@ Implementation
 ---
 ```csharp
 // Simple use
-XTween.To(gameObject, XHash.Position(600f,200f)).Play();
+XTween.To(gameObject, XHash.Position(600f,200f), 1f).Play();
 
 
 // Shortcut type
-gameObject.ToPosition2D(600f,200f).Play();
+gameObject.ToPosition2D(600f, 200f, 1f).Play();
 
 
 // Use with coroutine
@@ -36,10 +36,10 @@ StartCoroutine(CoroutineTween());
 
 IEnumerator CoroutineTween()
 {
-	yield return XTween.To(gameObject, XHash.Position(600f,200f)).WaitForPlay();
+	yield return XTween.To(gameObject, XHash.Position(600f, 200f), 1f).WaitForPlay();
 
 	//or
-	yield return gameObject.ToPosition2D(600f,200f).WaitForPlay();
+	yield return gameObject.ToPosition2D(600f, 200f, 1f).WaitForPlay();
 }
 ```
 
@@ -64,7 +64,7 @@ __Garbage Alloc__
 >__End__
 >
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/Tween_End.jpg)
->XTween is don't produces garbage.
+>XTween dose not produces garbage.
 
 __CPU Performance__
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/Tween_Update.jpg)
@@ -107,28 +107,28 @@ Road Map
 Position
 ---
 ```csharp
-XTween.To(gameObject, XHash.New.AddX(600f).AddY(200f).AddZ(100f)).Play();
+gameObject.ToPosition2D(600f, 200f, 1f).Play();
 
-//or
-gameObject.ToPosition2D(600f,200f).Play();
+//Common type
+XTween.To(gameObject, XHash.New.AddX(600f).AddY(200f).AddZ(100f), 1f).Play();
 ```
 
 Scale
 ---
 ```csharp
-XTween.To(gameObject, XHash.New.AddScaleX(1f).AddScaleY(1.5f).AddScaleZ(0.5f)).Play();
+gameObject.ToScale2D(1f, 1.5f, 1f).Play();
 
-//or
-gameObject.ToScale2D(1f,1.5f).Play();
+//Common type
+XTween.To(gameObject, XHash.New.AddScaleX(1f).AddScaleY(1.5f).AddScaleZ(0.5f), 1f).Play();
 ```
 
 Rotation
 ---
 ```csharp
-XTween.To(gameObject, XHash.New.AddRotationZ(600f)).Play();
+gameObject.ToRotation3D(60f, -180f, -45f, 1f).Play();
 
-//or
-gameObject.ToRotation3D(60f,-180f,-45f)).Play();
+//Common type
+XTween.To(gameObject, XHash.New.AddRotationZ(600f), 1f).Play();
 ```
 
 Combination
@@ -145,47 +145,48 @@ Bezier
 ---
 ```csharp
 XHash hash = XHash.Position(0f,0f).AddControlPointX(1000f).AddControlPointZ(-500f);
-XTween.To(gameObject, hash).Play();
+XTween.To(gameObject, hash, 1f).Play();
 
 //or
-gameObject.To(hash).Play();
+gameObject.To(hash, 1f).Play();
 ```
 
 Value
 ---
 ```csharp
 //Setter
-XTween.ToValue(x=>camera3D.fieldOfView=x, 10f).Play();
+XTween.ToValue(x=>camera3D.fieldOfView=x, 10f, 1f).Play();
 
 //or multi type
-XTween.ToValueMulti(XObjectHash.New.Add("value", 50f, 10f), UpdateValue).Play();
+XTween.ToValueMulti(XObjectHash.New.Add("value0", 50f, 10f).Add("value1", 0f, 10f), UpdateValue, 1f).Play();
 
 void UpdateValue(XObjectHash hash)
 {
-	camera3D.fieldOfView = hash.Now("value");
+	camera3D.fieldOfView = hash.Now("value0");
+	Debug.Log( hash.Now("value1") );
 }
 ```
 
 Property
 ---
 ```csharp
-camera3D.ToProperty("fieldOfView", 6f).Play();
+camera3D.ToProperty("fieldOfView", 6f, 1f).Play();
 
 //or
-XTween.ToPropertyMulti<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f)).Play();
+XTween.ToPropertyMulti<Camera>(camera3D, XObjectHash.New.Add("fieldOfView", 6f), 1f).Play();
 ```
 
 Event Handling
 ---
 ```csharp
-XTween.To(gameObject, XHash.Position(600f,200f)).AddOnComplete(()=>Debug.Log("OnComplete")).Play();
+gameObject.ToPosition2D(600f, 200f, 1f).AddOnComplete(()=>Debug.Log("OnComplete")).Play();
 
 //or
-IXTween ani = XTween.To(gameObject, XHash.New.AddX(600f).AddY(200f));
-ani.OnComplete = Executor<float>.New(OnTweenEnd, 10f);
-ani.Play();
+IXTween tween = gameObject.ToPosition2D(600f, 200f, 1f);
+tween.OnComplete = Executor<GameObject>.New(OnTweenEnd, gameObject);
+tween.Play();
 
-void OnTweenEnd(float value)
+void OnTweenEnd(GameObject tweenTarget)
 {
 	Debug.Log(value);
 }
@@ -201,11 +202,11 @@ StartCoroutine(tweenCoroutine);
 
 IEnumerator CoroutineTween()
 {
-	yield return gameObject.To(XHash.Position(200f,50f,-1500f)).WaitForPlay();
+	yield return gameObject.ToPosition3D(200f, 50f, -1500f, 1f).WaitForPlay();
 	Debug.Log("On Complete First Tween");
 
 	//Start other tween start at 0.3sec
-	yield return gameObject.To(XHash.Position(100f,500f)).WaitForGotoAndPlay(0.3f);
+	yield return gameObject.ToPosition2D(100f, 500f, 1f).WaitForGotoAndPlay(0.3f);
 	Debug.Log("On Complete Second Tween");
 }
 
@@ -219,8 +220,8 @@ Serial
 XTween.SerialTweens
 (	
 	false, 
-	gameObject.To(XHash.Position(1000f,300f)), 
-	gameObject.To(XHash.Scale(200f,200f))
+	gameObject.ToPosition2D(1000f, 300f, 1f), 
+	gameObject.ToScale2D(200f, 200f, 1f)
 ).Play();
 ```
 
@@ -230,8 +231,8 @@ Parallel
 XTween.ParallelTweens
 (	
 	false, 
-	gameObject.To(XHash.Position(1000f,300f)), 
-	gameObject.To(XHash.Scale(200f,200f))
+	gameObject.ToPosition2D(1000f, 300f, 1f), 
+	gameObject.ToScale(200f, 200f, 1f)
 ).Play();
 ```
 
@@ -239,26 +240,26 @@ UI
 ---
 ```csharp
 XHash hashButton = XHash.New.AddX(400f).AddY(-250f).AddWidth(800f).AddHeight(400f);
-XTween.To(button, hashButton).Play();
+XTween.To(button, hashButton, 1f).Play();
 
 //or when stretch type
 XHash hashDropdown = XHash.New.AddLeft(2000f).AddRight(300f).AddTop(500f).AddBottom(400f);
-XTween.To(dropdown, hashDropdown).Play();
+XTween.To(dropdown, hashDropdown, 1f).Play();
 ```
 
 Color
 ---
 ```csharp
-XTween.ToColor(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
+XTween.ToColor(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f), 1f).Play();
 
 //or when object has other type
-XTween.ToColor<Image>(imageInstance, "color", XColorHash.New.AddRed(0.56f).AddGreen(0.83f)).Play();
+XTween.ToColor<Image>(imageInstance, "color", XColorHash.New.AddRed(0.56f).AddGreen(0.83f), 1f).Play();
 ```
 
 Easing
 ---
 ```csharp
-gameObject.To(XHash.Position(600f,200f), 1f, Ease.QuintOut).Play();
+gameObject.ToPosition2D(600f, 200f, 1f, Ease.QuintOut).Play();
 ```
 
 Custom Easing
@@ -266,15 +267,15 @@ Custom Easing
 >![](https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/EaseCurve.png)
 >Customizable Easing, Support code hint for use of ease name, TopMenu -> Windows -> XTween Editor
 ```csharp
-XHash hash = XHash.New.Position(200f,50f,-1500f)
+XHash hash = XHash.Position(200f, 50f, -1500f)
 	     .AddControlPointX(-1000f,550f).AddControlPointY(550f,-300f);
-XTween.To(target3D, hash, Ease.Custom(EaseCustom.MyEasing)).Play();
+XTween.To(target3D, hash, 1f, Ease.Custom(EaseCustom.MyEasing)).Play();
 ```
 
 Decorator
 ---
 ```csharp
-IXTween tween = XTween.ToColor(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f));
+IXTween tween = XTween.ToColor(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f), 1f);
 
 //Delay Tweener
 tween = XTween.Delay(tween, 1f/*Pre Delay*/, 1f/*Post Delay*/);
@@ -299,10 +300,10 @@ XTween is basically autodispose. when the tweener is completed or stopped.
 So, you should set to "Lock" for reuse tweener
 ```csharp
 //This Tweener will not dispose when stop or complete.
-IXTween tween = gameObject.To(XHash.Position(600f,200f)).Lock().Play();
+IXTween tween = gameObject.ToPosition2D(600f, 200f, 1f).Lock().Play();
 
 //When the tweener after completed or stopped. You can reuse this.
-tween.Reset(); //Set to play position 0;
+tween.Reset(); //Set to play position 0 same with GotoAndStop(0)
 tween.Play(); //Replay
 
 //When you are not using twin anymore. You should "Release" this tween.
@@ -314,7 +315,7 @@ Time Control
 ---
 ```csharp
 //Start
-IXTween tween = gameObject.To(XHash.Position(600f,200f)).Lock().Play();
+IXTween tween = gameObject.ToPosition2D(600f, 200f, 1f).Lock().Play();
 //Stop at this position
 tween.Stop();
 //Resume
