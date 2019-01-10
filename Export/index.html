@@ -128,28 +128,24 @@
 
 <p><strong>Ps. Because it is still in the development stage(ALAPHA), the interface can change frequently. At this stage, you can use it for testing purposes. After in BETA, You can use it stably.</strong></p>
 
+
 <h2 id="implementation">Implementation</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Simple use</span>
-<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Shortcut type</span>
+<span class="n">gameObject</span><span class="p">.</span><span class="nf">ToPosition2D</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span> <span class="m">200f</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 
-
-<span class="c1">// Shortcut type</span>
-<span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
-
+<span class="c1">// Universal type</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span> <span class="m">200f</span><span class="p">),</span> <span class="m">1f</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="c1">// Use with coroutine</span>
-<span class="n">IEnumerator</span> <span class="n">tweenCoroutine</span> <span class="p">=</span> <span class="nf">CoroutineTween</span><span class="p">();</span>
-<span class="nf">StartCoroutine</span><span class="p">(</span><span class="n">tweenCoroutine</span><span class="p">);</span>
+<span class="nf">StartCoroutine</span><span class="p">(</span><span class="nf">CoroutineTween</span><span class="p">());</span>
 
 <span class="n">IEnumerator</span> <span class="nf">CoroutineTween</span><span class="p">()</span>
 <span class="p">{</span>
-	<span class="k">yield</span> <span class="k">return</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">WaitForPlay</span><span class="p">();</span>
+	<span class="k">yield</span> <span class="k">return</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span> <span class="m">200f</span><span class="p">),</span> <span class="m">1f</span><span class="p">).</span><span class="nf">WaitForPlay</span><span class="p">();</span>
 
 	<span class="c1">//or</span>
-	<span class="k">yield</span> <span class="k">return</span> <span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span><span class="m">200f</span><span class="p">)).</span><span class="nf">WaitForPlay</span><span class="p">();</span>
+	<span class="k">yield</span> <span class="k">return</span> <span class="n">gameObject</span><span class="p">.</span><span class="nf">ToPosition2D</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span> <span class="m">200f</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">WaitForPlay</span><span class="p">();</span>
 <span class="p">}</span>
-
-<span class="nf">StopCoroutine</span><span class="p">(</span><span class="n">tweenCoroutine</span><span class="p">);</span>
 </code></pre></div></div>
 
 
