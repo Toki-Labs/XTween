@@ -143,10 +143,10 @@ Bezier
 ---
 ```csharp
 XHash hash = XHash.Position(0f,0f).AddControlPointX(1000f).AddControlPointZ(-500f);
-XTween.To(gameObject, hash, 1f).Play();
-
-//or
 gameObject.To(hash, 1f).Play();
+
+//Universal type
+XTween.To(gameObject, hash, 1f).Play();
 ```
 
 Value
