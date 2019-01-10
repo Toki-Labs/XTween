@@ -789,20 +789,29 @@ public class XHash : XEventHash
 		this.IsRelativeRotateX = this.IsRelativeRotateY = this.IsRelativeRotateZ = false;
 		this.IsRelativeLeft = this.IsRelativeRight = this.IsRelativeTop = this.IsRelativeBottom = false;
 		this.IsRelativeWidth = this.IsRelativeHeight = false;
+		
 		this._containX = this._containY = this._containZ = false;
 		this._x = this._y = this._z = 0f;
 		this._controlX = this._controlY = this._controlZ = null;
+
 		this._containLeft = this._containRight = this._containTop = this._containBottom = false;
 		this._left = this._right = this._top = this._bottom = 0f;
 		this._controlLeft = this._controlRight = this._controlTop = this._controlBottom = null;
+
 		this._containWidth = this._containHeight = false;
 		this._width = this._height = 0f;
-		this._controlBottom = this._controlHeight = null;
+		this._controlWidth = this._controlHeight = null;
+
 		this._containScaleX = this._containScaleY = this._containScaleZ = false;
+		this._scaleX = this._scaleY = this._scaleZ = 0f;
+		this._controlScaleX = this._controlScaleY = this._controlScaleZ = null;
+
+		this._containRotationX = this._containRotationY = this._containRotationZ = false;
+		this._rotationX = this._rotationY = this._rotationZ = 0f;
 		this._controlRotationX = this._controlRotationY = this._controlRotationZ = null;
 		this._rotateXClockwise = this._rotateYClockwise = this._rotateZClockwise = false;
-		this._rotationX = this._rotationY = this._rotationZ = 0f;
 		this._rotateXCount = this._rotateYCount = this._rotateZCount = 0;
+
 		this._start = null;
 	}
 }
