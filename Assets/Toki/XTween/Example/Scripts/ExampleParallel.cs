@@ -79,7 +79,7 @@ public class ExampleParallel : ExampleBase
 			(
 				false,
 				target3DSecond.ToPosition3D(-940f, -160f, -500f, data.time, data.Easing),
-				target3D.ToPosition3D(200f, 70f, -1500f, data.time, data.Easing).SetReverse().SetScale(2f).SetRepeat(2)
+				target3D.ToPosition3D(200f, 70f, -1500f, data.time, data.Easing)
 			).SetLock().Play();
 		}
 		else this._tween.Play(0f);

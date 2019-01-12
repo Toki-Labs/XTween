@@ -254,7 +254,6 @@ namespace Toki.Tween
 		{
 			if (_isPlaying) 
 			{
-				_ticker.RemoveTimer(this);
 				_isPlaying = false;
 				if (_classicHandlers != null && _classicHandlers.OnStop != null) 
 					_classicHandlers.OnStop.Execute();
@@ -333,13 +332,6 @@ namespace Toki.Tween
 					else
 					{
 						_position = _durationTarget;
-						/* if( _isGroup )
-						{
-							if (_classicHandlers != null && _classicHandlers.OnComplete != null)
-								_classicHandlers.OnComplete.Execute();
-
-							InternalRelease();
-						} */
 						return true;
 					}
 				}

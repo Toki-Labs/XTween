@@ -12,6 +12,5 @@ namespace Toki.Tween
 		float GetDeltaTime( int frameSkip );
 		void Initialize();
 		void AddTimer( TimerListener listener );
-		void RemoveTimer( TimerListener listener );
 	}
 }

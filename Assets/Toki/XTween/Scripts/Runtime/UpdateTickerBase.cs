@@ -303,35 +303,6 @@ namespace Toki.Tween
 			// Debug.Log("Add: " + _numListeners);
 		}
 			
-		public void RemoveTimer( TimerListener listener )
-		{
-			TimerListener l = _first;
-				
-			while (l != null) {
-					
-				if (l == listener) {
-					if (listener.prevListener != null) {
-						listener.prevListener.nextListener = listener.nextListener;
-					}
-					if (listener.nextListener != null) {
-						listener.nextListener.prevListener = listener.prevListener;
-					}
-					if (listener == _first) {
-						_first = listener.nextListener;
-					}
-					ll = listener.prevListener;
-					listener.nextListener = null;
-					listener.prevListener = null;
-					listener = ll;
-					--_numListeners;
-					break;
-				}
-					
-				l = l.nextListener;
-			}
-			// Debug.Log("Remove: " + _numListeners);
-		}
-			
 		public void Initialize()
 		{
 			this.TimeSet();
