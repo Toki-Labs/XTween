@@ -15,18 +15,26 @@ namespace Toki.Tween
 		}
 
 		protected ITimer _ticker;
+		protected float _preDelay;
+		protected float _preDelayTarget;
+		protected float _postDelay;
+		protected float _postDelayTarget;
 		protected float _time;
 		protected float _position = 0f;
 		protected float _duration = 0f;
+		protected float _durationTarget = 0f;
+		protected float _scale = 1f;
+		protected float _scaleReverse;
 		protected float _startTime;
+		protected int _repeatTotal = 1;
+		protected int _repeatCurrent = 0;
+		protected bool _reverse = false;
 		protected bool _isPlaying = false;
 		protected bool _isRealTime = false;
 		protected uint _frameSkip = 0;
 		protected uint _frameSkipCount = 0;
-		protected bool _enableGroup = true;
+		protected bool _isGroup = false;
 		protected bool _autoDispose = true;
-		//when wrapped in decorator
-		protected TweenDecorator _decorator;
 		protected IClassicHandlable _classicHandlers;
 			
 		public ITimer Ticker
@@ -44,7 +52,7 @@ namespace Toki.Tween
 			
 		public float Duration
 		{
-			get { return _duration; }
+			get { return DurationTotal * _repeatTotal; }
 		}
 			
 		public float Position
@@ -57,37 +65,21 @@ namespace Toki.Tween
 			get { return _isPlaying; }
 		}
 
-		public virtual TweenDecorator Decorator
-		{
-			set
-			{
-				this._decorator = value;
-			}
-		}
-
-		public uint FrameSkip
+		private float DurationTotal
 		{
 			get
 			{
-				return this._frameSkip;
-			}
-			set
-			{
-				this._frameSkip = value;
-				if( this._frameSkip > 0 )
-				{
-					if( this._frameSkip > 4 ) this._frameSkip = 4;
-				}
+				return _durationTarget + _preDelayTarget;
 			}
 		}
-		
+
 		public IClassicHandlable ClassicHandlers
 		{
 			get 
 			{
 				if( _classicHandlers == null )
 				{
-					_classicHandlers = new XHash();
+					_classicHandlers = new XEventHash();
 				} 
 				return _classicHandlers; 
 			}
@@ -118,10 +110,13 @@ namespace Toki.Tween
 			set { ClassicHandlers.OnComplete = value; }
 		}
 
-		public void IntializeGroup()
+		public void InitializeGroup()
 		{
-			this._position = 0f;
 			this._time = 0f;
+			this._position = 0f;
+			this._isGroup = true;
+			this._isPlaying = true;
+			this.ComposeTime(0f);
 		}
 
 		public override void StopOnDestroy()
@@ -139,6 +134,7 @@ namespace Toki.Tween
 		{
 			if( _ticker == null )
 			{
+				Debug.Log(this.GetType());
 				throw new System.Exception("Tweener were disposed. if you want to use for reusable instance. Set to \"Lock()\" in instance");
 			}
 		}
@@ -146,22 +142,62 @@ namespace Toki.Tween
 		//Play Directly
 		public virtual IXTween Play()
 		{
+			return this.Play(0f);
+		}
+
+		//Goto And Play Directly
+		public virtual IXTween Play( float position )
+		{
 			CheckDisposed();
 			TickerChange();
-			PlayTween();
+			GotoAndPlayTween(position);
 			return this;
 		}
 
-		private void PlayTween()
+		private void GotoAndPlayTween(float position)
 		{
-			if (!_isPlaying) 
+			if( !_isPlaying )
 			{
-				if (_position >= _duration) _position = 0;
-				float t = _ticker.Time;
-				_startTime = t - _position;
+				ComposeTime(position);
 				ResolveValues();
-				PlayCompose(t);
+				InternalUpdate(_position * _scaleReverse);
+				ComposePlay(_ticker.Time);
 			}
+		}
+
+		public virtual IXTween Seek( float position ) 
+		{
+			CheckDisposed();
+			ComposeTime(position);
+			ResolveValues();
+			InternalUpdate(_position * _scaleReverse);
+			if (_classicHandlers != null && _classicHandlers.OnUpdate != null) 
+				_classicHandlers.OnUpdate.Execute();
+
+			Stop();
+			return this;
+		}
+
+		private void ComposeTime(float position)
+		{
+			ComposeDecorator();
+			if (position < 0) position = 0;
+			if (position > DurationTotal * _repeatTotal) position = DurationTotal * _repeatTotal;
+			if (position > DurationTotal)
+			{
+				_repeatCurrent = Mathf.FloorToInt(position / DurationTotal);
+				position = position - (_repeatCurrent * DurationTotal);
+			}
+
+			_position = position - _preDelayTarget;
+			if( _reverse )
+			{
+				if( _position > 0f ) _position = _duration * _scale - _position;
+				else _position = _durationTarget + _postDelayTarget;
+			}
+
+			float currentTime = _isGroup ? _time : _ticker.Time;
+			_startTime = currentTime - position + _preDelayTarget;
 		}
 
 		public virtual WaitForTweenPlay WaitForPlay()
@@ -178,11 +214,11 @@ namespace Toki.Tween
 				wait.Initialize(_ticker, this);
 				_ticker = wait;
 			}
-			PlayTween();
+			GotoAndPlayTween(0f);
 			return wait;
 		}
 
-		private void PlayCompose(float time)
+		private void ComposePlay(float time)
 		{
 	#if UNITY_EDITOR
 			if( Application.isPlaying )
@@ -218,6 +254,7 @@ namespace Toki.Tween
 		{
 			if (_isPlaying) 
 			{
+				_ticker.RemoveTimer(this);
 				_isPlaying = false;
 				if (_classicHandlers != null && _classicHandlers.OnStop != null) 
 					_classicHandlers.OnStop.Execute();
@@ -228,7 +265,7 @@ namespace Toki.Tween
 
 		public virtual void Reset()
 		{
-			GotoAndStop(0);
+			Seek(0f);
 		}
 
 		public virtual void StartStop()
@@ -236,28 +273,8 @@ namespace Toki.Tween
 			if (_classicHandlers != null && _classicHandlers.OnStop != null) 
 				_classicHandlers.OnStop.Execute();
 		}
-			
-		//Goto And Play Directly
-		public virtual IXTween GotoAndPlay( float position )
-		{
-			CheckDisposed();
-			TickerChange();
-			GotoAndPlayTween(position);
-			return this;
-		}
-
-		private void GotoAndPlayTween(float position)
-		{
-			if (position < 0) position = 0;
-			if (position > _duration) position = _duration;
-			_position = position;
-			_startTime = _ticker.Time - _position;
-			ResolveValues();
-			InternalUpdate(position);
-			PlayCompose(_ticker.Time);
-		}
 		
-		public virtual WaitForTweenPlay WaitForGotoAndPlay(float position)
+		public virtual WaitForTweenPlay WaitForPlay(float position)
 		{
 			CheckDisposed();
 			WaitForTweenPlay wait;
@@ -275,76 +292,56 @@ namespace Toki.Tween
 			return wait;
 		}
 
-		public virtual void GotoAndStop( float position ) 
-		{
-			CheckDisposed();
-			if (position < 0) position = 0;
-			if (position > _duration) position = _duration;
-			
-			_position = position;
-			ResolveValues();
-			InternalUpdate(position);
-			if (_classicHandlers != null && _classicHandlers.OnUpdate != null) 
-				_classicHandlers.OnUpdate.Execute();
-
-			Stop();
-		}
-			
-		public virtual void UpdateTween( float time )
-		{
-			bool isComplete = false;
-				
-			if ((_position < _duration && _duration <= time) || (0 < _position && time <= 0)) 
-			{
-				isComplete = true;
-			}
-				
-			_position = time;
-			if( _enableGroup )
-			{
-				InternalUpdate(time);
-				
-				if (_classicHandlers != null && _classicHandlers.OnUpdate != null)
-					_classicHandlers.OnUpdate.Execute();
-				
-				if (isComplete)
-				{
-					if (_classicHandlers != null && _classicHandlers.OnComplete != null)
-						_classicHandlers.OnComplete.Execute();
-
-					InternalRelease();
-				}
-			}	
-		}
-
 		public override bool Tick( float time )
 		{
 			if(_frameSkip < 1) return TickNormal(time);
 			else return TickByCount(time);
 		}
 
-		public virtual bool TickNormal( float time )
+		public virtual bool TickNormal( float t )
 		{
 			if (!_isPlaying) return true;
+			float time = t - _startTime;
+			float controlTime = time;
+
+			if( _reverse )
+			{
+				if( controlTime > 0f ) controlTime = _durationTarget - _postDelayTarget - controlTime;
+				else controlTime = _durationTarget + _postDelayTarget;
+			} 
 				
-			float t = time - _startTime;
-				
-			_position = t;
-			InternalUpdate(t);
+			_position = time;
+			InternalUpdate(controlTime * _scaleReverse);
 				
 			if (_classicHandlers != null && _classicHandlers.OnUpdate != null)
 				_classicHandlers.OnUpdate.Execute();
 				
 			if (_isPlaying) 
 			{
-				if (t >= _duration) 
+				// if( this.GetType() != typeof(SerialTween) )
+				// if( this.GetType() == typeof(SerialTween) )
+					// Debug.Log("Test: " + this.GetType() + ", " + time + ", " + _durationTarget);
+					// Debug.Log(t + ", " + time + ", " + _durationTarget);
+				if (time >= _durationTarget)
 				{
-					_position = _duration;
-					if (_classicHandlers != null && _classicHandlers.OnComplete != null)
-						_classicHandlers.OnComplete.Execute();
+					_repeatCurrent++;
+					if( _repeatCurrent < _repeatTotal )
+					{
+						if( _isGroup ) _time = DurationTotal * _repeatCurrent;
+						ComposeTime(0f);
+					}
+					else
+					{
+						_position = _durationTarget;
+						/* if( _isGroup )
+						{
+							if (_classicHandlers != null && _classicHandlers.OnComplete != null)
+								_classicHandlers.OnComplete.Execute();
 
-					InternalRelease();
-					return true;
+							InternalRelease();
+						} */
+						return true;
+					}
 				}
 				return false;
 			}			
@@ -405,9 +402,52 @@ namespace Toki.Tween
 			}
 		}
 
-		public IXTween Lock()
+		private void ComposeDecorator()
+		{
+			this._scaleReverse = 1f / _scale;
+			this._preDelayTarget = this._preDelay * this._scale;
+			this._postDelayTarget = this._postDelay * this._scale;
+			this._durationTarget = this._duration * this._scale + this._postDelayTarget;
+		}
+
+		public IXTween SetFrameSkip(uint skip)
+		{
+			this._frameSkip = skip;
+			if( this._frameSkip > 0 )
+			{
+				if( this._frameSkip > 4 ) this._frameSkip = 4;
+			}
+			return this;
+		}
+
+		public virtual IXTween SetLock()
 		{
 			this._autoDispose = false;
+			return this;
+		}
+
+		public IXTween SetReverse()
+		{
+			this._reverse = !this._reverse;
+			return this;
+		}
+
+		public IXTween SetRepeat(int count)
+		{
+			this._repeatTotal = count;
+			this._repeatCurrent = 0;
+			return this;
+		}
+
+		public IXTween SetScale(float scale)
+		{
+			this._scale = scale;
+			return this;
+		}
+		public IXTween SetDelay(float preDelay, float postDelay = 0f)
+		{
+			this._preDelay = preDelay;
+			this._postDelay = postDelay;
 			return this;
 		}
 
@@ -418,7 +458,7 @@ namespace Toki.Tween
 
 		public IXTween AddOnComplete(IExecutable executor)
 		{
-			_classicHandlers.OnComplete = executor;
+			ClassicHandlers.OnComplete = executor;
 			return this;
 		}
 
@@ -429,7 +469,7 @@ namespace Toki.Tween
 
 		public IXTween AddOnStop(IExecutable executor)
 		{
-			_classicHandlers.OnStop = executor;
+			ClassicHandlers.OnStop = executor;
 			return this;
 		}
 
@@ -440,7 +480,7 @@ namespace Toki.Tween
 
 		public IXTween AddOnPlay(IExecutable executor)
 		{
-			_classicHandlers.OnPlay = executor;
+			ClassicHandlers.OnPlay = executor;
 			return this;
 		}
 
@@ -451,7 +491,7 @@ namespace Toki.Tween
 
 		public IXTween AddOnUpdate(IExecutable executor)
 		{
-			_classicHandlers.OnUpdate = executor;
+			ClassicHandlers.OnUpdate = executor;
 			return this;
 		}
 
@@ -475,15 +515,23 @@ namespace Toki.Tween
 			this._ticker = null;
 			this._time = 0f;
 			this._position = 0f;
+			this._reverse = false;
+			this._preDelay = 0f;
+			this._preDelayTarget = 0f;
+			this._postDelay = 0f;
+			this._postDelayTarget = 0f;
 			this._duration = 0f;
+			this._durationTarget = 0f;
 			this._startTime = 0f;
+			this._scale = 1f;
+			this._repeatTotal = 1;
+			this._repeatCurrent = 0;
 			this._isPlaying = false;
 			this._isRealTime = false;
-			this._frameSkip = 1;
+			this._frameSkip = 0;
 			this._frameSkipCount = 0;
+			this._isGroup = false;
 			this._autoDispose = true;
-			this._enableGroup = true;
-			this._decorator = null;
 			this._classicHandlers = null;
 		}
 	}

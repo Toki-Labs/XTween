@@ -68,22 +68,24 @@ public class ExampleSerial : ExampleBase
 	************************************************************************/
 	protected override IEnumerator CoroutineStart()
 	{
-		if( this._tween != null )
-		{
-			this._tween.Stop();
-			this._tween = null;
-		}
+		if( this._tween != null ) this._tween.Stop();
 		this.target3D.transform.localPosition = this._position3D;
 		this.target3DSecond.transform.localPosition = this._position3DSecond;
 		yield return new WaitForSeconds(0.5f);
 		TweenUIData data = this.uiContainer.Data;
-		this._tween = XTween.SerialTweens
-		(
-			false,
-			XTween.To(this.target3DSecond, XHash.New.AddX(-940f).AddY(-160f).AddZ(-500f), data.time, data.Easing),
-			XTween.To(this.target3D, XHash.New.AddX(200f).AddY(70f).AddZ(-1500f), data.time, data.Easing)
-		);
-		this._tween.Play();
+		if( this._tween == null )
+		{
+			this._tween = XTween.SerialTweens
+			(
+				false,
+				target3DSecond.ToPosition3D(-940f, -160f, -500f, data.time, data.Easing),
+				target3D.ToPosition3D(200f, 70f, -1500f, data.time, data.Easing)
+			).SetLock().Play();
+		}
+		else
+		{
+			this._tween.Play();
+		}
 	}
 	
 	/************************************************************************

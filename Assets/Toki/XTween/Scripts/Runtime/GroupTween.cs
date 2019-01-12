@@ -144,7 +144,7 @@ namespace Toki.Tween
 			return -1;
 		}
 
-		public override void ResolveValues()
+		/* public override void ResolveValues()
 		{
 			int l;
 			int i;
@@ -174,43 +174,7 @@ namespace Toki.Tween
 					}
 				}
 			}
-		}
-
-		public override IXTween Play()
-		{
-			int l;
-			int i;
-			IIXTween t;
-
-			if (_a != null)
-			{
-				_a.IntializeGroup();
-				if (_b != null)
-				{
-					_b.IntializeGroup();
-					if (_c != null)
-					{
-						_c.IntializeGroup();
-						if (_d != null)
-						{
-							_d.IntializeGroup();
-							if (_targets != null)
-							{
-								l = _targets.Length;
-								for (i = 0; i < l; ++i)
-								{
-									t = _targets[i];
-									t.IntializeGroup();
-								}
-							}
-						}
-					}
-				}
-			}
-
-			base.Play();
-			return this;
-		}
+		} */
 
 		public override void Dispose()
 		{

@@ -87,8 +87,7 @@ namespace Toki.Tween
 
         public void Reset()
         {
-            _tween.GotoAndStop(0);
-        
+            _tween.Seek(0);
         }
 
         public float GetDeltaTime( int frameSkip )

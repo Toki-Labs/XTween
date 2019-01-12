@@ -71,7 +71,7 @@ public class ExampleEvent : ExampleBase
 		TweenUIData data = this.uiContainer.Data;
 		this.textLog.text = "Tweening...";
 		this._tween = XTween.To(this.target3D, XHash.New.AddX(200f).AddY(50f).AddZ(-1500f), data.time, data.Easing);
-		this._tween.OnComplete = Executor<string>.New(TweenComplete, "Tween Complete!");
+		this._tween.AddOnComplete(Executor<string>.New(TweenComplete, "Tween Complete!"));
 		this._tween.Play();
 	}
 

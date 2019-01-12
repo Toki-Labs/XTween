@@ -310,18 +310,21 @@ namespace Toki.Tween
 			while (l != null) {
 					
 				if (l == listener) {
-					if (l.prevListener != null) {
-						l.prevListener.nextListener = l.nextListener;
-						l.nextListener = null;
+					if (listener.prevListener != null) {
+						listener.prevListener.nextListener = listener.nextListener;
 					}
-					else {
-						_first = l.nextListener;
+					if (listener.nextListener != null) {
+						listener.nextListener.prevListener = listener.prevListener;
 					}
-					if (l.nextListener != null) {
-						l.nextListener.prevListener = l.prevListener;
-						l.prevListener = null;
+					if (listener == _first) {
+						_first = listener.nextListener;
 					}
+					ll = listener.prevListener;
+					listener.nextListener = null;
+					listener.prevListener = null;
+					listener = ll;
 					--_numListeners;
+					break;
 				}
 					
 				l = l.nextListener;

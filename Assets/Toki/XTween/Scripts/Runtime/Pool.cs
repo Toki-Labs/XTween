@@ -109,7 +109,7 @@ namespace Toki
 		private bool _test = false;//true;
 		private HashSet<Type> _checkTypes = new HashSet<Type>
 		{
-			/* typeof(ParallelTween),  */typeof(ObjectTween)
+			typeof(SerialTween), typeof(ObjectTween)
 		};
 
 		public T PopInstance()

@@ -97,20 +97,16 @@ namespace Toki.Tween
 			return this;
 		}
 
-		public override IXTween GotoAndPlay( float position )
+		public override IXTween Play( float position )
 		{
 			//Not implement
 			return null;
 		}
 
-		public override void GotoAndStop( float position )
+		public override IXTween Seek( float position )
 		{
 			//Not implement
-		}
-
-		public override void UpdateTween( float time )
-		{
-			//Not implement
+			return this;
 		}
 	}
 }

@@ -7,44 +7,44 @@ namespace Toki.Tween
 	public class SerialTween : GroupTween
 	{
 		private float _lastTime = 0f;
+		private List<float> _durationList = new List<float>();
 			
 		public void Initialize( IXTween[] targets, ITimer ticker, float position )
 		{
 			base.Initialize(ticker, position);
 			int l = targets.Length;
-				
-			_duration = 0f;
+			_duration = 0;
 				
 			if (l > 0) {
 				_a = targets[0] as IIXTween;
-				_a.Lock();
-				_a.IntializeGroup();
+				_a.InitializeGroup();
 				_duration += _a.Duration;
+				_durationList.Add(_a.Duration);
 				if (l > 1) {
 					_b = targets[1] as IIXTween;
-					_b.Lock();
-					_b.IntializeGroup();
+					_b.InitializeGroup();
 					_duration += _b.Duration;
+					_durationList.Add(_b.Duration);
 					if (l > 2) {
 						_c = targets[2] as IIXTween;
-						_c.Lock();
-						_c.IntializeGroup();
+						_c.InitializeGroup();
 						_duration += _c.Duration;
+						_durationList.Add(_c.Duration);
 						if (l > 3) {
 							_d = targets[3] as IIXTween;
-							_d.Lock();
-							_d.IntializeGroup();
+							_d.InitializeGroup();
 							_duration += _d.Duration;
+							_durationList.Add(_d.Duration);
 							if (l > 4) {
 								int length = l - 4;
 								_targets = new IIXTween[length];
 								for (int i = 4; i < l; ++i) 
 								{
 									IIXTween t = targets[i] as IIXTween;
-									t.Lock();
-									t.IntializeGroup();
-									_targets[i - 4] = t;
+									t.InitializeGroup();
 									_duration += t.Duration;
+									_durationList.Add(t.Duration);
+									_targets[i - 4] = t;
 								}
 							}
 						}
@@ -60,35 +60,51 @@ namespace Toki.Tween
 			float lt = _lastTime;
 			int l;
 			int i;
+			int index = 0;
 			IIXTween t;
 				
 			if ((time - lt) >= 0) {
 				if (_a != null) {
-					if (lt <= (d += _a.Duration) && ld <= time) {
-						_a.UpdateTween(time - ld);
+					d += _durationList[index];
+					index++;
+					if (lt <= d && ld <= time && !_a.Disposed) {
+						_a.ResolveValues();
+						_a.Tick(time - ld);
 					}
 					ld = d;
 					if (_b != null) {
-						if (lt <= (d += _b.Duration) && ld <= time) {
-							_b.UpdateTween(time - ld);
+						d += _durationList[index];
+						index++;
+						if (lt <= d && ld <= time && !_b.Disposed) {
+							_b.ResolveValues();
+							_b.Tick(time - ld);
 						}
 						ld = d;
 						if (_c != null) {
-							if (lt <= (d += _c.Duration) && ld <= time) {
-								_c.UpdateTween(time - ld);
+							d += _durationList[index];
+							index++;
+							if (lt <= d && ld <= time && !_c.Disposed) {
+								_c.ResolveValues();
+								_c.Tick(time - ld);
 							}
 							ld = d;
 							if (_d != null) {
-								if (lt <= (d += _d.Duration) && ld <= time) {
-									_d.UpdateTween(time - ld);
+								d += _durationList[index];
+								index++;
+								if (lt <= d && ld <= time) {
+									_d.ResolveValues();
+									_d.Tick(time - ld);
 								}
 								ld = d;
 								if (_targets != null) {
 									l = _targets.Length;
 									for (i = 0; i < l; ++i) {
 										t = _targets[i];
-										if (lt <= (d += t.Duration) && ld <= time) {
-											t.UpdateTween(time - ld);
+										d += _durationList[index];
+										index++;
+										if (lt <= d && ld <= time) {
+											t.ResolveValues();
+											t.Tick(time - ld);
 										}
 										ld = d;
 									}
@@ -105,32 +121,32 @@ namespace Toki.Tween
 					for (i = _targets.Length - 1; i >= 0; --i) {
 						t = _targets[i];
 						if (lt >= (d -= t.Duration) && ld >= time) {
-							t.UpdateTween(time - d);
+							t.Tick(time - d);
 						}
 						ld = d;
 					}
 				}
 				if (_d != null) {
 					if (lt >= (d -= _d.Duration) && ld >= time) {
-						_d.UpdateTween(time - d);
+						_d.Tick(time - d);
 					}
 					ld = d;
 				}
 				if (_c != null) {
 					if (lt >= (d -= _c.Duration) && ld >= time) {
-						_c.UpdateTween(time - d);
+						_c.Tick(time - d);
 					}
 					ld = d;
 				}
 				if (_b != null) {
 					if (lt >= (d -= _b.Duration) && ld >= time) {
-						_b.UpdateTween(time - d);
+						_b.Tick(time - d);
 					}
 					ld = d;
 				}
 				if (_a != null) {
 					if (lt >= (d -= _a.Duration) && ld >= time) {
-						_a.UpdateTween(time - d);
+						_a.Tick(time - d);
 					}
 					ld = d;
 				}
@@ -138,15 +154,45 @@ namespace Toki.Tween
 			_lastTime = time;
 		}
 
+		public override IXTween SetLock()
+		{
+			if (_a != null) {
+				_a.SetLock();
+			}
+			if (_b != null) {
+				_b.SetLock();
+			}
+			if (_c != null) {
+				_c.SetLock();
+			}
+			if (_d != null) {
+				_d.SetLock();
+			}
+			if (_targets != null) {
+				IIXTween[] t = _targets;
+				int l = t.Length;
+				for (int i = 0; i < l; ++i) {
+					t[i].SetLock();
+				}
+			}
+			return base.SetLock();
+		}
+
 		protected override void InternalRelease()
 		{
-			if( this._autoDispose ) this.PoolPush();
+			if( this._autoDispose )
+			{
+				this.PoolPush();
+				if( this._classicHandlers != null ) 
+					(this._classicHandlers as XEventHash).PoolPush();
+			} 
 		}
 
 		public override void Dispose()
 		{
 			base.Dispose();
 			this._lastTime = 0f;
+			this._durationList.Clear();
 		}
 			
 		protected override AbstractTween NewInstance()

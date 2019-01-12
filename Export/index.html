@@ -384,11 +384,11 @@ XTween is similar with D Tween, but 2 times faster than i Tweener.</p>
 <blockquote>
   <p><img src="https://github.com/Toki-Labs/XTween/raw/master/StoreDocument/EaseCurve.png" alt="" />
 Customizable Easing, Support code hint for use of ease name, TopMenu -&gt; Windows -&gt; XTween Editor</p>
+</blockquote>
   <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">200f</span><span class="p">,</span> <span class="m">50f</span><span class="p">,</span> <span class="p">-</span><span class="m">1500f</span><span class="p">)</span>
 	     <span class="p">.</span><span class="nf">AddControlPointX</span><span class="p">(-</span><span class="m">1000f</span><span class="p">,</span><span class="m">550f</span><span class="p">).</span><span class="nf">AddControlPointY</span><span class="p">(</span><span class="m">550f</span><span class="p">,-</span><span class="m">300f</span><span class="p">);</span>
 <span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">target3D</span><span class="p">,</span> <span class="n">hash</span><span class="p">,</span> <span class="m">1f</span><span class="p">,</span> <span class="n">Ease</span><span class="p">.</span><span class="nf">Custom</span><span class="p">(</span><span class="n">EaseCustom</span><span class="p">.</span><span class="n">MyEasing</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div>  </div>
-</blockquote>
 
 <h2 id="decorator">Decorator</h2>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">IXTween</span> <span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">ToColor</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">),</span> <span class="m">1f</span><span class="p">);</span>

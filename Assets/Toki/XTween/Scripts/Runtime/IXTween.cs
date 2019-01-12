@@ -19,47 +19,21 @@ public interface IXTween
 	{
 		get;
 	}
-		
-	uint FrameSkip
-	{
-		get;
-		set;
-	}
-		
-	IExecutable OnPlay
-	{
-		get;
-		set;
-	}
-		
-	IExecutable OnStop
-	{
-		get;
-		set;
-	}
-		
-	IExecutable OnUpdate
-	{
-		get;
-		set;
-	}
-		
-	IExecutable OnComplete
-	{
-		get;
-		set;
-	}
-
     void StopOnDestroy();
 	IXTween Play();
+	IXTween Play( float position );
 	WaitForTweenPlay WaitForPlay();
-	WaitForTweenPlay WaitForGotoAndPlay( float position );
-	IXTween GotoAndPlay( float position );
-	void GotoAndStop( float position );
+	WaitForTweenPlay WaitForPlay( float position );
+	IXTween Seek( float position );
 	void Stop();
 	void Reset();
 	IXTween Clone();
-	IXTween Lock();
+	IXTween SetFrameSkip(uint skip);
+	IXTween SetLock();
+	IXTween SetReverse();
+	IXTween SetRepeat(int count);
+	IXTween SetScale(float scale);
+	IXTween SetDelay(float preDelay, float postDelay = 0f);
 	IXTween AddOnComplete(Action listener);
 	IXTween AddOnComplete(IExecutable executor);
 	IXTween AddOnStop(Action listener);

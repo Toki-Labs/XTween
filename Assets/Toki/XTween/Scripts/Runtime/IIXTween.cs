@@ -8,21 +8,16 @@ namespace Toki.Tween
 		{
 			get;
 		}
-		TweenDecorator Decorator
-		{
-			set;
-		}
-
 		bool Disposed
 		{
 			get;
 		}
 
 		void Initialize( ITimer ticker, float position );
-		void IntializeGroup();
+		void InitializeGroup();
 		void StartPlay();
 		void StartStop();
 		void ResolveValues();
-		void UpdateTween( float time );
+		bool Tick( float time );
 	}
 }

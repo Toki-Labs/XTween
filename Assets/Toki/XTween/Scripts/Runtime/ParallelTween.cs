@@ -15,19 +15,19 @@ namespace Toki.Tween
 				
 			if (l > 0) {
 				_a = targets[0] as IIXTween;
-				_a.Lock();
+				_a.SetLock();
 				_duration = _a.Duration > _duration ? _a.Duration : _duration;
 				if (l > 1) {
 					_b = targets[1] as IIXTween;
-					_b.Lock();
+					_b.SetLock();
 					_duration = _b.Duration > _duration ? _b.Duration : _duration;
 					if (l > 2) {
 						_c = targets[2] as IIXTween;
-						_c.Lock();
+						_c.SetLock();
 						_duration = _c.Duration > _duration ? _c.Duration : _duration;
 						if (l > 3) {
 							_d = targets[3] as IIXTween;
-							_d.Lock();
+							_d.SetLock();
 							_duration = _d.Duration > _duration ? _d.Duration : _duration;
 							if (l > 4) {
 								int length = l - 4;
@@ -35,7 +35,7 @@ namespace Toki.Tween
 								for (int i = 4; i < l; ++i) 
 								{
 									IIXTween t = targets[i] as IIXTween;
-									t.Lock();
+									t.SetLock();
 									_targets[i - 4] = t;
 									_duration = t.Duration > _duration ? t.Duration : _duration;
 								}
@@ -49,18 +49,18 @@ namespace Toki.Tween
 		protected override void InternalUpdate( float time )
 		{
 			if (_a != null) {
-				if( !_a.Disposed ) _a.UpdateTween(time);
+				if( !_a.Disposed ) _a.Tick(time);
 				if (_b != null) {
-					if( !_b.Disposed ) _b.UpdateTween(time);
+					if( !_b.Disposed ) _b.Tick(time);
 					if (_c != null) {
-						if( !_c.Disposed ) _c.UpdateTween(time);
+						if( !_c.Disposed ) _c.Tick(time);
 						if (_d != null) {
-							if( !_d.Disposed ) _d.UpdateTween(time);
+							if( !_d.Disposed ) _d.Tick(time);
 							if (_targets != null) {
 								IIXTween[] targets = _targets;
 								int l = targets.Length;
 								for (int i = 0; i < l; ++i) {
-									if( !targets[i].Disposed ) targets[i].UpdateTween(time);
+									if( !targets[i].Disposed ) targets[i].Tick(time);
 								}
 							}
 						}

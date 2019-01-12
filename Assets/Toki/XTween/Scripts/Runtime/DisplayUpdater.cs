@@ -65,9 +65,9 @@ namespace Toki.Tween
 				pos = this._transformRect.anchoredPosition3D;
 				size = this._transformRect.sizeDelta;
 				rect = new Rect( this._transformRect.offsetMin.x, 
-									-this._transformRect.offsetMax.y,
-									-this._transformRect.offsetMax.x,
-									this._transformRect.offsetMin.y);
+								-this._transformRect.offsetMax.y,
+								-this._transformRect.offsetMax.x,
+								this._transformRect.offsetMin.y);
 			}
 			rot = this._transform.localEulerAngles;
 			sca = this._transform.localScale;
