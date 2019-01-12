@@ -144,37 +144,29 @@ namespace Toki.Tween
 			return -1;
 		}
 
-		/* public override void ResolveValues()
+		public override IXTween SetLock()
 		{
-			int l;
-			int i;
-			IIXTween t;
-			if (_a != null)
-			{
-				_a.ResolveValues();
-				if (_b != null)
-				{
-					_b.ResolveValues();
-					if (_c != null)
-					{
-						_c.ResolveValues();
-						if (_d != null)
-						{
-							_d.ResolveValues();
-							if (_targets != null)
-							{
-								l = _targets.Length;
-								for (i = 0; i < l; ++i)
-								{
-									t = _targets[i];
-									t.ResolveValues();
-								}
-							}
-						}
-					}
+			if (_a != null) {
+				_a.SetLock();
+			}
+			if (_b != null) {
+				_b.SetLock();
+			}
+			if (_c != null) {
+				_c.SetLock();
+			}
+			if (_d != null) {
+				_d.SetLock();
+			}
+			if (_targets != null) {
+				IIXTween[] t = _targets;
+				int l = t.Length;
+				for (int i = 0; i < l; ++i) {
+					t[i].SetLock();
 				}
 			}
-		} */
+			return base.SetLock();
+		}
 
 		public override void Dispose()
 		{

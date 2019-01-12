@@ -84,7 +84,7 @@ public class ExampleSerial : ExampleBase
 		}
 		else
 		{
-			this._tween.Play();
+			this._tween.Play(0f);
 		}
 	}
 	

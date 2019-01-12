@@ -154,30 +154,6 @@ namespace Toki.Tween
 			_lastTime = time;
 		}
 
-		public override IXTween SetLock()
-		{
-			if (_a != null) {
-				_a.SetLock();
-			}
-			if (_b != null) {
-				_b.SetLock();
-			}
-			if (_c != null) {
-				_c.SetLock();
-			}
-			if (_d != null) {
-				_d.SetLock();
-			}
-			if (_targets != null) {
-				IIXTween[] t = _targets;
-				int l = t.Length;
-				for (int i = 0; i < l; ++i) {
-					t[i].SetLock();
-				}
-			}
-			return base.SetLock();
-		}
-
 		protected override void InternalRelease()
 		{
 			if( this._autoDispose )

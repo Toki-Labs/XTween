@@ -135,7 +135,7 @@ namespace Toki.Tween
 			if( _ticker == null )
 			{
 				Debug.Log(this.GetType());
-				throw new System.Exception("Tweener were disposed. if you want to use for reusable instance. Set to \"Lock()\" in instance");
+				throw new System.Exception("Tweener were disposed. if you want to use for reusable instance. Set to \"SetLock()\" in instance");
 			}
 		}
 
@@ -183,9 +183,9 @@ namespace Toki.Tween
 			ComposeDecorator();
 			if (position < 0) position = 0;
 			if (position > DurationTotal * _repeatTotal) position = DurationTotal * _repeatTotal;
+			_repeatCurrent = Mathf.FloorToInt(position / DurationTotal);
 			if (position > DurationTotal)
 			{
-				_repeatCurrent = Mathf.FloorToInt(position / DurationTotal);
 				position = position - (_repeatCurrent * DurationTotal);
 			}
 

@@ -10,24 +10,23 @@ namespace Toki.Tween
 		{
 			base.Initialize(ticker,position);
 			int l = targets.Length;
-				
 			_duration = 0;
 				
 			if (l > 0) {
 				_a = targets[0] as IIXTween;
-				_a.SetLock();
+				_a.InitializeGroup();
 				_duration = _a.Duration > _duration ? _a.Duration : _duration;
 				if (l > 1) {
 					_b = targets[1] as IIXTween;
-					_b.SetLock();
+					_b.InitializeGroup();
 					_duration = _b.Duration > _duration ? _b.Duration : _duration;
 					if (l > 2) {
 						_c = targets[2] as IIXTween;
-						_c.SetLock();
+						_c.InitializeGroup();
 						_duration = _c.Duration > _duration ? _c.Duration : _duration;
 						if (l > 3) {
 							_d = targets[3] as IIXTween;
-							_d.SetLock();
+							_d.InitializeGroup();
 							_duration = _d.Duration > _duration ? _d.Duration : _duration;
 							if (l > 4) {
 								int length = l - 4;
@@ -35,9 +34,46 @@ namespace Toki.Tween
 								for (int i = 4; i < l; ++i) 
 								{
 									IIXTween t = targets[i] as IIXTween;
-									t.SetLock();
+									t.InitializeGroup();
 									_targets[i - 4] = t;
 									_duration = t.Duration > _duration ? t.Duration : _duration;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		public override void ResolveValues()
+		{
+			int l;
+			int i;
+			IIXTween t;
+			if (_a != null)
+			{
+				_a.InitializeGroup();
+				_a.ResolveValues();
+				if (_b != null)
+				{
+					_b.InitializeGroup();
+					_b.ResolveValues();
+					if (_c != null)
+					{
+						_c.InitializeGroup();
+						_c.ResolveValues();
+						if (_d != null)
+						{
+							_d.InitializeGroup();
+							_d.ResolveValues();
+							if (_targets != null)
+							{
+								l = _targets.Length;
+								for (i = 0; i < l; ++i)
+								{
+									t = _targets[i];
+									t.InitializeGroup();
+									t.ResolveValues();
 								}
 							}
 						}
