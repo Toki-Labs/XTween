@@ -121,7 +121,7 @@ namespace Toki.Tween
 				}
 				else
 				{
-					if(typeof(T).GetProperty(item.Key).GetType().Equals(typeof(float)))
+					if(typeof(T).GetProperty(item.Key).PropertyType.Equals(typeof(float)))
 					{
 						Action<T,float> setter = (Action<T, float>)Delegate.CreateDelegate(
 							typeof(Action<T, float>),
@@ -154,7 +154,7 @@ namespace Toki.Tween
 							setter(_target, objValue.current);
 						};
 					}
-					else if(typeof(T).GetProperty(item.Key).GetType().Equals(typeof(int)))
+					else if(typeof(T).GetProperty(item.Key).PropertyType.Equals(typeof(int)))
 					{
 						Action<T,int> setter = (Action<T, int>)Delegate.CreateDelegate(
 							typeof(Action<T, int>),

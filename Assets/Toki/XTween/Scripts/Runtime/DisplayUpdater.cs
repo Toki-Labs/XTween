@@ -303,6 +303,15 @@ namespace Toki.Tween
 			if( _finish.ControlPointRotationY != null && !_finish.ContainRotationY ) _finish.RotationY = rot.y;
 			if( _finish.ControlPointRotationZ != null && !_finish.ContainRotationZ ) _finish.RotationZ = rot.z;
 
+			if( _finish.ContainRotationX || _finish.ContainRotationY || _finish.ContainRotationZ )
+			{
+				if( !_finish.ContainRotationX ) _finish.RotationX = rot.x;
+				if( !_finish.ContainRotationY ) _finish.RotationY = rot.y;
+				if( !_finish.ContainRotationZ ) _finish.RotationZ = rot.z;
+				changeRot = true;
+				changeRotX = changeRotY = changeRotZ = true;
+			}
+
 			if( _finish.ContainRotationX )
 			{
 				if( rotationX != _finish.RotationX || _finish.ControlPointRotationX != null || 
@@ -393,9 +402,9 @@ namespace Toki.Tween
 			this._resolvedValues = true;
 		}
 
-		private float GetRotation( float start, float finish, bool rotateRight, int rotateCount )
+		private float GetRotation( float start, float finish, bool clockwise, int rotateCount )
 		{
-			if( rotateRight )
+			if( clockwise )
 			{
 				if( start < finish )
 				{
@@ -447,8 +456,21 @@ namespace Toki.Tween
 				if( _updaterSizeDelta.initialized )
 					_transformRect.sizeDelta = _updaterSizeDelta.Update(_invert, _factor, _transformRect.sizeDelta);
 				if( _updaterRotation.initialized ) 
-					_transform.localEulerAngles = _updaterRotation.Update(_invert, _factor, _transform.localEulerAngles);
+				{
+					// _transform.localRotation = Quaternion.Euler(_updaterRotation.Update(_invert, _factor, _transform.localEulerAngles));
+					Vector3 rot = _updaterRotation.Update(_invert, _factor, _transform.localEulerAngles);
+					rot.x = GetAngle(rot.x);
+					rot.y = GetAngle(rot.y);
+					rot.z = GetAngle(rot.z);
+					_transform.localRotation = Quaternion.Euler(rot);
+				}
 			}
+		}
+
+		private float GetAngle( float input )
+		{
+			if( input >= 360f || input <= -360f ) input = input % 360f;
+			return input;
 		}
 
 		public override void Release()

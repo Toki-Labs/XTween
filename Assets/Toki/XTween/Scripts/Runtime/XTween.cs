@@ -313,35 +313,35 @@ public static class XTweenShorcutExtensions
 		return XTween.To(gameObject, hash, time, easing, realTime);
 	}
 
-	public static IXTween ToRotation2D(this Transform trans, float? z, float time, IEasing easing = null, bool realTime = false )
+	public static IXTween ToRotation2D(this Transform trans, float z, float time, bool clockwise, IEasing easing = null, bool realTime = false )
 	{
 		XHash hash = XHash.New;
-		if( z != null ) hash.Z = (float)z;
+		hash.AddRotationZ( z, clockwise, 0 );
 		return XTween.To(trans.gameObject, hash, time, easing, realTime);
 	}
 
 	public static IXTween ToRotation3D(this Transform trans, float? x, float? y, float? z, float time, IEasing easing = null, bool realTime = false )
 	{
 		XHash hash = XHash.New;
-		if( x != null ) hash.X = (float)x;
-		if( y != null ) hash.Y = (float)y;
-		if( z != null ) hash.Z = (float)z;
+		if( x != null ) hash.AddRotationX((float)x);
+		if( y != null ) hash.AddRotationY((float)y);
+		if( z != null ) hash.AddRotationZ((float)z);
 		return XTween.To(trans.gameObject, hash, time, easing, realTime);
 	}
 
-	public static IXTween ToRotation2D(this GameObject gameObject, float? z, float time, IEasing easing = null, bool realTime = false )
+	public static IXTween ToRotation2D(this GameObject gameObject, float z, float time, bool clockwise, IEasing easing = null, bool realTime = false )
 	{
 		XHash hash = XHash.New;
-		if( z != null ) hash.Z = (float)z;
+		hash.AddRotationZ( z, clockwise, 0 );
 		return XTween.To(gameObject, hash, time, easing, realTime);
 	}
 
 	public static IXTween ToRotation3D(this GameObject gameObject, float? x, float? y, float? z, float time, IEasing easing = null, bool realTime = false )
 	{
 		XHash hash = XHash.New;
-		if( x != null ) hash.X = (float)x;
-		if( y != null ) hash.Y = (float)y;
-		if( z != null ) hash.Z = (float)z;
+		if( x != null ) hash.AddRotationX((float)x);
+		if( y != null ) hash.AddRotationY((float)y);
+		if( z != null ) hash.AddRotationZ((float)z);
 		return XTween.To(gameObject, hash, time, easing, realTime);
 	}
 
