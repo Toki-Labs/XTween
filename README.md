@@ -45,7 +45,7 @@ IEnumerator CoroutineTween()
 
 Lastest Release
 ---
-Version(Alpha) 0.0.104 - [XTween_0.0.104.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.104.unitypackage)
+Version(Alpha) 0.0.105 - [XTween_0.0.105.unitypackage](https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.105.unitypackage)
 
 
 
