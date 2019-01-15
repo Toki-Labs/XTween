@@ -403,15 +403,48 @@ public static class XTweenShorcutExtensions
 		return XTween.ToColor<SpriteRenderer>(target, "color", hash, time, easing, realTime);
 	}
 
+	//Color - Sprite
+	public static IXTween ToColor(this SpriteRenderer target, float? r, float? g, float? b, float? a, float time, IEasing easing = null, bool realTime = false )
+	{
+		XColorHash hash = XColorHash.New;
+		if( r != null ) hash.AddRed((float)r);
+		if( g != null ) hash.AddRed((float)g);
+		if( b != null ) hash.AddRed((float)b);
+		if( a != null ) hash.AddRed((float)a);
+		return XTween.ToColor<SpriteRenderer>(target, "color", hash, time, easing, realTime);
+	}
+
 	//Color - UI
 	public static IXTween ToColor(this Graphic target, XColorHash hash, float time, IEasing easing = null, bool realTime = false )
 	{
 		return XTween.ToColor<Graphic>(target, "color", hash, time, easing, realTime);
 	}
 
+	//Color - UI
+	public static IXTween ToColor(this Graphic target, float? r, float? g, float? b, float? a, float time, IEasing easing = null, bool realTime = false )
+	{
+		XColorHash hash = XColorHash.New;
+		if( r != null ) hash.AddRed((float)r);
+		if( g != null ) hash.AddRed((float)g);
+		if( b != null ) hash.AddRed((float)b);
+		if( a != null ) hash.AddRed((float)a);
+		return XTween.ToColor<Graphic>(target, "color", hash, time, easing, realTime);
+	}
+
 	//Color - Property
 	public static IXTween ToColor<T>(this T target, string colorPropertyName, XColorHash hash, float time, IEasing easing = null, bool realTime = false )
 	{
+		return XTween.ToColor<T>(target, colorPropertyName, hash, time, easing, realTime);
+	}
+
+	//Color - Property
+	public static IXTween ToColor<T>(this T target, string colorPropertyName, float? r, float? g, float? b, float? a, float time, IEasing easing = null, bool realTime = false )
+	{
+		XColorHash hash = XColorHash.New;
+		if( r != null ) hash.AddRed((float)r);
+		if( g != null ) hash.AddRed((float)g);
+		if( b != null ) hash.AddRed((float)b);
+		if( a != null ) hash.AddRed((float)a);
 		return XTween.ToColor<T>(target, colorPropertyName, hash, time, easing, realTime);
 	}
 }

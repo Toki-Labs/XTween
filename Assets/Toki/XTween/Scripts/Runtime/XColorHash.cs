@@ -61,20 +61,26 @@ public class XColorHash : XEventHash
 		}
 	}
 	public float[] ControlPointAlpha { get{ return _controlAlpha; } set{ _controlAlpha = value; } }
-    public XColorHash Color( Color color, bool isRelative = false )
+	public static XColorHash Color( float? r, float? g, float? b, float? a, bool isRelative = false )
     {
-        this.AddRed( color.r, isRelative );
-		this.AddGreen( color.g, isRelative );
-		this.AddBlue( color.b, isRelative );
-        return this;
+		XColorHash hash = XColorHash.New;
+		if( r != null ) hash.AddRed((float)r, isRelative);
+		if( g != null ) hash.AddGreen((float)g, isRelative);
+		if( b != null ) hash.AddBlue((float)b, isRelative);
+		if( a != null ) hash.AddAlpha((float)a, isRelative);
+        return hash;
     }
-	public XColorHash Color( Color start, Color end, bool isRelative = false )
+    public static XColorHash Color( Color color, bool isRelative = false )
     {
-		this._start = this.GetStart().Color(start, isRelative);
-        this.AddRed( end.r, isRelative );
-		this.AddGreen( end.g, isRelative );
-		this.AddBlue( end.b, isRelative );
-        return this;
+		XColorHash hash = XColorHash.New;
+        hash.AddColor( color, isRelative );
+        return hash;
+    }
+	public static XColorHash Color( Color start, Color end, bool isRelative = false )
+    {
+		XColorHash hash = XColorHash.New;
+		hash.AddColor(start, end, isRelative);
+        return hash;
     }
 
 	/*********************************** Create Instance **********************************/
@@ -118,6 +124,24 @@ public class XColorHash : XEventHash
 		hash.Green = start;
 		this._start = hash;
 		return AddGreen( end, isRelative );
+	}
+	public XColorHash AddColor( Color end, bool isRelative = false )
+	{
+		XColorHash hash = this.GetStart();
+		this.AddRed(end.r, isRelative);
+		this.AddGreen(end.g, isRelative);
+		this.AddBlue(end.b, isRelative);
+		this.AddAlpha(end.a, isRelative);
+		return this;
+	}
+	public XColorHash AddColor( Color start, Color end, bool isRelative = false )
+	{
+		XColorHash hash = this.GetStart();
+		this.AddRed(start.r, end.r, isRelative);
+		this.AddGreen(start.g, end.g, isRelative);
+		this.AddBlue(start.b, end.b, isRelative);
+		this.AddAlpha(start.a, end.a, isRelative);
+		return this;
 	}
 	public XColorHash AddControlPointGreen( params float[] values )
 	{

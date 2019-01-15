@@ -111,8 +111,8 @@ public class ExampleTest : ExampleBase
 			// yield return wait;
 			// Debug.Break();
 
-			this.StartiTween(this.target3D);
-			// this.StartXTween(this.target3D);
+			// this.StartiTween(this.target3D);
+			this.StartXTween(this.target3D);
 
 		}
 	}
@@ -135,8 +135,15 @@ public class ExampleTest : ExampleBase
 
 	private void StartXTween(GameObject target)
 	{
-		target.To(XHash.Position(200f,50f,-1500f), 1f, Ease.Custom(EaseCustom.Test3))
-				.AddOnComplete(Debug.Break).Play();
+		// XHash hash = XHash.New.AddX(200f).AddY(50f).AddZ(-1500f);
+		XHash hash = XHash.New.AddRotationZ(360, true, 1);
+		hash.GetStart().AddRotationZ( -100f );
+		// target.ToPosition(new Vector3(200,50,-1500), 1f).Play();
+
+		XObjectHash oHash = XObjectHash.New.Add("fieldOfView", 80f);
+		this.camera3D.ToColor("backgroundColor", XColorHash.Color(0.5f, 0.5f, 0.5f, 0.5f), 1f).Play();
+		// target.transform.DOLocalRotate(new Vector3(100,55,-30),1).Play();
+		// Debug.Log(target.transform.localEulerAngles);
 	}
 	
 	void OnComplete()
