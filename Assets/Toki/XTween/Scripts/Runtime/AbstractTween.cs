@@ -183,9 +183,9 @@ namespace Toki.Tween
 			ComposeDecorator();
 			if (position < 0) position = 0;
 			if (position > DurationTotal * _repeatTotal) position = DurationTotal * _repeatTotal;
-			_repeatCurrent = Mathf.FloorToInt(position / DurationTotal);
-			if (position > DurationTotal)
+			if (position > DurationTotal && _repeatTotal > 1)
 			{
+				_repeatCurrent = Mathf.FloorToInt(position / DurationTotal);
 				position = position - (_repeatCurrent * DurationTotal);
 			}
 
