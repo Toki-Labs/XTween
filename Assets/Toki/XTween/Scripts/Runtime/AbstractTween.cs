@@ -142,7 +142,7 @@ namespace Toki.Tween
 		//Play Directly
 		public virtual IXTween Play()
 		{
-			return this.Play(0f);
+			return this.Play(this._position + this._preDelayTarget);
 		}
 
 		//Goto And Play Directly
