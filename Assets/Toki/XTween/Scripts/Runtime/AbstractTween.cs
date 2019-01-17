@@ -214,7 +214,7 @@ namespace Toki.Tween
 				wait.Initialize(_ticker, this);
 				_ticker = wait;
 			}
-			GotoAndPlayTween(0f);
+			GotoAndPlayTween(this._position + this._preDelayTarget);
 			return wait;
 		}
 
