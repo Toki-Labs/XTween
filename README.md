@@ -34,10 +34,10 @@ StartCoroutine(CoroutineTween());
 
 IEnumerator CoroutineTween()
 {
-	yield return XTween.To(gameObject, XHash.Position(600f, 200f), 1f).WaitForPlay();
+	yield return gameObject.ToPosition2D(600f, 200f, 1f).WaitForPlay();
 
 	//or
-	yield return gameObject.ToPosition2D(600f, 200f, 1f).WaitForPlay();
+	yield return XTween.To(gameObject, XHash.Position(600f, 200f), 1f).WaitForPlay();
 }
 ```
 
