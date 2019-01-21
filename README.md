@@ -18,7 +18,7 @@ XTween is
 
 You can check example at [XTween Example](http://toki-labs.com/xtween)
 
-__Ps. Because it is still in the development stage(ALAPHA), the interface can change frequently. At this stage, you can use it for testing purposes. After in BETA, You can use it stably.__
+__Ps. Because it is still in the development stage(ALPHA), the interface can change frequently. At this stage, you can use it for testing purposes. After in BETA, You can use it stably.__
 
 Implementation
 ---
