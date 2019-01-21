@@ -126,8 +126,9 @@
   <li>Support in editor mode(Not Play mode) and Available on all types of platforms</li>
 </ol>
 
-<p><strong>Ps. Because it is still in the development stage(ALAPHA), the interface can change frequently. At this stage, you can use it for testing purposes. After in BETA, You can use it stably.</strong></p>
+<p>You can check example at <a href="http://toki-labs.com/xtween">XTween Example</a></p>
 
+<p><strong>Ps. Because it is still in the development stage(ALAPHA), the interface can change frequently. At this stage, you can use it for testing purposes. After in BETA, You can use it stably.</strong></p>
 
 <h2 id="implementation">Implementation</h2>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Shortcut type</span>
@@ -156,8 +157,7 @@
 
 
 <h2 id="performance">Performance</h2>
-<p>Tweener comparison when moving 1000 gameObjects.</p>
-
+<p>Tweener comparison when moving 1000 gameObjects. set x, y, z and use elastic easing.</p>
 
 <p><strong>Garbage Alloc</strong></p>
 <blockquote>
@@ -245,8 +245,8 @@ XTween is similar with D Tween, but 2 times faster than i Tweener.</p>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Support UI RectTransform</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Performance check &amp; polishing effciency</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Support Easing Edit in UI Graph</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Stabilize Interface</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Decorator Combine with IXTween Interface</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Stabilize Interface</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Decorator Combine with IXTween Interface</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Documentaion</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Specific examples</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Support visual editor</li>
@@ -284,10 +284,10 @@ XTween is similar with D Tween, but 2 times faster than i Tweener.</p>
 
 <h2 id="bezier">Bezier</h2>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XHash</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="m">0f</span><span class="p">,</span><span class="m">0f</span><span class="p">).</span><span class="nf">AddControlPointX</span><span class="p">(</span><span class="m">1000f</span><span class="p">).</span><span class="nf">AddControlPointZ</span><span class="p">(-</span><span class="m">500f</span><span class="p">);</span>
-<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">hash</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
-
-<span class="c1">//or</span>
 <span class="n">gameObject</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">hash</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+
+<span class="c1">//Universal type</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">gameObject</span><span class="p">,</span> <span class="n">hash</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="value">Value</h2>
@@ -295,7 +295,8 @@ XTween is similar with D Tween, but 2 times faster than i Tweener.</p>
 <span class="n">XTween</span><span class="p">.</span><span class="nf">ToValue</span><span class="p">(</span><span class="n">x</span><span class="p">=&gt;</span><span class="n">camera3D</span><span class="p">.</span><span class="n">fieldOfView</span><span class="p">=</span><span class="n">x</span><span class="p">,</span> <span class="m">10f</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="c1">//or Multi value type</span>
-<span class="n">XTween</span><span class="p">.</span><span class="nf">ToValueMulti</span><span class="p">(</span><span class="n">XObjectHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"value0"</span><span class="p">,</span> <span class="m">50f</span><span class="p">,</span> <span class="m">10f</span><span class="p">).</span><span class="nf">Add</span><span class="p">(</span><span class="s">"value1"</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">10f</span><span class="p">),</span> <span class="n">UpdateValue</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+<span class="n">XObjectHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XObjectHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"value0"</span><span class="p">,</span> <span class="m">50f</span><span class="p">,</span> <span class="m">10f</span><span class="p">).</span><span class="nf">Add</span><span class="p">(</span><span class="s">"value1"</span><span class="p">,</span> <span class="m">0f</span><span class="p">,</span> <span class="m">10f</span><span class="p">);</span>
+<span class="n">XTween</span><span class="p">.</span><span class="nf">ToValueMulti</span><span class="p">(</span><span class="n">hash</span><span class="p">,</span> <span class="n">UpdateValue</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="k">void</span> <span class="nf">UpdateValue</span><span class="p">(</span><span class="n">XObjectHash</span> <span class="n">hash</span><span class="p">)</span>
 <span class="p">{</span>
@@ -309,12 +310,8 @@ XTween is similar with D Tween, but 2 times faster than i Tweener.</p>
 </code></pre></div></div>
 
 <h2 id="event-handling">Event Handling</h2>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gameObject</span><span class="p">.</span><span class="nf">ToPosition2D</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span> <span class="m">200f</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">AddOnComplete</span><span class="p">(()=&gt;</span><span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"OnComplete"</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
-
-<span class="c1">//or</span>
-<span class="n">IXTween</span> <span class="n">tween</span> <span class="p">=</span> <span class="n">gameObject</span><span class="p">.</span><span class="nf">ToPosition2D</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span> <span class="m">200f</span><span class="p">,</span> <span class="m">1f</span><span class="p">);</span>
-<span class="n">tween</span><span class="p">.</span><span class="n">OnComplete</span> <span class="p">=</span> <span class="n">Executor</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;.</span><span class="nf">New</span><span class="p">(</span><span class="n">OnTweenEnd</span><span class="p">,</span> <span class="n">gameObject</span><span class="p">);</span>
-<span class="n">tween</span><span class="p">.</span><span class="nf">Play</span><span class="p">();</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gameObject</span><span class="p">.</span><span class="nf">ToPosition2D</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span> <span class="m">200f</span><span class="p">,</span> <span class="m">1f</span><span class="p">)</span>
+          <span class="p">.</span><span class="nf">AddOnComplete</span><span class="p">(()=&gt;</span><span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"OnComplete"</span><span class="p">)).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="k">void</span> <span class="nf">OnTweenEnd</span><span class="p">(</span><span class="n">GameObject</span> <span class="n">tweenTarget</span><span class="p">)</span>
 <span class="p">{</span>
@@ -334,7 +331,7 @@ XTween is similar with D Tween, but 2 times faster than i Tweener.</p>
 	<span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"On Complete First Tween"</span><span class="p">);</span>
 
 	<span class="c1">//Start other tween start at 0.3sec</span>
-	<span class="k">yield</span> <span class="k">return</span> <span class="n">gameObject</span><span class="p">.</span><span class="nf">ToPosition2D</span><span class="p">(</span><span class="m">100f</span><span class="p">,</span> <span class="m">500f</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">WaitForGotoAndPlay</span><span class="p">(</span><span class="m">0.3f</span><span class="p">);</span>
+	<span class="k">yield</span> <span class="k">return</span> <span class="n">gameObject</span><span class="p">.</span><span class="nf">ToPosition2D</span><span class="p">(</span><span class="m">100f</span><span class="p">,</span> <span class="m">500f</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">WaitForPlay</span><span class="p">(</span><span class="m">0.3f</span><span class="p">);</span>
 	<span class="n">Debug</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">"On Complete Second Tween"</span><span class="p">);</span>
 <span class="p">}</span>
 
@@ -373,7 +370,8 @@ XTween is similar with D Tween, but 2 times faster than i Tweener.</p>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">XTween</span><span class="p">.</span><span class="nf">ToColor</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">),</span> <span class="m">1f</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="c1">//or when object has other type</span>
-<span class="n">XTween</span><span class="p">.</span><span class="n">ToColor</span><span class="p">&lt;</span><span class="n">Image</span><span class="p">&gt;(</span><span class="n">imageInstance</span><span class="p">,</span> <span class="s">"color"</span><span class="p">,</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">),</span> <span class="m">1f</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
+<span class="n">XColorHash</span> <span class="n">hash</span> <span class="p">=</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">);</span>
+<span class="n">XTween</span><span class="p">.</span><span class="n">ToColor</span><span class="p">&lt;</span><span class="n">Image</span><span class="p">&gt;(</span><span class="n">imageInstance</span><span class="p">,</span> <span class="s">"color"</span><span class="p">,</span> <span class="n">hash</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
 <h2 id="easing">Easing</h2>
@@ -394,19 +392,16 @@ Customizable Easing, Support code hint for use of ease name, TopMenu -&gt; Windo
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">IXTween</span> <span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">ToColor</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="n">XColorHash</span><span class="p">.</span><span class="n">New</span><span class="p">.</span><span class="nf">AddRed</span><span class="p">(</span><span class="m">0.56f</span><span class="p">).</span><span class="nf">AddGreen</span><span class="p">(</span><span class="m">0.83f</span><span class="p">),</span> <span class="m">1f</span><span class="p">);</span>
 
 <span class="c1">//Delay Tweener</span>
-<span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">Delay</span><span class="p">(</span><span class="n">tween</span><span class="p">,</span> <span class="m">1f</span><span class="cm">/*Pre Delay*/</span><span class="p">,</span> <span class="m">1f</span><span class="cm">/*Post Delay*/</span><span class="p">);</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">SetDelay</span><span class="p">(</span><span class="n">tween</span><span class="p">,</span> <span class="m">1f</span><span class="cm">/*Pre Delay*/</span><span class="p">,</span> <span class="m">1f</span><span class="cm">/*Post Delay*/</span><span class="p">);</span>
 
 <span class="c1">//Scale Tweener time</span>
-<span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">Scale</span><span class="p">(</span><span class="n">tween</span><span class="p">,</span> <span class="m">2f</span><span class="cm">/*Scale tweener time*/</span><span class="p">);</span>
-
-<span class="c1">//Slice Tweener</span>
-<span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">Slice</span><span class="p">(</span><span class="n">tween</span><span class="p">,</span> <span class="m">0.2f</span><span class="cm">/*Slice start at*/</span><span class="p">,</span> <span class="m">0.8f</span><span class="cm">/*Slice end*/</span><span class="p">,</span> <span class="k">false</span><span class="cm">/*is percent value?*/</span><span class="p">);</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">SetScale</span><span class="p">(</span><span class="n">tween</span><span class="p">,</span> <span class="m">2f</span><span class="cm">/*Scale tweener time*/</span><span class="p">);</span>
 
 <span class="c1">//Repeat Tweener</span>
-<span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">Repeat</span><span class="p">(</span><span class="n">tween</span><span class="p">,</span> <span class="m">3</span><span class="cm">/*3 time repeat*/</span><span class="p">);</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">SetRepeat</span><span class="p">(</span><span class="n">tween</span><span class="p">,</span> <span class="m">3</span><span class="cm">/*3 time repeat*/</span><span class="p">);</span>
 
 <span class="c1">//Reverse Tweener</span>
-<span class="n">tween</span> <span class="p">=</span> <span class="n">XTween</span><span class="p">.</span><span class="nf">Reverse</span><span class="p">(</span><span class="n">tween</span><span class="p">);</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">SetReverse</span><span class="p">(</span><span class="n">tween</span><span class="p">);</span>
 <span class="n">tween</span><span class="p">.</span><span class="nf">Play</span><span class="p">();</span>
 </code></pre></div></div>
 
@@ -414,11 +409,10 @@ Customizable Easing, Support code hint for use of ease name, TopMenu -&gt; Windo
 <p>XTween is basically autodispose. when the tweener is completed or stopped.
 So, you should set to “Lock” for reuse tweener</p>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//This Tweener will not dispose when stop or complete.</span>
-<span class="n">IXTween</span> <span class="n">tween</span> <span class="p">=</span> <span class="n">gameObject</span><span class="p">.</span><span class="nf">ToPosition2D</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span> <span class="m">200f</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">Lock</span><span class="p">().</span><span class="nf">Play</span><span class="p">();</span>
+<span class="n">IXTween</span> <span class="n">tween</span> <span class="p">=</span> <span class="n">gameObject</span><span class="p">.</span><span class="nf">ToPosition2D</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span> <span class="m">200f</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">SetLock</span><span class="p">().</span><span class="nf">Play</span><span class="p">();</span>
 
 <span class="c1">//When the tweener after completed or stopped. You can reuse this.</span>
-<span class="n">tween</span><span class="p">.</span><span class="nf">Reset</span><span class="p">();</span> <span class="c1">//Set to play position 0 same with GotoAndStop(0)</span>
-<span class="n">tween</span><span class="p">.</span><span class="nf">Play</span><span class="p">();</span> <span class="c1">//Replay</span>
+<span class="n">tween</span><span class="p">.</span><span class="nf">Play</span><span class="p">(</span><span class="m">0f</span><span class="p">);</span> <span class="c1">//Replay</span>
 
 <span class="c1">//When you are not using twin anymore. You should "Release" this tween.</span>
 <span class="n">tween</span><span class="p">.</span><span class="nf">Release</span><span class="p">();</span>
@@ -435,7 +429,7 @@ So, you should set to “Lock” for reuse tweener</p>
 <span class="c1">//Move to 0.5sec and Stop</span>
 <span class="n">tween</span><span class="p">.</span><span class="nf">GotoAndStop</span><span class="p">(</span><span class="m">0.5f</span><span class="p">);</span> 
 <span class="c1">//Move to 0.3sec and play;</span>
-<span class="n">tween</span><span class="p">.</span><span class="nf">GotoAndPlay</span><span class="p">(</span><span class="m">0.3f</span><span class="p">);</span> 
+<span class="n">tween</span><span class="p">.</span><span class="nf">Play</span><span class="p">(</span><span class="m">0.3f</span><span class="p">);</span> 
 <span class="c1">//Position set to 0 and Stop</span>
 <span class="n">tween</span><span class="p">.</span><span class="nf">Reset</span><span class="p">();</span>
 </code></pre></div></div>
