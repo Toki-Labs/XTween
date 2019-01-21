@@ -93,8 +93,8 @@ Road Map
 - [x] Support UI RectTransform
 - [x] Performance check & polishing effciency
 - [x] Support Easing Edit in UI Graph
-- [ ] Stabilize Interface
-- [ ] Decorator Combine with IXTween Interface
+- [x] Stabilize Interface
+- [x] Decorator Combine with IXTween Interface
 - [ ] Documentaion
 - [ ] Specific examples
 - [ ] Support visual editor
