@@ -17,13 +17,13 @@
 					<key>kind</key>
 					<string>display-image</string>
 					<key>url</key>
-					<string>https://dl.dropboxusercontent.com/s/qsjvnr7svkodpen/test.png</string>
+					<string>https://raw.githubusercontent.com/Toki-Labs/XTween/master/Packages/test.png</string>
 				</dict>
 				<dict>
 					<key>kind</key>
 					<string>full-size-image</string>
 					<key>url</key>
-					<string>https://dl.dropboxusercontent.com/s/qsjvnr7svkodpen/test.png</string>
+					<string>https://raw.githubusercontent.com/Toki-Labs/XTween/master/Packages/test.png</string>
 				</dict>
 			</array>
 			<key>metadata</key>
