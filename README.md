@@ -156,7 +156,8 @@ Value
 XTween.ToValue(x=>camera3D.fieldOfView=x, 10f, 1f).Play();
 
 //or Multi value type
-XTween.ToValueMulti(XObjectHash.New.Add("value0", 50f, 10f).Add("value1", 0f, 10f), UpdateValue, 1f).Play();
+XObjectHash hash = XObjectHash.New.Add("value0", 50f, 10f).Add("value1", 0f, 10f);
+XTween.ToValueMulti(hash, UpdateValue, 1f).Play();
 
 void UpdateValue(XObjectHash hash)
 {
@@ -174,12 +175,8 @@ camera3D.ToProperty("fieldOfView", 6f, 1f).Play();
 Event Handling
 ---
 ```csharp
-gameObject.ToPosition2D(600f, 200f, 1f).AddOnComplete(()=>Debug.Log("OnComplete")).Play();
-
-//or
-IXTween tween = gameObject.ToPosition2D(600f, 200f, 1f);
-tween.OnComplete = Executor<GameObject>.New(OnTweenEnd, gameObject);
-tween.Play();
+gameObject.ToPosition2D(600f, 200f, 1f)
+          .AddOnComplete(()=>Debug.Log("OnComplete")).Play();
 
 void OnTweenEnd(GameObject tweenTarget)
 {
@@ -201,7 +198,7 @@ IEnumerator CoroutineTween()
 	Debug.Log("On Complete First Tween");
 
 	//Start other tween start at 0.3sec
-	yield return gameObject.ToPosition2D(100f, 500f, 1f).WaitForGotoAndPlay(0.3f);
+	yield return gameObject.ToPosition2D(100f, 500f, 1f).WaitForPlay(0.3f);
 	Debug.Log("On Complete Second Tween");
 }
 
@@ -248,7 +245,8 @@ Color
 XTween.ToColor(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f), 1f).Play();
 
 //or when object has other type
-XTween.ToColor<Image>(imageInstance, "color", XColorHash.New.AddRed(0.56f).AddGreen(0.83f), 1f).Play();
+XColorHash hash = XColorHash.New.AddRed(0.56f).AddGreen(0.83f);
+XTween.ToColor<Image>(imageInstance, "color", hash, 1f).Play();
 ```
 
 Easing
@@ -273,19 +271,16 @@ Decorator
 IXTween tween = XTween.ToColor(sprite, XColorHash.New.AddRed(0.56f).AddGreen(0.83f), 1f);
 
 //Delay Tweener
-tween = XTween.Delay(tween, 1f/*Pre Delay*/, 1f/*Post Delay*/);
+tween.SetDelay(tween, 1f/*Pre Delay*/, 1f/*Post Delay*/);
 
 //Scale Tweener time
-tween = XTween.Scale(tween, 2f/*Scale tweener time*/);
-
-//Slice Tweener
-tween = XTween.Slice(tween, 0.2f/*Slice start at*/, 0.8f/*Slice end*/, false/*is percent value?*/);
+tween.SetScale(tween, 2f/*Scale tweener time*/);
 
 //Repeat Tweener
-tween = XTween.Repeat(tween, 3/*3 time repeat*/);
+tween.SetRepeat(tween, 3/*3 time repeat*/);
 
 //Reverse Tweener
-tween = XTween.Reverse(tween);
+tween.SetReverse(tween);
 tween.Play();
 ```
 
@@ -295,11 +290,10 @@ XTween is basically autodispose. when the tweener is completed or stopped.
 So, you should set to "Lock" for reuse tweener
 ```csharp
 //This Tweener will not dispose when stop or complete.
-IXTween tween = gameObject.ToPosition2D(600f, 200f, 1f).Lock().Play();
+IXTween tween = gameObject.ToPosition2D(600f, 200f, 1f).SetLock().Play();
 
 //When the tweener after completed or stopped. You can reuse this.
-tween.Reset(); //Set to play position 0 same with GotoAndStop(0)
-tween.Play(); //Replay
+tween.Play(0f); //Replay
 
 //When you are not using twin anymore. You should "Release" this tween.
 tween.Release();
@@ -318,7 +312,7 @@ tween.Play();
 //Move to 0.5sec and Stop
 tween.GotoAndStop(0.5f); 
 //Move to 0.3sec and play;
-tween.GotoAndPlay(0.3f); 
+tween.Play(0.3f); 
 //Position set to 0 and Stop
 tween.Reset();
 ```
