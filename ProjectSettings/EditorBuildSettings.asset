@@ -6,39 +6,39 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Toki/XTween/Example/Scenes/Example.unity
+    path: Assets/Toki/XAssets/XTween/Example/Scenes/Example.unity
     guid: 9ef5e4c305ad047699840c1be3b09bf7
   - enabled: 1
-    path: Assets/Toki/XTween/Example/Scenes/Example_Position.unity
+    path: Assets/Toki/XAssets/XTween/Example/Scenes/Example_Position.unity
     guid: 2b394962f4bbace4f8bfff40e2a0bc0c
   - enabled: 1
-    path: Assets/Toki/XTween/Example/Scenes/Example_Scale.unity
+    path: Assets/Toki/XAssets/XTween/Example/Scenes/Example_Scale.unity
     guid: 7ef8d541bdae9a6488e97bf2b0ea9cc5
   - enabled: 1
-    path: Assets/Toki/XTween/Example/Scenes/Example_Angle.unity
+    path: Assets/Toki/XAssets/XTween/Example/Scenes/Example_Angle.unity
     guid: 2cc4bd96000009a4390ee952aa0bf6d0
   - enabled: 1
-    path: Assets/Toki/XTween/Example/Scenes/Example_Combination.unity
+    path: Assets/Toki/XAssets/XTween/Example/Scenes/Example_Combination.unity
     guid: d55be1acc08d0f94ca1b09c827b150f4
   - enabled: 1
-    path: Assets/Toki/XTween/Example/Scenes/Example_Bezier.unity
+    path: Assets/Toki/XAssets/XTween/Example/Scenes/Example_Bezier.unity
     guid: e25f9854459ef3243b66342adb343738
   - enabled: 1
-    path: Assets/Toki/XTween/Example/Scenes/Example_Value.unity
+    path: Assets/Toki/XAssets/XTween/Example/Scenes/Example_Value.unity
     guid: 663eecb6eebc05f4484a897046348141
   - enabled: 1
-    path: Assets/Toki/XTween/Example/Scenes/Example_Event.unity
+    path: Assets/Toki/XAssets/XTween/Example/Scenes/Example_Event.unity
     guid: bd5f1b55ec106b543adf962184a89f84
   - enabled: 1
-    path: Assets/Toki/XTween/Example/Scenes/Example_Serial.unity
+    path: Assets/Toki/XAssets/XTween/Example/Scenes/Example_Serial.unity
     guid: a13b248f384b8384f9fbe85f9c47498b
   - enabled: 1
-    path: Assets/Toki/XTween/Example/Scenes/Example_Parallel.unity
+    path: Assets/Toki/XAssets/XTween/Example/Scenes/Example_Parallel.unity
     guid: c4d2ad23e77b539419640ee12011709e
   - enabled: 1
-    path: Assets/Toki/XTween/Example/Scenes/Example_UI.unity
+    path: Assets/Toki/XAssets/XTween/Example/Scenes/Example_UI.unity
     guid: b6c5bb1d34a9ab84ea64c34023282028
   - enabled: 1
-    path: Assets/Toki/XTween/Example/Scenes/Example_Color.unity
+    path: Assets/Toki/XAssets/XTween/Example/Scenes/Example_Color.unity
     guid: 704c5d417e2e83543b1771da7ac37b47
   m_configObjects: {}

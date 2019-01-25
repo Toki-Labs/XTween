@@ -1,21 +1,16 @@
 /**********************************************************************************
-/*		File Name 		: ModuleTest.cs
+/*		File Name 		: ModuleTemplete.cs
 /*		Author 			: Robin
 /*		Description 	: 
-/*		Created Date 	: 2016-7-28
+/*		Created Date 	: 2019-1-25
 /*		Modified Date 	: 
 /**********************************************************************************/
 
 using UnityEngine;
 using UnityEditor;
-using System.Security.Cryptography;
-using System.Text;
-using System;
-using System.IO;
-using System.Reflection;
 using System.Collections.Generic;
 
-public class ModuleTest : EditorWindowModuleBase
+public class ModuleTemplete : EditorWindowModuleBase
 {
     /************************************************************************
     *	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
@@ -45,7 +40,7 @@ public class ModuleTest : EditorWindowModuleBase
     {
         get
         {
-            return "Test";
+            return "Templete";
         }
     }
 
@@ -77,20 +72,7 @@ public class ModuleTest : EditorWindowModuleBase
     {
         base.OnGUI();
 
-        if (GUILayout.Button("Test0", GUILayout.Height(40f)))
-        {
-            /*SlackFile file = new SlackFile();
-            file.title = "Title Test";
-            file.fileName = "fileName Test";
-            file.initial_comment = "Initial comment";
-            file.filePath = SystemUtil.absPath + "/Assets/Images/test.jpg";
-            SlackManager.To.Send("app_notifier", file);*/
-            
-        }
-
-        if (GUILayout.Button("Test1", GUILayout.Height(40f)))
-        {
-        }
+        //Start
     }
     
     public override void OnDestroy()
