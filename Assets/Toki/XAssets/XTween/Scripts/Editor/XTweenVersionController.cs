@@ -31,7 +31,7 @@ namespace Toki.Tween
 		************************************************************************/
 		private const string STORE_CHECKED_DATE = "xtween.store_checked_date";
 		private const string STORE_LAST_VERSION = "xtween.store_last_version";
-		private const string URL = "https://toki-labs.github.io/XTween/Assets/Toki/XTween/Scripts/Editor/xtween_config.json";
+		private const string URL = "https://toki-labs.github.io/XTween/Assets/Toki/XAssets/XTween/Scripts/Editor/xtween_config.json";
 		private UnityWebRequest _http;
 		
 		/************************************************************************
@@ -131,10 +131,10 @@ namespace Toki.Tween
 			while (!this._http.isDone);
 			if( string.IsNullOrEmpty(this._http.error) )
 			{
-				string nameStartPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
+				string nameStartPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XAssets/XTween/Scripts/EaseCustom.cs";
 				string nameDestPath = Path.Combine( tempPath, "EaseCustomTemp" );
 				File.Copy(nameStartPath, nameDestPath);
-				string rootPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/";
+				string rootPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XAssets/XTween/Scripts/";
 				string[] dirs = new string[]{rootPath + "Editor", rootPath + "Runtime"};
 				foreach ( var path in dirs )
 				{

@@ -88,7 +88,7 @@ namespace Toki.Tween
 			List<string> easingNameList = new List<string>();
 			easingList.ForEach(x => easingNameList.Add(x.name));
 			string[] names = easingNameList.ToArray();
-			string filePath = AbsPath + "/Assets/Toki/XTween/Scripts/EaseCustom.cs";
+			string filePath = AbsPath + "/Assets/Toki/XAssets/XTween/Scripts/EaseCustom.cs";
 
 			bool refresh = false;
 			if( File.Exists(filePath) )
@@ -119,7 +119,7 @@ namespace Toki.Tween
 			if( refresh )
 			{
 				string replaceStr = string.Join(",\n\t", names);
-				string path = AbsPath + "/Assets/Toki/XTween/Scripts/Editor/EaseCustomTemplete";
+				string path = AbsPath + "/Assets/Toki/XAssets/XTween/Scripts/Editor/EaseCustomTemplete";
 				string content = ReadText(path);
 				content = content.Replace("/* Name List */", replaceStr);
 				WriteText(filePath, content);
@@ -166,7 +166,7 @@ namespace Toki.Tween
         {
             get
             {
-                return XTweenEditorManager.AbsPath + "/Assets/Toki/XTween/Scripts/Editor/xtween_config.json";
+                return XTweenEditorManager.AbsPath + "/Assets/Toki/XAssets/XTween/Scripts/Editor/xtween_config.json";
             }
         }
 

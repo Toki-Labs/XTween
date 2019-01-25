@@ -91,7 +91,7 @@ namespace Toki.Tween
         ************************************************************************/
         private List<string> _folderList = new List<string>
         { 
-            "Assets/Toki/XTween/Scripts"
+            "Assets/Toki/XAssets/XTween/Scripts"
         };
         
         /************************************************************************
@@ -226,10 +226,10 @@ namespace Toki.Tween
             {
                 addStr = "All_";
                 exportRootPath = ExportDefaultPath;
-                exportPathList.Add("Assets/Toki/XTween/Export");
-                exportPathList.Add("Assets/Toki/XTween/Example");
-                exportPathList.Add("Assets/Toki/XTween/Images");
-                exportPathList.Add("Assets/Toki/XTween/Resources");
+                exportPathList.Add("Assets/Toki/XAssets/XTween/Export");
+                exportPathList.Add("Assets/Toki/XAssets/XTween/Example");
+                exportPathList.Add("Assets/Toki/XAssets/XTween/Images");
+                exportPathList.Add("Assets/Toki/XAssets/XTween/Resources");
             }
             else
             {
