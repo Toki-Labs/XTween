@@ -7,6 +7,7 @@
 /**********************************************************************************/
 
 using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using Toki.Editors.EditorWindows;
 using Toki.Common;
