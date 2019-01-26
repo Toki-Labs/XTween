@@ -116,7 +116,6 @@ namespace Toki.Common
                         {
                             this._versionController.Check(true);
                         }
-                        Debug.Log("Test1");
                         this._checkResult = this._lastVersion != NETWORK_ERROR_MSG && 
                                             this._lastVersion != INIT_MSG &&
                                             lastVersionInt > currentVersionInt;

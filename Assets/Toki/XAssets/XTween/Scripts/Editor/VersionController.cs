@@ -151,7 +151,6 @@ namespace Toki.Common
 		private IEnumerator CoroutineVersionLoad()
 		{
 			this._http = new UnityWebRequest(URL);
-			Debug.Log(URL);
 			this._http.SetRequestHeader("Content-Type", "application/json");
 			this._http.SetRequestHeader("Accepted", "application/json");
 			this._http.downloadHandler = new DownloadHandlerBuffer();
