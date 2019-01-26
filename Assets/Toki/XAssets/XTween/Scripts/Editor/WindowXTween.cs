@@ -19,10 +19,14 @@ namespace Toki.Tween
 		*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
 		************************************************************************/
 		
-		
 		/************************************************************************
 		*	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
 		************************************************************************/
+		[MenuItem("Window/XTween Editor #%9",priority=16)]
+		public static void OpenXTweenEditorWindow()
+		{
+			EditorWindow.GetWindow<WindowXTween>(false, XTweenVersionController.NAME, true);
+		}
 		
 		
 		/************************************************************************
