@@ -16,7 +16,7 @@ XTween is
 7. Less use of memory and cpu. (XTween is don't create MonoBehaviour each by tween)
 8. Support in editor mode(Not Play mode) and Available on all types of platforms
 
-You can check example at [XTween Example](http://toki-labs.com/xtween)
+You can check example at [XTween Example](http://toki-labs.com/xassets/xtween)
 
 __Ps. Because it is still in the development stage(ALPHA), the interface can change frequently. At this stage, you can use it for testing purposes. After in BETA, You can use it stably.__
 
