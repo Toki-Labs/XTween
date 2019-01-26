@@ -13,10 +13,11 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using Toki.Common;
 
 namespace Toki.Tween
 {
-	public class XTweenVersionController
+	public class XTweenVersionController : VersionController
 	{
 		/************************************************************************
 		*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
@@ -25,14 +26,23 @@ namespace Toki.Tween
 		/************************************************************************
 		*	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
 		************************************************************************/
+		public static XTweenVersionController To
+		{
+			get
+			{
+				VersionController controller;
+				if( (controller = VersionController.Get(NAME)) == null )
+				{
+					controller = new XTweenVersionController(NAME);
+					VersionController.Push(controller);
+				}
+				return controller as XTweenVersionController;
+			}
+		}
 		
 		/************************************************************************
 		*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 		************************************************************************/
-		private const string STORE_CHECKED_DATE = "xtween.store_checked_date";
-		private const string STORE_LAST_VERSION = "xtween.store_last_version";
-		private const string URL = "https://toki-labs.github.io/XTween/Assets/Toki/XAssets/XTween/Scripts/Editor/xtween_config.json";
-		private UnityWebRequest _http;
 		
 		/************************************************************************
 		*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -41,22 +51,26 @@ namespace Toki.Tween
 		/************************************************************************
 		*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 		************************************************************************/
-		private Action<string> _listener;
-		private Action _packageLoad;
-
+		public const string NAME = "XTween";
+		
 		/************************************************************************
 		*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
 		************************************************************************/
-		public bool IsDownloading { get; set; }
-		public bool IsChecking { get; set; }
-		public string StoredLastVersion
+		public override string URL
 		{
 			get
 			{
-				return EditorPrefs.GetString(STORE_LAST_VERSION, XTweenEditorManager.Instance.Data.version);
+				return "https://toki-labs.github.io/XTween/Assets/Toki/XAssets/XTween/Scripts/Editor/xtween_version.json";
 			}
 		}
 
+		public override string URLPackage
+		{
+			get
+			{
+				return "https://github.com/Toki-Labs/XTween/raw/master/Bin/";
+			}
+		}
 		
 		
 		/************************************************************************
@@ -66,122 +80,41 @@ namespace Toki.Tween
 		/************************************************************************
 		*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 		************************************************************************/
-		public XTweenVersionController(Action<string> listener)
+		public XTweenVersionController(string assetName ) : base(assetName)
 		{
-			this._listener = listener;
 		}
 		
 		/************************************************************************
 		*	 	 	 	 	Coroutine Declaration	 	  			 	 		*
 		************************************************************************/
-		private IEnumerator CoroutineVersionLoad()
+		protected override void ImportPrevProcess()
 		{
-			this._http = new UnityWebRequest(URL);
-			this._http.SetRequestHeader("Content-Type", "application/json");
-			this._http.SetRequestHeader("Accepted", "application/json");
-			this._http.downloadHandler = new DownloadHandlerBuffer();
-			yield return this._http.SendWebRequest();
-			do
+			string absPath = SystemUtil.AbsPath;
+			string nameStartPath = absPath + "/Assets/Toki/XAssets/XTween/Scripts/EaseCustom.cs";
+			string nameDestPath = Path.Combine( VersionController.TempPath, "EaseCustomTemp" );
+			File.Copy(nameStartPath, nameDestPath);
+			string rootPath = absPath + "/Assets/Toki/XAssets/XTween/Scripts/";
+			string[] dirs = new string[]{rootPath + "Editor", rootPath + "Runtime"};
+			foreach ( var path in dirs )
 			{
-				yield return null;
+				Directory.Delete(path,true);
 			}
-			while (!this._http.isDone);
-
-			bool isSuccess = false;
-			if( string.IsNullOrEmpty(this._http.error) || 
-				(this._http.responseCode < 300 && this._http.responseCode >= 200) )
-			{
-				//Check version
-				try
-				{
-					XTweenConfigData data = JsonUtility.FromJson<XTweenConfigData>(this._http.downloadHandler.text);
-					EditorPrefs.SetString(STORE_CHECKED_DATE, this.GetToday());
-					EditorPrefs.SetString(STORE_LAST_VERSION, data.version);
-					if( !IsDownloading )
-						this._listener(data.version);
-					isSuccess = true;
-				}
-				catch ( System.Exception e ) 
-				{
-					Debug.Log(e.Message);
-					this._listener("error");
-				}
-			}
-
-			this._http.Dispose();
-			if( !isSuccess ) this._listener("error");
-			this.IsChecking = false;
-			if( this._packageLoad != null ) this._packageLoad();
 		}
 
-		private IEnumerator CoroutinePackageLoad()
+		protected override void ImportPostProcess()
 		{
-			string fileName = "XTween_" + this.StoredLastVersion + ".unitypackage";
-			string tempPath = XTweenEditorManager.TempPath;
-			Directory.CreateDirectory(tempPath);
-			string filePath = Path.Combine(tempPath, fileName);
-			string url = "https://github.com/Toki-Labs/XTween/raw/master/Bin/" + fileName;
-			this._http = UnityWebRequest.Get(url);
-			this._http.downloadHandler = new DownloadHandlerFile(filePath);
-			yield return this._http.SendWebRequest();
-			do
+			string nameStartPath = SystemUtil.AbsPath + "/Assets/Toki/XAssets/XTween/Scripts/EaseCustom.cs";
+			string tempNamePath = Path.Combine(VersionController.TempPath, "EaseCustomTemp");
+			if( File.Exists(tempNamePath) )
 			{
-				yield return null;
-			}
-			while (!this._http.isDone);
-			if( string.IsNullOrEmpty(this._http.error) )
-			{
-				string nameStartPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XAssets/XTween/Scripts/EaseCustom.cs";
-				string nameDestPath = Path.Combine( tempPath, "EaseCustomTemp" );
-				File.Copy(nameStartPath, nameDestPath);
-				string rootPath = XTweenEditorManager.AbsPath + "/Assets/Toki/XAssets/XTween/Scripts/";
-				string[] dirs = new string[]{rootPath + "Editor", rootPath + "Runtime"};
-				foreach ( var path in dirs )
-				{
-					Directory.Delete(path,true);
-				}
-				AssetDatabase.ImportPackage(filePath, false);
-				XTweenEditorManager.Instance.Data.version = this.StoredLastVersion;
-				EditorPrefs.DeleteKey(STORE_CHECKED_DATE);
-				EditorPrefs.DeleteKey(STORE_LAST_VERSION);
-
-				EditorUtility.DisplayDialog("Information", "You had successfully updated!", "OK");
-
-				yield return null;
-				string tempNamePath = Path.Combine(XTweenEditorManager.TempPath, "EaseCustomTemp");
-				if( File.Exists(tempNamePath) )
-				{
-					File.Copy(tempNamePath, nameStartPath, true);
-					AssetDatabase.Refresh();
-				}
-			}
-			else
-			{
-				//Error
-				EditorUtility.DisplayDialog("Error!", "Something wrong with download file. try next time.", "OK");
-			}
-			this._http.Dispose();
-			this.IsDownloading = false;
-			this._packageLoad = null;
-		}
-
-		private void EmptyTemp()
-		{
-			string tempPath = XTweenEditorManager.TempPath;
-			if( Directory.Exists(tempPath) )
-			{
-				Directory.Delete(tempPath, true);
+				File.Copy(tempNamePath, nameStartPath, true);
+				AssetDatabase.Refresh();
 			}
 		}
 		
 		/************************************************************************
 		*	 	 	 	 	Private Method Declaration	 	 	 	 	 		*
 		************************************************************************/
-		private string GetToday()
-		{
-			DateTime date = DateTime.Now;
-			return date.Year + "-" + date.Month + "-" + date.Day;
-		}
 		
 		/************************************************************************
 		*	 	 	 	 	Protected Method Declaration	 	 	 	 	 	*
@@ -190,73 +123,5 @@ namespace Toki.Tween
 		/************************************************************************
 		*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
 		************************************************************************/
-		public void Check( bool checkForce = false )
-		{
-			bool needToCheck = checkForce;
-			this.EmptyTemp();
-			string date = EditorPrefs.GetString(STORE_CHECKED_DATE, null);
-			if( string.IsNullOrEmpty(date) )
-			{
-				needToCheck = true;
-			}
-			else
-			{
-				string today = this.GetToday();
-				if( !date.Equals(today) )
-				{
-					needToCheck = true;
-				}
-			}
-
-			if( needToCheck )
-			{
-				this.IsChecking = true;
-				EditorCoroutine.Start(CoroutineVersionLoad());
-			}
-			else
-			{
-				this._listener(null);
-			}
-		}
-
-		public void Update()
-		{
-			this.IsDownloading = true;
-			this.Check(true);
-			this._packageLoad = () => EditorCoroutine.Start(CoroutinePackageLoad());
-		}
-	}
-	
-	public class EditorCoroutine
-	{
-		public static EditorCoroutine Start( IEnumerator _routine )
-		{
-			EditorCoroutine coroutine = new EditorCoroutine(_routine);
-			coroutine.Start();
-			return coroutine;
-		}
-
-		private readonly IEnumerator _enumerator;
-		EditorCoroutine( IEnumerator _routine )
-		{
-			this._enumerator = _routine;
-		}
-
-		void Start()
-		{
-			EditorApplication.update += Update;
-		}
-		public void Stop()
-		{
-			EditorApplication.update -= Update;
-		}
-
-		void Update()
-		{
-			if (!_enumerator.MoveNext())
-			{
-				Stop();
-			}
-		}
 	}
 }

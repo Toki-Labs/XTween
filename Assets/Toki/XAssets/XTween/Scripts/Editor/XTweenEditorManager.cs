@@ -14,12 +14,6 @@ using UnityEditor;
 
 namespace Toki.Tween
 {
-	[Serializable]
-	public class XTweenConfigData
-	{
-		public string version;
-	}
-
 	[InitializeOnLoad]
 	public class XTweenEditorManager
 	{
@@ -37,14 +31,6 @@ namespace Toki.Tween
 			Instance.Initialize();
 		}
 
-		public static string TempPath
-		{
-			get
-			{
-				return Path.Combine(AbsPath, "XTweenTemp");
-			}
-		}
-		
 		public static XTweenEditorManager Instance
 		{
 			get
@@ -57,38 +43,13 @@ namespace Toki.Tween
 			}
 		}
 
-		public static string AbsPath
-		{
-			get
-			{
-	#if UNITY_EDITOR
-				string absPath = Application.dataPath;
-				return absPath.Substring( 0, absPath.LastIndexOf( "/" ) );
-	#else
-				return Application.dataPath;
-	#endif
-			}
-		}
-
-		public static string ReadText( string path )
-        {
-            return File.ReadAllText(path);
-        }
-
-        public static void WriteText( string path, string content )
-        {
-            StreamWriter writer = File.CreateText(path);
-            writer.Write(content);
-            writer.Close();
-        }
-
 		public static void UpdateEasingName()
 		{
 			List<EasingData> easingList = XTweenEditorData.Instance.easingDataList;
 			List<string> easingNameList = new List<string>();
 			easingList.ForEach(x => easingNameList.Add(x.name));
 			string[] names = easingNameList.ToArray();
-			string filePath = AbsPath + "/Assets/Toki/XAssets/XTween/Scripts/EaseCustom.cs";
+			string filePath = SystemUtil.AbsPath + "/Assets/Toki/XAssets/XTween/Scripts/EaseCustom.cs";
 
 			bool refresh = false;
 			if( File.Exists(filePath) )
@@ -119,10 +80,10 @@ namespace Toki.Tween
 			if( refresh )
 			{
 				string replaceStr = string.Join(",\n\t", names);
-				string path = AbsPath + "/Assets/Toki/XAssets/XTween/Scripts/Editor/EaseCustomTemplete";
-				string content = ReadText(path);
+				string path = SystemUtil.AbsPath + "/Assets/Toki/XAssets/XTween/Scripts/Editor/EaseCustomTemplete";
+				string content = FileReference.Read(path);
 				content = content.Replace("/* Name List */", replaceStr);
-				WriteText(filePath, content);
+				FileReference.Write(filePath, content);
 				XTweenEditorData.Instance.Save();
 				AssetDatabase.Refresh();
 			}
@@ -132,7 +93,6 @@ namespace Toki.Tween
 		*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 		************************************************************************/
 		private PlayModeStateChange _playMode;
-		private XTweenConfigData _data;
 		
 		/************************************************************************
 		*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
@@ -154,28 +114,12 @@ namespace Toki.Tween
 			}
 		}
 
-		public XTweenConfigData Data
-        {
-            get
-            {
-                return _data;
-            }
-        }
-
-		public string JsonPath
-        {
-            get
-            {
-                return XTweenEditorManager.AbsPath + "/Assets/Toki/XAssets/XTween/Scripts/Editor/xtween_config.json";
-            }
-        }
-
 		/************************************************************************
 		*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 		************************************************************************/
 		public XTweenEditorManager()
 		{
-			this.Load();
+			
 		}
 		
 		/************************************************************************
@@ -217,9 +161,9 @@ namespace Toki.Tween
 		{
 			string destDir = "Assets/Resources";
 			string destPath = destDir + "/XTweenData.asset";
-			if( !File.Exists(AbsPath + "/" + destPath) )
+			if( !File.Exists(SystemUtil.AbsPath + "/" + destPath) )
 			{
-				Directory.CreateDirectory(AbsPath + "/" + destDir);
+				Directory.CreateDirectory(SystemUtil.AbsPath + "/" + destDir);
 				XTweenEditorData asset = ScriptableObject.CreateInstance<XTweenEditorData>();
 				AssetDatabase.CreateAsset (asset, destPath);
 				AssetDatabase.SaveAssets();
@@ -246,25 +190,5 @@ namespace Toki.Tween
 				this.CheckEditorData();
 			}
 		}
-
-		public void Load()
-        {
-            if( File.Exists(this.JsonPath) )
-            {
-                string jsonStr = XTweenEditorManager.ReadText(this.JsonPath);
-                this._data = JsonUtility.FromJson<XTweenConfigData>(jsonStr);
-            }
-            else
-            {
-                this._data = new XTweenConfigData();
-                this.Save();
-            }
-        }
-		
-		public void Save()
-        {
-            string jsonStr = JsonUtility.ToJson(this._data);
-            XTweenEditorManager.WriteText(this.JsonPath, jsonStr);
-        }
 	}
 }

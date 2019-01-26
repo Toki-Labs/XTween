@@ -11,6 +11,7 @@ using UnityEditor;
 using System.Collections;
 using System;
 using System.IO;
+using Toki.Common;
 
 namespace Toki.Tween
 {
@@ -62,12 +63,12 @@ namespace Toki.Tween
         ************************************************************************/
         void OnEnable()
         {
-            this._xtweenVersion = XTweenEditorManager.Instance.Data.version;
+            this._xtweenVersion = XTweenVersionController.To.Data.version;
         }
 
         void OnGUI()
         {
-            XTweenConfigData data = XTweenEditorManager.Instance.Data;
+            VersionData data = XTweenVersionController.To.Data;
             GUILayout.BeginVertical();
 
             GUILayout.BeginVertical("Box");
@@ -97,7 +98,7 @@ namespace Toki.Tween
             if (GUILayout.Button("Save", GUILayout.Width(100f)))
             {
                 data.version = this._xtweenVersion;
-                XTweenEditorManager.Instance.Save();
+                XTweenVersionController.To.Save();
                 changed = false;
             }
             GUI.backgroundColor = Color.white;

@@ -6,12 +6,13 @@
 /*		Modified Date 	: 
 /**********************************************************************************/
 
+using System;
 using UnityEngine;
 using UnityEditor;
 
-namespace Toki.Tween
+namespace Toki.Common
 {
-    public class ModuleXTweenUpdate : ModuleAccordian
+    public class ModuleUpdate : ModuleAccordian
     {
         /************************************************************************
         *	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
@@ -27,13 +28,13 @@ namespace Toki.Tween
         /************************************************************************
         *	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
         ************************************************************************/
-        private const string NETWORK_ERROR_MSG = "Some with wrong in check update.";
-        private const string INIT_MSG = "Checking version...";
-        private XTweenEditorData _data;
-        private XTweenVersionController _versionController;
-        private bool _checkResult;
-        private bool _checkForce = false;
-        private string _lastVersion = INIT_MSG;
+        protected const string NETWORK_ERROR_MSG = "Some with wrong in check update.";
+        protected const string INIT_MSG = "Checking version...";
+        protected VersionController _versionController;
+        protected Func<VersionController> _getVersionController;
+        protected bool _checkResult;
+        protected bool _checkForce = false;
+        protected string _lastVersion = INIT_MSG;
 
 
         /************************************************************************
@@ -52,7 +53,6 @@ namespace Toki.Tween
             }
         }
 
-
         /************************************************************************
         *	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
         ************************************************************************/
@@ -66,6 +66,11 @@ namespace Toki.Tween
         /************************************************************************
         *	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
         ************************************************************************/
+        public ModuleUpdate( Func<VersionController> getController )
+        {
+            this._getVersionController = getController;
+        }
+
         public override void Initialize(EditorWindowBase window)
         {
             base.Initialize(window);
@@ -73,7 +78,8 @@ namespace Toki.Tween
 
         public override void OnEnable()
         {
-            this._versionController = new XTweenVersionController(this.CheckedLastVersion);
+            this._versionController = this._getVersionController();
+            this._versionController.VersionCheckListener = this.CheckedLastVersion;
 			if( !EditorApplication.isPlaying ) this._versionController.Check();
         }
 
@@ -86,7 +92,7 @@ namespace Toki.Tween
                 GUILayout.BeginVertical("Box");
                 GUILayout.Space(5f);
 
-                string currentVersion = XTweenEditorManager.Instance.Data.version;
+                string currentVersion = this._versionController.Data.version;
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Current version", GUILayout.Width(110f));
                 GUILayout.Label(currentVersion, "BoldLabel");
@@ -110,6 +116,7 @@ namespace Toki.Tween
                         {
                             this._versionController.Check(true);
                         }
+                        Debug.Log("Test1");
                         this._checkResult = this._lastVersion != NETWORK_ERROR_MSG && 
                                             this._lastVersion != INIT_MSG &&
                                             lastVersionInt > currentVersionInt;
@@ -161,7 +168,12 @@ namespace Toki.Tween
         /************************************************************************
         *	 	 	 	 	Private Method Declaration	 	 	 	 	 		*
         ************************************************************************/
-        private void CheckedLastVersion( string version )
+        
+        
+        /************************************************************************
+        *	 	 	 	 	Protected Method Declaration	 	 	 	 	 	*
+        ************************************************************************/
+        protected void CheckedLastVersion( string version )
 		{
 			if( string.IsNullOrEmpty(version) )
 			{
@@ -174,7 +186,7 @@ namespace Toki.Tween
 			}
 			else
 			{
-				string current = XTweenEditorManager.Instance.Data.version;
+				string current = this._versionController.Data.version;
 				if( !this._checkResult && version == current && this._checkForce )
 				{
 					this._checkForce = false;
@@ -186,10 +198,6 @@ namespace Toki.Tween
 			}
 			this._window.SetDirty();
 		}
-        
-        /************************************************************************
-        *	 	 	 	 	Protected Method Declaration	 	 	 	 	 	*
-        ************************************************************************/
 
 
         /************************************************************************

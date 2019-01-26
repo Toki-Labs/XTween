@@ -1,91 +1,88 @@
-/**********************************************************************************
-/*		File Name 		: TestWindow.cs
+﻿/**********************************************************************************
+/*		File Name 		: VersionController.cs
 /*		Author 			: Robin
 /*		Description 	: 
-/*		Created Date 	: 2016-7-27
+/*		Created Date 	: 2019-1-25
 /*		Modified Date 	: 
 /**********************************************************************************/
 
 using UnityEngine;
-using System.Collections;
-using Toki.Editors.EditorWindows;
-using Toki.Common;
+using UnityEditor;
+using UnityEngine.Networking;
+using System;
+using System.IO;
+using System.Collections.Generic;
 
-namespace Toki.Tween
+namespace Toki.Common
 {
-	public class WindowXTween : EditorWindowAccordian
+	
+	public class VersionReader
 	{
 		/************************************************************************
 		*	 	 	 	 	Static Variable Declaration	 	 	 	 	 	    *
 		************************************************************************/
-		
+		private static VersionReader _instance;
 		
 		/************************************************************************
 		*	 	 	 	 	Static Method Declaration	 	 	 	     	 	*
 		************************************************************************/
-		
+		public static VersionReader To
+		{
+			get
+			{
+				if( _instance == null )
+				{
+					_instance = new VersionReader();
+				}
+				return _instance;
+			}
+		}
 		
 		/************************************************************************
 		*	 	 	 	 	Private Variable Declaration	 	 	 	 	 	*
 		************************************************************************/
 		
-		
 		/************************************************************************
 		*	 	 	 	 	Protected Variable Declaration	 	 	 	 	 	*
 		************************************************************************/
+		protected string _assetName;
 		
-		
+			
 		/************************************************************************
 		*	 	 	 	 	Public Variable Declaration	 	 	 	 	 		*
 		************************************************************************/
-		
-		
+
 		/************************************************************************
 		*	 	 	 	 	Getter & Setter Declaration	 	 	 	 	 		*
 		************************************************************************/
 		
-		
+
 		/************************************************************************
 		*	 	 	 	 	Initialize & Destroy Declaration	 	 	 		*
 		************************************************************************/
-		public override void Initialize()
-		{
-			this.AddModule(new ModuleUpdate(()=>{ return XTweenVersionController.To;}), new ModuleXTweenEasing());
-			base.Initialize();
-		}
-
+		
 		/************************************************************************
 		*	 	 	 	 	Life Cycle Method Declaration	 	 	 	 	 	*
 		************************************************************************/
-
+		public VersionReader()
+		{
+		}
 		
 		/************************************************************************
 		*	 	 	 	 	Coroutine Declaration	 	  			 	 		*
 		************************************************************************/
 		
-		
 		/************************************************************************
 		*	 	 	 	 	Private Method Declaration	 	 	 	 	 		*
 		************************************************************************/
-		
 		
 		/************************************************************************
 		*	 	 	 	 	Protected Method Declaration	 	 	 	 	 	*
 		************************************************************************/
 		
-		
 		/************************************************************************
 		*	 	 	 	 	Public Method Declaration	 	 	 	 	 		*
 		************************************************************************/
-		public override void UpdateGUI()
-		{
-			this._showHeader = false;
-			GUILayout.BeginVertical();
-			GUILayout.Label("XTween", "BoldLabel");
-			
-			base.UpdateGUI();
-
-			GUILayout.EndVertical();
-		}
+		
 	}
 }
