@@ -81,7 +81,7 @@ namespace Toki.Tween
 		{
 			this._showHeader = false;
 			GUILayout.BeginVertical();
-			GUILayout.Label("XTween", "BoldLabel");
+			GUILayout.Label(XTweenVersionController.NAME, "BoldLabel");
 			
 			base.UpdateGUI();
 

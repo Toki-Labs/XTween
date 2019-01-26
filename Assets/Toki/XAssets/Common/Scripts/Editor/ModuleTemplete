@@ -65,9 +65,9 @@ public class ModuleTemplete : EditorWindowModuleBase
 
     public override void OnEnable()
     {
+        
     }
 
-    private int _count = 0;
     public override void OnGUI()
     {
         base.OnGUI();
