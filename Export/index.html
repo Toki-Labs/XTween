@@ -117,12 +117,12 @@
 <p>XTween is</p>
 <ol>
   <li>Can make tweener by few code (easy to learn and good readablity)</li>
-  <li>Provide code hint. (You just start with “To” than You can use tweener)</li>
+  <li>Provide code hint. (You just start with ?To? than You can use tweener)</li>
   <li>Easy to control event. (Support Anonymous Method)</li>
   <li>Support coroutine. (Easy to combine with other instruction)</li>
   <li>Support custom easing.</li>
   <li>Can make instance. This good at resuablity and time control.</li>
-  <li>Less use of memory and cpu. (XTween is don’t create MonoBehaviour each by tween)</li>
+  <li>Less use of memory and cpu. (XTween is don?t create MonoBehaviour each by tween)</li>
   <li>Support in editor mode(Not Play mode) and Available on all types of platforms</li>
 </ol>
 
@@ -152,7 +152,7 @@
 
 <h2 id="lastest-release">Lastest Release</h2>
 <!--Version Start-->
-<p>Version(Alpha) 0.0.111 - <a href="https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.111.unitypackage">XTween_0.0.111.unitypackage</a></p>
+<p>Version(Alpha) 0.0.112 - <a href="https://github.com/Toki-Labs/XTween/raw/master/Bin/XTween_0.0.112.unitypackage">XTween_0.0.112.unitypackage</a></p>
 <!--Version End-->
 
 
@@ -407,7 +407,7 @@ Customizable Easing, Support code hint for use of ease name, TopMenu -&gt; Windo
 
 <h2 id="reuse">Reuse</h2>
 <p>XTween is basically autodispose. when the tweener is completed or stopped.
-So, you should set to “Lock” for reuse tweener</p>
+So, you should set to ?Lock? for reuse tweener</p>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//This Tweener will not dispose when stop or complete.</span>
 <span class="n">IXTween</span> <span class="n">tween</span> <span class="p">=</span> <span class="n">gameObject</span><span class="p">.</span><span class="nf">ToPosition2D</span><span class="p">(</span><span class="m">600f</span><span class="p">,</span> <span class="m">200f</span><span class="p">,</span> <span class="m">1f</span><span class="p">).</span><span class="nf">SetLock</span><span class="p">().</span><span class="nf">Play</span><span class="p">();</span>
 
