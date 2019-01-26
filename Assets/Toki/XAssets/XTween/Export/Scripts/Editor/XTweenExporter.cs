@@ -217,7 +217,7 @@ namespace Toki.Tween
         
         public void Export(bool packingAll, bool release = false )
         {
-            XTweenVersionController controller = VersionController.Get(XTweenVersionController.NAME) as XTweenVersionController;
+            XTweenVersionController controller = XTweenVersionController.To;
             VersionData data = controller.Data;
             string addStr = "";
             string exportRootPath = SystemUtil.AbsPath + "/Bin";
