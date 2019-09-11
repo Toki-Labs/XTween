@@ -11,7 +11,7 @@
 					<key>kind</key>
 					<string>software-package</string>
 					<key>url</key>
-					<string>http://project.toki-labs.com:8000/build/rocket/ios/default/Rocket.ipa</string>
+					<string>http://toki-labs.com:8000/build/rocket/ios/default/Rocket.ipa</string>
 				</dict>
 				<dict>
 					<key>kind</key>
