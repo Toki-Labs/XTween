@@ -11,7 +11,7 @@
 					<key>kind</key>
 					<string>software-package</string>
 					<key>url</key>
-					<string>http://project.toki-labs.com:8000/build/tokisdk/ios/default/TokiSDK.ipa</string>
+					<string>http://toki-labs.com:8000/build/tokisdk/ios/default/TokiSDK.ipa</string>
 				</dict>
 				<dict>
 					<key>kind</key>
@@ -29,7 +29,7 @@
 			<key>metadata</key>
 			<dict>
 				<key>bundle-identifier</key>
-				<string>com.tokilabs.sdk.project</string>
+				<string>com.tokilabs.tokiframework</string>
 				<key>bundle-version</key>
 				<string>1.0</string>
 				<key>kind</key>
